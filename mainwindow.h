@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef _MAINWINDOW_H
@@ -25,13 +25,17 @@
 
 #include <QtGui/QMainWindow>
 
+#include "mediacontrols.h"
+#include "menubar.h"
+
 class MainWindow : public QMainWindow
 {
 public:
     MainWindow();
 
 private:
-    
+    MenuBar *menuBar;
+    MediaControls *mediaControls;
 };
 
 #endif	/* _MAINWINDOW_H */

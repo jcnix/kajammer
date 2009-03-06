@@ -17,19 +17,17 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "mainwindow.h"
-#include "mediacontrols.h"
-#include "menubar.h"
 
 MainWindow::MainWindow()
 {
-    MenuBar *menuBar = new MenuBar;
+    menuBar = new MenuBar;
     setMenuBar(menuBar);
 
-    MediaControls *mediaControls = new MediaControls;
+    mediaControls = new MediaControls;
     setCentralWidget(mediaControls);
 
     connect(menuBar, SIGNAL(songChanged(QString)), mediaControls, SLOT(changeSong(QString)));

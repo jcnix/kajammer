@@ -17,17 +17,17 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef _MENUBAR_H
 #define	_MENUBAR_H
 
-#include <QtCore/QString>
 #include <QtGui/QAction>
 #include <QtGui/QFileDialog>
 #include <QtGui/QMenuBar>
 #include <QtGui/QMenu>
+#include <QtCore/QString>
 
 class MenuBar : public QMenuBar
 {
@@ -47,7 +47,6 @@ private:
     QAction *openFile;
     QAction *close;
     QAction *about;
-
     QMenuBar *menuBar;
     QMenu *file;
     QMenu *help;
