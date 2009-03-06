@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'menubar.h'
 **
-** Created: Thu Mar 5 21:46:46 2009
+** Created: Fri Mar 6 16:10:38 2009
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.0)
 **
 ** WARNING! All changes made in this file will be lost!

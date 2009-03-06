@@ -22,6 +22,7 @@
 
 #include "menubar.h"
 #include "menu.h"
+#include <iostream>
 
 MenuBar::MenuBar()
 {
@@ -44,10 +45,14 @@ MenuBar::MenuBar()
 
 void MenuBar::open()
 {
-    fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+    QString file = QFileDialog::getOpenFileName(this, tr("Open File"),
                     "~/", tr("Music Files (*.mp3 *.ogg *.aac)"));
-
-    emit songChanged(fileName);
+    
+    if(file != NULL)
+    {
+        fileName = file;
+        emit songChanged(fileName);
+    }
 }
 
 void MenuBar::quit()
