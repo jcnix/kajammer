@@ -47,6 +47,4 @@ void MediaControls::changeSong(QString string)
 {
     mediaObject->setCurrentSource(Phonon::MediaSource(string));
     mediaObject->play();
-
-    emit songChanged();
 }
