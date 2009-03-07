@@ -25,6 +25,7 @@
 
 #include <QtGui/QAction>
 #include <QtGui/QFileDialog>
+#include <QtGui/QKeySequence>
 #include <QtGui/QMenuBar>
 #include <QtGui/QMenu>
 #include <QtCore/QString>
@@ -46,7 +47,7 @@ signals:
 private:
     QAction *openFile;
     QAction *close;
-    QAction *about;
+    QAction *about;;
     QMenuBar *menuBar;
     QMenu *file;
     QMenu *help;

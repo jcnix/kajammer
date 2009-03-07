@@ -20,6 +20,9 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtGui/qkeysequence.h>
+
+
 #include "menubar.h"
 
 MenuBar::MenuBar()
@@ -32,10 +35,16 @@ MenuBar::MenuBar()
     addMenu(file);
     addMenu(help);
 
-    openFile = file->addAction("&Open");
-    close =file->addAction("E&xit");
+    openFile = new QAction("&Open", this);
+    close = new QAction("E&xit", this);
+    about = new QAction("&About", this);
 
-    about = help->addAction("&About");
+    openFile->setShortcut(QKeySequence::Open);
+    close->setShortcut(QKeySequence::fromString("Ctrl+X", QKeySequence::NativeText));
+    
+    file->addAction(openFile);
+    file->addAction(close);
+    help->addAction(about);
     
     connect(openFile, SIGNAL(triggered()), this, SLOT(open()));
     connect(close, SIGNAL(triggered()), this, SLOT(quit()));
@@ -45,7 +54,8 @@ void MenuBar::open()
 {
     QString file = QFileDialog::getOpenFileName(this, tr("Open File"),
                     "~/", tr("Music Files (*.mp3 *.ogg *.aac)"));
-    
+
+    //If user cancels out of open dialog, don't stop playing the current song
     if(file != NULL)
     {
         fileName = file;

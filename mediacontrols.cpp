@@ -24,20 +24,29 @@
 
 MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 {
-    audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
-    mediaObject = new Phonon::MediaObject(this);
+    audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory);
+    mediaObject = new Phonon::MediaObject;
     Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
-    volumeSlider = new Phonon::VolumeSlider(this);
+
+    volumeSlider = new Phonon::VolumeSlider;
     volumeSlider->setAudioOutput(audioOutput);
+
+    seekSlider = new Phonon::SeekSlider;
+    seekSlider->setTracking(false);
+    seekSlider->setMediaObject(mediaObject);
 
     play = new QPushButton("Play", this);
     pause = new QPushButton("Pause", this);
 
-    QHBoxLayout *layout = new QHBoxLayout;
-    layout->addWidget(play);
-    layout->addWidget(pause);
-    layout->addWidget(volumeSlider);
-    setLayout(layout);
+    hLayout = new QHBoxLayout;
+    hLayout->addWidget(play);
+    hLayout->addWidget(pause);
+    hLayout->addWidget(volumeSlider);
+
+    vLayout = new QVBoxLayout;
+    vLayout->addWidget(seekSlider);
+    vLayout->addLayout(hLayout);
+    setLayout(vLayout);
 
     connect(play, SIGNAL(clicked()), mediaObject, SLOT(play()));
     connect(pause, SIGNAL(clicked()), mediaObject, SLOT(pause()));

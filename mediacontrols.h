@@ -26,8 +26,10 @@
 #include <QtGui/QWidget>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QPushButton>
+#include <QtGui/QVBoxLayout>
 #include <phonon/audiooutput.h>
 #include <phonon/mediaobject.h>
+#include <phonon/seekslider.h>
 #include <phonon/volumeslider.h>
 
 class MediaControls : public QWidget
@@ -43,9 +45,12 @@ public slots:
 private:
     Phonon::AudioOutput *audioOutput;
     Phonon::MediaObject *mediaObject;
+    Phonon::VolumeSlider *volumeSlider;
+    Phonon::SeekSlider *seekSlider;
     QPushButton *play;
     QPushButton *pause;
-    Phonon::VolumeSlider *volumeSlider;
+    QHBoxLayout *hLayout;
+    QVBoxLayout *vLayout;
 };
 
 #endif	/* _CONTROLS_H */
