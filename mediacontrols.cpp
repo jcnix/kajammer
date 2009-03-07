@@ -27,6 +27,8 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
     mediaObject = new Phonon::MediaObject(this);
     Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
+    volumeSlider = new Phonon::VolumeSlider(this);
+    volumeSlider->setAudioOutput(audioOutput);
 
     play = new QPushButton("Play", this);
     pause = new QPushButton("Pause", this);
@@ -34,6 +36,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     QHBoxLayout *layout = new QHBoxLayout;
     layout->addWidget(play);
     layout->addWidget(pause);
+    layout->addWidget(volumeSlider);
     setLayout(layout);
 
     connect(play, SIGNAL(clicked()), mediaObject, SLOT(play()));
@@ -44,4 +47,6 @@ void MediaControls::changeSong(QString string)
 {
     mediaObject->setCurrentSource(Phonon::MediaSource(string));
     mediaObject->play();
+
+    emit songChanged();
 }

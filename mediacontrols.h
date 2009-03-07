@@ -28,6 +28,7 @@
 #include <QtGui/QPushButton>
 #include <phonon/audiooutput.h>
 #include <phonon/mediaobject.h>
+#include <phonon/volumeslider.h>
 
 class MediaControls : public QWidget
 {
@@ -39,11 +40,15 @@ public:
 public slots:
     void changeSong(QString);
 
+signals:
+    void songChanged();
+
 private:
     Phonon::AudioOutput *audioOutput;
     Phonon::MediaObject *mediaObject;
     QPushButton *play;
     QPushButton *pause;
+    Phonon::VolumeSlider *volumeSlider;
 };
 
 #endif	/* _CONTROLS_H */
