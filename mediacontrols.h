@@ -40,9 +40,6 @@ public:
 public slots:
     void changeSong(QString);
 
-signals:
-    void songChanged();
-
 private:
     Phonon::AudioOutput *audioOutput;
     Phonon::MediaObject *mediaObject;
