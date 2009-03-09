@@ -35,8 +35,8 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     seekSlider->setTracking(false);
     seekSlider->setMediaObject(mediaObject);
 
-    play = new QPushButton("Play", this);
-    pause = new QPushButton("Pause", this);
+    play = new QPushButton(style()->standardIcon(QStyle::SP_MediaPlay), "", this);
+    pause = new QPushButton(style()->standardIcon(QStyle::SP_MediaPause), "", this);
 
     hLayout = new QHBoxLayout;
     hLayout->addWidget(play);
@@ -50,10 +50,16 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 
     connect(play, SIGNAL(clicked()), mediaObject, SLOT(play()));
     connect(pause, SIGNAL(clicked()), mediaObject, SLOT(pause()));
+    connect(mediaObject, SIGNAL(finished()), this, SLOT(finished()));
 }
 
 void MediaControls::changeSong(QString string)
 {
     mediaObject->setCurrentSource(Phonon::MediaSource(string));
     mediaObject->play();
+}
+
+void MediaControls::finished()
+{
+    emit playNextSong();
 }

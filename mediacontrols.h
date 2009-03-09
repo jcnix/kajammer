@@ -26,6 +26,7 @@
 #include <QtGui/QWidget>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QPushButton>
+#include <QtGui/QStyle>
 #include <QtGui/QVBoxLayout>
 #include <phonon/audiooutput.h>
 #include <phonon/mediaobject.h>
@@ -41,6 +42,10 @@ public:
 
 public slots:
     void changeSong(QString);
+    void finished();
+
+signals:
+    void playNextSong();
 
 private:
     Phonon::AudioOutput *audioOutput;

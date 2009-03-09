@@ -31,4 +31,5 @@ MainWindow::MainWindow()
     setCentralWidget(mediaControls);
 
     connect(menuBar, SIGNAL(songChanged(QString)), mediaControls, SLOT(changeSong(QString)));
+    connect(mediaControls, SIGNAL(playNextSong()), menuBar, SLOT(nextSong()));
 }

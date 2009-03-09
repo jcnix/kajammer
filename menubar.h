@@ -26,9 +26,11 @@
 #include <QtGui/QAction>
 #include <QtGui/QFileDialog>
 #include <QtGui/QKeySequence>
+#include <QtGui/QMessageBox>
 #include <QtGui/QMenuBar>
 #include <QtGui/QMenu>
 #include <QtCore/QString>
+#include <QtCore/QStringList>
 
 class MenuBar : public QMenuBar
 {
@@ -36,10 +38,13 @@ class MenuBar : public QMenuBar
 
 public:
     MenuBar();
+    QStringList getQueue();
 
 private slots:
     void open();
     void quit();
+    void aboutDialog();
+    void nextSong();
 
 signals:
     void songChanged(QString);
@@ -47,11 +52,12 @@ signals:
 private:
     QAction *openFile;
     QAction *close;
-    QAction *about;;
+    QAction *about;
     QMenuBar *menuBar;
     QMenu *file;
     QMenu *help;
     QString fileName;
+    QStringList fileQueue;
 };
 
 #endif	/* _MENUBAR_H */

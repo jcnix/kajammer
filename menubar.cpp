@@ -20,8 +20,6 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtGui/qkeysequence.h>
-
 
 #include "menubar.h"
 
@@ -48,19 +46,32 @@ MenuBar::MenuBar()
     
     connect(openFile, SIGNAL(triggered()), this, SLOT(open()));
     connect(close, SIGNAL(triggered()), this, SLOT(quit()));
+    connect(about, SIGNAL(triggered()), this, SLOT(aboutDialog()));
 }
 
 void MenuBar::open()
 {
-    QString file = QFileDialog::getOpenFileName(this, tr("Open File"),
-                    "~/", tr("Music Files (*.mp3 *.ogg *.aac)"));
+    fileQueue = QFileDialog::getOpenFileNames(this, tr("Open File"),
+            "~/", tr("Music Files (*.mp3 *.ogg *.aac)"));
 
+    nextSong();
+}
+
+void MenuBar::nextSong()
+{
     //If user cancels out of open dialog, don't stop playing the current song
-    if(file != NULL)
+    if(!fileQueue.isEmpty())
     {
-        fileName = file;
+        fileName = fileQueue.first();
+        fileQueue.removeFirst();
         emit songChanged(fileName);
     }
+}
+
+void MenuBar::aboutDialog()
+{
+    QMessageBox::information(this, ("About KaJammer"),
+             "KaJammer MediaPlayer 0.1");
 }
 
 void MenuBar::quit()
