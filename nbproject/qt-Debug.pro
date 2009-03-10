@@ -1,5 +1,5 @@
 TEMPLATE = app
-DESTDIR = dist/
+DESTDIR = dist
 TARGET = kajammer
 VERSION = 0.1.1
 CONFIG -= debug_and_release

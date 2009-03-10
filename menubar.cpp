@@ -62,7 +62,7 @@ void MenuBar::open()
 void MenuBar::aboutDialog()
 {
     QMessageBox::information(this, ("About KaJammer"),
-            "KaJammer Media Player 0.1\n"
+            "KaJammer Media Player 0.1.1\n"
             "Licensed under the GPLv3.");
 }
 

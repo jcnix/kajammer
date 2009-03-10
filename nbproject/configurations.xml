@@ -37,7 +37,7 @@
         <platform>2</platform>
       </toolsSet>
       <qt>
-        <destdir>dist/</destdir>
+        <destdir>dist</destdir>
         <target>kajammer</target>
         <version>0.1.1</version>
         <modules>core gui phonon</modules>
@@ -56,7 +56,7 @@
         <platform>2</platform>
       </toolsSet>
       <qt>
-        <destdir>dist/</destdir>
+        <destdir>dist</destdir>
         <version>0.1.1</version>
         <buildMode>1</buildMode>
         <modules>core gui phonon</modules>
