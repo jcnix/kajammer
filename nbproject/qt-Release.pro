@@ -1,12 +1,12 @@
 TEMPLATE = app
-DESTDIR = dist/Release/GNU-Linux-x86
+DESTDIR = dist/
 TARGET = kajammer
-VERSION = 1.0.0
+VERSION = 0.1.1
 CONFIG -= debug_and_release
 CONFIG += release 
 QT = core gui phonon
-SOURCES += mainwindow.cpp mediacontrols.cpp menubar.cpp main.cpp
-HEADERS += menubar.h mainwindow.h mediacontrols.h
+SOURCES += mainwindow.cpp mediacontrols.cpp controller.cpp menubar.cpp main.cpp
+HEADERS += menubar.h mainwindow.h mediacontrols.h controller.h
 FORMS +=
 RESOURCES +=
 TRANSLATIONS +=

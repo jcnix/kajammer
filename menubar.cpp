@@ -25,6 +25,7 @@
 
 MenuBar::MenuBar()
 {
+    controller = Controller::getInstance();
     menuBar = new QMenuBar;
 
     file = new QMenu("&File");
@@ -54,24 +55,15 @@ void MenuBar::open()
     fileQueue = QFileDialog::getOpenFileNames(this, tr("Open File"),
             "~/", tr("Music Files (*.mp3 *.ogg *.aac)"));
 
-    nextSong();
-}
-
-void MenuBar::nextSong()
-{
-    //If user cancels out of open dialog, don't stop playing the current song
-    if(!fileQueue.isEmpty())
-    {
-        fileName = fileQueue.first();
-        fileQueue.removeFirst();
-        emit songChanged(fileName);
-    }
+    controller->setQueue(fileQueue);
+    controller->nextSong();
 }
 
 void MenuBar::aboutDialog()
 {
     QMessageBox::information(this, ("About KaJammer"),
-             "KaJammer MediaPlayer 0.1");
+            "KaJammer Media Player 0.1\n"
+            "Licensed under the GPLv3.");
 }
 
 void MenuBar::quit()

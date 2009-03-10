@@ -33,27 +33,35 @@
 #include <phonon/seekslider.h>
 #include <phonon/volumeslider.h>
 
+#include <controller.h>
+
 class MediaControls : public QWidget
 {
     Q_OBJECT;
 
 public:
     MediaControls(QWidget *parent = 0);
+    QPushButton *next;
+    QPushButton *previous;
 
 public slots:
     void changeSong(QString);
-    void finished();
+    void songEnded();
 
 signals:
     void playNextSong();
 
 private:
+    Controller *controller;
+
     Phonon::AudioOutput *audioOutput;
     Phonon::MediaObject *mediaObject;
     Phonon::VolumeSlider *volumeSlider;
     Phonon::SeekSlider *seekSlider;
+    
     QPushButton *play;
     QPushButton *pause;
+    
     QHBoxLayout *hLayout;
     QVBoxLayout *vLayout;
 };

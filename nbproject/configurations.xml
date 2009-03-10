@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>controller.h</itemPath>
       <itemPath>mainwindow.h</itemPath>
       <itemPath>mediacontrols.h</itemPath>
       <itemPath>menubar.h</itemPath>
@@ -15,6 +16,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>controller.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
       <itemPath>mainwindow.cpp</itemPath>
       <itemPath>mediacontrols.cpp</itemPath>
@@ -35,8 +37,9 @@
         <platform>2</platform>
       </toolsSet>
       <qt>
+        <destdir>dist/</destdir>
         <target>kajammer</target>
-        <version>0.0.1</version>
+        <version>0.1.1</version>
         <modules>core gui phonon</modules>
       </qt>
       <compileType>
@@ -53,6 +56,8 @@
         <platform>2</platform>
       </toolsSet>
       <qt>
+        <destdir>dist/</destdir>
+        <version>0.1.1</version>
         <buildMode>1</buildMode>
         <modules>core gui phonon</modules>
       </qt>

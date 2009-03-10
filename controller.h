@@ -1,8 +1,8 @@
-/*
- * File:   mainwindow.h
- * Author: cjones
+/* 
+ * File:   controller.h
+ * Author: casey
  *
- * Created on March 2, 2009, 6:47 PM
+ * Created on March 10, 2009, 4:27 PM
  *
  * This file is part of KaJammer.
  *
@@ -20,25 +20,34 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _MAINWINDOW_H
-#define	_MAINWINDOW_H
+#ifndef _CONTROLLER_H
+#define	_CONTROLLER_H
 
-#include <QtGui/QMainWindow>
+#include <QtCore/QObject>
+#include <QtCore/QStringList>
+#include <QtCore/QString>
 
-#include "mediacontrols.h"
-#include "menubar.h"
-#include "controller.h"
-
-class MainWindow : public QMainWindow
+class Controller : public QObject
 {
+    Q_OBJECT;
+
 public:
-    MainWindow();
+    static Controller* getInstance();
+    void setQueue(QStringList);
+    
+public slots:
+    void nextSong();
+
+signals:
+    void songChanged(QString);
+
+protected:
+    Controller();
 
 private:
-    Controller *controller;
-    MenuBar *menuBar;
-    MediaControls *mediaControls;
+    static Controller *controller;
+    QStringList fileQueue;
 };
 
-#endif	/* _MAINWINDOW_H */
+#endif	/* _CONTROLLER_H */
 

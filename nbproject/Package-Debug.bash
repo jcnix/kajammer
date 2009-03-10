@@ -9,7 +9,7 @@ TOP=`pwd`
 CND_PLATFORM=GNU-Linux-x86
 TMPDIR=build/Debug/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=dist/Debug/${CND_PLATFORM}/kajammer
+OUTPUT_PATH=dist//kajammer
 OUTPUT_BASENAME=kajammer
 PACKAGE_TOP_DIR=kajammer/
 

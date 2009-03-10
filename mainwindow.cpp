@@ -24,12 +24,13 @@
 
 MainWindow::MainWindow()
 {
+    controller = Controller::getInstance();
     menuBar = new MenuBar;
     setMenuBar(menuBar);
 
     mediaControls = new MediaControls;
     setCentralWidget(mediaControls);
 
-    connect(menuBar, SIGNAL(songChanged(QString)), mediaControls, SLOT(changeSong(QString)));
-    connect(mediaControls, SIGNAL(playNextSong()), menuBar, SLOT(nextSong()));
+    connect(controller, SIGNAL(songChanged(QString)), mediaControls, SLOT(changeSong(QString)));
+    connect(mediaControls, SIGNAL(playNextSong()), controller, SLOT(nextSong()));
 }

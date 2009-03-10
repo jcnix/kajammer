@@ -24,6 +24,8 @@
 
 MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 {
+    controller = Controller::getInstance();
+
     audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory);
     mediaObject = new Phonon::MediaObject;
     Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
@@ -37,10 +39,14 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 
     play = new QPushButton(style()->standardIcon(QStyle::SP_MediaPlay), "", this);
     pause = new QPushButton(style()->standardIcon(QStyle::SP_MediaPause), "", this);
+    next = new QPushButton(style()->standardIcon(QStyle::SP_MediaSkipForward), "", this);
+    previous = new QPushButton(style()->standardIcon(QStyle::SP_MediaSkipBackward), "", this);
 
     hLayout = new QHBoxLayout;
+    hLayout->addWidget(previous);
     hLayout->addWidget(play);
     hLayout->addWidget(pause);
+    hLayout->addWidget(next);
     hLayout->addWidget(volumeSlider);
 
     vLayout = new QVBoxLayout;
@@ -50,16 +56,17 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 
     connect(play, SIGNAL(clicked()), mediaObject, SLOT(play()));
     connect(pause, SIGNAL(clicked()), mediaObject, SLOT(pause()));
-    connect(mediaObject, SIGNAL(finished()), this, SLOT(finished()));
+    connect(mediaObject, SIGNAL(finished()), this, SLOT(songEnded()));
+    connect(next, SIGNAL(clicked()), controller, SLOT(nextSong()));
 }
 
-void MediaControls::changeSong(QString string)
+void MediaControls::changeSong(QString song)
 {
-    mediaObject->setCurrentSource(Phonon::MediaSource(string));
+    mediaObject->setCurrentSource(Phonon::MediaSource(song));
     mediaObject->play();
 }
 
-void MediaControls::finished()
+void MediaControls::songEnded()
 {
     emit playNextSong();
 }

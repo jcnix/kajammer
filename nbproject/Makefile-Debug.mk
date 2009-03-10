@@ -54,7 +54,7 @@ FORCE:
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS} nbproject/qt-${CONF}.mk
-	${MAKE} -f nbproject/qt-${CONF}.mk dist/Debug/GNU-Linux-x86/kajammer
+	${MAKE} -f nbproject/qt-${CONF}.mk dist//kajammer
 
 # Subprojects
 .build-subprojects:

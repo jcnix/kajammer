@@ -32,6 +32,8 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 
+#include <controller.h>
+
 class MenuBar : public QMenuBar
 {
     Q_OBJECT;
@@ -44,19 +46,15 @@ private slots:
     void open();
     void quit();
     void aboutDialog();
-    void nextSong();
-
-signals:
-    void songChanged(QString);
 
 private:
+    Controller *controller;
     QAction *openFile;
     QAction *close;
     QAction *about;
     QMenuBar *menuBar;
     QMenu *file;
     QMenu *help;
-    QString fileName;
     QStringList fileQueue;
 };
 

@@ -1,8 +1,8 @@
 /*
- * File:   mainwindow.h
- * Author: cjones
+ * File:   controller.cpp
+ * Author: casey
  *
- * Created on March 2, 2009, 6:47 PM
+ * Created on March 10, 2009, 4:27 PM
  *
  * This file is part of KaJammer.
  *
@@ -20,25 +20,36 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _MAINWINDOW_H
-#define	_MAINWINDOW_H
-
-#include <QtGui/QMainWindow>
-
-#include "mediacontrols.h"
-#include "menubar.h"
 #include "controller.h"
 
-class MainWindow : public QMainWindow
+Controller* Controller::controller = 0;
+
+Controller::Controller()
 {
-public:
-    MainWindow();
+}
 
-private:
-    Controller *controller;
-    MenuBar *menuBar;
-    MediaControls *mediaControls;
-};
+Controller* Controller::getInstance()
+{
+    if(controller == 0)
+    {
+        controller = new Controller;
+    }
+    return controller;
+}
 
-#endif	/* _MAINWINDOW_H */
 
+void Controller::setQueue(QStringList queue)
+{
+    fileQueue = queue;
+}
+
+void Controller::nextSong()
+{
+    //If user cancels out of open dialog, don't stop playing the current song
+    if(!fileQueue.isEmpty())
+    {
+        QString fileName = fileQueue.first();
+        fileQueue.removeFirst();
+        emit songChanged(fileName);
+    }
+}
