@@ -40,10 +40,10 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     play = new QPushButton(style()->standardIcon(QStyle::SP_MediaPlay), "", this);
     pause = new QPushButton(style()->standardIcon(QStyle::SP_MediaPause), "", this);
     next = new QPushButton(style()->standardIcon(QStyle::SP_MediaSkipForward), "", this);
-    previous = new QPushButton(style()->standardIcon(QStyle::SP_MediaSkipBackward), "", this);
+    prev = new QPushButton(style()->standardIcon(QStyle::SP_MediaSkipBackward), "", this);
 
     hLayout = new QHBoxLayout;
-    hLayout->addWidget(previous);
+    hLayout->addWidget(prev);
     hLayout->addWidget(play);
     hLayout->addWidget(pause);
     hLayout->addWidget(next);
@@ -58,6 +58,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(pause, SIGNAL(clicked()), mediaObject, SLOT(pause()));
     connect(mediaObject, SIGNAL(finished()), this, SLOT(songEnded()));
     connect(next, SIGNAL(clicked()), controller, SLOT(nextSong()));
+    connect(prev, SIGNAL(clicked()), controller, SLOT(prevSong()));
 }
 
 void MediaControls::changeSong(QString song)

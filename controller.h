@@ -25,7 +25,9 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QStringList>
+#include <QtCore/QStack>
 #include <QtCore/QString>
+#include <QtCore/QVector>
 
 class Controller : public QObject
 {
@@ -37,6 +39,7 @@ public:
     
 public slots:
     void nextSong();
+    void prevSong();
 
 signals:
     void songChanged(QString);
@@ -46,7 +49,9 @@ protected:
 
 private:
     static Controller *controller;
-    QStringList fileQueue;
+    QString fileName;
+    QVector<QString> prevQueue;
+    QVector<QString> nextQueue;
 };
 
 #endif	/* _CONTROLLER_H */

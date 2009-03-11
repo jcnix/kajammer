@@ -41,9 +41,7 @@ class MediaControls : public QWidget
 
 public:
     MediaControls(QWidget *parent = 0);
-    QPushButton *next;
-    QPushButton *previous;
-
+    
 public slots:
     void changeSong(QString);
     void songEnded();
@@ -61,6 +59,8 @@ private:
     
     QPushButton *play;
     QPushButton *pause;
+    QPushButton *next;
+    QPushButton *prev;
     
     QHBoxLayout *hLayout;
     QVBoxLayout *vLayout;

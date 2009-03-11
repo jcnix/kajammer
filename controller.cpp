@@ -40,16 +40,43 @@ Controller* Controller::getInstance()
 
 void Controller::setQueue(QStringList queue)
 {
-    fileQueue = queue;
+    nextQueue = QVector<QString>::fromList(queue);
 }
 
 void Controller::nextSong()
 {
     //If user cancels out of open dialog, don't stop playing the current song
-    if(!fileQueue.isEmpty())
+    if(!nextQueue.isEmpty())
     {
-        QString fileName = fileQueue.first();
-        fileQueue.removeFirst();
+        //Make sure that when you hit next it won't repeat the same song.
+        if(fileName == nextQueue.at(0))
+        {
+            prevQueue.insert(0, fileName);
+            nextQueue.remove(0);
+        }
+
+        fileName = nextQueue.at(0);
+
+        /* Take song from nextQueue and place in prevQueue, so we can play songs
+         * that have already been played. */
+        prevQueue.insert(0, fileName);
+        nextQueue.remove(0);
+        
+        emit songChanged(fileName);
+    }
+}
+
+void Controller::prevSong()
+{
+    if(!prevQueue.isEmpty())
+    {
+        fileName = prevQueue.at(0);
+
+        /* Take song from prevQueue and place in nextQueue, so we can play songs
+         * that have already been played. */
+        nextQueue.insert(0, fileName);
+        prevQueue.remove(0);
+
         emit songChanged(fileName);
     }
 }
