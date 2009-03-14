@@ -52,7 +52,8 @@ void Controller::nextSong()
         if(fileName == nextQueue.at(0))
         {
             prevQueue.insert(0, fileName);
-            nextQueue.remove(0);
+            if(nextQueue.size() != 1)
+                nextQueue.remove(0);
         }
 
         fileName = nextQueue.at(0);

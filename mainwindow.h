@@ -24,10 +24,12 @@
 #define	_MAINWINDOW_H
 
 #include <QtGui/QMainWindow>
+#include <QtGui/QVBoxLayout>
 
 #include "mediacontrols.h"
 #include "menubar.h"
 #include "controller.h"
+
 
 class MainWindow : public QMainWindow
 {

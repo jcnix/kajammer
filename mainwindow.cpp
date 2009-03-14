@@ -24,7 +24,9 @@
 
 MainWindow::MainWindow()
 {
+    setWindowTitle("KaJammer Music Player");
     controller = Controller::getInstance();
+
     menuBar = new MenuBar;
     setMenuBar(menuBar);
 

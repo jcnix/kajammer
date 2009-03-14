@@ -25,7 +25,6 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QStringList>
-#include <QtCore/QStack>
 #include <QtCore/QString>
 #include <QtCore/QVector>
 

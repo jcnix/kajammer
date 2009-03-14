@@ -21,6 +21,7 @@
  */
 
 #include "mediacontrols.h"
+#include <iostream>
 
 MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 {
@@ -37,10 +38,17 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     seekSlider->setTracking(false);
     seekSlider->setMediaObject(mediaObject);
 
+    //Media Control buttons
     play = new QPushButton(style()->standardIcon(QStyle::SP_MediaPlay), "", this);
     pause = new QPushButton(style()->standardIcon(QStyle::SP_MediaPause), "", this);
     next = new QPushButton(style()->standardIcon(QStyle::SP_MediaSkipForward), "", this);
     prev = new QPushButton(style()->standardIcon(QStyle::SP_MediaSkipBackward), "", this);
+
+    //Table with meta info
+    table = new QTableWidget(1, 1);
+    QStringList tableHeaders;
+    tableHeaders.append("Title");
+    table->setHorizontalHeaderLabels(tableHeaders);
 
     hLayout = new QHBoxLayout;
     hLayout->addWidget(prev);
@@ -50,6 +58,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     hLayout->addWidget(volumeSlider);
 
     vLayout = new QVBoxLayout;
+    vLayout->addWidget(table);
     vLayout->addWidget(seekSlider);
     vLayout->addLayout(hLayout);
     setLayout(vLayout);
@@ -65,9 +74,31 @@ void MediaControls::changeSong(QString song)
 {
     mediaObject->setCurrentSource(Phonon::MediaSource(song));
     mediaObject->play();
+    setupTable();
 }
 
 void MediaControls::songEnded()
 {
     emit playNextSong();
+}
+
+void MediaControls::setupTable()
+{
+    //QStringList currentTitles = mediaObject->metaData(Phonon::ArtistMetaData);
+    //int temp = currentTitles.size();
+    //QString currentTitle = QString::number(temp, 10);
+    //QString currentTitle = currentTitles.first();
+    //bool test = currentTitles.isEmpty();
+    //std::cout << test;
+    
+    map = mediaObject->metaData();
+    if(map.isEmpty())
+    {
+        std::cout << "Empty\n";
+    }
+
+    QString currentTitle = mediaObject->currentSource().fileName();
+    titles = new QTableWidgetItem(QTableWidgetItem::Type);
+    titles->setText(currentTitle);
+    table->setItem(0, 0, titles);
 }

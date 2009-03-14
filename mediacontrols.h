@@ -25,8 +25,12 @@
 
 #include <QtGui/QWidget>
 #include <QtGui/QHBoxLayout>
+#include <QtCore/QMap>
 #include <QtGui/QPushButton>
+#include <QtCore/QStringList>
 #include <QtGui/QStyle>
+#include <QtGui/QTableWidget>
+#include <QtGui/QTableWidgetItem>
 #include <QtGui/QVBoxLayout>
 #include <phonon/audiooutput.h>
 #include <phonon/mediaobject.h>
@@ -41,7 +45,8 @@ class MediaControls : public QWidget
 
 public:
     MediaControls(QWidget *parent = 0);
-    
+    void setupTable();
+
 public slots:
     void changeSong(QString);
     void songEnded();
@@ -56,11 +61,14 @@ private:
     Phonon::MediaObject *mediaObject;
     Phonon::VolumeSlider *volumeSlider;
     Phonon::SeekSlider *seekSlider;
-    
+
+    QMap<QString, QString> map;
     QPushButton *play;
     QPushButton *pause;
     QPushButton *next;
     QPushButton *prev;
+    QTableWidget *table;
+    QTableWidgetItem *titles;
     
     QHBoxLayout *hLayout;
     QVBoxLayout *vLayout;
