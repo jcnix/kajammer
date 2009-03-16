@@ -1,5 +1,5 @@
 TEMPLATE = app
-DESTDIR = dist
+DESTDIR = bin
 TARGET = kajammer
 VERSION = 0.1.1
 CONFIG -= debug_and_release
@@ -10,7 +10,7 @@ HEADERS += menubar.h mainwindow.h mediacontrols.h controller.h
 FORMS +=
 RESOURCES +=
 TRANSLATIONS +=
-OBJECTS_DIR = build/Debug/GNU-Linux-x86
+OBJECTS_DIR = build
 MOC_DIR = 
 RCC_DIR = 
 UI_DIR = 

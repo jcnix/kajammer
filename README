@@ -1,7 +1,8 @@
 To build:
 -Change directory to where you downloaded KaJammer
+-Run qmake
 -Run make
--The binary is in dist/
+-The binary is in bin/
 
 KaJammer 0.1.1
 -Added next and previous buttons.
