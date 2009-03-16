@@ -50,6 +50,7 @@ public:
 public slots:
     void changeSong(QString);
     void songEnded();
+    void setMetaData();
 
 signals:
     void playNextSong();

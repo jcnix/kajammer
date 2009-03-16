@@ -6,8 +6,7 @@ To build:
 KaJammer 0.1.1
 -Added next and previous buttons.
 -Cleaned code up considerably
--Added table that displays current songs filename, I can't figure out how to get the MetaData 
-yet.
+-Added table that displays current songs title
 
 KaJammer 0.1
 -Added seek slider bar

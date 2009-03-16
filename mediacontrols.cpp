@@ -65,16 +65,16 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 
     connect(play, SIGNAL(clicked()), mediaObject, SLOT(play()));
     connect(pause, SIGNAL(clicked()), mediaObject, SLOT(pause()));
-    connect(mediaObject, SIGNAL(finished()), this, SLOT(songEnded()));
     connect(next, SIGNAL(clicked()), controller, SLOT(nextSong()));
     connect(prev, SIGNAL(clicked()), controller, SLOT(prevSong()));
+    connect(mediaObject, SIGNAL(finished()), this, SLOT(songEnded()));
+    connect(mediaObject, SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));
 }
 
 void MediaControls::changeSong(QString song)
 {
     mediaObject->setCurrentSource(Phonon::MediaSource(song));
     mediaObject->play();
-    setupTable();
 }
 
 void MediaControls::songEnded()
@@ -82,22 +82,11 @@ void MediaControls::songEnded()
     emit playNextSong();
 }
 
-void MediaControls::setupTable()
+void MediaControls::setMetaData()
 {
-    //QStringList currentTitles = mediaObject->metaData(Phonon::ArtistMetaData);
-    //int temp = currentTitles.size();
-    //QString currentTitle = QString::number(temp, 10);
-    //QString currentTitle = currentTitles.first();
-    //bool test = currentTitles.isEmpty();
-    //std::cout << test;
+    QStringList currentTitles = mediaObject->metaData(Phonon::TitleMetaData);
+    QString currentTitle = currentTitles.first();
     
-    map = mediaObject->metaData();
-    if(map.isEmpty())
-    {
-        std::cout << "Empty\n";
-    }
-
-    QString currentTitle = mediaObject->currentSource().fileName();
     titles = new QTableWidgetItem(QTableWidgetItem::Type);
     titles->setText(currentTitle);
     table->setItem(0, 0, titles);
