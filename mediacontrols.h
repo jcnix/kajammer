@@ -24,6 +24,7 @@
 #define	_CONTROLS_H
 
 #include <QtGui/QWidget>
+#include <QtGui/QAbstractItemView>
 #include <QtGui/QHBoxLayout>
 #include <QtCore/QMap>
 #include <QtGui/QPushButton>
@@ -34,6 +35,7 @@
 #include <QtGui/QVBoxLayout>
 #include <phonon/audiooutput.h>
 #include <phonon/mediaobject.h>
+#include <phonon/mediasource.h>
 #include <phonon/seekslider.h>
 #include <phonon/volumeslider.h>
 
@@ -45,31 +47,35 @@ class MediaControls : public QWidget
 
 public:
     MediaControls(QWidget *parent = 0);
-    void setupTable();
 
 public slots:
-    void changeSong(QString);
+    void changeSong(Phonon::MediaSource);
     void songEnded();
     void setMetaData();
+    void getMetaResolver(QList<Phonon::MediaSource>);
 
 signals:
     void playNextSong();
 
 private:
+    void init();
+
     Controller *controller;
 
     Phonon::AudioOutput *audioOutput;
     Phonon::MediaObject *mediaObject;
     Phonon::VolumeSlider *volumeSlider;
     Phonon::SeekSlider *seekSlider;
+    Phonon::MediaObject *metaResolver;
 
-    QMap<QString, QString> map;
     QPushButton *play;
     QPushButton *pause;
     QPushButton *next;
     QPushButton *prev;
     QTableWidget *table;
-    QTableWidgetItem *titles;
+    QMap<QString, QString> metaMap;
+    QList<Phonon::MediaSource> metaSources;
+    int currentRow;
     
     QHBoxLayout *hLayout;
     QVBoxLayout *vLayout;

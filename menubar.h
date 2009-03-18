@@ -48,6 +48,8 @@ private slots:
     void aboutDialog();
 
 private:
+    void init();
+
     Controller *controller;
     QAction *openFile;
     QAction *close;

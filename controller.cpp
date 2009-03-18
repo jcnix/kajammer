@@ -40,7 +40,15 @@ Controller* Controller::getInstance()
 
 void Controller::setQueue(QStringList queue)
 {
-    nextQueue = QVector<QString>::fromList(queue);
+    // Clean out the queue so we can start empty
+    nextQueue.clear();
+    prevQueue.clear();
+
+    // Finally add new data to the queue
+    for(int i = 0; i < queue.count(); i++)
+        nextQueue.append(queue.at(i));
+
+    emit queueSet(nextQueue);
 }
 
 void Controller::nextSong()
@@ -53,15 +61,15 @@ void Controller::nextSong()
         {
             prevQueue.insert(0, fileName);
             if(nextQueue.size() != 1)
-                nextQueue.remove(0);
+                nextQueue.removeFirst();
         }
 
         fileName = nextQueue.at(0);
 
         /* Take song from nextQueue and place in prevQueue, so we can play songs
          * that have already been played. */
-        prevQueue.insert(0, fileName);
-        nextQueue.remove(0);
+        prevQueue.prepend(fileName);
+        nextQueue.removeFirst();
         
         emit songChanged(fileName);
     }
@@ -75,8 +83,8 @@ void Controller::prevSong()
 
         /* Take song from prevQueue and place in nextQueue, so we can play songs
          * that have already been played. */
-        nextQueue.insert(0, fileName);
-        prevQueue.remove(0);
+        nextQueue.prepend(fileName);
+        prevQueue.removeFirst();
 
         emit songChanged(fileName);
     }

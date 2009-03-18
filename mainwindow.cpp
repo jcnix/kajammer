@@ -33,6 +33,6 @@ MainWindow::MainWindow()
     mediaControls = new MediaControls;
     setCentralWidget(mediaControls);
 
-    connect(controller, SIGNAL(songChanged(QString)), mediaControls, SLOT(changeSong(QString)));
+    connect(controller, SIGNAL(songChanged(Phonon::MediaSource)), mediaControls, SLOT(changeSong(Phonon::MediaSource)));
     connect(mediaControls, SIGNAL(playNextSong()), controller, SLOT(nextSong()));
 }

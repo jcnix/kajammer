@@ -20,14 +20,16 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <iostream>
 #include <QtGui/QApplication>
 
 #include "mainwindow.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) 
+{   
     // initialize resources, if needed
     // Q_INIT_RESOURCE(resfile);
-
+       
     QApplication app(argc, argv);
     app.setApplicationName("KaJammer");
     app.setQuitOnLastWindowClosed(true);

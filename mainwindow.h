@@ -25,6 +25,7 @@
 
 #include <QtGui/QMainWindow>
 #include <QtGui/QVBoxLayout>
+#include <phonon/mediasource.h>
 
 #include "mediacontrols.h"
 #include "menubar.h"

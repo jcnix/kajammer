@@ -20,16 +20,34 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtGui/qabstractitemview.h>
+
+
 #include "mediacontrols.h"
-#include <iostream>
 
 MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
+{
+    init();
+
+    connect(play, SIGNAL(clicked()), mediaObject, SLOT(play()));
+    connect(pause, SIGNAL(clicked()), mediaObject, SLOT(pause()));
+    connect(next, SIGNAL(clicked()), controller, SLOT(nextSong()));
+    connect(prev, SIGNAL(clicked()), controller, SLOT(prevSong()));
+    connect(mediaObject, SIGNAL(finished()), this, SLOT(songEnded()));
+    connect(controller, SIGNAL(queueSet(QList<Phonon::MediaSource>)), this,
+            SLOT(getMetaResolver(QList<Phonon::MediaSource>)));
+    connect(metaResolver, SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));  
+}
+
+void MediaControls::init()
 {
     controller = Controller::getInstance();
 
     audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory);
     mediaObject = new Phonon::MediaObject;
     Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
+    metaResolver = new Phonon::MediaObject;
+    currentRow = 0;
 
     volumeSlider = new Phonon::VolumeSlider;
     volumeSlider->setAudioOutput(audioOutput);
@@ -45,10 +63,14 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     prev = new QPushButton(style()->standardIcon(QStyle::SP_MediaSkipBackward), "", this);
 
     //Table with meta info
-    table = new QTableWidget(1, 1);
+    table = new QTableWidget();
+    table->setColumnCount(3);
     QStringList tableHeaders;
     tableHeaders.append("Title");
+    tableHeaders.append("Artist");
+    tableHeaders.append("Album");
     table->setHorizontalHeaderLabels(tableHeaders);
+    table->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     hLayout = new QHBoxLayout;
     hLayout->addWidget(prev);
@@ -62,18 +84,11 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     vLayout->addWidget(seekSlider);
     vLayout->addLayout(hLayout);
     setLayout(vLayout);
-
-    connect(play, SIGNAL(clicked()), mediaObject, SLOT(play()));
-    connect(pause, SIGNAL(clicked()), mediaObject, SLOT(pause()));
-    connect(next, SIGNAL(clicked()), controller, SLOT(nextSong()));
-    connect(prev, SIGNAL(clicked()), controller, SLOT(prevSong()));
-    connect(mediaObject, SIGNAL(finished()), this, SLOT(songEnded()));
-    connect(mediaObject, SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));
 }
 
-void MediaControls::changeSong(QString song)
+void MediaControls::changeSong(Phonon::MediaSource song)
 {
-    mediaObject->setCurrentSource(Phonon::MediaSource(song));
+    mediaObject->setCurrentSource(song);
     mediaObject->play();
 }
 
@@ -82,12 +97,41 @@ void MediaControls::songEnded()
     emit playNextSong();
 }
 
+void MediaControls::getMetaResolver(QList<Phonon::MediaSource> meta)
+{
+    metaSources = meta;
+    metaResolver->setCurrentSource(metaSources.at(0));
+    table->setRowCount(0);
+}
+
 void MediaControls::setMetaData()
 {
-    QStringList currentTitles = mediaObject->metaData(Phonon::TitleMetaData);
-    QString currentTitle = currentTitles.first();
-    
-    titles = new QTableWidgetItem(QTableWidgetItem::Type);
-    titles->setText(currentTitle);
-    table->setItem(0, 0, titles);
+    QMap<QString, QString> metaData = metaResolver->metaData();
+
+     QString title = metaData.value("TITLE");
+     if (title == "")
+         title = metaResolver->currentSource().fileName();
+
+     QTableWidgetItem *titleItem = new QTableWidgetItem(title);
+     QTableWidgetItem *artistItem = new QTableWidgetItem(metaData.value("ARTIST"));
+     QTableWidgetItem *albumItem = new QTableWidgetItem(metaData.value("ALBUM"));
+     QTableWidgetItem *yearItem = new QTableWidgetItem(metaData.value("DATE"));
+
+     int row = table->rowCount();
+     table->insertRow(row);
+     table->setItem(row, 0, titleItem);
+     table->setItem(row, 1, artistItem);
+     table->setItem(row, 2, albumItem);
+     table->setItem(row, 3, yearItem);
+
+     Phonon::MediaSource source = metaResolver->currentSource();
+     int index = metaSources.indexOf(source) + 1;
+     if (metaSources.size() > index) {
+         metaResolver->setCurrentSource(metaSources.at(index));
+     }
+     else {
+         table->resizeColumnsToContents();
+         if (table->columnWidth(0) > 300)
+             table->setColumnWidth(0, 300);
+     }
 }

@@ -26,7 +26,9 @@
 #include <QtCore/QObject>
 #include <QtCore/QStringList>
 #include <QtCore/QString>
-#include <QtCore/QVector>
+#include <QtCore/QList>
+#include <phonon/mediaobject.h>
+#include <phonon/mediasource.h>
 
 class Controller : public QObject
 {
@@ -41,16 +43,17 @@ public slots:
     void prevSong();
 
 signals:
-    void songChanged(QString);
+    void songChanged(Phonon::MediaSource);
+    void queueSet(QList<Phonon::MediaSource>);
 
 protected:
     Controller();
 
 private:
     static Controller *controller;
-    QString fileName;
-    QVector<QString> prevQueue;
-    QVector<QString> nextQueue;
+    Phonon::MediaSource fileName;
+    QList<Phonon::MediaSource> prevQueue;
+    QList<Phonon::MediaSource> nextQueue;
 };
 
 #endif	/* _CONTROLLER_H */

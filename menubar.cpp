@@ -24,6 +24,15 @@
 #include "menubar.h"
 
 MenuBar::MenuBar()
+{    
+    init();
+
+    connect(openFile, SIGNAL(triggered()), this, SLOT(open()));
+    connect(close, SIGNAL(triggered()), this, SLOT(quit()));
+    connect(about, SIGNAL(triggered()), this, SLOT(aboutDialog()));
+}
+
+void MenuBar::init()
 {
     controller = Controller::getInstance();
     menuBar = new QMenuBar;
@@ -40,14 +49,11 @@ MenuBar::MenuBar()
 
     openFile->setShortcut(QKeySequence::Open);
     close->setShortcut(QKeySequence::fromString("Ctrl+X", QKeySequence::NativeText));
-    
+
     file->addAction(openFile);
+    file->addSeparator();
     file->addAction(close);
     help->addAction(about);
-    
-    connect(openFile, SIGNAL(triggered()), this, SLOT(open()));
-    connect(close, SIGNAL(triggered()), this, SLOT(quit()));
-    connect(about, SIGNAL(triggered()), this, SLOT(aboutDialog()));
 }
 
 void MenuBar::open()
@@ -63,7 +69,9 @@ void MenuBar::aboutDialog()
 {
     QMessageBox::information(this, ("About KaJammer"),
             "KaJammer Media Player 0.1.1\n"
-            "Licensed under the GPLv3.");
+            "Licensed under the GPLv3.\n\n"
+            "You are using a development version, keep your "
+            "git repository up to date for the latest version");
 }
 
 void MenuBar::quit()
