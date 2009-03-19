@@ -37,6 +37,8 @@ class Controller : public QObject
 public:
     static Controller* getInstance();
     void setQueue(QStringList);
+    QList<Phonon::MediaSource> getNextQueue() {return nextQueue;}
+    QList<Phonon::MediaSource> getPrevQueue() {return prevQueue;}
     
 public slots:
     void nextSong();
@@ -56,5 +58,5 @@ private:
     QList<Phonon::MediaSource> nextQueue;
 };
 
-#endif	/* _CONTROLLER_H */
+#endif /* _CONTROLLER_H */
 

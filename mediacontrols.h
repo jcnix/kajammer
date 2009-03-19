@@ -53,6 +53,7 @@ public slots:
     void songEnded();
     void setMetaData();
     void getMetaResolver(QList<Phonon::MediaSource>);
+    void tableClicked(int);
 
 signals:
     void playNextSong();

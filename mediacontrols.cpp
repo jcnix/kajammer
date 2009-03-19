@@ -33,10 +33,15 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(pause, SIGNAL(clicked()), mediaObject, SLOT(pause()));
     connect(next, SIGNAL(clicked()), controller, SLOT(nextSong()));
     connect(prev, SIGNAL(clicked()), controller, SLOT(prevSong()));
+    
+    connect(controller, SIGNAL(songChanged(Phonon::MediaSource)), this, SLOT(changeSong(Phonon::MediaSource)));
+    connect(this, SIGNAL(playNextSong()), controller, SLOT(nextSong()));
+    
     connect(mediaObject, SIGNAL(finished()), this, SLOT(songEnded()));
     connect(controller, SIGNAL(queueSet(QList<Phonon::MediaSource>)), this,
             SLOT(getMetaResolver(QList<Phonon::MediaSource>)));
-    connect(metaResolver, SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));  
+    connect(metaResolver, SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));
+    connect(table, SIGNAL(cellClicked(int, int)), this, SLOT(tableClicked(int)));
 }
 
 void MediaControls::init()
@@ -88,6 +93,8 @@ void MediaControls::init()
 
 void MediaControls::changeSong(Phonon::MediaSource song)
 {
+    table->selectRow(metaSources.indexOf(song));
+    mediaObject->stop();
     mediaObject->setCurrentSource(song);
     mediaObject->play();
 }
@@ -100,6 +107,7 @@ void MediaControls::songEnded()
 void MediaControls::getMetaResolver(QList<Phonon::MediaSource> meta)
 {
     metaSources = meta;
+    //Set source so we activate metaDataChanged(), so it loops through our table
     metaResolver->setCurrentSource(metaSources.at(0));
     table->setRowCount(0);
 }
@@ -126,7 +134,8 @@ void MediaControls::setMetaData()
 
      Phonon::MediaSource source = metaResolver->currentSource();
      int index = metaSources.indexOf(source) + 1;
-     if (metaSources.size() > index) {
+     if (metaSources.size() > index) 
+     {
          metaResolver->setCurrentSource(metaSources.at(index));
      }
      else {
@@ -134,4 +143,33 @@ void MediaControls::setMetaData()
          if (table->columnWidth(0) > 300)
              table->setColumnWidth(0, 300);
      }
+}
+
+void MediaControls::tableClicked(int row)
+{
+    Phonon::MediaSource source = metaSources.at(row);
+    
+    /*
+     * Find which queue contains the song, so we know which way to go.
+     * We use nextSong() and prevSong(), so the queues get adjusted and the
+     * next and prev buttons work.  So if you skip a few songs using the table
+     * pressing the next button takes you to the next song listed on the table.
+     */
+    if(controller->getNextQueue().contains(source))
+    {
+        int loops = controller->getNextQueue().indexOf(source);
+        for(int i = 0; i <= loops; i++)
+        {
+            controller->nextSong();
+        }
+    }
+    
+    else if(controller->getPrevQueue().contains(source))
+    {
+        int loops = controller->getPrevQueue().indexOf(source);
+        for(int i = 0; i <= loops; i++)
+        {
+            controller->prevSong();
+        }
+    }
 }
