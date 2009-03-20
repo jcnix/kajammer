@@ -4,11 +4,16 @@ To build:
 -Run make
 -The binary is in bin/
 
+KaJammer 0.3
+-Added table that displays meta data for all open songs
+-Ability to click table item and go to that song
+-cleaned up sloppy song changing code. Makes much more sense now.
+-increased default size of window, was too small to display metadata 
+well.
+
 KaJammer 0.1.1
 -Added next and previous buttons.
 -Cleaned code up considerably
--Added table that displays meta data for all open songs
--Ability to click table item and go to that song
 
 KaJammer 0.1
 -Added seek slider bar

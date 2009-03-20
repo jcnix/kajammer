@@ -41,51 +41,21 @@ Controller* Controller::getInstance()
 void Controller::setQueue(QStringList queue)
 {
     // Clean out the queue so we can start empty
-    nextQueue.clear();
-    prevQueue.clear();
+    songQueue.clear();
 
     // Finally add new data to the queue
     for(int i = 0; i < queue.count(); i++)
-        nextQueue.append(queue.at(i));
+        songQueue.append(queue.at(i));
 
-    emit queueSet(nextQueue);
+    emit queueSet(songQueue);
 }
 
-void Controller::nextSong()
+void Controller::setSong(int index)
 {
     //If user cancels out of open dialog, don't stop playing the current song
-    if(!nextQueue.isEmpty())
-    {
-        //Make sure that when you hit next it won't repeat the same song.
-        if(fileName == nextQueue.at(0))
-        {
-            prevQueue.insert(0, fileName);
-            if(nextQueue.size() != 1)
-                nextQueue.removeFirst();
-        }
-
-        fileName = nextQueue.at(0);
-
-        /* Take song from nextQueue and place in prevQueue, so we can play songs
-         * that have already been played. */
-        prevQueue.prepend(fileName);
-        nextQueue.removeFirst();
-        
-        emit songChanged(fileName);
-    }
-}
-
-void Controller::prevSong()
-{
-    if(!prevQueue.isEmpty())
-    {
-        fileName = prevQueue.at(0);
-
-        /* Take song from prevQueue and place in nextQueue, so we can play songs
-         * that have already been played. */
-        nextQueue.prepend(fileName);
-        prevQueue.removeFirst();
-
-        emit songChanged(fileName);
+     if(!songQueue.isEmpty())
+     {
+         fileName = songQueue.at(index);         
+         emit songChanged(fileName);
     }
 }

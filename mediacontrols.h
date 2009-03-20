@@ -21,7 +21,7 @@
  */
 
 #ifndef _CONTROLS_H
-#define	_CONTROLS_H
+#define _CONTROLS_H
 
 #include <QtGui/QWidget>
 #include <QtGui/QAbstractItemView>
@@ -52,8 +52,10 @@ public slots:
     void changeSong(Phonon::MediaSource);
     void songEnded();
     void setMetaData();
-    void getMetaResolver(QList<Phonon::MediaSource>);
+    void getQueue(QList<Phonon::MediaSource>);
     void tableClicked(int);
+    void setNextSong();
+    void setPrevSong();
 
 signals:
     void playNextSong();
@@ -76,10 +78,10 @@ private:
     QTableWidget *table;
     QMap<QString, QString> metaMap;
     QList<Phonon::MediaSource> metaSources;
-    int currentRow;
+    int index;
     
     QHBoxLayout *hLayout;
     QVBoxLayout *vLayout;
 };
 
-#endif	/* _CONTROLS_H */
+#endif /* _CONTROLS_H */
