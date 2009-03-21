@@ -155,7 +155,9 @@ void MediaControls::setMetaData()
 
 void MediaControls::setNextSong()
 {
-    if(index > metaSources.count())
+    /* subtract one from count because index starts at 0
+     * and count starts from 1 */
+    if(index < metaSources.count() - 1)
         controller->setSong(++index);
 }
 
