@@ -22,16 +22,15 @@
 
 #include <iostream>
 #include <QtGui/QApplication>
+#include <QtGui/QIcon>
 
 #include "mainwindow.h"
 
 int main(int argc, char *argv[]) 
-{   
-    // initialize resources, if needed
-    // Q_INIT_RESOURCE(resfile);
-       
+{         
     QApplication app(argc, argv);
     app.setApplicationName("KaJammer");
+    app.setWindowIcon(QIcon("/usr/share/icons/oxygen/22x22/categories/applications-multimedia.png"));
     app.setQuitOnLastWindowClosed(true);
 
     MainWindow window;
