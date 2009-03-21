@@ -95,10 +95,10 @@ void MediaControls::init()
 
 void MediaControls::changeSong(Phonon::MediaSource song)
 {
-    table->selectRow(metaSources.indexOf(song));
     mediaObject->stop();
     mediaObject->setCurrentSource(song);
     mediaObject->play();
+    table->selectRow(metaSources.indexOf(song));
 }
 
 void MediaControls::songEnded()
@@ -138,7 +138,7 @@ void MediaControls::setMetaData()
 
      Phonon::MediaSource source = metaResolver->currentSource();
      int index = metaSources.indexOf(source) + 1;
-     if (metaSources.size() > index) 
+     if (metaSources.count() > index) 
      {
          /* emit a signal so we can loop through the queue and
           * set the table up */
@@ -148,17 +148,21 @@ void MediaControls::setMetaData()
          table->resizeColumnsToContents();
          if (table->columnWidth(0) > 300)
              table->setColumnWidth(0, 300);
+         //Done setting up table, play first song.
+         controller->setSong(0);
      }
 }
 
 void MediaControls::setNextSong()
 {
-    controller->setSong(++index);
+    if(index > metaSources.count())
+        controller->setSong(++index);
 }
 
 void MediaControls::setPrevSong()
 {
-    controller->setSong(--index);
+    if(index != 0)
+        controller->setSong(--index);
 }
 
 //If clicked, change song to the song in the row that was clicked

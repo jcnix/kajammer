@@ -64,7 +64,6 @@ void MenuBar::open()
     if(!fileQueue.isEmpty())
     {
         controller->setQueue(fileQueue);
-        controller->setSong(0);
     }
 }   
 
