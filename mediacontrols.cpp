@@ -56,6 +56,7 @@ void MediaControls::init()
 
     volumeSlider = new Phonon::VolumeSlider;
     volumeSlider->setAudioOutput(audioOutput);
+    //volumeSlider->setMaximumWidth(100);
 
     seekSlider = new Phonon::SeekSlider;
     seekSlider->setTracking(false);
@@ -76,6 +77,7 @@ void MediaControls::init()
     tableHeaders.append("Album");
     table->setHorizontalHeaderLabels(tableHeaders);
     table->setSelectionBehavior(QAbstractItemView::SelectRows);
+    table->setShowGrid(false);
 
     hLayout = new QHBoxLayout;
     hLayout->addWidget(prev);
@@ -138,6 +140,8 @@ void MediaControls::setMetaData()
      int index = metaSources.indexOf(source) + 1;
      if (metaSources.size() > index) 
      {
+         /* emit a signal so we can loop through the queue and
+          * set the table up */
          metaResolver->setCurrentSource(metaSources.at(index));
      }
      else {
@@ -160,7 +164,12 @@ void MediaControls::setPrevSong()
 //If clicked, change song to the song in the row that was clicked
 void MediaControls::tableClicked(int row)
 {
-    //set the index so when we press next we know where we are in the queue.
-    index = row;
-    controller->setSong(index);
+    /* if index == row, we clicked the currently playing song
+     * so do nothing */
+    if(index != row)
+    {
+        //set the index so when we press next we know where we are in the queue.
+        index = row;
+        controller->setSong(index);
+    }
 }
