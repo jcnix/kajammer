@@ -78,6 +78,8 @@ void MediaControls::init()
     table->setHorizontalHeaderLabels(tableHeaders);
     table->setSelectionBehavior(QAbstractItemView::SelectRows);
     table->setShowGrid(false);
+    // Commented out because sorting table doesn't sort list yet
+    //table->setSortingEnabled(true);
 
     hLayout = new QHBoxLayout;
     hLayout->addWidget(prev);
