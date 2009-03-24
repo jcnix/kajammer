@@ -26,7 +26,8 @@
 MenuBar::MenuBar()
 {    
     init();
-
+    
+    //connect(newPlaylist, SIGNAL(triggered()), this, SLOT(createNewPlaylist()));
     connect(openFile, SIGNAL(triggered()), this, SLOT(open()));
     connect(close, SIGNAL(triggered()), this, SLOT(quit()));
     connect(about, SIGNAL(triggered()), this, SLOT(aboutDialog()));
@@ -42,24 +43,34 @@ void MenuBar::init()
 
     addMenu(file);
     addMenu(help);
-
+    
+    //newPlaylist = new QAction("&New Playlist", this);
     openFile = new QAction("&Open", this);
     close = new QAction("E&xit", this);
     about = new QAction("&About", this);
-
+    
     openFile->setShortcut(QKeySequence::Open);
     close->setShortcut(QKeySequence::fromString("Ctrl+X", QKeySequence::NativeText));
 
+    //file->addAction(newPlaylist);
     file->addAction(openFile);
     file->addSeparator();
     file->addAction(close);
     help->addAction(about);
 }
 
+// void MenuBar::createNewPlaylist()
+// {
+//     bool ok;
+//     QString input = QInputDialog::getText(this, "New Playlist", "Enter Playlist Name:",
+//                                            QLineEdit::Normal, QDir::home().dirName(),
+//                                            &ok);
+// }
+
 void MenuBar::open()
 {
-    fileQueue = QFileDialog::getOpenFileNames(this, tr("Open File"),
-            "~/", tr("Music Files (*.mp3 *.ogg *.aac)"));
+    fileQueue = QFileDialog::getOpenFileNames(this, tr("Open File"), "~/", 
+                                               tr("Music Files (*.mp3 *.ogg *.aac)"));
     
     if(!fileQueue.isEmpty())
     {
@@ -70,10 +81,10 @@ void MenuBar::open()
 void MenuBar::aboutDialog()
 {
     QMessageBox::information(this, ("About KaJammer"),
-            "KaJammer Media Player 0.3\n"
-            "Licensed under the GPLv3.\n\n"
-            "You are using a development version, keep your "
-            "git repository up to date for the latest version");
+                            "KaJammer Media Player 0.3\n"
+                            "Licensed under the GPLv3.\n\n"
+                            "You are using a development version, keep your "
+                            "git repository up to date for the latest version");
 }
 
 void MenuBar::quit()

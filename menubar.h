@@ -25,6 +25,7 @@
 
 #include <QtGui/QAction>
 #include <QtGui/QFileDialog>
+#include <QtGui/QInputDialog>
 #include <QtGui/QKeySequence>
 #include <QtGui/QMessageBox>
 #include <QtGui/QMenuBar>
@@ -43,6 +44,7 @@ public:
     QStringList getQueue();
 
 private slots:
+    //void createNewPlaylist();
     void open();
     void quit();
     void aboutDialog();
@@ -51,6 +53,7 @@ private:
     void init();
 
     Controller *controller;
+    //QAction *newPlaylist;
     QAction *openFile;
     QAction *close;
     QAction *about;

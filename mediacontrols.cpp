@@ -20,9 +20,6 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtGui/qabstractitemview.h>
-
-
 #include "mediacontrols.h"
 
 MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
@@ -56,11 +53,12 @@ void MediaControls::init()
 
     volumeSlider = new Phonon::VolumeSlider;
     volumeSlider->setAudioOutput(audioOutput);
-    //volumeSlider->setMaximumWidth(100);
+    volumeSlider->setMaximumWidth(100);
 
     seekSlider = new Phonon::SeekSlider;
     seekSlider->setTracking(false);
     seekSlider->setMediaObject(mediaObject);
+    //seekSlider->setMaximumWidth(300);
 
     //Media Control buttons
     play = new QPushButton(style()->standardIcon(QStyle::SP_MediaPlay), "", this);
@@ -69,7 +67,7 @@ void MediaControls::init()
     prev = new QPushButton(style()->standardIcon(QStyle::SP_MediaSkipBackward), "", this);
 
     //Table with meta info
-    table = new QTableWidget();
+    table = new QTableWidget;
     table->setColumnCount(3);
     QStringList tableHeaders;
     tableHeaders.append("Title");
@@ -80,6 +78,18 @@ void MediaControls::init()
     table->setShowGrid(false);
     // Commented out because sorting table doesn't sort list yet
     //table->setSortingEnabled(true);
+    
+//     playlistTable = new QTableWidget;
+//     playlistTable->setColumnCount(1);
+//     QStringList playlistHeaders;
+//     playlistHeaders.append("Playlist");
+//     playlistTable->setHorizontalHeaderLabels(playlistHeaders);
+//     playlistTable->setShowGrid(false);
+//     playlistTable->setMaximumWidth(125);
+//     
+//     tableLayout = new QHBoxLayout;
+//     tableLayout->addWidget(playlistTable);
+//     tableLayout->addWidget(table);
 
     hLayout = new QHBoxLayout;
     hLayout->addWidget(prev);
@@ -89,6 +99,7 @@ void MediaControls::init()
     hLayout->addWidget(volumeSlider);
 
     vLayout = new QVBoxLayout;
+    //vLayout->addLayout(tableLayout);
     vLayout->addWidget(table);
     vLayout->addWidget(seekSlider);
     vLayout->addLayout(hLayout);
