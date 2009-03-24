@@ -1,8 +1,8 @@
 /*
- * File:   mainwindow.h
- * Author: cjones
+ * File:   playlist.h
+ * Author: casey
  *
- * Created on March 2, 2009, 6:47 PM
+ * Created on March 24, 2009, 4:48 PM
  *
  * This file is part of KaJammer.
  *
@@ -20,27 +20,28 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _MAINWINDOW_H
-#define	_MAINWINDOW_H
+#ifndef _PLAYLIST_H
+#define _PLAYLIST_H
 
-#include <QtGui/QMainWindow>
-#include <QtGui/QVBoxLayout>
-#include <phonon/mediasource.h>
+#include <QtCore/QObject>
+#include <QtCore/QDir>
+#include <QtCore/QFile>
+#include <QtCore/QIODevice>
+#include <QtCore/QString>
+#include <QtCore/QTextStream>
 
-#include "mediacontrols.h"
-#include "menubar.h"
-#include "controller.h"
-
-
-class MainWindow : public QMainWindow
+class Playlist : public QObject
 {
+    Q_OBJECT;
+    
 public:
-    MainWindow();
-
+    Playlist();
+    void newPlaylist(QString);
+    
 private:
-    Controller *controller;
-    MenuBar *menuBar;
-    MediaControls *mediaControls;
+    void init();
+    
+    QDir kajamDir;
 };
 
-#endif	/* _MAINWINDOW_H */
+#endif /* _PLAYLIST_H */

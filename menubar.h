@@ -33,7 +33,8 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 
-#include <controller.h>
+#include "controller.h"
+#include "playlist.h"
 
 class MenuBar : public QMenuBar
 {
@@ -53,6 +54,7 @@ private:
     void init();
 
     Controller *controller;
+    Playlist *playlist;
     QAction *newPlaylist;
     QAction *openFile;
     QAction *close;

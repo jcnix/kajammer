@@ -36,6 +36,8 @@ MenuBar::MenuBar()
 void MenuBar::init()
 {
     controller = Controller::getInstance();
+    playlist = new Playlist();
+    
     menuBar = new QMenuBar;
 
     file = new QMenu("&File");
@@ -49,6 +51,7 @@ void MenuBar::init()
     close = new QAction("E&xit", this);
     about = new QAction("&About", this);
     
+    newPlaylist->setShortcut(QKeySequence::New);
     openFile->setShortcut(QKeySequence::Open);
     close->setShortcut(QKeySequence::fromString("Ctrl+X", QKeySequence::NativeText));
 
@@ -65,6 +68,10 @@ void MenuBar::createNewPlaylist()
     QString input = QInputDialog::getText(this, "New Playlist", "Enter Playlist Name:",
                                            QLineEdit::Normal, "",
                                            &ok);
+    if(ok && !input.isEmpty())
+    {
+        playlist->newPlaylist(input);
+    }
 }
 
 void MenuBar::open()
