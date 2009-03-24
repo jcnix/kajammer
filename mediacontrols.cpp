@@ -79,17 +79,17 @@ void MediaControls::init()
     // Commented out because sorting table doesn't sort list yet
     //table->setSortingEnabled(true);
     
-//     playlistTable = new QTableWidget;
-//     playlistTable->setColumnCount(1);
-//     QStringList playlistHeaders;
-//     playlistHeaders.append("Playlist");
-//     playlistTable->setHorizontalHeaderLabels(playlistHeaders);
-//     playlistTable->setShowGrid(false);
-//     playlistTable->setMaximumWidth(125);
-//     
-//     tableLayout = new QHBoxLayout;
-//     tableLayout->addWidget(playlistTable);
-//     tableLayout->addWidget(table);
+    playlistTable = new QTableWidget;
+    playlistTable->setColumnCount(1);
+    QStringList playlistHeaders;
+    playlistHeaders.append("Playlist");
+    playlistTable->setHorizontalHeaderLabels(playlistHeaders);
+    playlistTable->setShowGrid(false);
+    playlistTable->setMaximumWidth(125);
+    
+    tableLayout = new QHBoxLayout;
+    tableLayout->addWidget(playlistTable);
+    tableLayout->addWidget(table);
 
     hLayout = new QHBoxLayout;
     hLayout->addWidget(prev);
@@ -99,8 +99,8 @@ void MediaControls::init()
     hLayout->addWidget(volumeSlider);
 
     vLayout = new QVBoxLayout;
-    //vLayout->addLayout(tableLayout);
-    vLayout->addWidget(table);
+    vLayout->addLayout(tableLayout);
+    //vLayout->addWidget(table);
     vLayout->addWidget(seekSlider);
     vLayout->addLayout(hLayout);
     setLayout(vLayout);

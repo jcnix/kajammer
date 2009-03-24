@@ -44,7 +44,7 @@ public:
     QStringList getQueue();
 
 private slots:
-    //void createNewPlaylist();
+    void createNewPlaylist();
     void open();
     void quit();
     void aboutDialog();
@@ -53,7 +53,7 @@ private:
     void init();
 
     Controller *controller;
-    //QAction *newPlaylist;
+    QAction *newPlaylist;
     QAction *openFile;
     QAction *close;
     QAction *about;

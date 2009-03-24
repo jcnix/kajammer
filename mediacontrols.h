@@ -76,12 +76,12 @@ private:
     QPushButton *next;
     QPushButton *prev;
     QTableWidget *table;
-    //QTableWidget *playlistTable;
+    QTableWidget *playlistTable;
     QMap<QString, QString> metaMap;
     QList<Phonon::MediaSource> metaSources;
     int index;
     
-    //QHBoxLayout *tableLayout;
+    QHBoxLayout *tableLayout;
     QHBoxLayout *hLayout;
     QVBoxLayout *vLayout;
 };

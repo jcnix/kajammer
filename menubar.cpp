@@ -27,7 +27,7 @@ MenuBar::MenuBar()
 {    
     init();
     
-    //connect(newPlaylist, SIGNAL(triggered()), this, SLOT(createNewPlaylist()));
+    connect(newPlaylist, SIGNAL(triggered()), this, SLOT(createNewPlaylist()));
     connect(openFile, SIGNAL(triggered()), this, SLOT(open()));
     connect(close, SIGNAL(triggered()), this, SLOT(quit()));
     connect(about, SIGNAL(triggered()), this, SLOT(aboutDialog()));
@@ -44,7 +44,7 @@ void MenuBar::init()
     addMenu(file);
     addMenu(help);
     
-    //newPlaylist = new QAction("&New Playlist", this);
+    newPlaylist = new QAction("&New Playlist", this);
     openFile = new QAction("&Open", this);
     close = new QAction("E&xit", this);
     about = new QAction("&About", this);
@@ -52,20 +52,20 @@ void MenuBar::init()
     openFile->setShortcut(QKeySequence::Open);
     close->setShortcut(QKeySequence::fromString("Ctrl+X", QKeySequence::NativeText));
 
-    //file->addAction(newPlaylist);
+    file->addAction(newPlaylist);
     file->addAction(openFile);
     file->addSeparator();
     file->addAction(close);
     help->addAction(about);
 }
 
-// void MenuBar::createNewPlaylist()
-// {
-//     bool ok;
-//     QString input = QInputDialog::getText(this, "New Playlist", "Enter Playlist Name:",
-//                                            QLineEdit::Normal, QDir::home().dirName(),
-//                                            &ok);
-// }
+void MenuBar::createNewPlaylist()
+{
+    bool ok;
+    QString input = QInputDialog::getText(this, "New Playlist", "Enter Playlist Name:",
+                                           QLineEdit::Normal, "",
+                                           &ok);
+}
 
 void MenuBar::open()
 {
