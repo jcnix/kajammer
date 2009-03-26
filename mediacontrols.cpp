@@ -21,6 +21,7 @@
  */
 
 #include "mediacontrols.h"
+#include <iostream>
 
 MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 {
@@ -59,7 +60,6 @@ void MediaControls::init()
     seekSlider = new Phonon::SeekSlider;
     seekSlider->setTracking(false);
     seekSlider->setMediaObject(mediaObject);
-    //seekSlider->setMaximumWidth(300);
 
     //Media Control buttons
     play = new QPushButton(style()->standardIcon(QStyle::SP_MediaPlay), "", this);
@@ -102,7 +102,7 @@ void MediaControls::init()
 
     vLayout = new QVBoxLayout;
     vLayout->addLayout(tableLayout);
-    //vLayout->addWidget(table);
+    vLayout->addWidget(table);
     vLayout->addWidget(seekSlider);
     vLayout->addLayout(hLayout);
     setLayout(vLayout);
@@ -135,37 +135,39 @@ void MediaControls::setMetaData()
 {
     QMap<QString, QString> metaData = metaResolver->metaData();
 
-     QString title = metaData.value("TITLE");
-     if (title == "")
-         title = metaResolver->currentSource().fileName();
+    QString title = metaData.value("TITLE");
+    if (title == "")
+    {
+        QFileInfo file(metaResolver->currentSource().fileName());
+        QString title = file.baseName();
+    }
+    QTableWidgetItem *titleItem = new QTableWidgetItem(title);
+    QTableWidgetItem *artistItem = new QTableWidgetItem(metaData.value("ARTIST"));
+    QTableWidgetItem *albumItem = new QTableWidgetItem(metaData.value("ALBUM"));
+    QTableWidgetItem *yearItem = new QTableWidgetItem(metaData.value("DATE"));
 
-     QTableWidgetItem *titleItem = new QTableWidgetItem(title);
-     QTableWidgetItem *artistItem = new QTableWidgetItem(metaData.value("ARTIST"));
-     QTableWidgetItem *albumItem = new QTableWidgetItem(metaData.value("ALBUM"));
-     QTableWidgetItem *yearItem = new QTableWidgetItem(metaData.value("DATE"));
+    int row = table->rowCount();
+    table->insertRow(row);
+    table->setItem(row, 0, titleItem);
+    table->setItem(row, 1, artistItem);
+    table->setItem(row, 2, albumItem);
+    table->setItem(row, 3, yearItem);
 
-     int row = table->rowCount();
-     table->insertRow(row);
-     table->setItem(row, 0, titleItem);
-     table->setItem(row, 1, artistItem);
-     table->setItem(row, 2, albumItem);
-     table->setItem(row, 3, yearItem);
-
-     Phonon::MediaSource source = metaResolver->currentSource();
-     int index = metaSources.indexOf(source) + 1;
-     if (metaSources.count() > index) 
-     {
-         /* emit a signal so we can loop through the queue and
-          * set the table up */
-         metaResolver->setCurrentSource(metaSources.at(index));
-     }
-     else {
-         table->resizeColumnsToContents();
-         if (table->columnWidth(0) > 300)
-             table->setColumnWidth(0, 300);
-         //Done setting up table, play first song.
-         controller->setSong(0);
-     }
+    Phonon::MediaSource source = metaResolver->currentSource();
+    int index = metaSources.indexOf(source) + 1;
+    if (metaSources.count() > index) 
+    {
+        /* emit a signal so we can loop through the queue and
+        * set the table up */
+        metaResolver->setCurrentSource(metaSources.at(index));
+    }
+    else {
+        table->resizeColumnsToContents();
+        if (table->columnWidth(0) > 300)
+            table->setColumnWidth(0, 300);
+        //Done setting up table, play first song.
+        controller->setSong(0);
+    }
 }
 
 void MediaControls::setNextSong()
