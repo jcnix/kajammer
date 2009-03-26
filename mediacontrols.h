@@ -25,6 +25,7 @@
 
 #include <QtGui/QWidget>
 #include <QtGui/QAbstractItemView>
+#include <QtCore/QFileInfo>
 #include <QtGui/QHBoxLayout>
 #include <QtCore/QMap>
 #include <QtGui/QPushButton>
