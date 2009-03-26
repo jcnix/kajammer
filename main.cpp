@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     app.setQuitOnLastWindowClosed(true);
 
     MainWindow window;
-    window.resize(480, 320);
+    window.resize(540, 380);
     window.show();
 
     return app.exec();

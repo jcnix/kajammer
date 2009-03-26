@@ -26,8 +26,11 @@
 #include <QtCore/QObject>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
+#include <QtCore/QFileInfo>
+#include <QtCore/QList>
 #include <QtCore/QIODevice>
 #include <QtCore/QString>
+#include <QtCore/QStack>
 #include <QtCore/QTextStream>
 
 class Playlist : public QObject
@@ -36,12 +39,14 @@ class Playlist : public QObject
     
 public:
     Playlist();
-    void newPlaylist(QString);
+    void newPlaylist(QString, QStringList);
+    QString getPlaylist(int);
+    int count();
     
 private:
     void init();
     
-    QDir kajamDir;
+    QList<QFileInfo> info;
 };
 
 #endif /* _PLAYLIST_H */

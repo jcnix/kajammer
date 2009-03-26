@@ -44,6 +44,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 void MediaControls::init()
 {
     controller = Controller::getInstance();
+    playlist = new Playlist;
 
     audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory);
     mediaObject = new Phonon::MediaObject;
@@ -86,6 +87,7 @@ void MediaControls::init()
     playlistTable->setHorizontalHeaderLabels(playlistHeaders);
     playlistTable->setShowGrid(false);
     playlistTable->setMaximumWidth(125);
+    setupPlaylists(); //Fill table with playlists
     
     tableLayout = new QHBoxLayout;
     tableLayout->addWidget(playlistTable);
@@ -190,5 +192,20 @@ void MediaControls::tableClicked(int row)
         //set the index so when we press next we know where we are in the queue.
         index = row;
         controller->setSong(index);
+    }
+}
+
+// Fill playlist table with playlists
+void MediaControls::setupPlaylists()
+{
+    int numLists = playlist->count();
+    
+    for(int i = 0; i < numLists; i++)
+    {
+        QString list = playlist->getPlaylist(i);
+        
+         QTableWidgetItem *listName = new QTableWidgetItem(list);
+         playlistTable->insertRow(i);
+         playlistTable->setItem(i, 0, listName);
     }
 }

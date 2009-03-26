@@ -65,12 +65,17 @@ void MenuBar::init()
 void MenuBar::createNewPlaylist()
 {
     bool ok;
+    QStringList addToList;
+    
     QString input = QInputDialog::getText(this, "New Playlist", "Enter Playlist Name:",
                                            QLineEdit::Normal, "",
                                            &ok);
     if(ok && !input.isEmpty())
     {
-        playlist->newPlaylist(input);
+        addToList = QFileDialog::getOpenFileNames(this, tr("Open File"), "~/", 
+                                                   tr("Music Files (*.mp3 *.ogg *.aac)"));
+                                                   
+        playlist->newPlaylist(input, addToList);
     }
 }
 

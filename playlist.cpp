@@ -29,7 +29,8 @@ Playlist::Playlist()
 
 void Playlist::init()
 {
-    kajamDir = QDir(QDir::homePath() + "/.kajammer/");
+    info = QDir(QDir::homePath() + "/.kajammer/playlists").entryInfoList(QDir::Files, QDir::Name);
+    QDir kajamDir = QDir(QDir::homePath() + "/.kajammer/");
     
     if(!kajamDir.exists())
     {
@@ -38,11 +39,24 @@ void Playlist::init()
     }
 }
 
-void Playlist::newPlaylist(QString name)
+void Playlist::newPlaylist(QString name, QStringList newList)
 {
-    QFile newList(QDir::homePath() +"/.kajammer/playlists/" + name);
-    newList.open(QIODevice::ReadWrite);
+    QFile newListFile(QDir::homePath() + "/.kajammer/playlists/" + name);
+    newListFile.open(QIODevice::ReadWrite);
     
-    QTextStream out(&newList);
-    out << "Test";
+    QTextStream out(&newListFile);
+    for(int i = 0; i < newList.count(); i++)
+        out << newList.at(i) + "\n";
+}
+
+int Playlist::count()
+{    
+    return info.count();
+}
+
+QString Playlist::getPlaylist(int index)
+{    
+    QString name = info.at(index).baseName();
+    
+    return name;
 }

@@ -26,8 +26,11 @@
 #include <QtGui/QWidget>
 #include <QtGui/QAbstractItemView>
 #include <QtGui/QHBoxLayout>
+#include <QtCore/QList>
 #include <QtCore/QMap>
 #include <QtGui/QPushButton>
+#include <QtCore/QStack>
+#include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtGui/QStyle>
 #include <QtGui/QTableWidget>
@@ -39,7 +42,8 @@
 #include <phonon/seekslider.h>
 #include <phonon/volumeslider.h>
 
-#include <controller.h>
+#include "controller.h"
+#include "playlist.h"
 
 class MediaControls : public QWidget
 {
@@ -62,8 +66,10 @@ signals:
 
 private:
     void init();
+    void setupPlaylists();
 
     Controller *controller;
+    Playlist *playlist;
 
     Phonon::AudioOutput *audioOutput;
     Phonon::MediaObject *mediaObject;
