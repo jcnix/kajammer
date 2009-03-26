@@ -21,6 +21,7 @@
  */
 
 #include "playlist.h"
+#include <iostream>
 
 Playlist::Playlist()
 {
@@ -42,7 +43,7 @@ void Playlist::init()
 void Playlist::newPlaylist(QString name, QStringList newList)
 {
     QFile newListFile(QDir::homePath() + "/.kajammer/playlists/" + name);
-    newListFile.open(QIODevice::ReadWrite);
+    newListFile.open(QIODevice::WriteOnly);
     
     QTextStream out(&newListFile);
     for(int i = 0; i < newList.count(); i++)
@@ -54,9 +55,26 @@ int Playlist::count()
     return info.count();
 }
 
-QString Playlist::getPlaylist(int index)
+QString Playlist::getPlaylistName(int index)
 {    
     QString name = info.at(index).baseName();
     
     return name;
+}
+
+QStringList Playlist::getPlaylistContents(int index)
+{
+    QFile playlistFile(info.at(index).canonicalFilePath());
+    playlistFile.open(QIODevice::ReadOnly);
+    
+    QStringList playlist;    
+    QTextStream in(&playlistFile);
+    
+    while(!in.atEnd())
+    {
+        QString song = in.readLine(0);
+        playlist.append(song);
+    }
+    
+    return playlist;
 }

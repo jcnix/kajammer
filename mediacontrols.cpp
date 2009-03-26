@@ -40,6 +40,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
             SLOT(getQueue(QList<Phonon::MediaSource>)));
     connect(metaResolver, SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));
     connect(table, SIGNAL(cellClicked(int, int)), this, SLOT(tableClicked(int)));
+    connect(playlistTable, SIGNAL(cellClicked(int, int)), this, SLOT(playlistChange(int)));
 }
 
 void MediaControls::init()
@@ -51,8 +52,10 @@ void MediaControls::init()
     mediaObject = new Phonon::MediaObject;
     Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
     metaResolver = new Phonon::MediaObject;
-    index = 0;
-
+    
+    currentSong = 0;
+    currentList = 0;
+    
     volumeSlider = new Phonon::VolumeSlider;
     volumeSlider->setAudioOutput(audioOutput);
     volumeSlider->setMaximumWidth(100);
@@ -102,7 +105,6 @@ void MediaControls::init()
 
     vLayout = new QVBoxLayout;
     vLayout->addLayout(tableLayout);
-    vLayout->addWidget(table);
     vLayout->addWidget(seekSlider);
     vLayout->addLayout(hLayout);
     setLayout(vLayout);
@@ -128,7 +130,7 @@ void MediaControls::getQueue(QList<Phonon::MediaSource> meta)
     //Set source so we activate metaDataChanged(), so it loops through our table
     metaResolver->setCurrentSource(metaSources.at(0));
     table->setRowCount(0);
-    index = 0;
+    currentSong = 0;
 }
 
 void MediaControls::setMetaData()
@@ -139,7 +141,7 @@ void MediaControls::setMetaData()
     if (title == "")
     {
         QFileInfo file(metaResolver->currentSource().fileName());
-        QString title = file.baseName();
+        title = file.baseName();
     }
     QTableWidgetItem *titleItem = new QTableWidgetItem(title);
     QTableWidgetItem *artistItem = new QTableWidgetItem(metaData.value("ARTIST"));
@@ -174,14 +176,14 @@ void MediaControls::setNextSong()
 {
     /* subtract one from count because index starts at 0
      * and count starts from 1 */
-    if(index < metaSources.count() - 1)
-        controller->setSong(++index);
+    if(currentSong < metaSources.count() - 1)
+        controller->setSong(++currentSong);
 }
 
 void MediaControls::setPrevSong()
 {
-    if(index != 0)
-        controller->setSong(--index);
+    if(currentSong != 0)
+        controller->setSong(--currentSong);
 }
 
 //If clicked, change song to the song in the row that was clicked
@@ -189,13 +191,24 @@ void MediaControls::tableClicked(int row)
 {
     /* if index == row, we clicked the currently playing song
      * so do nothing */
-    if(index != row)
+    if(currentSong != row)
     {
         //set the index so when we press next we know where we are in the queue.
-        index = row;
-        controller->setSong(index);
+        currentSong = row;
+        controller->setSong(currentSong);
     }
 }
+
+void MediaControls::playlistChange(int row)
+{
+    if(currentList != row)
+    {
+        currentList = row;
+        QStringList list = playlist->getPlaylistContents(row);
+        controller->setQueue(list);
+    }
+}
+        
 
 // Fill playlist table with playlists
 void MediaControls::setupPlaylists()
@@ -204,10 +217,10 @@ void MediaControls::setupPlaylists()
     
     for(int i = 0; i < numLists; i++)
     {
-        QString list = playlist->getPlaylist(i);
+        QString list = playlist->getPlaylistName(i);
         
-         QTableWidgetItem *listName = new QTableWidgetItem(list);
-         playlistTable->insertRow(i);
-         playlistTable->setItem(i, 0, listName);
+        QTableWidgetItem *listName = new QTableWidgetItem(list);
+        playlistTable->insertRow(i);
+        playlistTable->setItem(i, 0, listName);
     }
 }

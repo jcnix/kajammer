@@ -27,9 +27,9 @@
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
-#include <QtCore/QList>
 #include <QtCore/QIODevice>
 #include <QtCore/QString>
+#include <QtCore/QStringList>
 #include <QtCore/QStack>
 #include <QtCore/QTextStream>
 
@@ -40,7 +40,8 @@ class Playlist : public QObject
 public:
     Playlist();
     void newPlaylist(QString, QStringList);
-    QString getPlaylist(int);
+    QString getPlaylistName(int);
+    QStringList getPlaylistContents(int);
     int count();
     
 private:
