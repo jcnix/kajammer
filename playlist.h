@@ -38,15 +38,22 @@ class Playlist : public QObject
     Q_OBJECT;
     
 public:
-    Playlist();
+    static Playlist* getInstance();
     void newPlaylist(QString, QStringList);
     QString getPlaylistName(int);
     QStringList getPlaylistContents(int);
     int count();
     
+signals:
+    void resetPlaylists();
+    
+protected:
+    Playlist();
+    
 private:
     void init();
     
+    static Playlist *playlist;
     QList<QFileInfo> info;
 };
 

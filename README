@@ -12,7 +12,7 @@ To switch to the unstable branch:
     git checkout yourBranchName origin/myRemoteBranch
     Where yourBranchName is anything you want, and myRemoteBranch is the name of the remote branch.
 
-KaJammer 0.5
+KaJammer 0.4
 -Working playlists
 -Playlists are saved to ~/.kajammer/playlists as plain text files with filenames to 
 your music files

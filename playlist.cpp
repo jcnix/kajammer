@@ -21,7 +21,8 @@
  */
 
 #include "playlist.h"
-#include <iostream>
+
+Playlist* Playlist::playlist = 0;
 
 Playlist::Playlist()
 {
@@ -40,6 +41,15 @@ void Playlist::init()
     }
 }
 
+Playlist* Playlist::getInstance()
+{
+    if(playlist == 0)
+    {
+        playlist = new Playlist;
+    }
+    return playlist;
+}
+
 void Playlist::newPlaylist(QString name, QStringList newList)
 {
     QFile newListFile(QDir::homePath() + "/.kajammer/playlists/" + name);
@@ -48,6 +58,10 @@ void Playlist::newPlaylist(QString name, QStringList newList)
     QTextStream out(&newListFile);
     for(int i = 0; i < newList.count(); i++)
         out << newList.at(i) + "\n";
+    
+    //Reset Info so it finds the new playlist
+    info = QDir(QDir::homePath() + "/.kajammer/playlists").entryInfoList(QDir::Files, QDir::Name);
+    emit resetPlaylists();
 }
 
 int Playlist::count()

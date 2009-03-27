@@ -62,13 +62,13 @@ public slots:
     void playlistChange(int);
     void setNextSong();
     void setPrevSong();
+    void setupPlaylists();
 
 signals:
     void playNextSong();
 
 private:
     void init();
-    void setupPlaylists();
 
     Controller *controller;
     Playlist *playlist;

@@ -41,12 +41,13 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(metaResolver, SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));
     connect(table, SIGNAL(cellClicked(int, int)), this, SLOT(tableClicked(int)));
     connect(playlistTable, SIGNAL(cellClicked(int, int)), this, SLOT(playlistChange(int)));
+    connect(playlist, SIGNAL(resetPlaylists()), this, SLOT(setupPlaylists()));
 }
 
 void MediaControls::init()
 {
     controller = Controller::getInstance();
-    playlist = new Playlist;
+    playlist = Playlist::getInstance();
 
     audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory);
     mediaObject = new Phonon::MediaObject;
@@ -54,7 +55,7 @@ void MediaControls::init()
     metaResolver = new Phonon::MediaObject;
     
     currentSong = 0;
-    currentList = 0;
+    currentList = -1; //the first row on playlistTable is 0, so initialize as -1.
     
     volumeSlider = new Phonon::VolumeSlider;
     volumeSlider->setAudioOutput(audioOutput);
@@ -213,6 +214,9 @@ void MediaControls::playlistChange(int row)
 // Fill playlist table with playlists
 void MediaControls::setupPlaylists()
 {
+    playlistTable->setRowCount(0);
+    currentList = -1;  //the first row on playlistTable is 0, so initialize as -1.
+    
     int numLists = playlist->count();
     
     for(int i = 0; i < numLists; i++)
