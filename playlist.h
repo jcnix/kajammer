@@ -32,6 +32,8 @@
 #include <QtCore/QStringList>
 #include <QtCore/QStack>
 #include <QtCore/QTextStream>
+#include <iostream>
+#include <cstring>
 
 class Playlist : public QObject
 {
@@ -40,6 +42,7 @@ class Playlist : public QObject
 public:
     static Playlist* getInstance();
     void newPlaylist(QString, QStringList);
+    void delPlaylist(QString);
     QString getPlaylistName(int);
     QStringList getPlaylistContents(int);
     int count();

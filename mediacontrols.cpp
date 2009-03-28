@@ -87,7 +87,7 @@ void MediaControls::init()
     playlistTable = new QTableWidget;
     playlistTable->setColumnCount(1);
     QStringList playlistHeaders;
-    playlistHeaders.append("Playlist");
+    playlistHeaders.append("Playlists");
     playlistTable->setHorizontalHeaderLabels(playlistHeaders);
     playlistTable->setShowGrid(false);
     playlistTable->setMaximumWidth(125);

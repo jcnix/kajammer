@@ -46,6 +46,7 @@ public:
 
 private slots:
     void createNewPlaylist();
+    void deletePlaylist();
     void open();
     void quit();
     void aboutDialog();
@@ -56,6 +57,7 @@ private:
     Controller *controller;
     Playlist *playlist;
     QAction *newPlaylist;
+    QAction *delPlaylist;
     QAction *openFile;
     QAction *close;
     QAction *about;

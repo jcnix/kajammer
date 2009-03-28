@@ -29,6 +29,7 @@ MenuBar::MenuBar()
     
     connect(newPlaylist, SIGNAL(triggered()), this, SLOT(createNewPlaylist()));
     connect(openFile, SIGNAL(triggered()), this, SLOT(open()));
+    connect(delPlaylist, SIGNAL(triggered()), this, SLOT(deletePlaylist()));
     connect(close, SIGNAL(triggered()), this, SLOT(quit()));
     connect(about, SIGNAL(triggered()), this, SLOT(aboutDialog()));
 }
@@ -47,6 +48,7 @@ void MenuBar::init()
     addMenu(help);
     
     newPlaylist = new QAction("&New Playlist", this);
+    delPlaylist = new QAction("&Delete Playlist", this);
     openFile = new QAction("&Open", this);
     close = new QAction("E&xit", this);
     about = new QAction("&About", this);
@@ -57,6 +59,7 @@ void MenuBar::init()
 
     file->addAction(newPlaylist);
     file->addAction(openFile);
+    file->addAction(delPlaylist);
     file->addSeparator();
     file->addAction(close);
     help->addAction(about);
@@ -79,6 +82,19 @@ void MenuBar::createNewPlaylist()
         {
             playlist->newPlaylist(input, addToList);
         }
+    }
+}
+
+void MenuBar::deletePlaylist()
+{
+    bool ok;
+    
+    QString input = QInputDialog::getText(this, "Delete Playlist", "Enter Playlist Name:",
+                                           QLineEdit::Normal, "",
+                                           &ok);
+    if(ok && !input.isEmpty())
+    {
+        playlist->delPlaylist(input);
     }
 }
 
