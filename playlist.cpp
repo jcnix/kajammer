@@ -66,9 +66,8 @@ void Playlist::newPlaylist(QString name, QStringList newList)
 
 void Playlist::delPlaylist(QString playlist)
 {
-    QString homeDir = QDir::homePath() + "/.kajammer/playlists/";
-    std::string list = homeDir.toStdString() + playlist.toStdString();
-    remove(list.c_str()); //in iostream
+    QDir kajamDir = QDir(QDir::homePath() + "/.kajammer/playlists/");
+    kajamDir.remove(playlist);
     
     //Reset Info so it finds the new playlist
     info = QDir(QDir::homePath() + "/.kajammer/playlists").entryInfoList(QDir::Files, QDir::Name);
