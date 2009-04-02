@@ -1,0 +1,12 @@
+Dependencies for Fedora (Gnome):
+qt-x11
+qt-devel
+phonon
+phonon-devel
+phonon-backend-gstreamer
+gstreamer
+gcc
+gcc-c++
+
+Haven't figured out where the mp3 plugin for gstreamer is yet, so I 
+don't have working mp3 support at the moment. :)
