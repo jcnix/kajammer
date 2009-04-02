@@ -21,13 +21,21 @@
  */
 
 #include <iostream>
+#include <stdio.h>
 #include <QtGui/QApplication>
 #include <QtGui/QIcon>
+#include <QtCore/QString>
 
 #include "mainwindow.h"
 
 int main(int argc, char *argv[]) 
-{         
+{   
+    if(argc == 2 && strcmp(argv[1], "--version") == 0)
+    {
+        std::cout << "KaJammer Music Player 0.4\n";
+        return 0;
+    }
+    
     QApplication app(argc, argv);
     app.setApplicationName("KaJammer");
     app.setWindowIcon(QIcon("/usr/share/icons/oxygen/22x22/categories/applications-multimedia.png"));
@@ -36,6 +44,7 @@ int main(int argc, char *argv[])
     MainWindow window;
     window.resize(540, 380);
     window.show();
+    window.getCliArgs(argv[1]);
 
     return app.exec();
 }

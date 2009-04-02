@@ -23,9 +23,10 @@
 #ifndef _MAINWINDOW_H
 #define	_MAINWINDOW_H
 
+#include <iostream>
 #include <QtGui/QMainWindow>
-#include <QtGui/QVBoxLayout>
-#include <phonon/mediasource.h>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
 
 #include "mediacontrols.h"
 #include "menubar.h"
@@ -36,6 +37,7 @@ class MainWindow : public QMainWindow
 {
 public:
     MainWindow();
+    void getCliArgs(QString);
 
 private:
     Controller *controller;
