@@ -34,13 +34,13 @@ MainWindow::MainWindow()
     setCentralWidget(mediaControls);
 }
 
-void MainWindow::getCliArgs(QString song)
+void MainWindow::getCliArgs(QStringList args)
 {
-    if(!song.isNull())
+    if(!args.isEmpty())
     {
-        QStringList songList;
-        songList.append(song);
+        //QStringList songList;
+        //songList.append(song);
         
-        controller->setQueue(songList);
+        controller->setQueue(args);
     }
 }

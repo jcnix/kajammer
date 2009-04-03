@@ -23,7 +23,6 @@
 #ifndef _MAINWINDOW_H
 #define	_MAINWINDOW_H
 
-#include <iostream>
 #include <QtGui/QMainWindow>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
@@ -37,7 +36,7 @@ class MainWindow : public QMainWindow
 {
 public:
     MainWindow();
-    void getCliArgs(QString);
+    void getCliArgs(QStringList);
 
 private:
     Controller *controller;

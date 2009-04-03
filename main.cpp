@@ -21,10 +21,10 @@
  */
 
 #include <iostream>
-#include <stdio.h>
 #include <QtGui/QApplication>
 #include <QtGui/QIcon>
 #include <QtCore/QString>
+#include <QtCore/QStringList>
 
 #include "mainwindow.h"
 
@@ -44,7 +44,17 @@ int main(int argc, char *argv[])
     MainWindow window;
     window.resize(540, 380);
     window.show();
-    window.getCliArgs(argv[1]);
+    
+    // if -p arg, play songs given as args
+    if(argc > 2 && strcmp(argv[1], "-p") == 0)
+    {
+        QStringList args;
+        for(int i = 2; i <= argc - 2; i++)
+        {
+            args.append(argv[i]);
+        }
+        window.getCliArgs(args);
+    }
 
     return app.exec();
 }
