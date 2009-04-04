@@ -34,13 +34,4 @@ MainWindow::MainWindow()
     setCentralWidget(mediaControls);
 }
 
-void MainWindow::getCliArgs(QStringList args)
-{
-    if(!args.isEmpty())
-    {
-        //QStringList songList;
-        //songList.append(song);
-        
-        controller->setQueue(args);
-    }
-}
+

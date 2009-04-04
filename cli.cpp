@@ -1,8 +1,8 @@
 /*
- * File:   mainwindow.h
- * Author: cjones
+ * File:   cli.cpp
+ * Author: casey
  *
- * Created on March 2, 2009, 6:47 PM
+ * Created on March 24, 2009, 4:48 PM
  *
  * This file is part of KaJammer.
  *
@@ -20,27 +20,35 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _MAINWINDOW_H
-#define	_MAINWINDOW_H
+#include "cli.h"
+#include <iostream>
 
-#include <QtGui/QMainWindow>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-
-#include "mediacontrols.h"
-#include "menubar.h"
-#include "controller.h"
-
-
-class MainWindow : public QMainWindow
+Cli::Cli()
 {
-public:
-    MainWindow();
+    controller = Controller::getInstance();
+}
 
-private:
-    Controller *controller;
-    MenuBar *menuBar;
-    MediaControls *mediaControls;
-};
+void Cli::cliArgs(int argc, char *argv[])
+{
+    std::cout << argv[0];
+    std::cout << argv[1];
+    
+    // if -p arg, play songs given as args
+    if(argc > 2 && strcmp(argv[1], "-p") == 0)
+    {
+        QStringList args;
+        for(int i = 2; i <= argc - 2; i++)
+        {
+            args.append(argv[i]);
+        }
+        play(args);
+    }
+}
 
-#endif	/* _MAINWINDOW_H */
+void Cli::play(QStringList songs)
+{
+    if(!songs.isEmpty())
+    {       
+        controller->setQueue(songs);
+    }
+}

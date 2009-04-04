@@ -1,8 +1,8 @@
 /*
- * File:   main.cpp
- * Author: cjones
+ * File:   cli.h
+ * Author: casey
  *
- * Created on March 2, 2009, 6:47 PM
+ * Created on March 24, 2009, 4:48 PM
  *
  * This file is part of KaJammer.
  *
@@ -20,34 +20,18 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
-#include <QtGui/QApplication>
-#include <QtGui/QIcon>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
+#include "controller.h"
 
-#include "mainwindow.h"
-#include "cli.h"
-
-int main(int argc, char *argv[]) 
-{   
-    if(argc == 2 && strcmp(argv[1], "--version") == 0)
-    {
-        std::cout << "KaJammer Music Player 0.4\n";
-        return 0;
-    }
+class Cli
+{
+public:
+    Cli();
+    void cliArgs(int argc, char *argv[]);
     
-    QApplication app(argc, argv);
-    app.setApplicationName("KaJammer");
-    app.setWindowIcon(QIcon("/usr/share/icons/oxygen/22x22/categories/applications-multimedia.png"));
-    app.setQuitOnLastWindowClosed(true);
-
-    MainWindow window;
-    window.resize(540, 380);
-    window.show();
+private:
+    Controller *controller;
     
-    Cli *cli = new Cli;
-    cli->cliArgs(argc, argv);
-
-    return app.exec();
-}
+    void play(QStringList);
+};
