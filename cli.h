@@ -23,15 +23,20 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include "controller.h"
+#include "playlist.h"
 
 class Cli
 {
 public:
-    Cli();
-    void cliArgs(int argc, char *argv[]);
+    Cli(int argc, char *argv[]);
+    void cliArgs(char *argv[]);
     
 private:
     Controller *controller;
+    Playlist *playlist;
+    int argc;
     
     void play(QStringList);
+    void newPlaylist(QString, QStringList);
+    QStringList getArgList(char *argv[], int);
 };

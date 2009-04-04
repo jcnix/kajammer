@@ -46,8 +46,7 @@ int main(int argc, char *argv[])
     window.resize(540, 380);
     window.show();
     
-    Cli *cli = new Cli;
-    cli->cliArgs(argc, argv);
+    Cli(argc, argv);
 
     return app.exec();
 }

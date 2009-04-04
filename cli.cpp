@@ -21,14 +21,16 @@
  */
 
 #include "cli.h"
-#include <iostream>
 
-Cli::Cli()
+Cli::Cli(int argc, char *argv[])
 {
-    controller = Controller::getInstance();
+    this->argc = argc;
+    
+    //Process arguments
+    cliArgs(argv);
 }
 
-void Cli::cliArgs(int argc, char *argv[])
+void Cli::cliArgs(char *argv[])
 {
     std::cout << argv[0];
     std::cout << argv[1];
@@ -36,19 +38,41 @@ void Cli::cliArgs(int argc, char *argv[])
     // if -p arg, play songs given as args
     if(argc > 2 && strcmp(argv[1], "-p") == 0)
     {
-        QStringList args;
-        for(int i = 2; i <= argc - 2; i++)
-        {
-            args.append(argv[i]);
-        }
+        QStringList args = getArgList(argv, 2);
         play(args);
     }
+    
+    if(argc > 2 && strcmp(argv[1], "-n") == 0)
+    {
+        QStringList args = getArgList(argv, 3);
+        newPlaylist(argv[2], args);
+    }
+}
+
+/* Take argv[], and create QStringList of args
+ * startFrom is which argument to put as first in the list */
+QStringList Cli::getArgList(char *argv[], int startFrom)
+{
+    QStringList args;
+    for(int i = startFrom; i <= argc - startFrom; i++)
+    {
+        args.append(argv[i]);
+    }
+    return args;
 }
 
 void Cli::play(QStringList songs)
 {
+    controller = Controller::getInstance();
     if(!songs.isEmpty())
     {       
         controller->setQueue(songs);
     }
 }
+
+void Cli::newPlaylist(QString name, QStringList songs)
+{
+    playlist = Playlist::getInstance();
+    playlist->newPlaylist(name, songs);
+}
+    
