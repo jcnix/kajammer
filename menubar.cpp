@@ -47,9 +47,9 @@ void MenuBar::init()
     addMenu(file);
     addMenu(help);
     
-    newPlaylist = new QAction("&New Playlist", this);
-    delPlaylist = new QAction("&Delete Playlist", this);
-    openFile = new QAction("&Open", this);
+    newPlaylist = new QAction("&New Playlist...", this);
+    openFile = new QAction("&Open...", this);
+    delPlaylist = new QAction("&Delete Playlist...", this);
     close = new QAction("E&xit", this);
     about = new QAction("&About", this);
     
