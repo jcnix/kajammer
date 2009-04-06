@@ -42,7 +42,8 @@ void Cli::cliArgs(char *argv[])
     if(argc > 2 && strcmp(argv[1], "-n") == 0)
     {
         QStringList args = getArgList(argv, 3);
-        newPlaylist(argv[2], args);
+        QStringList args2 = appendFilePath(args);
+        newPlaylist(argv[2], args2);
     }
     
     if(argc > 2 && strcmp(argv[1], "-d") == 0)
@@ -71,6 +72,19 @@ void Cli::play(QStringList songs)
     {       
         controller->setQueue(songs);
     }
+}
+
+QStringList Cli::appendFilePath(QStringList files)
+{
+    QString path = QDir(".").absolutePath();
+    
+    QStringList newList;
+    for(int i = 0; i < files.count(); i++)
+    {
+        if(!files.at(i).isEmpty())
+            newList.append(path + "/" + files.at(i));
+    }
+    return newList;
 }
 
 void Cli::newPlaylist(QString name, QStringList songs)

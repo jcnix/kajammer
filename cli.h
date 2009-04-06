@@ -43,5 +43,6 @@ private:
     void newPlaylist(QString, QStringList);
     void delPlaylist(QStringList);
     QStringList getArgList(char *argv[], int);
+    QStringList appendFilePath(QStringList);
 };
 #endif /* _CLI_H */
