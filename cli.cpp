@@ -47,6 +47,12 @@ void Cli::cliArgs(char *argv[])
         QStringList args = getArgList(argv, 3);
         newPlaylist(argv[2], args);
     }
+    
+    if(argc > 2 && strcmp(argv[1], "-d") == 0)
+    {
+        QStringList args = getArgList(argv, 2);
+        delPlaylist(args);
+    }
 }
 
 /* Take argv[], and create QStringList of args
@@ -75,4 +81,16 @@ void Cli::newPlaylist(QString name, QStringList songs)
     playlist = Playlist::getInstance();
     playlist->newPlaylist(name, songs);
 }
+
+//Delete all playlists given
+void Cli::delPlaylist(QStringList names)
+{
+    playlist = Playlist::getInstance();
+    QString name;
     
+    for(int i = 0; i < names.count(); i++)
+    {
+        name = names.at(i);
+        playlist->delPlaylist(name);
+    }
+}

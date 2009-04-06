@@ -20,6 +20,9 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef _CLI_H
+#define _CLI_H
+
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include "controller.h"
@@ -38,5 +41,7 @@ private:
     
     void play(QStringList);
     void newPlaylist(QString, QStringList);
+    void delPlaylist(QStringList);
     QStringList getArgList(char *argv[], int);
 };
+#endif /* _CLI_H */
