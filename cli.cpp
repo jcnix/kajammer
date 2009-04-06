@@ -31,10 +31,7 @@ Cli::Cli(int argc, char *argv[])
 }
 
 void Cli::cliArgs(char *argv[])
-{
-    std::cout << argv[0];
-    std::cout << argv[1];
-    
+{    
     // if -p arg, play songs given as args
     if(argc > 2 && strcmp(argv[1], "-p") == 0)
     {
@@ -60,7 +57,7 @@ void Cli::cliArgs(char *argv[])
 QStringList Cli::getArgList(char *argv[], int startFrom)
 {
     QStringList args;
-    for(int i = startFrom; i <= argc - startFrom; i++)
+    for(int i = startFrom; i <= argc; i++)
     {
         args.append(argv[i]);
     }
