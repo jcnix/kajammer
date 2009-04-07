@@ -66,8 +66,16 @@ void Playlist::newPlaylist(QString name, QStringList newList)
 
 void Playlist::delPlaylist(QString playlist)
 {
-    QDir kajamDir = QDir(QDir::homePath() + "/.kajammer/playlists/");
-    kajamDir.remove(playlist);
+    QFile listFile (QDir::homePath() + "/.kajammer/playlists/" + playlist);
+    
+    if(listFile.exists())
+    {
+        listFile.remove();
+    }
+    else
+    {
+        std::cout << "Playlist does not exist: " << playlist.toStdString() << "\n";
+    }
     
     //Reset Info so it finds the new playlist
     info = QDir(QDir::homePath() + "/.kajammer/playlists").entryInfoList(QDir::Files, QDir::Name);
