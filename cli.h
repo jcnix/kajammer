@@ -23,6 +23,7 @@
 #ifndef _CLI_H
 #define _CLI_H
 
+#include <iostream>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include "controller.h"

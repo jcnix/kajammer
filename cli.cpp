@@ -32,29 +32,41 @@ Cli::Cli(int argc, char *argv[])
 
 void Cli::cliArgs(char *argv[])
 {    
-    // if -p arg, play songs given as args
+    // play songs given as args: -p [Files]
     if(argc > 2 && strcmp(argv[1], "-p") == 0)
     {
         QStringList args = getArgList(argv, 2);
         play(args);
     }
     
-    if(argc > 2 && strcmp(argv[1], "-n") == 0)
+    // Create new playlist: -n [Name] [Files]
+    else if(argc > 2 && strcmp(argv[1], "-n") == 0)
     {
         QStringList args = getArgList(argv, 3);
         QStringList args2 = appendFilePath(args);
         newPlaylist(argv[2], args2);
     }
     
-    if(argc > 2 && strcmp(argv[1], "-d") == 0)
+    // Delete Playlists: -d [Names]
+    else if(argc > 2 && strcmp(argv[1], "-d") == 0)
     {
         QStringList args = getArgList(argv, 2);
         delPlaylist(args);
     }
+    
+    // Unrecognized Option
+    else if (argc > 1) //If argc == 1, no arguments
+    {
+        std::cout << "Usage: kajammer [options...] [arguments...]\n";
+        std::cout << "\t" << "where options include:\n";
+        std::cout << "\t" << "-p\t" << "play" << "[Files]\n";
+        std::cout << "\t" << "-n\t" << "new playlist\t" << "[Name] [Files]\n";
+        std::cout << "\t" << "-d\t" << "delete playlist" << "[Files]\n";
+    }
 }
 
 /* Take argv[], and create QStringList of args
- * startFrom is which argument to put as first in the list */
+ * startFrom is the index of argv to put as first in the list */
 QStringList Cli::getArgList(char *argv[], int startFrom)
 {
     QStringList args;
@@ -63,15 +75,6 @@ QStringList Cli::getArgList(char *argv[], int startFrom)
         args.append(argv[i]);
     }
     return args;
-}
-
-void Cli::play(QStringList songs)
-{
-    controller = Controller::getInstance();
-    if(!songs.isEmpty())
-    {       
-        controller->setQueue(songs);
-    }
 }
 
 QStringList Cli::appendFilePath(QStringList files)
@@ -85,6 +88,15 @@ QStringList Cli::appendFilePath(QStringList files)
             newList.append(path + "/" + files.at(i));
     }
     return newList;
+}
+
+void Cli::play(QStringList songs)
+{
+    controller = Controller::getInstance();
+    if(!songs.isEmpty())
+    {       
+        controller->setQueue(songs);
+    }
 }
 
 void Cli::newPlaylist(QString name, QStringList songs)
