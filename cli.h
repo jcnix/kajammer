@@ -24,6 +24,7 @@
 #define _CLI_H
 
 #include <iostream>
+#include <unistd.h>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include "controller.h"

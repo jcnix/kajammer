@@ -31,38 +31,55 @@ Cli::Cli(int argc, char *argv[])
 }
 
 void Cli::cliArgs(char *argv[])
-{    
-    // play songs given as args: -p [Files]
-    if(argc > 2 && strcmp(argv[1], "-p") == 0)
-    {
-        QStringList args = getArgList(argv, 2);
-        play(args);
-    }
+{   
+    int c;
+    QStringList args;
+    QStringList args2;
     
-    // Create new playlist: -n [Name] [Files]
-    else if(argc > 2 && strcmp(argv[1], "-n") == 0)
-    {
-        QStringList args = getArgList(argv, 3);
-        QStringList args2 = appendFilePath(args);
-        newPlaylist(argv[2], args2);
-    }
+    opterr = 0;
     
-    // Delete Playlists: -d [Names]
-    else if(argc > 2 && strcmp(argv[1], "-d") == 0)
+    while ((c = getopt(argc, argv, "p:n:d:")) != -1)
     {
-        QStringList args = getArgList(argv, 2);
-        delPlaylist(args);
+        switch (c)
+        {
+            case 'p':
+                args = getArgList(argv, 2);
+                play(args);
+                std::cout << "p\n";
+                break;
+                
+            case 'n':
+                args = getArgList(argv, 3);
+                args2 = appendFilePath(args);
+                newPlaylist(argv[2], args2);
+                std::cout << "n\n";
+                break;
+                
+            case 'd':
+                args = getArgList(argv, 2);
+                delPlaylist(args);
+                std::cout << "d\n";
+                break;
+                
+            default:
+                std::cout << "Usage: kajammer [options...] [arguments...]\n";
+                std::cout << "\t" << "Where options include:\n";
+                std::cout << "\t" << "-p\t" << "play" << "[Files]\n";
+                std::cout << "\t" << "-n\t" << "new playlist\t" << "[Name] [Files]\n";
+                std::cout << "\t" << "-d\t" << "delete playlist" << "[Files]\n";
+                break;
+        }
     }
     
     // Unrecognized Option
-    else if (argc > 1) //If argc == 1, no arguments
-    {
-        std::cout << "Usage: kajammer [options...] [arguments...]\n";
-        std::cout << "\t" << "where options include:\n";
-        std::cout << "\t" << "-p\t" << "play" << "[Files]\n";
-        std::cout << "\t" << "-n\t" << "new playlist\t" << "[Name] [Files]\n";
-        std::cout << "\t" << "-d\t" << "delete playlist" << "[Files]\n";
-    }
+    //else if (argc > 1) //If argc == 1, no arguments
+    //{
+    //    std::cout << "Usage: kajammer [options...] [arguments...]\n";
+    //    std::cout << "\t" << "where options include:\n";
+    //    std::cout << "\t" << "-p\t" << "play" << "[Files]\n";
+    //    std::cout << "\t" << "-n\t" << "new playlist\t" << "[Name] [Files]\n";
+    //    std::cout << "\t" << "-d\t" << "delete playlist" << "[Files]\n";
+    //}
 }
 
 /* Take argv[], and create QStringList of args
