@@ -42,12 +42,16 @@ void Controller::setQueue(QStringList queue)
 {
     // Clean out the queue so we can start empty
     songQueue.clear();
+    
+    // _Will_ crash if queue is empty
+    if(!queue.isEmpty())
+    {
+        // Finally add new data to the queue
+        for(int i = 0; i < queue.count(); i++)
+            songQueue.append(queue.at(i));
 
-    // Finally add new data to the queue
-    for(int i = 0; i < queue.count(); i++)
-        songQueue.append(queue.at(i));
-
-    emit queueSet(songQueue);
+        emit queueSet(songQueue);
+    }
 }
 
 void Controller::setSong(int index)
