@@ -25,6 +25,7 @@
 Cli::Cli(int argc, char *argv[])
 {
     this->argc = argc;
+    x = true;
     
     //Process arguments
     cliArgs(argv);
@@ -38,29 +39,35 @@ void Cli::cliArgs(char *argv[])
     
     opterr = 0;
     
-    while ((c = getopt(argc, argv, "p:n:d:")) != -1)
+    while ((c = getopt(argc, argv, "pndvx")) != -1)
     {
         switch (c)
         {
+            //Play
             case 'p':
                 args = getArgList(argv, 2);
                 play(args);
-                std::cout << "p\n";
                 break;
-                
+            //New Playlist    
             case 'n':
                 args = getArgList(argv, 3);
                 args2 = appendFilePath(args);
                 newPlaylist(argv[2], args2);
-                std::cout << "n\n";
                 break;
-                
+            //Delete Playlist    
             case 'd':
                 args = getArgList(argv, 2);
                 delPlaylist(args);
-                std::cout << "d\n";
                 break;
-                
+            //Display version info
+            case 'v':
+                x = false;
+                std::cout << "KaJammer Music Player 0.4\n";
+                break;
+            //Don't bring up main window, no Xorg mode.
+            case 'x':
+                x = false;
+                break;
             default:
                 std::cout << "Usage: kajammer [options...] [arguments...]\n";
                 std::cout << "\t" << "Where options include:\n";
@@ -133,4 +140,9 @@ void Cli::delPlaylist(QStringList names)
         name = names.at(i);
         playlist->delPlaylist(name);
     }
+}
+
+bool Cli::useX()
+{
+    return x;
 }

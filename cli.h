@@ -35,11 +35,13 @@ class Cli
 public:
     Cli(int argc, char *argv[]);
     void cliArgs(char *argv[]);
+    bool useX();
     
 private:
     Controller *controller;
     Playlist *playlist;
     int argc;
+    bool x;
     
     void play(QStringList);
     void newPlaylist(QString, QStringList);

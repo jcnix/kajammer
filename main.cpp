@@ -36,17 +36,23 @@ int main(int argc, char *argv[])
         std::cout << "KaJammer Music Player 0.4\n";
         return 0;
     }
+
+    Cli *cli = new Cli(argc, argv);
+    bool x = cli->useX();
     
     QApplication app(argc, argv);
-    app.setApplicationName("KaJammer");
-    app.setWindowIcon(QIcon("/usr/share/icons/oxygen/22x22/categories/applications-multimedia.png"));
-    app.setQuitOnLastWindowClosed(true);
-
-    MainWindow window;
-    window.resize(540, 380);
-    window.show();
     
-    Cli(argc, argv);
-
-    return app.exec();
+    if(x)
+    {
+        app.setApplicationName("KaJammer");
+        app.setWindowIcon(QIcon("/usr/share/icons/oxygen/22x22/categories/applications-multimedia.png"));
+        app.setQuitOnLastWindowClosed(true);
+        
+        MainWindow window;
+        window.resize(540, 380);
+        window.show();
+        return app.exec();
+    }
+    
+    app.exit();
 }
