@@ -23,20 +23,12 @@
 #include <iostream>
 #include <QtGui/QApplication>
 #include <QtGui/QIcon>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
 
 #include "mainwindow.h"
 #include "cli.h"
 
 int main(int argc, char *argv[]) 
-{   
-    if(argc == 2 && strcmp(argv[1], "--version") == 0)
-    {
-        std::cout << "KaJammer Music Player 0.4\n";
-        return 0;
-    }
-
+{  
     Cli *cli = new Cli(argc, argv);
     bool useXorg = cli->useX();
     

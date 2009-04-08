@@ -21,21 +21,17 @@
  */
 
 #include "mediacontrols.h"
-#include <iostream>
 
 MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 {
     init();
 
-    connect(play, SIGNAL(clicked()), mediaObject, SLOT(play()));
-    connect(pause, SIGNAL(clicked()), mediaObject, SLOT(pause()));
-    connect(next, SIGNAL(clicked()), this, SLOT(setNextSong()));
-    connect(prev, SIGNAL(clicked()), this, SLOT(setPrevSong()));
+    connect(play, SIGNAL(clicked()), controller, SLOT(play()));
+    connect(pause, SIGNAL(clicked()), controller, SLOT(pause()));
+    connect(next, SIGNAL(clicked()), controller, SLOT(setNextSong()));
+    connect(prev, SIGNAL(clicked()), controller, SLOT(setPrevSong()));
     
-    connect(controller, SIGNAL(songChanged(Phonon::MediaSource)), this,    SLOT(changeSong(Phonon::MediaSource)));
-    connect(mediaObject, SIGNAL(finished()), this, SLOT(songEnded()));
-    connect(this, SIGNAL(playNextSong()), this, SLOT(setNextSong()));
-    
+    connect(controller, SIGNAL(songChanged(int)), this, SLOT(songChanged(int)));
     connect(controller, SIGNAL(queueSet(QList<Phonon::MediaSource>)), this,
             SLOT(getQueue(QList<Phonon::MediaSource>)));
     connect(metaResolver, SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));
@@ -49,21 +45,17 @@ void MediaControls::init()
     controller = Controller::getInstance();
     playlist = Playlist::getInstance();
 
-    audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory);
-    mediaObject = new Phonon::MediaObject;
-    Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
     metaResolver = new Phonon::MediaObject;  //Used for finding metadata
     
-    currentSong = 0;
     currentList = -1; //the first row on playlistTable is 0, so initialize as -1.
     
     volumeSlider = new Phonon::VolumeSlider;
-    volumeSlider->setAudioOutput(audioOutput);
+    volumeSlider->setAudioOutput(controller->getAudioOutput());
     volumeSlider->setMaximumWidth(100);
 
     seekSlider = new Phonon::SeekSlider;
     seekSlider->setTracking(false);
-    seekSlider->setMediaObject(mediaObject);
+    seekSlider->setMediaObject(controller->getMediaObject());
 
     //Media Control buttons
     play = new QPushButton(style()->standardIcon(QStyle::SP_MediaPlay), "", this);
@@ -111,17 +103,9 @@ void MediaControls::init()
     setLayout(vLayout);
 }
 
-void MediaControls::changeSong(Phonon::MediaSource song)
+void MediaControls::songChanged(int row)
 {
-    mediaObject->stop();
-    mediaObject->setCurrentSource(song);
-    mediaObject->play();
-    table->selectRow(metaSources.indexOf(song));
-}
-
-void MediaControls::songEnded()
-{
-    emit playNextSong();
+    table->selectRow(row);
 }
 
 //New files opened, get the list of songs.
@@ -131,7 +115,6 @@ void MediaControls::getQueue(QList<Phonon::MediaSource> meta)
     //Set source so we activate metaDataChanged(), so it loops through our table
     metaResolver->setCurrentSource(metaSources.at(0));
     table->setRowCount(0);
-    currentSong = 0;
 }
 
 void MediaControls::setMetaData()
@@ -171,31 +154,10 @@ void MediaControls::setMetaData()
     }
 }
 
-void MediaControls::setNextSong()
-{
-    /* subtract one from count because index starts at 0
-     * and count starts from 1 */
-    if(currentSong < metaSources.count() - 1)
-        controller->setSong(++currentSong);
-}
-
-void MediaControls::setPrevSong()
-{
-    if(currentSong != 0)
-        controller->setSong(--currentSong);
-}
-
 //If clicked, change song to the song in the row that was clicked
 void MediaControls::tableClicked(int row)
 {
-    /* if index == row, we clicked the currently playing song
-     * so do nothing */
-    if(currentSong != row)
-    {
-        //set the index so when we press next we know where we are in the queue.
-        currentSong = row;
-        controller->setSong(currentSong);
-    }
+    controller->setSong(row);
 }
 
 void MediaControls::playlistChange(int row)

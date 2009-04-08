@@ -26,6 +26,13 @@ Controller* Controller::controller = 0;
 
 Controller::Controller()
 {
+    audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory);
+    mediaObject = new Phonon::MediaObject;
+    Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
+    
+    currentSong = -1;
+    
+    connect(mediaObject, SIGNAL(finished()), this, SLOT(setNextSong()));
 }
 
 Controller* Controller::getInstance()
@@ -60,7 +67,58 @@ void Controller::setSong(int index)
     //If user cancels out of open dialog, don't stop playing the current song
     if(!songQueue.isEmpty())
     {
-        fileName = songQueue.at(index);         
-        emit songChanged(fileName);
+        /* if currentSong == row, we clicked the currently playing song
+        * so do nothing */
+        if(currentSong != index)
+        {
+            // set currentSong so when we press next we know where we are in the queue.
+            // and so we know what currentSong is next time the table is clicked
+            currentSong = index;
+            Phonon::MediaSource fileName = songQueue.at(index);         
+            changeSong(fileName);
+        }
     }
+}
+
+void Controller::changeSong(Phonon::MediaSource song)
+{
+    mediaObject->stop();
+    mediaObject->setCurrentSource(song);
+    mediaObject->play();
+    emit songChanged(currentSong);
+}
+
+//Allow external access to the mediaObject
+void Controller::play()
+{
+    mediaObject->play();
+}
+
+void Controller::pause()
+{
+    mediaObject->pause();
+}
+
+void Controller::setNextSong()
+{
+    /* subtract one from count because index starts at 0
+    * and count starts from 1 */
+    if(currentSong < songQueue.count() - 1)
+        controller->setSong(++currentSong);
+}
+
+void Controller::setPrevSong()
+{
+    if(currentSong != 0)
+        controller->setSong(--currentSong);
+}
+
+Phonon::AudioOutput* Controller::getAudioOutput()
+{
+    return audioOutput;
+}
+
+Phonon::MediaObject* Controller::getMediaObject()
+{
+    return mediaObject;
 }
