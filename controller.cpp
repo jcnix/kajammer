@@ -51,15 +51,16 @@ void Controller::setQueue(QStringList queue)
             songQueue.append(queue.at(i));
 
         emit queueSet(songQueue);
+        setSong(0);
     }
 }
 
 void Controller::setSong(int index)
-{
+{    
     //If user cancels out of open dialog, don't stop playing the current song
-     if(!songQueue.isEmpty())
-     {
-         fileName = songQueue.at(index);         
-         emit songChanged(fileName);
+    if(!songQueue.isEmpty())
+    {
+        fileName = songQueue.at(index);         
+        emit songChanged(fileName);
     }
 }

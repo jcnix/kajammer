@@ -25,7 +25,7 @@
 Cli::Cli(int argc, char *argv[])
 {
     this->argc = argc;
-    x = true;
+    useXorg = true;
     
     //Process arguments
     cliArgs(argv);
@@ -61,12 +61,12 @@ void Cli::cliArgs(char *argv[])
                 break;
             //Display version info
             case 'v':
-                x = false;
+                useXorg = false;
                 std::cout << "KaJammer Music Player 0.4\n";
                 break;
             //Don't bring up main window, no Xorg mode.
             case 'x':
-                x = false;
+                useXorg = false;
                 break;
             default:
                 std::cout << "Usage: kajammer [options...] [arguments...]\n";
@@ -144,5 +144,5 @@ void Cli::delPlaylist(QStringList names)
 
 bool Cli::useX()
 {
-    return x;
+    return useXorg;
 }

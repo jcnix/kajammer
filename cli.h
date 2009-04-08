@@ -41,7 +41,7 @@ private:
     Controller *controller;
     Playlist *playlist;
     int argc;
-    bool x;
+    bool useXorg;
     
     void play(QStringList);
     void newPlaylist(QString, QStringList);

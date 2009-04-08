@@ -52,7 +52,7 @@ void MediaControls::init()
     audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory);
     mediaObject = new Phonon::MediaObject;
     Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
-    metaResolver = new Phonon::MediaObject;
+    metaResolver = new Phonon::MediaObject;  //Used for finding metadata
     
     currentSong = 0;
     currentList = -1; //the first row on playlistTable is 0, so initialize as -1.
@@ -168,8 +168,6 @@ void MediaControls::setMetaData()
         table->resizeColumnsToContents();
         if (table->columnWidth(0) > 300)
             table->setColumnWidth(0, 300);
-        //Done setting up table, play first song.
-        controller->setSong(0);
     }
 }
 

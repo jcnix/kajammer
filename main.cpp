@@ -38,11 +38,11 @@ int main(int argc, char *argv[])
     }
 
     Cli *cli = new Cli(argc, argv);
-    bool x = cli->useX();
+    bool useXorg = cli->useX();
     
     QApplication app(argc, argv);
     
-    if(x)
+    if(useXorg)
     {
         app.setApplicationName("KaJammer");
         app.setWindowIcon(QIcon("/usr/share/icons/oxygen/22x22/categories/applications-multimedia.png"));
