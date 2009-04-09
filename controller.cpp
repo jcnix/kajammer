@@ -52,6 +52,7 @@ void Controller::setQueue(QStringList queue)
 {
     // Clean out the queue so we can start empty
     songQueue.clear();
+    currentSong = -1;
     
     // _Will_ crash if queue is empty
     if(!queue.isEmpty())
@@ -122,6 +123,11 @@ void Controller::changePlaylist(int index)
         QStringList list = playlist->getPlaylistContents(index);
         controller->setQueue(list);
     }
+}
+
+void Controller::resetCurrentList()
+{
+    currentList = -1;
 }
 
 Phonon::AudioOutput* Controller::getAudioOutput()

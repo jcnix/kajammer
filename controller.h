@@ -40,6 +40,7 @@ class Controller : public QObject
 public:
     static Controller* getInstance();
     void setQueue(QStringList);
+    void resetCurrentList();
     QList<Phonon::MediaSource> getSongQueue() {return songQueue;}
     Phonon::AudioOutput* getAudioOutput();
     Phonon::MediaObject* getMediaObject();

@@ -105,6 +105,7 @@ void MenuBar::open()
     //Make sure user didn't cancel out of the dialog
     if(!fileQueue.isEmpty())
     {
+        controller->resetCurrentList();
         controller->setQueue(fileQueue);
     }
 }   
