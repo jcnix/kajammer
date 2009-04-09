@@ -62,7 +62,7 @@ void Cli::cliArgs(char *argv[])
             //Display version info
             case 'v':
                 useXorg = false;
-                std::cout << "KaJammer Music Player 0.4\n";
+                std::cout << "KaJammer Music Player 0.4.5\n";
                 break;
             //Don't bring up main window, no Xorg mode.
             case 'x':

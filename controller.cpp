@@ -21,6 +21,7 @@
  */
 
 #include "controller.h"
+#include <iostream>
 
 Controller* Controller::controller = 0;
 
@@ -69,14 +70,16 @@ void Controller::setSong(int index)
     {
         /* if currentSong == row, we clicked the currently playing song
         * so do nothing */
-        if(currentSong != index)
-        {
+        std::cout << "Setting song...\n";
+        //if(currentSong != index)
+        //{
+            std::cout << "setSong(" << index << ");\n";
             // set currentSong so when we press next we know where we are in the queue.
             // and so we know what currentSong is next time the table is clicked
             currentSong = index;
             Phonon::MediaSource fileName = songQueue.at(index);         
             changeSong(fileName);
-        }
+        //}
     }
 }
 
@@ -104,7 +107,7 @@ void Controller::setNextSong()
     /* subtract one from count because index starts at 0
     * and count starts from 1 */
     if(currentSong < songQueue.count() - 1)
-        controller->setSong(++currentSong);
+        setSong(++currentSong);
 }
 
 void Controller::setPrevSong()
