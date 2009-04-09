@@ -38,7 +38,7 @@ void Cli::cliArgs(char *argv[])
     
     opterr = 0;
     
-    while ((c = getopt(argc, argv, "p:n:d:")) != -1)
+    while ((c = getopt(argc, argv, "p:n:d:v")) != -1)
     {
         switch (c)
         {
@@ -61,6 +61,10 @@ void Cli::cliArgs(char *argv[])
                 std::cout << "d\n";
                 break;
                 
+            case 'v':
+                std::cout << "KaJammer Music Player 0.4\n";
+                break;
+                
             default:
                 std::cout << "Usage: kajammer [options...] [arguments...]\n";
                 std::cout << "\t" << "Where options include:\n";
@@ -70,16 +74,6 @@ void Cli::cliArgs(char *argv[])
                 break;
         }
     }
-    
-    // Unrecognized Option
-    //else if (argc > 1) //If argc == 1, no arguments
-    //{
-    //    std::cout << "Usage: kajammer [options...] [arguments...]\n";
-    //    std::cout << "\t" << "where options include:\n";
-    //    std::cout << "\t" << "-p\t" << "play" << "[Files]\n";
-    //    std::cout << "\t" << "-n\t" << "new playlist\t" << "[Name] [Files]\n";
-    //    std::cout << "\t" << "-d\t" << "delete playlist" << "[Files]\n";
-    //}
 }
 
 /* Take argv[], and create QStringList of args

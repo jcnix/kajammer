@@ -30,13 +30,7 @@
 #include "cli.h"
 
 int main(int argc, char *argv[]) 
-{   
-    if(argc == 2 && strcmp(argv[1], "--version") == 0)
-    {
-        std::cout << "KaJammer Music Player 0.4\n";
-        return 0;
-    }
-    
+{     
     QApplication app(argc, argv);
     app.setApplicationName("KaJammer");
     app.setWindowIcon(QIcon("/usr/share/icons/oxygen/22x22/categories/applications-multimedia.png"));
