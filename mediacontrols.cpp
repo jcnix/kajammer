@@ -36,7 +36,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
             SLOT(getQueue(QList<Phonon::MediaSource>)));
     connect(metaResolver, SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));
     connect(table, SIGNAL(cellClicked(int, int)), this, SLOT(tableClicked(int)));
-    connect(playlistTable, SIGNAL(cellClicked(int, int)), this, SLOT(playlistChange(int)));
+    connect(playlistTable, SIGNAL(cellClicked(int, int)), controller, SLOT(changePlaylist(int)));
     connect(playlist, SIGNAL(resetPlaylists()), this, SLOT(setupPlaylists()));
 }
 
@@ -46,8 +46,6 @@ void MediaControls::init()
     playlist = Playlist::getInstance();
 
     metaResolver = new Phonon::MediaObject;  //Used for finding metadata
-    
-    currentList = -1; //the first row on playlistTable is 0, so initialize as -1.
     
     volumeSlider = new Phonon::VolumeSlider;
     volumeSlider->setAudioOutput(controller->getAudioOutput());
@@ -160,21 +158,20 @@ void MediaControls::tableClicked(int row)
     controller->setSong(row);
 }
 
-void MediaControls::playlistChange(int row)
-{
-    if(currentList != row)
-    {
-        currentList = row;
-        QStringList list = playlist->getPlaylistContents(row);
-        controller->setQueue(list);
-    }
-}
+//void MediaControls::playlistChange(int row)
+//{
+//    if(currentList != row)
+//    {
+//        currentList = row;
+//        QStringList list = playlist->getPlaylistContents(row);
+//        controller->setQueue(list);
+//    }
+//}
 
 // Fill playlist table with playlists
 void MediaControls::setupPlaylists()
 {
     playlistTable->setRowCount(0);
-    currentList = -1;  //the first row on playlistTable is 0, so initialize as -1.
     
     int numLists = playlist->count();
     

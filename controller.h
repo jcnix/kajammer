@@ -31,6 +31,8 @@
 #include <phonon/mediasource.h>
 #include <phonon/audiooutput.h>
 
+#include "playlist.h"
+
 class Controller : public QObject
 {
     Q_OBJECT;
@@ -49,6 +51,7 @@ public slots:
     void pause();
     void setNextSong();
     void setPrevSong();
+    void changePlaylist(int);
 
 signals:
     void songChanged(int);
@@ -59,11 +62,13 @@ protected:
 
 private:
     static Controller *controller;
+    Playlist *playlist;
     
     Phonon::AudioOutput *audioOutput;
     Phonon::MediaObject *mediaObject;
     QList<Phonon::MediaSource> songQueue;
     int currentSong;
+    int currentList;
 };
 
 #endif /* _CONTROLLER_H */

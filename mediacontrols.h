@@ -56,7 +56,7 @@ public slots:
     void setMetaData();
     void getQueue(QList<Phonon::MediaSource>);
     void tableClicked(int);
-    void playlistChange(int);
+    //void playlistChange(int);
     void setupPlaylists();
 
 private:
@@ -77,7 +77,6 @@ private:
     QTableWidget *playlistTable;
     QMap<QString, QString> metaMap;
     QList<Phonon::MediaSource> metaSources;
-    int currentList;
     
     QHBoxLayout *tableLayout;
     QHBoxLayout *hLayout;
