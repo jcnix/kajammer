@@ -169,7 +169,6 @@ void MediaControls::playlistChange(int row)
         controller->setQueue(list);
     }
 }
-        
 
 // Fill playlist table with playlists
 void MediaControls::setupPlaylists()

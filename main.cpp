@@ -29,14 +29,14 @@
 
 int main(int argc, char *argv[]) 
 {  
+    QApplication app(argc, argv);
+    app.setApplicationName("KaJammer");
+    
     Cli *cli = new Cli(argc, argv);
     bool useXorg = cli->useX();
     
-    QApplication app(argc, argv);
-    
     if(useXorg)
     {
-        app.setApplicationName("KaJammer");
         app.setWindowIcon(QIcon("/usr/share/icons/oxygen/22x22/categories/applications-multimedia.png"));
         app.setQuitOnLastWindowClosed(true);
         

@@ -26,6 +26,8 @@ Cli::Cli(int argc, char *argv[])
 {
     this->argc = argc;
     useXorg = true;
+    controller = Controller::getInstance();
+    playlist = Playlist::getInstance();
     
     //Process arguments
     cliArgs(argv);
@@ -50,12 +52,14 @@ void Cli::cliArgs(char *argv[])
                 break;
             //New Playlist    
             case 'n':
+                useXorg = false;
                 args = getArgList(argv, 3);
                 args2 = appendFilePath(args);
                 newPlaylist(argv[2], args2);
                 break;
             //Delete Playlist    
             case 'd':
+                useXorg = false;
                 args = getArgList(argv, 2);
                 delPlaylist(args);
                 break;
@@ -106,7 +110,6 @@ QStringList Cli::appendFilePath(QStringList files)
 
 void Cli::play(QStringList songs)
 {
-    controller = Controller::getInstance();
     if(!songs.isEmpty())
     {       
         controller->setQueue(songs);
@@ -115,14 +118,12 @@ void Cli::play(QStringList songs)
 
 void Cli::newPlaylist(QString name, QStringList songs)
 {
-    playlist = Playlist::getInstance();
     playlist->newPlaylist(name, songs);
 }
 
 //Delete all playlists given
 void Cli::delPlaylist(QStringList names)
 {
-    playlist = Playlist::getInstance();
     QString name;
     
     for(int i = 0; i < names.count(); i++)

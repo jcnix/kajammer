@@ -68,18 +68,11 @@ void Controller::setSong(int index)
     //If user cancels out of open dialog, don't stop playing the current song
     if(!songQueue.isEmpty())
     {
-        /* if currentSong == row, we clicked the currently playing song
-        * so do nothing */
-        std::cout << "Setting song...\n";
-        //if(currentSong != index)
-        //{
-            std::cout << "setSong(" << index << ");\n";
-            // set currentSong so when we press next we know where we are in the queue.
-            // and so we know what currentSong is next time the table is clicked
-            currentSong = index;
-            Phonon::MediaSource fileName = songQueue.at(index);         
-            changeSong(fileName);
-        //}
+        // set currentSong so when we press next we know where we are in the queue.
+        // and so we know what currentSong is next time the table is clicked
+        currentSong = index;
+        Phonon::MediaSource fileName = songQueue.at(index);         
+        changeSong(fileName);
     }
 }
 

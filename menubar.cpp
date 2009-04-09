@@ -102,7 +102,7 @@ void MenuBar::open()
 {
     fileQueue = QFileDialog::getOpenFileNames(this, tr("Open File"), "~/", 
                                                tr("Music Files (*.mp3 *.ogg *.aac)"));
-    
+    //Make sure user didn't cancel out of the dialog
     if(!fileQueue.isEmpty())
     {
         controller->setQueue(fileQueue);
