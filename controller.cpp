@@ -112,7 +112,7 @@ void Controller::setNextSong()
 void Controller::setPrevSong()
 {
     if(currentSong != 0)
-        setSong(currentSong + 1);
+        setSong(currentSong - 1);
 }
 
 void Controller::changePlaylist(int index)

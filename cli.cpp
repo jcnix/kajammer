@@ -111,7 +111,15 @@ QStringList Cli::appendFilePath(QStringList files)
 void Cli::play(QStringList songs)
 {
     if(!songs.isEmpty())
-    {       
+    {   
+        //print file names if not using Gui
+        if(!useXorg)
+        {
+            for(int i = 0; i < songs.count(); i++)
+            {
+                std::cout << songs.at(i).toStdString() << "\n";
+            }
+        }
         controller->setQueue(songs);
     }
 }
