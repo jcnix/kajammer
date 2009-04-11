@@ -26,8 +26,6 @@ Cli::Cli(int argc, char *argv[])
 {
     this->argc = argc;
     useXorg = true;
-    controller = Controller::getInstance();
-    playlist = Playlist::getInstance();
     
     //Process arguments
     cliArgs(argv);
@@ -73,11 +71,12 @@ void Cli::cliArgs(char *argv[])
                 useXorg = false;
                 break;
             default:
+                useXorg = false;
                 std::cout << "Usage: kajammer [options...] [arguments...]\n";
                 std::cout << "\t" << "Where options include:\n";
                 std::cout << "\t" << "-p\t" << "play" << "[Files]\n";
                 std::cout << "\t" << "-n\t" << "new playlist\t" << "[Name] [Files]\n";
-                std::cout << "\t" << "-d\t" << "delete playlist" << "[Files]\n";
+                std::cout << "\t" << "-d\t" << "delete playlist\t" << "[Playlists]\n";
                 break;
         }
     }
@@ -110,30 +109,32 @@ QStringList Cli::appendFilePath(QStringList files)
 
 void Cli::play(QStringList songs)
 {
+    Controller *controller = Controller::getInstance();
+    
     if(!songs.isEmpty())
     {   
         //print file names if not using Gui
-        if(!useXorg)
+        for(int i = 0; i < songs.count() - 1; i++)
         {
-            for(int i = 0; i < songs.count(); i++)
-            {
-                std::cout << songs.at(i).toStdString() << "\n";
-            }
+            std::cout << songs.at(i).toStdString() << "\n";
         }
         controller->setQueue(songs);
     }
+    getchar();
 }
 
 void Cli::newPlaylist(QString name, QStringList songs)
 {
+    Playlist *playlist = Playlist::getInstance();
     playlist->newPlaylist(name, songs);
 }
 
 //Delete all playlists given
 void Cli::delPlaylist(QStringList names)
 {
+    Playlist *playlist = Playlist::getInstance();
     QString name;
-    
+
     for(int i = 0; i < names.count(); i++)
     {
         name = names.at(i);

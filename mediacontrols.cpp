@@ -158,16 +158,6 @@ void MediaControls::tableClicked(int row)
     controller->setSong(row);
 }
 
-//void MediaControls::playlistChange(int row)
-//{
-//    if(currentList != row)
-//    {
-//        currentList = row;
-//        QStringList list = playlist->getPlaylistContents(row);
-//        controller->setQueue(list);
-//    }
-//}
-
 // Fill playlist table with playlists
 void MediaControls::setupPlaylists()
 {
