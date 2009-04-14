@@ -25,6 +25,7 @@
 Cli::Cli(int argc, char *argv[])
 {
     this->argc = argc;
+    useXorg = true;
     
     //Process arguments
     cliArgs(argv);
@@ -38,39 +39,52 @@ void Cli::cliArgs(char *argv[])
     
     opterr = 0;
     
-    while ((c = getopt(argc, argv, "p:n:d:v")) != -1)
+    while ((c = getopt(argc, argv, "pndvx")) != -1)
     {
         switch (c)
         {
+            //Play
             case 'p':
                 args = getArgList(argv, 2);
                 play(args);
-                std::cout << "p\n";
                 break;
-                
+            //New Playlist    
             case 'n':
+                useXorg = false;
                 args = getArgList(argv, 3);
                 args2 = appendFilePath(args);
                 newPlaylist(argv[2], args2);
-                std::cout << "n\n";
                 break;
-                
+            //Delete Playlist    
             case 'd':
+                useXorg = false;
                 args = getArgList(argv, 2);
                 delPlaylist(args);
-                std::cout << "d\n";
                 break;
+<<<<<<< HEAD:cli.cpp
                 
             case 'v':
                 std::cout << "KaJammer Music Player 0.4\n";
                 break;
                 
+=======
+            //Display version info
+            case 'v':
+                useXorg = false;
+                std::cout << "KaJammer Music Player 0.4.5\n";
+                break;
+            //Don't bring up main window, no Xorg mode.
+            case 'x':
+                useXorg = false;
+                break;
+>>>>>>> unstable:cli.cpp
             default:
+                useXorg = false;
                 std::cout << "Usage: kajammer [options...] [arguments...]\n";
                 std::cout << "\t" << "Where options include:\n";
                 std::cout << "\t" << "-p\t" << "play" << "[Files]\n";
                 std::cout << "\t" << "-n\t" << "new playlist\t" << "[Name] [Files]\n";
-                std::cout << "\t" << "-d\t" << "delete playlist" << "[Files]\n";
+                std::cout << "\t" << "-d\t" << "delete playlist\t" << "[Playlists]\n";
                 break;
         }
     }
@@ -103,28 +117,40 @@ QStringList Cli::appendFilePath(QStringList files)
 
 void Cli::play(QStringList songs)
 {
-    controller = Controller::getInstance();
+    Controller *controller = Controller::getInstance();
+    
     if(!songs.isEmpty())
-    {       
+    {   
+        //print file names if not using Gui
+        for(int i = 0; i < songs.count() - 1; i++)
+        {
+            std::cout << songs.at(i).toStdString() << "\n";
+        }
         controller->setQueue(songs);
     }
+    getchar();
 }
 
 void Cli::newPlaylist(QString name, QStringList songs)
 {
-    playlist = Playlist::getInstance();
+    Playlist *playlist = Playlist::getInstance();
     playlist->newPlaylist(name, songs);
 }
 
 //Delete all playlists given
 void Cli::delPlaylist(QStringList names)
 {
-    playlist = Playlist::getInstance();
+    Playlist *playlist = Playlist::getInstance();
     QString name;
-    
+
     for(int i = 0; i < names.count(); i++)
     {
         name = names.at(i);
         playlist->delPlaylist(name);
     }
+}
+
+bool Cli::useX()
+{
+    return useXorg;
 }

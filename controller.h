@@ -29,6 +29,9 @@
 #include <QtCore/QList>
 #include <phonon/mediaobject.h>
 #include <phonon/mediasource.h>
+#include <phonon/audiooutput.h>
+
+#include "playlist.h"
 
 class Controller : public QObject
 {
@@ -37,13 +40,22 @@ class Controller : public QObject
 public:
     static Controller* getInstance();
     void setQueue(QStringList);
+    void resetCurrentList();
     QList<Phonon::MediaSource> getSongQueue() {return songQueue;}
+    Phonon::AudioOutput* getAudioOutput();
+    Phonon::MediaObject* getMediaObject();
     
 public slots:
     void setSong(int);
+    void changeSong(Phonon::MediaSource);
+    void play();
+    void pause();
+    void setNextSong();
+    void setPrevSong();
+    void changePlaylist(int);
 
 signals:
-    void songChanged(Phonon::MediaSource);
+    void songChanged(int);
     void queueSet(QList<Phonon::MediaSource>);
 
 protected:
@@ -51,8 +63,13 @@ protected:
 
 private:
     static Controller *controller;
-    Phonon::MediaSource fileName;
+    Playlist *playlist;
+    
+    Phonon::AudioOutput *audioOutput;
+    Phonon::MediaObject *mediaObject;
     QList<Phonon::MediaSource> songQueue;
+    int currentSong;
+    int currentList;
 };
 
 #endif /* _CONTROLLER_H */

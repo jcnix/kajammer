@@ -25,21 +25,24 @@
 
 #include <iostream>
 #include <unistd.h>
+#include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include "controller.h"
 #include "playlist.h"
 
-class Cli
+class Cli : public QObject
 {
+    //Q_OBJECT;
+    
 public:
     Cli(int argc, char *argv[]);
     void cliArgs(char *argv[]);
+    bool useX();
     
 private:
-    Controller *controller;
-    Playlist *playlist;
     int argc;
+    bool useXorg;
     
     void play(QStringList);
     void newPlaylist(QString, QStringList);

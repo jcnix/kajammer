@@ -37,8 +37,6 @@
 #include <QtGui/QTableWidget>
 #include <QtGui/QTableWidgetItem>
 #include <QtGui/QVBoxLayout>
-#include <phonon/audiooutput.h>
-#include <phonon/mediaobject.h>
 #include <phonon/mediasource.h>
 #include <phonon/seekslider.h>
 #include <phonon/volumeslider.h>
@@ -54,18 +52,12 @@ public:
     MediaControls(QWidget *parent = 0);
 
 public slots:
-    void changeSong(Phonon::MediaSource);
-    void songEnded();
+    void songChanged(int);
     void setMetaData();
     void getQueue(QList<Phonon::MediaSource>);
     void tableClicked(int);
-    void playlistChange(int);
-    void setNextSong();
-    void setPrevSong();
+    //void playlistChange(int);
     void setupPlaylists();
-
-signals:
-    void playNextSong();
 
 private:
     void init();
@@ -73,8 +65,6 @@ private:
     Controller *controller;
     Playlist *playlist;
 
-    Phonon::AudioOutput *audioOutput;
-    Phonon::MediaObject *mediaObject;
     Phonon::VolumeSlider *volumeSlider;
     Phonon::SeekSlider *seekSlider;
     Phonon::MediaObject *metaResolver;
@@ -87,8 +77,6 @@ private:
     QTableWidget *playlistTable;
     QMap<QString, QString> metaMap;
     QList<Phonon::MediaSource> metaSources;
-    int currentSong;
-    int currentList;
     
     QHBoxLayout *tableLayout;
     QHBoxLayout *hLayout;

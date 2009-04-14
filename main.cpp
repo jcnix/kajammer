@@ -23,24 +23,27 @@
 #include <iostream>
 #include <QtGui/QApplication>
 #include <QtGui/QIcon>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
 
 #include "mainwindow.h"
 #include "cli.h"
 
 int main(int argc, char *argv[]) 
-{     
+{  
     QApplication app(argc, argv);
     app.setApplicationName("KaJammer");
-    app.setWindowIcon(QIcon("/usr/share/icons/oxygen/22x22/categories/applications-multimedia.png"));
-    app.setQuitOnLastWindowClosed(true);
-
-    MainWindow window;
-    window.resize(540, 380);
-    window.show();
     
-    Cli(argc, argv);
-
-    return app.exec();
+    Cli *cli = new Cli(argc, argv);
+    bool useXorg = cli->useX();
+    
+    if(useXorg)
+    {
+        app.setWindowIcon(QIcon("/usr/share/icons/oxygen/22x22/categories/applications-multimedia.png"));
+        app.setQuitOnLastWindowClosed(true);
+        
+        MainWindow window;
+        window.resize(540, 380);
+        window.show();
+        return app.exec();
+    }
+    app.exit();
 }
