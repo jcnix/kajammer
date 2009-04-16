@@ -26,20 +26,20 @@ Cli::Cli(int argc, char *argv[])
 {
     this->argc = argc;
     useXorg = true;
-    
+
     //Process arguments
     cliArgs(argv);
 }
 
 void Cli::cliArgs(char *argv[])
-{   
+{
     int c;
     QStringList args;
     QStringList args2;
-    
+
     opterr = 0;
-    
-    while ((c = getopt(argc, argv, "pndvx")) != -1)
+
+    while ((c = getopt(argc, argv, "plndvx")) != -1)
     {
         switch (c)
         {
@@ -48,26 +48,20 @@ void Cli::cliArgs(char *argv[])
                 args = getArgList(argv, 2);
                 play(args);
                 break;
-            //New Playlist    
+            //Play Playlist
+            //New Playlist
             case 'n':
                 useXorg = false;
                 args = getArgList(argv, 3);
                 args2 = appendFilePath(args);
                 newPlaylist(argv[2], args2);
                 break;
-            //Delete Playlist    
+            //Delete Playlist
             case 'd':
                 useXorg = false;
                 args = getArgList(argv, 2);
                 delPlaylist(args);
                 break;
-<<<<<<< HEAD:cli.cpp
-                
-            case 'v':
-                std::cout << "KaJammer Music Player 0.4\n";
-                break;
-                
-=======
             //Display version info
             case 'v':
                 useXorg = false;
@@ -77,7 +71,7 @@ void Cli::cliArgs(char *argv[])
             case 'x':
                 useXorg = false;
                 break;
->>>>>>> unstable:cli.cpp
+            //Command not recognized
             default:
                 useXorg = false;
                 std::cout << "Usage: kajammer [options...] [arguments...]\n";
@@ -105,7 +99,7 @@ QStringList Cli::getArgList(char *argv[], int startFrom)
 QStringList Cli::appendFilePath(QStringList files)
 {
     QString path = QDir(".").absolutePath();
-    
+
     QStringList newList;
     for(int i = 0; i < files.count(); i++)
     {
@@ -118,9 +112,9 @@ QStringList Cli::appendFilePath(QStringList files)
 void Cli::play(QStringList songs)
 {
     Controller *controller = Controller::getInstance();
-    
+
     if(!songs.isEmpty())
-    {   
+    {
         //print file names if not using Gui
         for(int i = 0; i < songs.count() - 1; i++)
         {

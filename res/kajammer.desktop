@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Encoding=UTF-8
+Name=Kajammer
+Generic Name=Audio Player
+Comment=Music Player
+Icon=/usr/share/icons/oxygen/64x64/categories/applications-multimedia.png
+Exec=kajammer
+Terminal=false
+MimeType=application/ogg;application/x-ogg;audio/aac;audio/x-aac;audio/m4a;audio/x-m4a;audio/mp3;audio/x-mp3;audio/wav;audio/x-wav;audio/x-vorbis+ogg;application/ogg;audio/ogg;
+Categories=Qt;KDE;AudioVideo;Audio;Player

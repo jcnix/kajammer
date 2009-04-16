@@ -30,11 +30,11 @@ Controller::Controller()
     audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory);
     mediaObject = new Phonon::MediaObject;
     Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
-    
+
     playlist = Playlist::getInstance();
     currentSong = -1;
     currentList = -1;
-    
+
     connect(mediaObject, SIGNAL(finished()), this, SLOT(setNextSong()));
 }
 
@@ -53,7 +53,7 @@ void Controller::setQueue(QStringList queue)
     // Clean out the queue so we can start empty
     songQueue.clear();
     currentSong = -1;
-    
+
     // _Will_ crash if queue is empty
     if(!queue.isEmpty())
     {
@@ -67,7 +67,7 @@ void Controller::setQueue(QStringList queue)
 }
 
 void Controller::setSong(int index)
-{    
+{
     //If user cancels out of open dialog, don't stop playing the current song
     if(!songQueue.isEmpty())
     {
@@ -76,7 +76,7 @@ void Controller::setSong(int index)
             // set currentSong so when we press next we know where we are in the queue.
             // and so we know what currentSong is next time the table is clicked
             currentSong = index;
-            Phonon::MediaSource fileName = songQueue.at(index);         
+            Phonon::MediaSource fileName = songQueue.at(index);
             changeSong(fileName);
         }
     }
