@@ -47,6 +47,7 @@ public:
     
 public slots:
     void setSong(int);
+    void setSong(int, int);
     void changeSong(Phonon::MediaSource);
     void play();
     void pause();

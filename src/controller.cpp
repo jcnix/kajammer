@@ -68,8 +68,13 @@ void Controller::setQueue(QStringList queue)
 
 void Controller::setSong(int index)
 {
+    setSong(index, 0);
+}
+
+void Controller::setSong(int index, int row)
+{
     //If user cancels out of open dialog, don't stop playing the current song
-    if(!songQueue.isEmpty())
+    if(!songQueue.isEmpty() && index >= 0 && index <= songQueue.count())
     {
         if(currentSong != index)
         {
@@ -78,6 +83,7 @@ void Controller::setSong(int index)
             currentSong = index;
             Phonon::MediaSource fileName = songQueue.at(index);
             changeSong(fileName);
+            emit songChanged(row);
         }
     }
 }
@@ -87,7 +93,6 @@ void Controller::changeSong(Phonon::MediaSource song)
     mediaObject->stop();
     mediaObject->setCurrentSource(song);
     mediaObject->play();
-    emit songChanged(currentSong);
 }
 
 //Allow external access to the mediaObject

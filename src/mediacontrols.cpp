@@ -35,7 +35,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(controller, SIGNAL(queueSet(QList<Phonon::MediaSource>)), this,
             SLOT(getQueue(QList<Phonon::MediaSource>)));
     connect(metaResolver, SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));
-    connect(table, SIGNAL(cellClicked(int, int)), controller, SLOT(S(int)));
+    connect(table, SIGNAL(cellClicked(int, int)), this, SLOT(tableClicked(int)));
     connect(playlistTable, SIGNAL(cellClicked(int, int)), controller, SLOT(changePlaylist(int)));
     connect(playlist, SIGNAL(resetPlaylists()), this, SLOT(setupPlaylists()));
 }
@@ -44,6 +44,7 @@ void MediaControls::init()
 {
     controller = Controller::getInstance();
     playlist = Playlist::getInstance();
+    tableIndex = 0;
 
     metaResolver = new Phonon::MediaObject;  //Used for finding metadata
     
@@ -63,16 +64,16 @@ void MediaControls::init()
 
     //Table with meta info
     table = new QTableWidget;
-    table->setColumnCount(3);
+    table->setColumnCount(4);
     QStringList tableHeaders;
     tableHeaders.append("Title");
     tableHeaders.append("Artist");
     tableHeaders.append("Album");
+    tableHeaders.append("Track");
     table->setHorizontalHeaderLabels(tableHeaders);
     table->setSelectionBehavior(QAbstractItemView::SelectRows);
     table->setShowGrid(false);
-    // Commented out because sorting table doesn't sort list yet
-    //table->setSortingEnabled(true);
+    table->setSortingEnabled(true);
     
     playlistTable = new QTableWidget;
     playlistTable->setColumnCount(1);
@@ -113,12 +114,13 @@ void MediaControls::getQueue(QList<Phonon::MediaSource> meta)
     //Set source so we activate metaDataChanged(), so it loops through our table
     metaResolver->setCurrentSource(metaSources.at(0));
     table->setRowCount(0);
+    tableIndex = 0;
 }
 
 void MediaControls::setMetaData()
 {
     QMap<QString, QString> metaData = metaResolver->metaData();
-
+    
     QString title = metaData.value("TITLE");
     if (title == "")
     {
@@ -128,7 +130,7 @@ void MediaControls::setMetaData()
     QTableWidgetItem *titleItem = new QTableWidgetItem(title);
     QTableWidgetItem *artistItem = new QTableWidgetItem(metaData.value("ARTIST"));
     QTableWidgetItem *albumItem = new QTableWidgetItem(metaData.value("ALBUM"));
-    QTableWidgetItem *indexItem = new QTableWidgetItem();
+    QTableWidgetItem *indexItem = new QTableWidgetItem(QString::number(tableIndex++));
 
     int row = table->rowCount();
     table->insertRow(row);
@@ -142,7 +144,7 @@ void MediaControls::setMetaData()
     if (metaSources.count() > index) 
     {
         /* emit a signal so we can loop through the queue and
-        * set the table up */
+         * set the table up */
         metaResolver->setCurrentSource(metaSources.at(index));
     }
     else {
@@ -150,6 +152,14 @@ void MediaControls::setMetaData()
         if (table->columnWidth(0) > 300)
             table->setColumnWidth(0, 300);
     }
+}
+
+void MediaControls::tableClicked(int row)
+{
+    QTableWidgetItem *item = table->item(row, 3);
+    QString text = item->text();
+    int song = text.toInt();
+    controller->setSong(song, row);
 }
 
 // Fill playlist table with playlists
