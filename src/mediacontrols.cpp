@@ -35,7 +35,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(controller, SIGNAL(queueSet(QList<Phonon::MediaSource>)), this,
             SLOT(getQueue(QList<Phonon::MediaSource>)));
     connect(metaResolver, SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));
-    connect(table, SIGNAL(cellClicked(int, int)), this, SLOT(tableClicked(int)));
+    connect(table, SIGNAL(cellClicked(int, int)), controller, SLOT(setSong(int)));
     connect(playlistTable, SIGNAL(cellClicked(int, int)), controller, SLOT(changePlaylist(int)));
     connect(playlist, SIGNAL(resetPlaylists()), this, SLOT(setupPlaylists()));
 }
@@ -101,11 +101,6 @@ void MediaControls::init()
     setLayout(vLayout);
 }
 
-void MediaControls::songChanged(int row)
-{
-    table->selectRow(row);
-}
-
 //New files opened, get the list of songs.
 void MediaControls::getQueue(QList<Phonon::MediaSource> meta)
 {
@@ -128,14 +123,14 @@ void MediaControls::setMetaData()
     QTableWidgetItem *titleItem = new QTableWidgetItem(title);
     QTableWidgetItem *artistItem = new QTableWidgetItem(metaData.value("ARTIST"));
     QTableWidgetItem *albumItem = new QTableWidgetItem(metaData.value("ALBUM"));
-    QTableWidgetItem *yearItem = new QTableWidgetItem(metaData.value("DATE"));
+    QTableWidgetItem *indexItem = new QTableWidgetItem();
 
     int row = table->rowCount();
     table->insertRow(row);
     table->setItem(row, 0, titleItem);
     table->setItem(row, 1, artistItem);
     table->setItem(row, 2, albumItem);
-    table->setItem(row, 3, yearItem);
+    table->setItem(row, 3, indexItem);
 
     Phonon::MediaSource source = metaResolver->currentSource();
     int index = metaSources.indexOf(source) + 1;

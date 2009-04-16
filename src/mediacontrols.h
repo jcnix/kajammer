@@ -30,7 +30,6 @@
 #include <QtCore/QList>
 #include <QtCore/QMap>
 #include <QtGui/QPushButton>
-#include <QtCore/QStack>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtGui/QStyle>
@@ -55,8 +54,6 @@ public slots:
     void songChanged(int);
     void setMetaData();
     void getQueue(QList<Phonon::MediaSource>);
-    void tableClicked(int);
-    //void playlistChange(int);
     void setupPlaylists();
 
 private:

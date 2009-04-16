@@ -48,7 +48,6 @@ void Cli::cliArgs(char *argv[])
                 args = getArgList(argv, 2);
                 play(args);
                 break;
-            //Play Playlist
             //New Playlist
             case 'n':
                 useXorg = false;
@@ -79,6 +78,7 @@ void Cli::cliArgs(char *argv[])
                 std::cout << "\t" << "-p\t" << "play" << "[Files]\n";
                 std::cout << "\t" << "-n\t" << "new playlist\t" << "[Name] [Files]\n";
                 std::cout << "\t" << "-d\t" << "delete playlist\t" << "[Playlists]\n";
+                std::cout << "\t" << "-x\t" << "no X mode\t";
                 break;
         }
     }
