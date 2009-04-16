@@ -35,7 +35,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(controller, SIGNAL(queueSet(QList<Phonon::MediaSource>)), this,
             SLOT(getQueue(QList<Phonon::MediaSource>)));
     connect(metaResolver, SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));
-    connect(table, SIGNAL(cellClicked(int, int)), controller, SLOT(setSong(int)));
+    connect(table, SIGNAL(cellClicked(int, int)), controller, SLOT(S(int)));
     connect(playlistTable, SIGNAL(cellClicked(int, int)), controller, SLOT(changePlaylist(int)));
     connect(playlist, SIGNAL(resetPlaylists()), this, SLOT(setupPlaylists()));
 }
@@ -101,6 +101,11 @@ void MediaControls::init()
     setLayout(vLayout);
 }
 
+void MediaControls::songChanged(int row)
+{
+    table->selectRow(row);
+}
+
 //New files opened, get the list of songs.
 void MediaControls::getQueue(QList<Phonon::MediaSource> meta)
 {
@@ -145,12 +150,6 @@ void MediaControls::setMetaData()
         if (table->columnWidth(0) > 300)
             table->setColumnWidth(0, 300);
     }
-}
-
-//If clicked, change song to the song in the row that was clicked
-void MediaControls::tableClicked(int row)
-{
-    controller->setSong(row);
 }
 
 // Fill playlist table with playlists
