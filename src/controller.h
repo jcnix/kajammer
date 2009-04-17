@@ -71,6 +71,7 @@ private:
     QList<Phonon::MediaSource> songQueue;
     int currentSong;
     int currentList;
+    int currentRow;
 };
 
 #endif /* _CONTROLLER_H */

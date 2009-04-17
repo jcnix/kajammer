@@ -34,6 +34,7 @@ Controller::Controller()
     playlist = Playlist::getInstance();
     currentSong = -1;
     currentList = -1;
+    currentRow = -1;
 
     connect(mediaObject, SIGNAL(finished()), this, SLOT(setNextSong()));
 }
@@ -53,6 +54,7 @@ void Controller::setQueue(QStringList queue)
     // Clean out the queue so we can start empty
     songQueue.clear();
     currentSong = -1;
+    currentRow = -1;
 
     // _Will_ crash if queue is empty
     if(!queue.isEmpty())
@@ -73,6 +75,7 @@ void Controller::setSong(int index)
 
 void Controller::setSong(int index, int row)
 {
+    currentRow = row;
     //If user cancels out of open dialog, don't stop playing the current song
     if(!songQueue.isEmpty() && index >= 0 && index <= songQueue.count())
     {
@@ -83,7 +86,7 @@ void Controller::setSong(int index, int row)
             currentSong = index;
             Phonon::MediaSource fileName = songQueue.at(index);
             changeSong(fileName);
-            emit songChanged(row);
+            emit songChanged(currentRow);
         }
     }
 }
@@ -111,13 +114,13 @@ void Controller::setNextSong()
     /* subtract one from count because index starts at 0
     * and count starts from 1 */
     if(currentSong < songQueue.count() - 1)
-        setSong(currentSong + 1);
+        setSong(currentSong + 1, currentRow + 1);
 }
 
 void Controller::setPrevSong()
 {
     if(currentSong != 0)
-        setSong(currentSong - 1);
+        setSong(currentSong - 1, currentRow -1);
 }
 
 void Controller::changePlaylist(int index)
