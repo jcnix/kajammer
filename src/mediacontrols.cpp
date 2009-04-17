@@ -66,10 +66,10 @@ void MediaControls::init()
     table = new QTableWidget;
     table->setColumnCount(4);
     QStringList tableHeaders;
+    tableHeaders.append("Track");
     tableHeaders.append("Title");
     tableHeaders.append("Artist");
     tableHeaders.append("Album");
-    tableHeaders.append("Track");
     table->setHorizontalHeaderLabels(tableHeaders);
     table->setSelectionBehavior(QAbstractItemView::SelectRows);
     table->setShowGrid(false);
@@ -134,10 +134,10 @@ void MediaControls::setMetaData()
 
     int row = table->rowCount();
     table->insertRow(row);
-    table->setItem(row, 0, titleItem);
-    table->setItem(row, 1, artistItem);
-    table->setItem(row, 2, albumItem);
-    table->setItem(row, 3, indexItem);
+    table->setItem(row, 0, indexItem);
+    table->setItem(row, 1, titleItem);
+    table->setItem(row, 2, artistItem);
+    table->setItem(row, 3, albumItem);
 
     Phonon::MediaSource source = metaResolver->currentSource();
     int index = metaSources.indexOf(source) + 1;
@@ -148,6 +148,11 @@ void MediaControls::setMetaData()
         metaResolver->setCurrentSource(metaSources.at(index));
     }
     else {
+        QStringList labels;
+        for(int i = 0; i <= metaSources.count(); i++)
+            labels.append("");
+        table->setVerticalHeaderLabels(labels);
+        
         table->resizeColumnsToContents();
         if (table->columnWidth(0) > 300)
             table->setColumnWidth(0, 300);
@@ -156,7 +161,7 @@ void MediaControls::setMetaData()
 
 void MediaControls::tableClicked(int row)
 {
-    QTableWidgetItem *item = table->item(row, 3);
+    QTableWidgetItem *item = table->item(row, 0);
     QString text = item->text();
     int song = text.toInt();
     controller->setSong(song, row);
