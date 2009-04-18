@@ -129,7 +129,7 @@ void Controller::setNextSong(int track)
 
 void Controller::setPrevSong(int track)
 {
-    if(currentRow != 1)
+    if(currentRow != 0)
         setSong(track, currentRow -1);
 }
 
