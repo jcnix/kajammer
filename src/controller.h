@@ -30,6 +30,7 @@
 #include <phonon/mediaobject.h>
 #include <phonon/mediasource.h>
 #include <phonon/audiooutput.h>
+#include <iostream>
 
 #include "playlist.h"
 
@@ -45,6 +46,8 @@ public:
     Phonon::AudioOutput* getAudioOutput();
     Phonon::MediaObject* getMediaObject();
     int getCurrentRow();
+    void setTrackOrder(QList<int>);
+    void setCurrentOrder(int);
     
 public slots:
     void setSong(int);
@@ -53,8 +56,8 @@ public slots:
     void play();
     void pause();
     void setNextSong();
-    void setNextSong(int);
-    void setPrevSong(int);
+    //void setNextSong(int);
+    void setPrevSong();
     void changePlaylist(int);
 
 signals:
@@ -71,9 +74,11 @@ private:
     Phonon::AudioOutput *audioOutput;
     Phonon::MediaObject *mediaObject;
     QList<Phonon::MediaSource> songQueue;
+    QList<int> trackOrder;
     int currentSong;
     int currentList;
     int currentRow;
+    int currentOrder;
 };
 
 #endif /* _CONTROLLER_H */

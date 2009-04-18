@@ -117,6 +117,18 @@ void MediaControls::getQueue(QList<Phonon::MediaSource> meta)
     tableIndex = 0;
 }
 
+QList<int> MediaControls::getTrackOrder()
+{
+    QList<int> order;
+    
+    for(int i = 0; i < table->rowCount(); i++)
+    {
+        int track = getTrack(i);
+        order.append(track);
+    }
+    return order;
+}
+
 int MediaControls::getTrack(int row)
 {  
     if(row >= 0 && row < table->rowCount())
@@ -131,14 +143,16 @@ int MediaControls::getTrack(int row)
 
 void MediaControls::setNextSong()
 {
+    controller->setTrackOrder(getTrackOrder());
     int song = getTrack(controller->getCurrentRow() + 1);
-    if(song != -1) controller->setNextSong(song);
+    if(song != -1) controller->setNextSong();
 }
 
 void MediaControls::setPrevSong()
 {
+    controller->setTrackOrder(getTrackOrder());
     int song = getTrack(controller->getCurrentRow() - 1);
-    if(song != -1) controller->setPrevSong(song);
+    if(song != -1) controller->setPrevSong();
 }
 
 void MediaControls::setMetaData()
@@ -185,6 +199,8 @@ void MediaControls::setMetaData()
 
 void MediaControls::tableClicked(int row)
 {
+    controller->setTrackOrder(getTrackOrder());
+    controller->setCurrentOrder(row);
     int song = getTrack(row);
     controller->setSong(song, row);
 }

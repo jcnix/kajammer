@@ -21,7 +21,6 @@
  */
 
 #include "controller.h"
-#include <iostream>
 
 Controller* Controller::controller = 0;
 
@@ -55,13 +54,17 @@ void Controller::setQueue(QStringList queue)
     songQueue.clear();
     currentSong = -1;
     currentRow = -1;
+    currentOrder = 0;
 
     // _Will_ crash if queue is empty
     if(!queue.isEmpty())
     {
         // Finally add new data to the queue
         for(int i = 0; i < queue.count(); i++)
+        {
             songQueue.append(queue.at(i));
+            trackOrder.append(i);
+        }
 
         emit queueSet(songQueue);
         setSong(0);
@@ -114,21 +117,36 @@ void Controller::pause()
     mediaObject->pause();
 }
 
-void Controller::setNextSong()
+//void Controller::setNextSong()/
+//{
+//    setSong(currentSong + 1);
+//}
+
+void Controller::setTrackOrder(QList<int> order)
 {
-    setSong(currentSong + 1);
+    //trackOrder.removeAll;
+    trackOrder = order;
 }
 
-void Controller::setNextSong(int track)
+void Controller::setCurrentOrder(int row)
+{
+    currentOrder = row;
+}
+
+void Controller::setNextSong()
 {
     /* subtract one from count because index starts at 0
-    * and count starts from 1 */    
+    * and count starts from 1 */
+    currentOrder++;
+    int track = trackOrder.at(currentOrder);
     if(currentRow < songQueue.count() - 1)
         setSong(track, currentRow + 1);
 }
 
-void Controller::setPrevSong(int track)
+void Controller::setPrevSong()
 {
+    currentOrder--;
+    int track = trackOrder.at(currentOrder);
     if(currentRow != 0)
         setSong(track, currentRow -1);
 }

@@ -30,6 +30,7 @@
 #include <QtCore/QList>
 #include <QtCore/QMap>
 #include <QtGui/QPushButton>
+#include <QtCore/QQueue>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtGui/QStyle>
@@ -39,6 +40,7 @@
 #include <phonon/mediasource.h>
 #include <phonon/seekslider.h>
 #include <phonon/volumeslider.h>
+#include <iostream>
 
 #include "controller.h"
 #include "playlist.h"
@@ -62,6 +64,7 @@ public slots:
 private:
     void init();
     int getTrack(int);
+    QList<int> getTrackOrder();
 
     Controller *controller;
     Playlist *playlist;
@@ -78,6 +81,7 @@ private:
     QTableWidget *playlistTable;
     QMap<QString, QString> metaMap;
     QList<Phonon::MediaSource> metaSources;
+    QList<int> trackOrder;
     
     int tableIndex;
     
