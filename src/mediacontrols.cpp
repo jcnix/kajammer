@@ -28,8 +28,8 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 
     connect(play, SIGNAL(clicked()), controller, SLOT(play()));
     connect(pause, SIGNAL(clicked()), controller, SLOT(pause()));
-    connect(next, SIGNAL(clicked()), controller, SLOT(setNextSong()));
-    connect(prev, SIGNAL(clicked()), controller, SLOT(setPrevSong()));
+    connect(next, SIGNAL(clicked()), this, SLOT(setNextSong()));
+    connect(prev, SIGNAL(clicked()), this, SLOT(setPrevSong()));
     
     connect(controller, SIGNAL(songChanged(int)), this, SLOT(songChanged(int)));
     connect(controller, SIGNAL(queueSet(QList<Phonon::MediaSource>)), this,
@@ -117,6 +117,26 @@ void MediaControls::getQueue(QList<Phonon::MediaSource> meta)
     tableIndex = 0;
 }
 
+int MediaControls::getTrack(int row)
+{  
+    QTableWidgetItem *item = table->item(row, 0);
+    QString text = item->text();
+    int track = text.toInt();
+    return track;
+}
+
+void MediaControls::setNextSong()
+{
+    int song = getTrack(controller->getCurrentRow() + 1);
+    controller->setNextSong(song);
+}
+
+void MediaControls::setPrevSong()
+{
+    int song = getTrack(controller->getCurrentRow() - 1);
+    controller->setPrevSong(song);
+}
+
 void MediaControls::setMetaData()
 {
     QMap<QString, QString> metaData = metaResolver->metaData();
@@ -161,9 +181,7 @@ void MediaControls::setMetaData()
 
 void MediaControls::tableClicked(int row)
 {
-    QTableWidgetItem *item = table->item(row, 0);
-    QString text = item->text();
-    int song = text.toInt();
+    int song = getTrack(row);
     controller->setSong(song, row);
 }
 

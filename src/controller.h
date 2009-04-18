@@ -44,6 +44,7 @@ public:
     QList<Phonon::MediaSource> getSongQueue() {return songQueue;}
     Phonon::AudioOutput* getAudioOutput();
     Phonon::MediaObject* getMediaObject();
+    int getCurrentRow();
     
 public slots:
     void setSong(int);
@@ -52,7 +53,8 @@ public slots:
     void play();
     void pause();
     void setNextSong();
-    void setPrevSong();
+    void setNextSong(int);
+    void setPrevSong(int);
     void changePlaylist(int);
 
 signals:

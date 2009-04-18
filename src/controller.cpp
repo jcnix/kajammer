@@ -79,12 +79,17 @@ void Controller::setSong(int index, int row)
     //If user cancels out of open dialog, don't stop playing the current song
     if(!songQueue.isEmpty() && index >= 0 && index <= songQueue.count())
     {
+        //won't restart the song if you click it twice.
         if(currentSong != index)
         {
             // set currentSong so when we press next we know where we are in the queue.
             // and so we know what currentSong is next time the table is clicked
             currentSong = index;
-            Phonon::MediaSource fileName = songQueue.at(index);
+            Phonon::MediaSource fileName;
+            //if(row == index) 
+                fileName = songQueue.at(index);
+            //else
+            //    fileName = songQueue.at(row);
             changeSong(fileName);
             emit songChanged(currentRow);
         }
@@ -111,16 +116,21 @@ void Controller::pause()
 
 void Controller::setNextSong()
 {
-    /* subtract one from count because index starts at 0
-    * and count starts from 1 */
-    if(currentSong < songQueue.count() - 1)
-        setSong(currentSong + 1, currentRow + 1);
+    setSong(currentSong + 1);
 }
 
-void Controller::setPrevSong()
+void Controller::setNextSong(int track)
+{
+    /* subtract one from count because index starts at 0
+    * and count starts from 1 */    
+    if(currentSong < songQueue.count() - 1)
+        setSong(track, currentRow + 1);
+}
+
+void Controller::setPrevSong(int track)
 {
     if(currentSong != 0)
-        setSong(currentSong - 1, currentRow -1);
+        setSong(track, currentRow -1);
 }
 
 void Controller::changePlaylist(int index)
@@ -146,4 +156,9 @@ Phonon::AudioOutput* Controller::getAudioOutput()
 Phonon::MediaObject* Controller::getMediaObject()
 {
     return mediaObject;
+}
+
+int Controller::getCurrentRow()
+{
+    return currentRow;
 }
