@@ -34,7 +34,7 @@ Controller::Controller()
     playlist = Playlist::getInstance();
     currentSong = -1;
     currentList = -1;
-    currentRow = -1;
+    currentRow = 0;
 
     connect(mediaObject, SIGNAL(finished()), this, SLOT(setNextSong()));
 }
@@ -123,13 +123,13 @@ void Controller::setNextSong(int track)
 {
     /* subtract one from count because index starts at 0
     * and count starts from 1 */    
-    if(currentSong < songQueue.count() - 1)
+    if(currentRow < songQueue.count() - 1)
         setSong(track, currentRow + 1);
 }
 
 void Controller::setPrevSong(int track)
 {
-    if(currentSong != 0)
+    if(currentRow != 1)
         setSong(track, currentRow -1);
 }
 

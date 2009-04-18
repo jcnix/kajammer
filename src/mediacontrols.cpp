@@ -119,22 +119,26 @@ void MediaControls::getQueue(QList<Phonon::MediaSource> meta)
 
 int MediaControls::getTrack(int row)
 {  
-    QTableWidgetItem *item = table->item(row, 0);
-    QString text = item->text();
-    int track = text.toInt();
-    return track;
+    if(row >= 0 && row < table->rowCount())
+    {
+        QTableWidgetItem *item = table->item(row, 0);
+        QString text = item->text();
+        int track = text.toInt();
+        return track;
+    }
+    else return -1;
 }
 
 void MediaControls::setNextSong()
 {
     int song = getTrack(controller->getCurrentRow() + 1);
-    controller->setNextSong(song);
+    if(song != -1) controller->setNextSong(song);
 }
 
 void MediaControls::setPrevSong()
 {
     int song = getTrack(controller->getCurrentRow() - 1);
-    controller->setPrevSong(song);
+    if(song != -1) controller->setPrevSong(song);
 }
 
 void MediaControls::setMetaData()
