@@ -62,6 +62,9 @@ void MediaControls::init()
     next = new QPushButton(style()->standardIcon(QStyle::SP_MediaSkipForward), "", this);
     prev = new QPushButton(style()->standardIcon(QStyle::SP_MediaSkipBackward), "", this);
 
+    next->setShortcut(Qt::Key_Right);
+    prev->setShortcut(Qt::Key_Left);
+    
     //Table with meta info
     table = new QTableWidget;
     table->setColumnCount(4);
@@ -176,6 +179,9 @@ void MediaControls::setMetaData()
     table->setItem(row, 1, titleItem);
     table->setItem(row, 2, artistItem);
     table->setItem(row, 3, albumItem);
+    
+    tableLabels.append("");
+    table->setVerticalHeaderLabels(tableLabels);
 
     Phonon::MediaSource source = metaResolver->currentSource();
     int index = metaSources.indexOf(source) + 1;
@@ -186,10 +192,10 @@ void MediaControls::setMetaData()
         metaResolver->setCurrentSource(metaSources.at(index));
     }
     else {
-        QStringList labels;
-        for(int i = 0; i <= metaSources.count(); i++)
-            labels.append("");
-        table->setVerticalHeaderLabels(labels);
+        //QStringList labels;
+        //for(int i = 0; i <= metaSources.count(); i++)
+        //    labels.append("");
+        //table->setVerticalHeaderLabels(labels);
         
         table->resizeColumnsToContents();
         if (table->columnWidth(0) > 300)
@@ -211,6 +217,7 @@ void MediaControls::setupPlaylists()
     playlistTable->setRowCount(0);
     
     int numLists = playlist->count();
+    QStringList labels;
     
     for(int i = 0; i < numLists; i++)
     {
@@ -219,5 +226,7 @@ void MediaControls::setupPlaylists()
         QTableWidgetItem *listName = new QTableWidgetItem(list);
         playlistTable->insertRow(i);
         playlistTable->setItem(i, 0, listName);
+        labels.append("");
+        playlistTable->setVerticalHeaderLabels(labels);
     }
 }

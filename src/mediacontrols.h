@@ -27,10 +27,10 @@
 #include <QtGui/QAbstractItemView>
 #include <QtCore/QFileInfo>
 #include <QtGui/QHBoxLayout>
+#include <QtGui/QKeySequence>
 #include <QtCore/QList>
 #include <QtCore/QMap>
 #include <QtGui/QPushButton>
-#include <QtCore/QQueue>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtGui/QStyle>
@@ -82,6 +82,7 @@ private:
     QMap<QString, QString> metaMap;
     QList<Phonon::MediaSource> metaSources;
     QList<int> trackOrder;
+    QStringList tableLabels;
     
     int tableIndex;
     
