@@ -81,6 +81,7 @@ void MenuBar::createNewPlaylist()
         if(!addToList.isEmpty())
         {
             playlist->newPlaylist(input, addToList);
+            controller->resetCurrentList();
         }
     }
 }
