@@ -122,6 +122,7 @@ void MediaControls::getQueue(QList<Phonon::MediaSource> meta)
 
 QList<int> MediaControls::getTrackOrder()
 {
+    //std::cout << "MediaControls::getTrackOrder();\n";
     QList<int> order;
     
     for(int i = 0; i < table->rowCount(); i++)
@@ -134,6 +135,7 @@ QList<int> MediaControls::getTrackOrder()
 
 int MediaControls::getTrack(int row)
 {  
+    //std::cout << "MediaControls::getTrack(" << row << ");\n";
     if(row >= 0 && row < table->rowCount())
     {
         QTableWidgetItem *item = table->item(row, 0);
@@ -146,13 +148,15 @@ int MediaControls::getTrack(int row)
 
 void MediaControls::setNextSong()
 {
+    std::cout << "MediaControls::setNextSong();\n";
     controller->setTrackOrder(getTrackOrder());
     int song = getTrack(controller->getCurrentRow() + 1);
     if(song != -1) controller->setNextSong();
 }
 
 void MediaControls::setPrevSong()
-{
+{   
+    std::cout << "MediaControls::setPrevSong();\n";
     controller->setTrackOrder(getTrackOrder());
     int song = getTrack(controller->getCurrentRow() - 1);
     if(song != -1) controller->setPrevSong();

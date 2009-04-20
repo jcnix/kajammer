@@ -135,12 +135,15 @@ void Controller::setCurrentOrder(int row)
 
 void Controller::setNextSong()
 {
+    std::cout << "Controller::setNextSong();\n";
     /* subtract one from count because index starts at 0
     * and count starts from 1 */
-    currentOrder++;
-    int track = trackOrder.at(currentOrder);
     if(currentRow < songQueue.count() - 1)
+    {
+        currentOrder++;
+        int track = trackOrder.at(currentOrder);
         setSong(track, currentRow + 1);
+    }
 }
 
 void Controller::setPrevSong()
