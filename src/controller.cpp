@@ -63,6 +63,7 @@ void Controller::setQueue(QStringList queue)
         for(int i = 0; i < queue.count(); i++)
         {
             songQueue.append(queue.at(i));
+            //Reset trackOrder
             trackOrder.append(i);
         }
 
@@ -89,10 +90,7 @@ void Controller::setSong(int index, int row)
             // and so we know what currentSong is next time the table is clicked
             currentSong = index;
             Phonon::MediaSource fileName;
-            //if(row == index) 
-                fileName = songQueue.at(index);
-            //else
-            //    fileName = songQueue.at(row);
+            fileName = songQueue.at(index);
             changeSong(fileName);
             emit songChanged(currentRow);
         }
@@ -117,14 +115,8 @@ void Controller::pause()
     mediaObject->pause();
 }
 
-//void Controller::setNextSong()/
-//{
-//    setSong(currentSong + 1);
-//}
-
 void Controller::setTrackOrder(QList<int> order)
 {
-    //trackOrder.removeAll;
     trackOrder = order;
 }
 
@@ -135,7 +127,7 @@ void Controller::setCurrentOrder(int row)
 
 void Controller::setNextSong()
 {
-    std::cout << "Controller::setNextSong();\n";
+    //std::cout << "Controller::setNextSong();\n";
     /* subtract one from count because index starts at 0
     * and count starts from 1 */
     if(currentRow < songQueue.count() - 1)
@@ -148,10 +140,12 @@ void Controller::setNextSong()
 
 void Controller::setPrevSong()
 {
-    currentOrder--;
-    int track = trackOrder.at(currentOrder);
     if(currentRow != 0)
+    {
+        currentOrder--;
+        int track = trackOrder.at(currentOrder);
         setSong(track, currentRow -1);
+    }
 }
 
 void Controller::changePlaylist(int index)

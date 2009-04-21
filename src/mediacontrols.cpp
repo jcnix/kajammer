@@ -117,7 +117,7 @@ void MediaControls::getQueue(QList<Phonon::MediaSource> meta)
     //Set source so we activate metaDataChanged(), so it loops through our table
     metaResolver->setCurrentSource(metaSources.at(0));
     table->setRowCount(0);
-    tableIndex = 0;
+    tableIndex = 1;
 }
 
 QList<int> MediaControls::getTrackOrder()
@@ -128,6 +128,7 @@ QList<int> MediaControls::getTrackOrder()
     for(int i = 0; i < table->rowCount(); i++)
     {
         int track = getTrack(i);
+        track -= 1;
         order.append(track);
     }
     return order;
@@ -148,17 +149,17 @@ int MediaControls::getTrack(int row)
 
 void MediaControls::setNextSong()
 {
-    std::cout << "MediaControls::setNextSong();\n";
+    //std::cout << "MediaControls::setNextSong();\n";
     controller->setTrackOrder(getTrackOrder());
-    int song = getTrack(controller->getCurrentRow() + 1);
+    int song = getTrack(controller->getCurrentRow());
     if(song != -1) controller->setNextSong();
 }
 
 void MediaControls::setPrevSong()
 {   
-    std::cout << "MediaControls::setPrevSong();\n";
+    //std::cout << "MediaControls::setPrevSong();\n";
     controller->setTrackOrder(getTrackOrder());
-    int song = getTrack(controller->getCurrentRow() - 1);
+    int song = getTrack(controller->getCurrentRow());
     if(song != -1) controller->setPrevSong();
 }
 
@@ -212,6 +213,7 @@ void MediaControls::tableClicked(int row)
     controller->setTrackOrder(getTrackOrder());
     controller->setCurrentOrder(row);
     int song = getTrack(row);
+    std::cout << song << "\n";
     controller->setSong(song, row);
 }
 
