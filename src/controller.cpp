@@ -113,7 +113,7 @@ void Controller::changeSong(Phonon::MediaSource song)
 void Controller::setNextSong()
 {
     //std::cout << "Controller::setNextSong();\n";
-    if(currentRow < trackQueue.count())
+    if(currentRow < trackQueue.count() - 1)
     {
         currentOrder++;
         int track = trackOrder.at(currentOrder);
