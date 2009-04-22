@@ -21,7 +21,7 @@
  */
 
 
-#include "menubar.h"
+#include "headers/menubar.h"
 
 MenuBar::MenuBar()
 {    

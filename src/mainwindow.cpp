@@ -20,7 +20,7 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "mainwindow.h"
+#include "headers/mainwindow.h"
 
 MainWindow::MainWindow()
 {

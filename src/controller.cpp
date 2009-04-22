@@ -20,7 +20,7 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "controller.h"
+#include "headers/controller.h"
 
 Controller* Controller::controller = 0;
 
@@ -113,6 +113,7 @@ void Controller::changeSong(Phonon::MediaSource song)
 void Controller::setNextSong()
 {
     //std::cout << "Controller::setNextSong();\n";
+    //subtract one to prevent a crash when last song on table finishes.
     if(currentRow < trackQueue.count() - 1)
     {
         currentOrder++;

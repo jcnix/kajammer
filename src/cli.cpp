@@ -20,7 +20,7 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "cli.h"
+#include "headers/cli.h"
 
 Cli::Cli(int argc, char *argv[])
 {

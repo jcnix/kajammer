@@ -24,8 +24,8 @@
 #include <QtGui/QApplication>
 #include <QtGui/QIcon>
 
-#include "mainwindow.h"
-#include "cli.h"
+#include "headers/mainwindow.h"
+#include "headers/cli.h"
 
 int main(int argc, char *argv[]) 
 {  
