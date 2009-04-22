@@ -124,11 +124,9 @@ QList<int> MediaControls::getTrackOrder()
 {
     //std::cout << "MediaControls::getTrackOrder();\n";
     QList<int> order;
-    
     for(int i = 0; i < table->rowCount(); i++)
     {
         int track = getTrack(i);
-        track -= 1;
         order.append(track);
     }
     return order;
@@ -151,7 +149,7 @@ void MediaControls::setNextSong()
 {
     //std::cout << "MediaControls::setNextSong();\n";
     controller->setTrackOrder(getTrackOrder());
-    int song = getTrack(controller->getCurrentRow());
+    int song = getTrack(controller->getCurrentRow() + 1);
     if(song != -1) controller->setNextSong();
 }
 
@@ -159,7 +157,7 @@ void MediaControls::setPrevSong()
 {   
     //std::cout << "MediaControls::setPrevSong();\n";
     controller->setTrackOrder(getTrackOrder());
-    int song = getTrack(controller->getCurrentRow());
+    int song = getTrack(controller->getCurrentRow() - 1);
     if(song != -1) controller->setPrevSong();
 }
 
@@ -196,12 +194,7 @@ void MediaControls::setMetaData()
          * set the table up */
         metaResolver->setCurrentSource(metaSources.at(index));
     }
-    else {
-        //QStringList labels;
-        //for(int i = 0; i <= metaSources.count(); i++)
-        //    labels.append("");
-        //table->setVerticalHeaderLabels(labels);
-        
+    else {        
         table->resizeColumnsToContents();
         if (table->columnWidth(0) > 300)
             table->setColumnWidth(0, 300);
@@ -213,7 +206,6 @@ void MediaControls::tableClicked(int row)
     controller->setTrackOrder(getTrackOrder());
     controller->setCurrentOrder(row);
     int song = getTrack(row);
-    std::cout << song << "\n";
     controller->setSong(song, row);
 }
 

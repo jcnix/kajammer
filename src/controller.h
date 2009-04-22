@@ -42,21 +42,19 @@ public:
     static Controller* getInstance();
     void setQueue(QStringList);
     void resetCurrentList();
-    QList<Phonon::MediaSource> getSongQueue() {return songQueue;}
     Phonon::AudioOutput* getAudioOutput();
     Phonon::MediaObject* getMediaObject();
     int getCurrentRow();
-    void setTrackOrder(QList<int>);
-    void setCurrentOrder(int);
+    void setTrackOrder(QList<int> order) { trackOrder = order; }
+    void setCurrentOrder(int row) { currentOrder = row; }
     
 public slots:
     void setSong(int);
     void setSong(int, int);
     void changeSong(Phonon::MediaSource);
-    void play();
-    void pause();
+    void play() { mediaObject->play(); }
+    void pause() { mediaObject->pause(); }
     void setNextSong();
-    //void setNextSong(int);
     void setPrevSong();
     void changePlaylist(int);
 
@@ -73,7 +71,7 @@ private:
     
     Phonon::AudioOutput *audioOutput;
     Phonon::MediaObject *mediaObject;
-    QList<Phonon::MediaSource> songQueue;
+    QMap<int, Phonon::MediaSource> trackQueue;
     QList<int> trackOrder;
     int currentSong;
     int currentList;

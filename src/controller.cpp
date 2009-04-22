@@ -51,10 +51,10 @@ Controller* Controller::getInstance()
 void Controller::setQueue(QStringList queue)
 {
     // Clean out the queue so we can start empty
-    songQueue.clear();
+    trackQueue.clear();
     currentSong = -1;
     currentRow = -1;
-    currentOrder = 0;
+    currentOrder = 1;
 
     // _Will_ crash if queue is empty
     if(!queue.isEmpty())
@@ -62,13 +62,19 @@ void Controller::setQueue(QStringList queue)
         // Finally add new data to the queue
         for(int i = 0; i < queue.count(); i++)
         {
-            songQueue.append(queue.at(i));
             //Reset trackOrder
             trackOrder.append(i);
+            Phonon::MediaSource source = queue.at(i);
+            
+            //turn a 0 into a 1, much more easy and standard way of dealing with the tracks.
+            trackQueue[i + 1] = source;
         }
-
-        emit queueSet(songQueue);
-        setSong(0);
+        QList<Phonon::MediaSource> list;
+        for(int i = 0; i < trackQueue.count(); i++)
+            list.append(trackQueue[i + 1]);
+        
+        emit queueSet(list);
+        setSong(1);
     }
 }
 
@@ -81,7 +87,7 @@ void Controller::setSong(int index, int row)
 {
     currentRow = row;
     //If user cancels out of open dialog, don't stop playing the current song
-    if(!songQueue.isEmpty() && index >= 0 && index <= songQueue.count())
+    if(!trackQueue.isEmpty() && index >= 0 && index <= trackQueue.count())
     {
         //won't restart the song if you click it twice.
         if(currentSong != index)
@@ -90,7 +96,7 @@ void Controller::setSong(int index, int row)
             // and so we know what currentSong is next time the table is clicked
             currentSong = index;
             Phonon::MediaSource fileName;
-            fileName = songQueue.at(index);
+            fileName = trackQueue[index];
             changeSong(fileName);
             emit songChanged(currentRow);
         }
@@ -104,33 +110,10 @@ void Controller::changeSong(Phonon::MediaSource song)
     mediaObject->play();
 }
 
-//Allow external access to the mediaObject
-void Controller::play()
-{
-    mediaObject->play();
-}
-
-void Controller::pause()
-{
-    mediaObject->pause();
-}
-
-void Controller::setTrackOrder(QList<int> order)
-{
-    trackOrder = order;
-}
-
-void Controller::setCurrentOrder(int row)
-{
-    currentOrder = row;
-}
-
 void Controller::setNextSong()
 {
     //std::cout << "Controller::setNextSong();\n";
-    /* subtract one from count because index starts at 0
-    * and count starts from 1 */
-    if(currentRow < songQueue.count() - 1)
+    if(currentRow < trackQueue.count())
     {
         currentOrder++;
         int track = trackOrder.at(currentOrder);
@@ -140,6 +123,7 @@ void Controller::setNextSong()
 
 void Controller::setPrevSong()
 {
+    //std::cout << "Controller::setPrevSong();\n";
     if(currentRow != 0)
     {
         currentOrder--;
