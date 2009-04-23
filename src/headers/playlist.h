@@ -30,10 +30,8 @@
 #include <QtCore/QIODevice>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
-#include <QtCore/QStack>
 #include <QtCore/QTextStream>
 #include <iostream>
-#include <cstring>
 
 class Playlist : public QObject
 {

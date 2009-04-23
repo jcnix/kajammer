@@ -1,17 +1,17 @@
 TEMPLATE = app
 DESTDIR = bin
 TARGET = kajammer
-VERSION = 0.1.1
+VERSION = 0.4
 CONFIG -= debug_and_release
 CONFIG += debug 
 QT = core gui phonon
-SOURCES += src/mainwindow.cpp src/mediacontrols.cpp src/controller.cpp src/menubar.cpp src/main.cpp src/playlist.cpp src/cli.cpp
-HEADERS += src/headers/menubar.h src/headers/mainwindow.h src/headers/mediacontrols.h src/headers/controller.h src/headers/playlist.h src/headers/cli.h
+SOURCES += src/mainwindow.cpp src/mediacontrols.cpp src/controller.cpp src/menubar.cpp src/main.cpp src/playlist.cpp src/cli.cpp src/optionsPanel.cpp
+HEADERS += src/headers/menubar.h src/headers/mainwindow.h src/headers/mediacontrols.h src/headers/controller.h src/headers/playlist.h src/headers/cli.h src/headers/optionsPanel.h
 FORMS +=
 RESOURCES +=
 TRANSLATIONS +=
 OBJECTS_DIR = build
-MOC_DIR = 
+MOC_DIR = moc 
 RCC_DIR = 
 UI_DIR = 
 QMAKE_CC = gcc
@@ -24,3 +24,4 @@ target.files = bin/kajammer
 menu.path = /usr/share/applications
 menu.files = res/kajammer.desktop
 INSTALLS += target menu
+

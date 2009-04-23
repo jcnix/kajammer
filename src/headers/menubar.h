@@ -35,6 +35,7 @@
 
 #include "controller.h"
 #include "playlist.h"
+#include "optionsPanel.h"
 
 class MenuBar : public QMenuBar
 {
@@ -49,6 +50,7 @@ private slots:
     void deletePlaylist();
     void open();
     void quit();
+    void showOptions();
     void aboutDialog();
 
 private:
@@ -60,9 +62,11 @@ private:
     QAction *delPlaylist;
     QAction *openFile;
     QAction *close;
+    QAction *options;
     QAction *about;
     QMenuBar *menuBar;
     QMenu *file;
+    QMenu *tools;
     QMenu *help;
     QStringList fileQueue;
 };

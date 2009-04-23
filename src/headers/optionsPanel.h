@@ -1,8 +1,8 @@
 /*
- * File:   cli.h
+ * File:   optionsPanel.h
  * Author: casey
  *
- * Created on March 24, 2009, 4:48 PM
+ * Created on March 10, 2009, 4:27 PM
  *
  * This file is part of KaJammer.
  *
@@ -20,34 +20,32 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _CLI_H
-#define _CLI_H
+#ifndef _OPTIONSPANEL_H
+#define _OPTIONSPANEL_H
 
-#include <iostream>
-#include <unistd.h>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
+#include <QtCore/QObject>
+#include <QtCore/QDir>
+#include <QtCore/QFile>
+#include <QtCore/QIODevice>
+#include <QtCore/QTextStream>
+#include <QtGui/QDialog>
+#include <QtGui/QDialogButtonBox>
+#include <QtGui/QVBoxLayout>
 
-#include "controller.h"
-#include "playlist.h"
-
-class Cli : public QObject
+class OptionsPanel : public QDialog
 {
     Q_OBJECT;
     
 public:
-    Cli(int argc, char *argv[]);
-    void cliArgs(char *argv[]);
-    bool useX();
+    OptionsPanel();
+    
+public slots:
+    void save();
     
 private:
-    int argc;
-    bool useXorg;
+    QDialogButtonBox *buttonBox;
     
-    void play(QStringList);
-    void newPlaylist(QString, QStringList);
-    void delPlaylist(QStringList);
-    QStringList getArgList(char *argv[], int);
-    QStringList appendFilePath(QStringList);
+    QVBoxLayout *vLayout;
 };
-#endif /* _CLI_H */
+
+#endif /* _OPTIONSPANEL_H */

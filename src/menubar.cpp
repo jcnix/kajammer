@@ -24,13 +24,14 @@
 #include "headers/menubar.h"
 
 MenuBar::MenuBar()
-{    
+{
     init();
     
     connect(newPlaylist, SIGNAL(triggered()), this, SLOT(createNewPlaylist()));
     connect(openFile, SIGNAL(triggered()), this, SLOT(open()));
     connect(delPlaylist, SIGNAL(triggered()), this, SLOT(deletePlaylist()));
     connect(close, SIGNAL(triggered()), this, SLOT(quit()));
+    connect(options, SIGNAL(triggered()), this, SLOT(showOptions()));
     connect(about, SIGNAL(triggered()), this, SLOT(aboutDialog()));
 }
 
@@ -42,15 +43,18 @@ void MenuBar::init()
     menuBar = new QMenuBar;
 
     file = new QMenu("&File");
+    tools = new QMenu("&Tools");
     help = new QMenu("&Help");
 
     addMenu(file);
+    addMenu(tools);
     addMenu(help);
     
     newPlaylist = new QAction("&New Playlist...", this);
     openFile = new QAction("&Open...", this);
     delPlaylist = new QAction("&Delete Playlist...", this);
     close = new QAction("E&xit", this);
+    options = new QAction("&Options", this);
     about = new QAction("&About", this);
     
     newPlaylist->setShortcut(QKeySequence::New);
@@ -62,6 +66,9 @@ void MenuBar::init()
     file->addAction(delPlaylist);
     file->addSeparator();
     file->addAction(close);
+    
+    tools->addAction(options);
+    
     help->addAction(about);
 }
 
@@ -109,7 +116,15 @@ void MenuBar::open()
         controller->resetCurrentList();
         controller->setQueue(fileQueue);
     }
-}   
+}
+
+void MenuBar::showOptions()
+{
+    OptionsPanel *panel;
+    panel = new OptionsPanel;
+    panel->show();
+}
+    
 
 void MenuBar::aboutDialog()
 {

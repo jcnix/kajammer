@@ -32,12 +32,13 @@ Playlist::Playlist()
 void Playlist::init()
 {
     info = QDir(QDir::homePath() + "/.kajammer/playlists").entryInfoList(QDir::Files, QDir::Name);
-    QDir kajamDir = QDir(QDir::homePath() + "/.kajammer/");
+    QString home = QDir::homePath();
+    QDir kajamDir = QDir(home + "/.kajammer/");
     
     if(!kajamDir.exists())
     {
-        kajamDir.mkdir(QDir::homePath() + "/.kajammer");
-        kajamDir.mkdir(QDir::homePath() + "/.kajammer/playlists");
+        kajamDir.mkdir(home + "/.kajammer");
+        kajamDir.mkdir(home + "/.kajammer/playlists");
     }
 }
 
