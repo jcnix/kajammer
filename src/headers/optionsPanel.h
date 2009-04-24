@@ -27,10 +27,15 @@
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QIODevice>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
 #include <QtCore/QTextStream>
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
+#include <QtGui/QLineEdit>
 #include <QtGui/QVBoxLayout>
+
+#include "options.h"
 
 class OptionsPanel : public QDialog
 {
@@ -43,7 +48,15 @@ public slots:
     void save();
     
 private:
+    void init();
+    void populate();
+    QString setDefaultOpen();
+    
+    Options *options;
+    QString confPath;
+    
     QDialogButtonBox *buttonBox;
+    QLineEdit *defaultOpen;
     
     QVBoxLayout *vLayout;
 };

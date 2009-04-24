@@ -36,6 +36,7 @@
 #include "controller.h"
 #include "playlist.h"
 #include "optionsPanel.h"
+#include "options.h"
 
 class MenuBar : public QMenuBar
 {
@@ -55,14 +56,16 @@ private slots:
 
 private:
     void init();
-
+    
     Controller *controller;
     Playlist *playlist;
+    Options *options;
+    
     QAction *newPlaylist;
     QAction *delPlaylist;
     QAction *openFile;
     QAction *close;
-    QAction *options;
+    QAction *optionsAction;
     QAction *about;
     QMenuBar *menuBar;
     QMenu *file;

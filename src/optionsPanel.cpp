@@ -25,28 +25,36 @@
 
 OptionsPanel::OptionsPanel()
 {
-    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    vLayout = new QVBoxLayout;
-    vLayout->addWidget(buttonBox);
-    setLayout(vLayout);
+    init();
+    populate();
     
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(save()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 }
 
+void OptionsPanel::init()
+{   
+    options = Options::getInstance();
+    defaultOpen = new QLineEdit;
+    
+    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    
+    vLayout = new QVBoxLayout;
+    vLayout->addWidget(defaultOpen);
+    vLayout->addWidget(buttonBox);
+    setLayout(vLayout);
+}
+
+void OptionsPanel::populate()
+{    
+    QString defaultOpenDir = options->getDefaultOpenDir();
+    defaultOpen->setText(defaultOpenDir);
+}
+
 void OptionsPanel::save()
 {
-    QString home = QDir::homePath();
-    QDir kajamDir = QDir(home + "/.kajammer/");
+    options->setDefaultOpenDir(defaultOpen->text());
+    options->save();
     
-    if(!kajamDir.exists())
-    {
-        kajamDir.mkdir(home + "/.kajammer");
-        kajamDir.mkdir(home + "/.kajammer/playlists");
-    }
-    
-    QFile conf(home + "/.kajammer/kajammer.conf");
-    conf.open(QIODevice::WriteOnly);
-    QTextStream out(&conf);
     accept();
 }

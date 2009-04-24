@@ -1,12 +1,15 @@
 TEMPLATE = app
 DESTDIR = bin
 TARGET = kajammer
-VERSION = 0.4
+VERSION = 0.46
 CONFIG -= debug_and_release
 CONFIG += debug 
 QT = core gui phonon
-SOURCES += src/mainwindow.cpp src/mediacontrols.cpp src/controller.cpp src/menubar.cpp src/main.cpp src/playlist.cpp src/cli.cpp src/optionsPanel.cpp
-HEADERS += src/headers/menubar.h src/headers/mainwindow.h src/headers/mediacontrols.h src/headers/controller.h src/headers/playlist.h src/headers/cli.h src/headers/optionsPanel.h
+
+SOURCES += src/mainwindow.cpp src/mediacontrols.cpp src/controller.cpp src/menubar.cpp src/main.cpp src/playlist.cpp src/cli.cpp src/optionsPanel.cpp src/options.cpp
+
+HEADERS += src/headers/menubar.h src/headers/mainwindow.h src/headers/mediacontrols.h src/headers/controller.h src/headers/playlist.h src/headers/cli.h src/headers/optionsPanel.h src/headers/options.h
+
 FORMS +=
 RESOURCES +=
 TRANSLATIONS +=

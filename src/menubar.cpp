@@ -31,7 +31,7 @@ MenuBar::MenuBar()
     connect(openFile, SIGNAL(triggered()), this, SLOT(open()));
     connect(delPlaylist, SIGNAL(triggered()), this, SLOT(deletePlaylist()));
     connect(close, SIGNAL(triggered()), this, SLOT(quit()));
-    connect(options, SIGNAL(triggered()), this, SLOT(showOptions()));
+    connect(optionsAction, SIGNAL(triggered()), this, SLOT(showOptions()));
     connect(about, SIGNAL(triggered()), this, SLOT(aboutDialog()));
 }
 
@@ -39,6 +39,7 @@ void MenuBar::init()
 {
     controller = Controller::getInstance();
     playlist = Playlist::getInstance();
+    options = Options::getInstance();
     
     menuBar = new QMenuBar;
 
@@ -54,7 +55,7 @@ void MenuBar::init()
     openFile = new QAction("&Open...", this);
     delPlaylist = new QAction("&Delete Playlist...", this);
     close = new QAction("E&xit", this);
-    options = new QAction("&Options", this);
+    optionsAction = new QAction("&Options", this);
     about = new QAction("&About", this);
     
     newPlaylist->setShortcut(QKeySequence::New);
@@ -67,7 +68,7 @@ void MenuBar::init()
     file->addSeparator();
     file->addAction(close);
     
-    tools->addAction(options);
+    tools->addAction(optionsAction);
     
     help->addAction(about);
 }
@@ -108,7 +109,8 @@ void MenuBar::deletePlaylist()
 
 void MenuBar::open()
 {
-    fileQueue = QFileDialog::getOpenFileNames(this, tr("Open File"), "~/", 
+    QString defaultDir = options->getDefaultOpenDir();
+    fileQueue = QFileDialog::getOpenFileNames(this, tr("Open File"), defaultDir, 
                                                tr("Music Files (*.mp3 *.ogg *.aac)"));
     //Make sure user didn't cancel out of the dialog
     if(!fileQueue.isEmpty())

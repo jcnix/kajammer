@@ -104,10 +104,7 @@ QStringList Playlist::getPlaylistContents(int index)
     QTextStream in(&playlistFile);
     
     while(!in.atEnd())
-    {
-        QString song = in.readLine(0);
-        playlist.append(song);
-    }
+        playlist.append(in.readLine(0));
     
     return playlist;
 }
