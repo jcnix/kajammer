@@ -27,12 +27,14 @@
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QIODevice>
+#include <QtGui/QLabel>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QTextStream>
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QLineEdit>
+#include <QtGui/QHBoxLayout>
 #include <QtGui/QVBoxLayout>
 
 #include "options.h"
@@ -56,9 +58,8 @@ private:
     QString confPath;
     
     QDialogButtonBox *buttonBox;
+    QLabel *defaultOpenLabel;
     QLineEdit *defaultOpen;
-    
-    QVBoxLayout *vLayout;
 };
 
 #endif /* _OPTIONSPANEL_H */

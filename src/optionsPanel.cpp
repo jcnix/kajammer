@@ -35,12 +35,18 @@ OptionsPanel::OptionsPanel()
 void OptionsPanel::init()
 {   
     options = Options::getInstance();
-    defaultOpen = new QLineEdit;
-    
+
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    defaultOpenLabel = new QLabel("Music directory");
+    defaultOpen = new QLineEdit;
+    defaultOpen->setMinimumWidth(175);
     
-    vLayout = new QVBoxLayout;
-    vLayout->addWidget(defaultOpen);
+    QHBoxLayout *defaultOpenLayout = new QHBoxLayout;
+    defaultOpenLayout->addWidget(defaultOpenLabel);
+    defaultOpenLayout->addWidget(defaultOpen);
+    
+    QVBoxLayout *vLayout = new QVBoxLayout;
+    vLayout->addLayout(defaultOpenLayout);
     vLayout->addWidget(buttonBox);
     setLayout(vLayout);
 }
