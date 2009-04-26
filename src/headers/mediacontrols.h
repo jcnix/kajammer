@@ -60,6 +60,8 @@ public slots:
     void tableClicked(int);
     void setNextSong();
     void setPrevSong();
+    void playPressed();
+    void pausePressed();
 
 private:
     void init();

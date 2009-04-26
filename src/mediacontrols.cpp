@@ -26,8 +26,8 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 {
     init();
 
-    connect(play, SIGNAL(clicked()), controller, SLOT(play()));
-    connect(pause, SIGNAL(clicked()), controller, SLOT(pause()));
+    connect(play, SIGNAL(clicked()), this, SLOT(playPressed()));
+    connect(pause, SIGNAL(clicked()), this, SLOT(pausePressed()));
     connect(next, SIGNAL(clicked()), this, SLOT(setNextSong()));
     connect(prev, SIGNAL(clicked()), this, SLOT(setPrevSong()));
     
@@ -61,7 +61,8 @@ void MediaControls::init()
     pause = new QPushButton(style()->standardIcon(QStyle::SP_MediaPause), "", this);
     next = new QPushButton(style()->standardIcon(QStyle::SP_MediaSkipForward), "", this);
     prev = new QPushButton(style()->standardIcon(QStyle::SP_MediaSkipBackward), "", this);
-
+    
+    pause->setShortcut(Qt::Key_Space);
     next->setShortcut(Qt::Key_Right);
     prev->setShortcut(Qt::Key_Left);
     
@@ -107,6 +108,10 @@ void MediaControls::init()
 
 void MediaControls::songChanged(int row)
 {
+    //We're assuming when the song is changed, it won't be paused.
+    //Which is true for now.
+    play->setShortcut(NULL);
+    pause->setShortcut(Qt::Key_Space);
     table->selectRow(row);
 }
 
@@ -118,6 +123,22 @@ void MediaControls::getQueue(QList<Phonon::MediaSource> meta)
     metaResolver->setCurrentSource(metaSources.at(0));
     table->setRowCount(0);
     tableIndex = 1;
+}
+
+//Created these functions to reset keyboard shortcuts
+//Used F12 just because I
+void MediaControls::playPressed()
+{
+    play->setShortcut(NULL);
+    pause->setShortcut(Qt::Key_Space);
+    controller->play();
+}
+
+void MediaControls::pausePressed()
+{
+    play->setShortcut(Qt::Key_Space);
+    pause->setShortcut(NULL);
+    controller->pause();
 }
 
 QList<int> MediaControls::getTrackOrder()

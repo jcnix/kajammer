@@ -7,4 +7,24 @@ phonon-backend-gstreamer
 gstreamer
 gcc
 gcc-c++
-gstreamer-plugins-ugly (rpmfusion mp3 support)
+gstreamer-plugins-ugly (in rpmfusion, mp3 support)
+
+Dependencies for Ubuntu (Gnome):
+build-essential
+libphonon-dev
+libqt4-core
+libqt4-gui
+libqt4-dev
+phonon
+phonon-backend-xine 
+
+I couldn't get gstreamer to work, although it did work on Fedora
+Tested on Ubuntu 9.04 in VirtualBox 2.2.0
+
+Dependencies for KDE:
+Qt 4.4 or newer, if not 4.5
+Phonon is not supported in anything older than 4.4.  
+This also applies to Gnome.
+
+I use KDE 4.2.2 with Qt 4.5, so that would be the most tested configuration. ;)
+
