@@ -24,6 +24,7 @@
 #define	_MENUBAR_H
 
 #include <QtGui/QAction>
+#include <QtCore/QDir>
 #include <QtGui/QFileDialog>
 #include <QtGui/QInputDialog>
 #include <QtGui/QKeySequence>
