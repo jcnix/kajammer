@@ -41,12 +41,16 @@ public:
     bool useX();
     
 private:
+    Controller *controller;
+    Playlist *playlist;
+    
     int argc;
     bool useXorg;
     
     void play(QStringList);
     void newPlaylist(QString, QStringList);
     void delPlaylist(QStringList);
+    void listPlaylists();
     QStringList getArgList(char *argv[], int);
     QStringList appendFilePath(QStringList);
 };

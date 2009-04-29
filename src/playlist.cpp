@@ -108,3 +108,10 @@ QStringList Playlist::getPlaylistContents(int index)
     
     return playlist;
 }
+
+void Playlist::listPlaylists()
+{
+    int lists = count();
+    for(int i = 0; i < lists; i++)
+        std::cout << getPlaylistName(i).toStdString() << "\n";
+}

@@ -44,6 +44,7 @@ public:
     QString getPlaylistName(int);
     QStringList getPlaylistContents(int);
     int count();
+    void listPlaylists();
     
 signals:
     void resetPlaylists();

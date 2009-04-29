@@ -26,7 +26,10 @@ Cli::Cli(int argc, char *argv[])
 {
     this->argc = argc;
     useXorg = true;
-
+    
+    controller = Controller::getInstance();
+    playlist = Playlist::getInstance();
+    
     //Process arguments
     cliArgs(argv);
 }
@@ -49,6 +52,10 @@ void Cli::cliArgs(char *argv[])
                 play(args);
                 break;
             //New Playlist
+            case 'l':
+                useXorg = false;
+                listPlaylists();
+                break;
             case 'n':
                 useXorg = false;
                 args = getArgList(argv, 3);
@@ -111,8 +118,6 @@ QStringList Cli::appendFilePath(QStringList files)
 
 void Cli::play(QStringList songs)
 {
-    Controller *controller = Controller::getInstance();
-
     if(!songs.isEmpty())
     {
         //print file names if not using Gui
@@ -127,14 +132,12 @@ void Cli::play(QStringList songs)
 
 void Cli::newPlaylist(QString name, QStringList songs)
 {
-    Playlist *playlist = Playlist::getInstance();
     playlist->newPlaylist(name, songs);
 }
 
 //Delete all playlists given
 void Cli::delPlaylist(QStringList names)
 {
-    Playlist *playlist = Playlist::getInstance();
     QString name;
 
     for(int i = 0; i < names.count(); i++)
@@ -142,6 +145,11 @@ void Cli::delPlaylist(QStringList names)
         name = names.at(i);
         playlist->delPlaylist(name);
     }
+}
+
+void Cli::listPlaylists()
+{
+    playlist->listPlaylists();
 }
 
 bool Cli::useX()
