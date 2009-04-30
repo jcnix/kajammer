@@ -27,9 +27,6 @@ Cli::Cli(int argc, char *argv[])
     this->argc = argc;
     useXorg = true;
     
-    controller = Controller::getInstance();
-    playlist = Playlist::getInstance();
-    
     //Process arguments
     cliArgs(argv);
 }
@@ -71,7 +68,7 @@ void Cli::cliArgs(char *argv[])
             //Display version info
             case 'v':
                 useXorg = false;
-                std::cout << "KaJammer Music Player 0.4.5\n";
+                std::cout << "KaJammer Music Player 0.4.6\n";
                 break;
             //Don't bring up main window, no Xorg mode.
             case 'x':
@@ -82,10 +79,11 @@ void Cli::cliArgs(char *argv[])
                 useXorg = false;
                 std::cout << "Usage: kajammer [options...] [arguments...]\n";
                 std::cout << "\t" << "Where options include:\n";
-                std::cout << "\t" << "-p\t" << "play" << "[Files]\n";
+                std::cout << "\t" << "-p\t" << "play\t\t" << "[Files]\n";
                 std::cout << "\t" << "-n\t" << "new playlist\t" << "[Name] [Files]\n";
                 std::cout << "\t" << "-d\t" << "delete playlist\t" << "[Playlists]\n";
-                std::cout << "\t" << "-x\t" << "no X mode\t";
+                std::cout << "\t" << "-l\t" << "list playlists\n";
+                std::cout << "\t" << "-x\t" << "no X mode\n";
                 break;
         }
     }
@@ -118,6 +116,8 @@ QStringList Cli::appendFilePath(QStringList files)
 
 void Cli::play(QStringList songs)
 {
+    Controller *controller = Controller::getInstance();
+    
     if(!songs.isEmpty())
     {
         //print file names if not using Gui
@@ -132,12 +132,14 @@ void Cli::play(QStringList songs)
 
 void Cli::newPlaylist(QString name, QStringList songs)
 {
+    Playlist *playlist = Playlist::getInstance();
     playlist->newPlaylist(name, songs);
 }
 
 //Delete all playlists given
 void Cli::delPlaylist(QStringList names)
 {
+    Playlist *playlist = Playlist::getInstance();
     QString name;
 
     for(int i = 0; i < names.count(); i++)
@@ -149,6 +151,7 @@ void Cli::delPlaylist(QStringList names)
 
 void Cli::listPlaylists()
 {
+    Playlist *playlist = Playlist::getInstance();
     playlist->listPlaylists();
 }
 

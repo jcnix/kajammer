@@ -40,10 +40,7 @@ public:
     void cliArgs(char *argv[]);
     bool useX();
     
-private:
-    Controller *controller;
-    Playlist *playlist;
-    
+private:   
     int argc;
     bool useXorg;
     
