@@ -127,7 +127,7 @@ void Cli::play(QStringList songs)
         }
         controller->setQueue(songs);
     }
-    getchar();
+    if(!useXorg) getchar();
 }
 
 void Cli::newPlaylist(QString name, QStringList songs)
