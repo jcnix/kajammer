@@ -38,11 +38,15 @@ class Cli : public QObject
 public:
     Cli(int argc, char *argv[]);
     void cliArgs(char *argv[]);
-    bool useX();
+    bool getXFlag();
     
 private:   
     int argc;
-    bool useXorg;
+    bool xFlag;
+    bool pFlag;
+    bool nFlag;
+    bool dFlag;
+    bool lFlag;
     
     void play(QStringList);
     void newPlaylist(QString, QStringList);

@@ -33,9 +33,9 @@ int main(int argc, char *argv[])
     app.setApplicationName("KaJammer");
     
     Cli *cli = new Cli(argc, argv);
-    bool useXorg = cli->useX();
+    bool xFlag = cli->getXFlag();
     
-    if(useXorg)
+    if(!xFlag)
     {
         app.setWindowIcon(QIcon("/usr/share/icons/oxygen/22x22/categories/applications-multimedia.png"));
         app.setQuitOnLastWindowClosed(true);

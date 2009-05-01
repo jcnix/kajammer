@@ -25,7 +25,7 @@
 Cli::Cli(int argc, char *argv[])
 {
     this->argc = argc;
-    useXorg = true;
+    xFlag = false;
     
     //Process arguments
     cliArgs(argv);
@@ -35,8 +35,6 @@ void Cli::cliArgs(char *argv[])
 {
     int c;
     QStringList args;
-    QStringList args2;
-
     opterr = 0;
 
     while ((c = getopt(argc, argv, "plndvx")) != -1)
@@ -45,38 +43,41 @@ void Cli::cliArgs(char *argv[])
         {
             //Play
             case 'p':
-                args = getArgList(argv, 2);
-                play(args);
+                pFlag = true;
                 break;
-            //New Playlist
+                
+            //List playlists
             case 'l':
-                useXorg = false;
-                listPlaylists();
+                lFlag = true;
+                xFlag = true;
                 break;
+            
+            //New Playlist
             case 'n':
-                useXorg = false;
-                args = getArgList(argv, 3);
-                args2 = appendFilePath(args);
-                newPlaylist(argv[2], args2);
+                nFlag = true;
+                xFlag = true;
                 break;
+            
             //Delete Playlist
             case 'd':
-                useXorg = false;
-                args = getArgList(argv, 2);
-                delPlaylist(args);
+                dFlag = true;
+                xFlag = true;
                 break;
+            
             //Display version info
             case 'v':
-                useXorg = false;
+                xFlag = true;
                 std::cout << "KaJammer Music Player 0.4.6\n";
                 break;
+            
             //Don't bring up main window, no Xorg mode.
             case 'x':
-                useXorg = false;
+                xFlag = true;
                 break;
+            
             //Command not recognized
             default:
-                useXorg = false;
+                xFlag = true;
                 std::cout << "Usage: kajammer [options...] [arguments...]\n";
                 std::cout << "\t" << "Where options include:\n";
                 std::cout << "\t" << "-p\t" << "play\t\t" << "[Files]\n";
@@ -85,6 +86,25 @@ void Cli::cliArgs(char *argv[])
                 std::cout << "\t" << "-l\t" << "list playlists\n";
                 std::cout << "\t" << "-x\t" << "no X mode\n";
                 break;
+        }
+        
+        if(pFlag) {
+            args = getArgList(argv, 2);
+            play(args);
+        }
+        
+        if(nFlag) {
+            args = appendFilePath(getArgList(argv, 3));
+            newPlaylist(argv[2], args);
+        }
+        
+        if(dFlag) {
+            args = getArgList(argv, 2);
+            delPlaylist(args);
+        }
+        
+        if(lFlag) {
+            listPlaylists();
         }
     }
 }
@@ -127,7 +147,7 @@ void Cli::play(QStringList songs)
         }
         controller->setQueue(songs);
     }
-    if(!useXorg) getchar();
+    if(xFlag) getchar();
 }
 
 void Cli::newPlaylist(QString name, QStringList songs)
@@ -155,7 +175,7 @@ void Cli::listPlaylists()
     playlist->listPlaylists();
 }
 
-bool Cli::useX()
+bool Cli::getXFlag()
 {
-    return useXorg;
+    return xFlag;
 }
