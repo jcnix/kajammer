@@ -54,7 +54,7 @@ void Controller::setQueue(QStringList queue)
     trackQueue.clear();
     currentSong = -1;
     currentRow = -1;
-    currentOrder = 1;
+    currentOrder = 0;
 
     // _Will_ crash if queue is empty
     if(!queue.isEmpty())

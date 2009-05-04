@@ -40,6 +40,9 @@ public:
     void cliArgs(char *argv[]);
     bool getXFlag();
     
+public slots:
+    //void setNextSong();
+    
 private:   
     int argc;
     bool xFlag;
