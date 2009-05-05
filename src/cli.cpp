@@ -87,25 +87,25 @@ void Cli::cliArgs(char *argv[])
                 std::cout << "\t" << "-x\t" << "no X mode\n";
                 break;
         }
-        
-        if(pFlag) {
-            args = getArgList(argv, 2);
-            play(args);
-        }
-        
-        if(nFlag) {
-            args = appendFilePath(getArgList(argv, 3));
-            newPlaylist(argv[2], args);
-        }
-        
-        if(dFlag) {
-            args = getArgList(argv, 2);
-            delPlaylist(args);
-        }
-        
-        if(lFlag) {
-            listPlaylists();
-        }
+    }
+    
+    if(pFlag) {
+        args = getArgList(argv, 2);
+        play(args);
+    }
+    
+    if(nFlag) {
+        args = appendFilePath(getArgList(argv, 3));
+        newPlaylist(argv[2], args);
+    }
+    
+    if(dFlag) {
+        args = getArgList(argv, 2);
+        delPlaylist(args);
+    }
+    
+    if(lFlag) {
+        listPlaylists();
     }
 }
 
@@ -137,7 +137,6 @@ QStringList Cli::appendFilePath(QStringList files)
 void Cli::play(QStringList songs)
 {
     Controller *controller = Controller::getInstance();
-    
     if(!songs.isEmpty())
     {
         //print file names if not using Gui

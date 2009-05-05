@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     
     Cli *cli = new Cli(argc, argv);
     bool xFlag = cli->getXFlag();
-    
+
     if(!xFlag)
     {
         app.setWindowIcon(QIcon("/usr/share/icons/oxygen/22x22/categories/applications-multimedia.png"));
