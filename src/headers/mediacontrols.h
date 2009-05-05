@@ -87,10 +87,6 @@ private:
     QStringList tableLabels;
     
     int tableIndex;
-    
-    QHBoxLayout *tableLayout;
-    QHBoxLayout *hLayout;
-    QVBoxLayout *vLayout;
 };
 
 #endif /* _CONTROLS_H */

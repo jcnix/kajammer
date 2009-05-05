@@ -88,18 +88,21 @@ void MediaControls::init()
     playlistTable->setMaximumWidth(125);
     setupPlaylists(); //Fill table with playlists
     
-    tableLayout = new QHBoxLayout;
+    QHBoxLayout *tableLayout = new QHBoxLayout;
     tableLayout->addWidget(playlistTable);
     tableLayout->addWidget(table);
-
-    hLayout = new QHBoxLayout;
-    hLayout->addWidget(prev);
-    hLayout->addWidget(play);
-    hLayout->addWidget(pause);
-    hLayout->addWidget(next);
+    
+    QHBoxLayout *buttonLayout = new QHBoxLayout;
+    buttonLayout->addWidget(prev);
+    buttonLayout->addWidget(play);
+    buttonLayout->addWidget(pause);
+    buttonLayout->addWidget(next);
+    
+    QHBoxLayout *hLayout = new QHBoxLayout;
+    hLayout->addLayout(buttonLayout);
     hLayout->addWidget(volumeSlider);
 
-    vLayout = new QVBoxLayout;
+    QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addLayout(tableLayout);
     vLayout->addWidget(seekSlider);
     vLayout->addLayout(hLayout);
