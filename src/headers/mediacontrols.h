@@ -45,6 +45,8 @@
 #include "controller.h"
 #include "playlist.h"
 
+#define PLAYLIST_WIDTH 180
+
 class MediaControls : public QWidget
 {
     Q_OBJECT;
