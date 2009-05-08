@@ -21,7 +21,6 @@
  */
 
 #include "headers/optionsPanel.h"
-#include <iostream>
 
 OptionsPanel::OptionsPanel()
 {
@@ -30,6 +29,7 @@ OptionsPanel::OptionsPanel()
     
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(save()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(browseDefaultOpenBtn, SIGNAL(clicked()), this, SLOT(browseDefaultOpen()));
 }
 
 void OptionsPanel::init()
@@ -40,10 +40,12 @@ void OptionsPanel::init()
     defaultOpenLabel = new QLabel("Music directory");
     defaultOpen = new QLineEdit;
     defaultOpen->setMinimumWidth(175);
+    browseDefaultOpenBtn = new QPushButton("...");
     
     QHBoxLayout *defaultOpenLayout = new QHBoxLayout;
     defaultOpenLayout->addWidget(defaultOpenLabel);
     defaultOpenLayout->addWidget(defaultOpen);
+    defaultOpenLayout->addWidget(browseDefaultOpenBtn);
     
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addLayout(defaultOpenLayout);
@@ -63,4 +65,16 @@ void OptionsPanel::save()
     options->save();
     
     accept();
+}
+
+void OptionsPanel::browseDefaultOpen()
+{
+    QString dir;
+    dir = QFileDialog::getExistingDirectory(NULL, 
+                                             "Open Directory", 
+                                             QDir::homePath(),
+                                             QFileDialog::ShowDirsOnly
+                                             | QFileDialog::DontResolveSymlinks);
+                                             
+     defaultOpen->setText(dir);
 }

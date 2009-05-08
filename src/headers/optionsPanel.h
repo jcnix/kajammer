@@ -23,6 +23,7 @@
 #ifndef _OPTIONSPANEL_H
 #define _OPTIONSPANEL_H
 
+#include <iostream>
 #include <QtCore/QObject>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
@@ -33,8 +34,10 @@
 #include <QtCore/QTextStream>
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
+#include <QtGui/QFileDialog>
 #include <QtGui/QLineEdit>
 #include <QtGui/QHBoxLayout>
+#include <QtGui/QPushButton>
 #include <QtGui/QVBoxLayout>
 
 #include "options.h"
@@ -48,6 +51,7 @@ public:
     
 public slots:
     void save();
+    void browseDefaultOpen();
     
 private:
     void init();
@@ -60,6 +64,7 @@ private:
     QDialogButtonBox *buttonBox;
     QLabel *defaultOpenLabel;
     QLineEdit *defaultOpen;
+    QPushButton *browseDefaultOpenBtn;
 };
 
 #endif /* _OPTIONSPANEL_H */
