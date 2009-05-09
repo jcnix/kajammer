@@ -173,16 +173,14 @@ void MediaControls::setNextSong()
 {
     //std::cout << "MediaControls::setNextSong();\n";
     controller->setTrackOrder(getTrackOrder());
-    int song = getTrack(controller->getCurrentRow() + 1);
-    if(song != -1) controller->setNextSong();
+    controller->setNextSong();
 }
 
 void MediaControls::setPrevSong()
 {   
     //std::cout << "MediaControls::setPrevSong();\n";
     controller->setTrackOrder(getTrackOrder());
-    int song = getTrack(controller->getCurrentRow() - 1);
-    if(song != -1) controller->setPrevSong();
+    controller->setPrevSong();
 }
 
 void MediaControls::setMetaData()

@@ -116,9 +116,12 @@ void Controller::setNextSong()
     //subtract one to prevent a crash when last song on table finishes.
     if(currentRow < trackQueue.count() - 1)
     {
-        currentOrder++;
-        int track = trackOrder.at(currentOrder);
-        setSong(track, currentRow + 1);
+        if(currentOrder <= trackOrder.count())
+        {
+            currentOrder++;
+            int track = trackOrder.at(currentOrder);
+            setSong(track, currentRow + 1);
+        }
     }
 }
 
@@ -127,9 +130,12 @@ void Controller::setPrevSong()
     //std::cout << "Controller::setPrevSong();\n";
     if(currentRow != 0)
     {
-        currentOrder--;
-        int track = trackOrder.at(currentOrder);
-        setSong(track, currentRow -1);
+        if(currentOrder > 0)
+        {
+            currentOrder--;
+            int track = trackOrder.at(currentOrder);
+            setSong(track, currentRow -1);
+        }
     }
 }
 
