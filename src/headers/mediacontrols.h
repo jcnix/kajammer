@@ -67,8 +67,6 @@ public slots:
 
 private:
     void init();
-    int getTrack(int);
-    QList<int> getTrackOrder();
 
     Controller *controller;
     Playlist *playlist;

@@ -41,12 +41,10 @@ class Controller : public QObject
 public:
     static Controller* getInstance();
     void setQueue(QStringList);
-    void resetCurrentList();
-    Phonon::AudioOutput* getAudioOutput();
-    Phonon::MediaObject* getMediaObject();
-    int getCurrentRow();
-    void setTrackOrder(QList<int> order) { trackOrder = order; }
-    void setCurrentOrder(int row) { currentOrder = row; }
+    void resetCurrentList() { currentList = -1; }
+    Phonon::AudioOutput* getAudioOutput() { return audioOutput; }
+    Phonon::MediaObject* getMediaObject() { return mediaObject; }
+    int getCurrentRow() { return currentRow; }
     
 public slots:
     void setSong(int);
@@ -72,11 +70,9 @@ private:
     Phonon::AudioOutput *audioOutput;
     Phonon::MediaObject *mediaObject;
     QMap<int, Phonon::MediaSource> trackQueue;
-    QList<int> trackOrder;
     int currentSong;
     int currentList;
     int currentRow;
-    int currentOrder;
 };
 
 #endif /* _CONTROLLER_H */

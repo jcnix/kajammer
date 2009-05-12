@@ -54,7 +54,6 @@ void Controller::setQueue(QStringList queue)
     trackQueue.clear();
     currentSong = -1;
     currentRow = -1;
-    currentOrder = 0;
 
     // _Will_ crash if queue is empty
     if(!queue.isEmpty())
@@ -62,8 +61,6 @@ void Controller::setQueue(QStringList queue)
         // Finally add new data to the queue
         for(int i = 0; i < queue.count(); i++)
         {
-            //Reset trackOrder
-            trackOrder.append(i);
             Phonon::MediaSource source = queue.at(i);
             
             //turn a 0 into a 1, much more easy and standard way of dealing with the tracks.
@@ -116,12 +113,7 @@ void Controller::setNextSong()
     //subtract one to prevent a crash when last song on table finishes.
     if(currentRow < trackQueue.count() - 1)
     {
-        if(currentOrder <= trackOrder.count())
-        {
-            currentOrder++;
-            int track = trackOrder.at(currentOrder);
-            setSong(track, currentRow + 1);
-        }
+            setSong(currentSong + 1, currentRow + 1);
     }
 }
 
@@ -130,12 +122,7 @@ void Controller::setPrevSong()
     //std::cout << "Controller::setPrevSong();\n";
     if(currentRow != 0)
     {
-        if(currentOrder > 0)
-        {
-            currentOrder--;
-            int track = trackOrder.at(currentOrder);
-            setSong(track, currentRow -1);
-        }
+            setSong(currentSong - 1, currentRow -1);
     }
 }
 
@@ -147,24 +134,4 @@ void Controller::changePlaylist(int index)
         QStringList list = playlist->getPlaylistContents(index);
         controller->setQueue(list);
     }
-}
-
-void Controller::resetCurrentList()
-{
-    currentList = -1;
-}
-
-Phonon::AudioOutput* Controller::getAudioOutput()
-{
-    return audioOutput;
-}
-
-Phonon::MediaObject* Controller::getMediaObject()
-{
-    return mediaObject;
-}
-
-int Controller::getCurrentRow()
-{
-    return currentRow;
 }

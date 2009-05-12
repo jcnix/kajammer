@@ -77,7 +77,6 @@ void MediaControls::init()
     table->setHorizontalHeaderLabels(tableHeaders);
     table->setSelectionBehavior(QAbstractItemView::SelectRows);
     table->setShowGrid(false);
-    table->setSortingEnabled(true);
     
     playlistTable = new QTableWidget;
     playlistTable->setColumnCount(1);
@@ -144,42 +143,15 @@ void MediaControls::pausePressed()
     controller->pause();
 }
 
-QList<int> MediaControls::getTrackOrder()
-{
-    //std::cout << "MediaControls::getTrackOrder();\n";
-    QList<int> order;
-    for(int i = 0; i < table->rowCount(); i++)
-    {
-        int track = getTrack(i);
-        order.append(track);
-    }
-    return order;
-}
-
-int MediaControls::getTrack(int row)
-{  
-    //std::cout << "MediaControls::getTrack(" << row << ");\n";
-    if(row >= 0 && row < table->rowCount())
-    {
-        QTableWidgetItem *item = table->item(row, 0);
-        QString text = item->text();
-        int track = text.toInt();
-        return track;
-    }
-    else return -1;
-}
-
 void MediaControls::setNextSong()
 {
     //std::cout << "MediaControls::setNextSong();\n";
-    controller->setTrackOrder(getTrackOrder());
     controller->setNextSong();
 }
 
 void MediaControls::setPrevSong()
 {   
     //std::cout << "MediaControls::setPrevSong();\n";
-    controller->setTrackOrder(getTrackOrder());
     controller->setPrevSong();
 }
 
@@ -225,10 +197,7 @@ void MediaControls::setMetaData()
 
 void MediaControls::tableClicked(int row)
 {
-    controller->setTrackOrder(getTrackOrder());
-    controller->setCurrentOrder(row);
-    int song = getTrack(row);
-    controller->setSong(song, row);
+    controller->setSong(row + 1, row);
 }
 
 // Fill playlist table with playlists
