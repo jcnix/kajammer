@@ -53,6 +53,7 @@ private slots:
     void open();
     void quit();
     void showOptions();
+    void showPlaylistEditor();
     void aboutDialog();
 
 private:
@@ -67,6 +68,7 @@ private:
     QAction *openFile;
     QAction *close;
     QAction *optionsAction;
+    QAction *playlistEditAction;
     QAction *about;
     QMenuBar *menuBar;
     QMenu *file;

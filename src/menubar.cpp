@@ -32,6 +32,7 @@ MenuBar::MenuBar()
     connect(delPlaylist, SIGNAL(triggered()), this, SLOT(deletePlaylist()));
     connect(close, SIGNAL(triggered()), this, SLOT(quit()));
     connect(optionsAction, SIGNAL(triggered()), this, SLOT(showOptions()));
+    connect(playlistEditAction, SIGNAL(triggered()), this, SLOT(showPlaylistEditor()));
     connect(about, SIGNAL(triggered()), this, SLOT(aboutDialog()));
 }
 
@@ -56,6 +57,7 @@ void MenuBar::init()
     delPlaylist = new QAction("&Delete Playlist...", this);
     close = new QAction("E&xit", this);
     optionsAction = new QAction("&Options", this);
+    playlistEditAction = new QAction("&Playlist Editor", this);
     about = new QAction("&About", this);
     
     newPlaylist->setShortcut(QKeySequence::New);
@@ -69,6 +71,7 @@ void MenuBar::init()
     file->addAction(close);
     
     tools->addAction(optionsAction);
+    tools->addAction(playlistEditAction);
     
     help->addAction(about);
 }
@@ -128,6 +131,8 @@ void MenuBar::showOptions()
     panel = new OptionsPanel;
     panel->show();
 }
+
+void MenuBar::showPlaylistEditor() {}
     
 
 void MenuBar::aboutDialog()
