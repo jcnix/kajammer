@@ -24,8 +24,6 @@
 #define	_MAINWINDOW_H
 
 #include <QtGui/QMainWindow>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
 
 #include "mediacontrols.h"
 #include "menubar.h"

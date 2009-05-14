@@ -26,8 +26,6 @@
 #include <iostream>
 #include <QtCore/QObject>
 #include <QtCore/QDir>
-#include <QtCore/QFile>
-#include <QtCore/QIODevice>
 #include <QtGui/QLabel>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
