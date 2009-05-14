@@ -1,5 +1,5 @@
 /*
- * File:   options.h
+ * File:   playlistEditor.h
  * Author: casey
  *
  * Created on March 10, 2009, 4:27 PM
@@ -20,37 +20,14 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPTIONS_H
-#define _OPTIONS_H
+#ifndef _PLAYLISTEDITOR_H
+#define _PLAYLISTEDITOR_H
 
-#include <QtCore/QObject>
-#include <QtCore/QDir>
-#include <QtCore/QFile>
-#include <QtCore/QIODevice>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QTextStream>
 
-class Options
+
+class PlaylistEditor
 {
-public:
-    static Options* getInstance();
-    void save();
-    
-    void setDefaultOpenDir(QString);
-    
-    QString getDefaultOpenDir();
-    
-protected:
-    Options();
-    
-private:
-    static Options *options;
-    
-    void readOptions();
-    
-    QString confPath;
-    QString defaultOpenDir;
+
 };
 
-#endif /* _OPTIONS_H */
+#endif /* _PLAYLISTEDITOR_H */
