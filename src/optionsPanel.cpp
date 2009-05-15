@@ -36,6 +36,8 @@ void OptionsPanel::init()
 {   
     options = Options::getInstance();
 
+    setWindowTitle("KaJammer Options");
+    
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     defaultOpenLabel = new QLabel("Music directory");
     defaultOpen = new QLineEdit;
