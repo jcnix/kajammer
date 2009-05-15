@@ -23,11 +23,15 @@
 #ifndef _PLAYLISTEDITOR_H
 #define _PLAYLISTEDITOR_H
 
+#include <QtGui/QDialog>
 
-
-class PlaylistEditor
+class PlaylistEditor : public QDialog
 {
-
+public:
+    PlaylistEditor();
+    
+private:
+    void init();
 };
 
 #endif /* _PLAYLISTEDITOR_H */

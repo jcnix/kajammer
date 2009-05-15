@@ -38,6 +38,7 @@
 #include "playlist.h"
 #include "optionsPanel.h"
 #include "options.h"
+#include "playlistEditor.h"
 
 class MenuBar : public QMenuBar
 {

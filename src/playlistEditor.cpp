@@ -19,3 +19,15 @@
  * You should have received a copy of the GNU General Public License
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+#include "headers/playlistEditor.h"
+
+PlaylistEditor::PlaylistEditor()
+{
+    init();
+}
+
+void PlaylistEditor::init()
+{
+    setWindowTitle("KaJammer Playlist Editor");
+}

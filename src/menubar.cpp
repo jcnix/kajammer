@@ -132,7 +132,12 @@ void MenuBar::showOptions()
     panel->show();
 }
 
-void MenuBar::showPlaylistEditor() {}
+void MenuBar::showPlaylistEditor() 
+{
+    PlaylistEditor *editor;
+    editor = new PlaylistEditor;
+    editor->show();
+}
     
 
 void MenuBar::aboutDialog()
