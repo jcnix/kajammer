@@ -215,9 +215,9 @@ void MediaControls::setupPlaylists()
         QTableWidgetItem *listName = new QTableWidgetItem(list);
         playlistTable->insertRow(i);
         playlistTable->setItem(i, 0, listName);
-        /* Subtract 33, so the column doesn't stretch past the table width
-         * 33 seems to works best, but it seems like way too much */
-        playlistTable->setColumnWidth(0, PLAYLIST_WIDTH - 33);
+        /* Subtract 35, so the column doesn't stretch past the table width
+         * 35 seems to works best, but it seems like way too much to me*/
+        playlistTable->setColumnWidth(0, PLAYLIST_WIDTH - 35);
         
         labels.append("");
         playlistTable->setVerticalHeaderLabels(labels);
