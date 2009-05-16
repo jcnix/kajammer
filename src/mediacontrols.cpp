@@ -169,7 +169,12 @@ void MediaControls::setMetaData()
     QTableWidgetItem *artistItem = new QTableWidgetItem(metaData.value("ARTIST"));
     QTableWidgetItem *albumItem = new QTableWidgetItem(metaData.value("ALBUM"));
     QTableWidgetItem *indexItem = new QTableWidgetItem(QString::number(tableIndex++));
-
+    
+    titleItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+    artistItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+    albumItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+    indexItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+    
     int row = table->rowCount();
     table->insertRow(row);
     table->setItem(row, 0, indexItem);
@@ -213,6 +218,7 @@ void MediaControls::setupPlaylists()
         QString list = playlist->getPlaylistName(i);
         
         QTableWidgetItem *listName = new QTableWidgetItem(list);
+        listName->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         playlistTable->insertRow(i);
         playlistTable->setItem(i, 0, listName);
         /* Subtract 35, so the column doesn't stretch past the table width
