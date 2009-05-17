@@ -109,6 +109,19 @@ QStringList Playlist::getPlaylistContents(int index)
     return playlist;
 }
 
+QString Playlist::getEntirePlaylist(QString name)
+{
+    QFile playlistFile(QDir::homePath() + "/.kajammer/playlists/" + name);
+    playlistFile.open(QIODevice::ReadOnly);
+    
+    QString playlist;    
+    QTextStream in(&playlistFile);
+    
+    playlist = in.readAll();
+    
+    return playlist;
+}
+
 void Playlist::listPlaylists()
 {
     int lists = count();

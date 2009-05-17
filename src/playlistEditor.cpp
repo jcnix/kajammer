@@ -21,12 +21,13 @@
  */
 
 #include "headers/playlistEditor.h"
+#include <iostream>
 
 PlaylistEditor::PlaylistEditor()
 {
     init();
     
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(save()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 }
 
@@ -34,7 +35,12 @@ void PlaylistEditor::init()
 {
     setWindowTitle("KaJammer Playlist Editor");
     
+    playlist = Playlist::getInstance();
     textEdit = new QTextEdit;
+    textEdit->setMinimumSize(550, 300);
+    playlistDocument = new QTextDocument(playlist->getEntirePlaylist("test"));
+    textEdit->setDocument(playlistDocument);
+    
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     
     QVBoxLayout *vLayout = new QVBoxLayout;

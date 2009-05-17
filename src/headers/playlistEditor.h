@@ -24,18 +24,22 @@
 #define _PLAYLISTEDITOR_H
 
 #include <QtGui/QDialog>
-#include <QtCore/QObject>
 #include <QtCore/QDir>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
-#include <QtGui/QTextEdit>
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QPushButton>
+#include <QtGui/QTextEdit>
+#include <QtGui/QTextDocument>
 #include <QtGui/QVBoxLayout>
+
+#include "playlist.h"
 
 class PlaylistEditor : public QDialog
 {
+  Q_OBJECT;
+  
 public:
     PlaylistEditor();
     
@@ -45,8 +49,10 @@ public slots:
 private:
     void init();
     
+    Playlist *playlist;
     QDialogButtonBox *buttonBox;
     QTextEdit *textEdit;
+    QTextDocument *playlistDocument;
 };
 
 #endif /* _PLAYLISTEDITOR_H */
