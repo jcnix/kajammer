@@ -35,6 +35,8 @@ void Playlist::init()
     QString home = QDir::homePath();
     QDir kajamDir = QDir(home + "/.kajammer/");
     
+    playlistDir = home + "/.kajammer/playlists/";
+    
     if(!kajamDir.exists())
     {
         kajamDir.mkdir(home + "/.kajammer");
@@ -95,9 +97,9 @@ QString Playlist::getPlaylistName(int index)
     return name;
 }
 
-QStringList Playlist::getPlaylistContents(int index)
+QStringList Playlist::getPlaylistContents(QString name)
 {
-    QFile playlistFile(info.at(index).canonicalFilePath());
+    QFile playlistFile(playlistDir + name);
     playlistFile.open(QIODevice::ReadOnly);
     
     QStringList playlist;    
@@ -111,7 +113,7 @@ QStringList Playlist::getPlaylistContents(int index)
 
 QString Playlist::getEntirePlaylist(QString name)
 {
-    QFile playlistFile(QDir::homePath() + "/.kajammer/playlists/" + name);
+    QFile playlistFile(playlistDir + name);
     playlistFile.open(QIODevice::ReadOnly);
     
     QString playlist;    

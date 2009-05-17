@@ -54,7 +54,7 @@ public slots:
     void pause() { mediaObject->pause(); }
     void setNextSong();
     void setPrevSong();
-    void changePlaylist(int);
+    void changePlaylist(QString, int);
 
 signals:
     void songChanged(int);

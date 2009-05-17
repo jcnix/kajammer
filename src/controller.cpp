@@ -126,12 +126,12 @@ void Controller::setPrevSong()
     }
 }
 
-void Controller::changePlaylist(int index)
+void Controller::changePlaylist(QString name, int index)
 {
     if(currentList != index)
     {
         currentList = index;
-        QStringList list = playlist->getPlaylistContents(index);
+        QStringList list = playlist->getPlaylistContents(name);
         controller->setQueue(list);
     }
 }

@@ -42,7 +42,7 @@ public:
     void newPlaylist(QString, QStringList);
     void delPlaylist(QString);
     QString getPlaylistName(int);
-    QStringList getPlaylistContents(int);
+    QStringList getPlaylistContents(QString);
     int count();
     void listPlaylists();
     QString getEntirePlaylist(QString);
@@ -58,6 +58,7 @@ private:
     
     static Playlist *playlist;
     QList<QFileInfo> info;
+    QString playlistDir;
 };
 
 #endif /* _PLAYLIST_H */

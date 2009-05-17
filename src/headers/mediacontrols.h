@@ -64,6 +64,7 @@ public slots:
     void setPrevSong();
     void playPressed();
     void pausePressed();
+    void changePlaylist(int);
 
 private:
     void init();

@@ -36,7 +36,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
             SLOT(getQueue(QList<Phonon::MediaSource>)));
     connect(metaResolver, SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));
     connect(table, SIGNAL(cellClicked(int, int)), this, SLOT(tableClicked(int)));
-    connect(playlistTable, SIGNAL(cellClicked(int, int)), controller, SLOT(changePlaylist(int)));
+    connect(playlistTable, SIGNAL(cellClicked(int, int)), this, SLOT(changePlaylist(int)));
     connect(playlist, SIGNAL(resetPlaylists()), this, SLOT(setupPlaylists()));
 }
 
@@ -221,11 +221,19 @@ void MediaControls::setupPlaylists()
         listName->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         playlistTable->insertRow(i);
         playlistTable->setItem(i, 0, listName);
-        /* Subtract 35, so the column doesn't stretch past the table width
-         * 35 seems to works best, but it seems like way too much to me*/
-        playlistTable->setColumnWidth(0, PLAYLIST_WIDTH - 35);
         
         labels.append("");
         playlistTable->setVerticalHeaderLabels(labels);
     }
+    
+    /* Subtract 35, so the column doesn't stretch past the table width
+    * 35 seems to works best, but it seems like way too much to me*/
+    playlistTable->setColumnWidth(0, PLAYLIST_WIDTH - 35);
+}
+
+void MediaControls::changePlaylist(int row)
+{
+    QTableWidgetItem *clickedList = playlistTable->item(row, 0);
+    QString name = clickedList->text();
+    controller->changePlaylist(name, row);
 }
