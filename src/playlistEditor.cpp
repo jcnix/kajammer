@@ -53,7 +53,21 @@ void PlaylistEditor::init()
 }
 
 void PlaylistEditor::save()
-{}
+{
+    QTextDocument *document = textEdit->document();
+    QStringList text;
+    
+    /* Got lazy.  The string that get put into text will (or should)
+     * have linebreaks already if the user hasn't mashed everything into line
+     * which I have really no way of fixing.
+     * so the playlist will be written as one big string with linebreaks 
+     * already inserted */
+    text.append(document->toPlainText());
+    
+    //Delete old Playlist and replace with new
+    playlist->delPlaylist(playlistFile);
+    playlist->newPlaylist(playlistFile, text);
+}
 
 void PlaylistEditor::openPlaylist()
 {
