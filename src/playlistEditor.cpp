@@ -67,6 +67,8 @@ void PlaylistEditor::save()
     //Delete old Playlist and replace with new
     playlist->delPlaylist(playlistFile);
     playlist->newPlaylist(playlistFile, text);
+    
+    accept();
 }
 
 void PlaylistEditor::openPlaylist()
