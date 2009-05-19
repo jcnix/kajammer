@@ -25,9 +25,11 @@
 
 #include <QtGui/QDialog>
 #include <QtCore/QDir>
+#include <QtCore/QFileInfo>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtGui/QDialogButtonBox>
+#include <QtGui/QFileDialog>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QPushButton>
 #include <QtGui/QTextEdit>
@@ -45,14 +47,17 @@ public:
     
 public slots:
     void save();
+    void openPlaylist();
     
 private:
     void init();
     
     Playlist *playlist;
     QDialogButtonBox *buttonBox;
+    QString playlistFile;
     QTextEdit *textEdit;
     QTextDocument *playlistDocument;
+    QPushButton *open;
 };
 
 #endif /* _PLAYLISTEDITOR_H */

@@ -29,6 +29,7 @@ PlaylistEditor::PlaylistEditor()
     
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(save()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(open, SIGNAL(clicked()), this, SLOT(openPlaylist()));
 }
 
 void PlaylistEditor::init()
@@ -38,16 +39,36 @@ void PlaylistEditor::init()
     playlist = Playlist::getInstance();
     textEdit = new QTextEdit;
     textEdit->setMinimumSize(550, 300);
-    playlistDocument = new QTextDocument(playlist->getEntirePlaylist("test"));
-    textEdit->setDocument(playlistDocument);
+    
+    open = new QPushButton("Open");
+    open->setMaximumWidth(75);
     
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addWidget(textEdit);
+    vLayout->addWidget(open);
     vLayout->addWidget(buttonBox);
     setLayout(vLayout);
 }
 
 void PlaylistEditor::save()
 {}
+
+void PlaylistEditor::openPlaylist()
+{
+    QString playlistDir = QDir::homePath() + "/.kajammer/playlists";
+    
+    playlistFile = QFileDialog::getOpenFileName(this, tr("Open File"), 
+                                                playlistDir, "");
+    
+                                                
+    if(!playlistFile.isEmpty())
+    {
+        // figure out the file's name, we don't need the full path
+        QFileInfo file(playlistFile);
+        playlistFile = file.fileName();
+        playlistDocument = new QTextDocument(playlist->getEntirePlaylist(playlistFile));
+        textEdit->setDocument(playlistDocument);
+    }
+}
