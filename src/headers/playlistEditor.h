@@ -37,6 +37,7 @@
 #include <QtGui/QVBoxLayout>
 
 #include "playlist.h"
+#include "options.h"
 
 class PlaylistEditor : public QDialog
 {
@@ -48,6 +49,7 @@ public:
 public slots:
     void save();
     void openPlaylist();
+    void addTracks();
     
 private:
     void init();
@@ -58,6 +60,7 @@ private:
     QTextEdit *textEdit;
     QTextDocument *playlistDocument;
     QPushButton *open;
+    QPushButton *add;
 };
 
 #endif /* _PLAYLISTEDITOR_H */

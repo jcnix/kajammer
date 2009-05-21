@@ -113,10 +113,9 @@ void MenuBar::deletePlaylist()
 void MenuBar::open()
 {
     QString defaultDir = options->getDefaultOpenDir();
-    if(defaultDir.isEmpty() || defaultDir == NULL)\
-        defaultDir = QDir::homePath();
+    
     fileQueue = QFileDialog::getOpenFileNames(this, tr("Open File"), defaultDir, 
-                                               tr("Music Files (*.mp3 *.ogg *.aac)"));
+                                               tr("Music Files (*.mp3 *.ogg *.aac *.flac *.wma *.wav)"));
     //Make sure user didn't cancel out of the dialog
     if(!fileQueue.isEmpty())
     {

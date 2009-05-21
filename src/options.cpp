@@ -98,5 +98,7 @@ void Options::setDefaultOpenDir(QString dir)
 
 QString Options::getDefaultOpenDir()
 {
+    if(defaultOpenDir.isEmpty() || defaultOpenDir == NULL)
+        defaultOpenDir = QDir::homePath();
     return defaultOpenDir;
 }

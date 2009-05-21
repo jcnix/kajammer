@@ -30,6 +30,7 @@ PlaylistEditor::PlaylistEditor()
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(save()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
     connect(open, SIGNAL(clicked()), this, SLOT(openPlaylist()));
+    connect(add, SIGNAL(clicked()), this, SLOT(addTracks()));
 }
 
 void PlaylistEditor::init()
@@ -41,13 +42,20 @@ void PlaylistEditor::init()
     textEdit->setMinimumSize(550, 300);
     
     open = new QPushButton("Open");
+    add = new QPushButton("Add...");
+    
     open->setMaximumWidth(75);
+    add->setMaximumWidth(75);
     
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     
+    QHBoxLayout *hLayout = new QHBoxLayout;
+    hLayout->addWidget(open);
+    hLayout->addWidget(add);
+    
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addWidget(textEdit);
-    vLayout->addWidget(open);
+    vLayout->addLayout(hLayout);
     vLayout->addWidget(buttonBox);
     setLayout(vLayout);
 }
@@ -87,4 +95,22 @@ void PlaylistEditor::openPlaylist()
         playlistDocument = new QTextDocument(playlist->getEntirePlaylist(playlistFile));
         textEdit->setDocument(playlistDocument);
     }
+}
+
+void PlaylistEditor::addTracks()
+{
+    Options *options = Options::getInstance();
+    QString defaultDir = options->getDefaultOpenDir();
+    
+    QStringList fileQueue = QFileDialog::getOpenFileNames(this, tr("Open File"), defaultDir, 
+                                               tr("Music Files (*.mp3 *.ogg *.aac *.flac *.wma *.wav)"));
+                                               
+    QString currentDocument = textEdit->document()->toPlainText();
+    
+    QString newTracks;
+    for(int i = 0; i < fileQueue.count(); i++)
+        newTracks += fileQueue.at(i) + "\n";
+    
+    playlistDocument = new QTextDocument(currentDocument + newTracks);
+    textEdit->setDocument(playlistDocument);
 }
