@@ -60,8 +60,6 @@ public slots:
     void getQueue(QList<Phonon::MediaSource>);
     void setupPlaylists();
     void tableClicked(int);
-    void setNextSong();
-    void setPrevSong();
     void playPressed();
     void pausePressed();
     void changePlaylist(int);

@@ -28,8 +28,8 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 
     connect(play, SIGNAL(clicked()), this, SLOT(playPressed()));
     connect(pause, SIGNAL(clicked()), this, SLOT(pausePressed()));
-    connect(next, SIGNAL(clicked()), this, SLOT(setNextSong()));
-    connect(prev, SIGNAL(clicked()), this, SLOT(setPrevSong()));
+    connect(next, SIGNAL(clicked()), controller, SLOT(setNextSong()));
+    connect(prev, SIGNAL(clicked()), controller, SLOT(setPrevSong()));
     
     connect(controller, SIGNAL(songChanged(int)), this, SLOT(songChanged(int)));
     connect(controller, SIGNAL(queueSet(QList<Phonon::MediaSource>)), this,
@@ -128,7 +128,6 @@ void MediaControls::getQueue(QList<Phonon::MediaSource> meta)
 }
 
 //Created these functions to reset keyboard shortcuts
-//Used F12 just because I
 void MediaControls::playPressed()
 {
     play->setShortcut(NULL);
@@ -141,18 +140,6 @@ void MediaControls::pausePressed()
     play->setShortcut(Qt::Key_Space);
     pause->setShortcut(NULL);
     controller->pause();
-}
-
-void MediaControls::setNextSong()
-{
-    //std::cout << "MediaControls::setNextSong();\n";
-    controller->setNextSong();
-}
-
-void MediaControls::setPrevSong()
-{   
-    //std::cout << "MediaControls::setPrevSong();\n";
-    controller->setPrevSong();
 }
 
 void MediaControls::setMetaData()
