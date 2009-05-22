@@ -165,10 +165,10 @@ void MediaControls::setMetaData()
         QFileInfo file(metaResolver->currentSource().fileName());
         title = file.baseName();
     }
+    QTableWidgetItem *indexItem = new QTableWidgetItem(QString::number(tableIndex++));
     QTableWidgetItem *titleItem = new QTableWidgetItem(title);
     QTableWidgetItem *artistItem = new QTableWidgetItem(metaData.value("ARTIST"));
     QTableWidgetItem *albumItem = new QTableWidgetItem(metaData.value("ALBUM"));
-    QTableWidgetItem *indexItem = new QTableWidgetItem(QString::number(tableIndex++));
     
     titleItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
     artistItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
@@ -195,8 +195,16 @@ void MediaControls::setMetaData()
     }
     else {        
         table->resizeColumnsToContents();
-        if (table->columnWidth(0) > 300)
-            table->setColumnWidth(0, 300);
+        
+        if (table->columnWidth(1) > 300)
+            table->setColumnWidth(1, 300);
+        else 
+        {
+            //Make columns just a bit bigger, so things aren't squeezed
+            table->setColumnWidth(1, table->columnWidth(1) + 20);
+            table->setColumnWidth(2, table->columnWidth(2) + 20);
+            table->resizeColumnToContents(0);
+        }
     }
 }
 
