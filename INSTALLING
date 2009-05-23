@@ -26,5 +26,12 @@ Qt 4.4 or newer, if not 4.5
 Phonon is not supported in anything older than 4.4.  
 This also applies to Gnome.
 
-I use KDE 4.2.2 with Qt 4.5, so that would be the most tested configuration. ;)
+How to install:
+qmake
+make
+su -c 'make install' _or_ sudo make install
+kajammer  opens kajammer
+Kajammer can be found in the Gnome or KDE System menu under Multimedia or Audio/Video, etc
+
+I use KDE 4.3 Beta 1 with Qt 4.5.1, so that would be the most tested configuration. ;)
 
