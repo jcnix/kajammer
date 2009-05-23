@@ -1,6 +1,6 @@
 /*
  * File:   controller.cpp
- * Author: casey
+ * Author: Casey Jones
  *
  * Created on March 10, 2009, 4:27 PM
  *
@@ -80,6 +80,7 @@ void Controller::setSong(int index)
     setSong(index, 0);
 }
 
+// int row is only used to tell MediaControls which row to highlight
 void Controller::setSong(int index, int row)
 {
     currentRow = row;
@@ -128,6 +129,7 @@ void Controller::setPrevSong()
 
 void Controller::changePlaylist(QString name, int index)
 {
+    // Clicking the current List won't restart it
     if(currentList != index)
     {
         currentList = index;

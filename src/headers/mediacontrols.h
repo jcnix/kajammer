@@ -1,6 +1,6 @@
 /* 
  * File:   mediacontrols.h
- * Author: cjones
+ * Author: Casey Jones
  *
  * Created on March 3, 2009, 6:49 PM
  *

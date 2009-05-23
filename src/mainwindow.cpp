@@ -1,6 +1,6 @@
 /*
  * File:   mainwindow.h
- * Author: cjones
+ * Author: Casey Jones
  *
  * Created on March 2, 2009, 6:47 PM
  *

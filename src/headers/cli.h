@@ -1,6 +1,6 @@
 /*
  * File:   cli.h
- * Author: casey
+ * Author: Casey Jones
  *
  * Created on March 24, 2009, 4:48 PM
  *

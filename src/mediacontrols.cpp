@@ -1,6 +1,6 @@
 /*
  * File:   mediacontrols.cpp
- * Author: cjones
+ * Author: Casey Jones
  *
  * Created on March 3, 2009, 6:49 PM
  *
@@ -142,6 +142,7 @@ void MediaControls::pausePressed()
     controller->pause();
 }
 
+//Fills the music table with ID3 tag data.
 void MediaControls::setMetaData()
 {
     QMap<QString, QString> metaData = metaResolver->metaData();
@@ -169,6 +170,7 @@ void MediaControls::setMetaData()
     table->setItem(row, 2, artistItem);
     table->setItem(row, 3, albumItem);
     
+    //Don't put row numbers on the table
     tableLabels.append("");
     table->setVerticalHeaderLabels(tableLabels);
 
@@ -197,26 +199,29 @@ void MediaControls::setMetaData()
 
 void MediaControls::tableClicked(int row)
 {
+    //row 0 is track 1, row 5 is track 6, etc.
     controller->setSong(row + 1, row);
 }
 
 // Fill playlist table with playlists
 void MediaControls::setupPlaylists()
 {
+    //Clear out playlistTable
     playlistTable->setRowCount(0);
     
-    int numLists = playlist->count();
     QStringList labels;
     
-    for(int i = 0; i < numLists; i++)
+    for(int i = 0; i < playlist->count(); i++)
     {
         QString list = playlist->getPlaylistName(i);
         
         QTableWidgetItem *listName = new QTableWidgetItem(list);
         listName->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        
         playlistTable->insertRow(i);
         playlistTable->setItem(i, 0, listName);
         
+        //Don't put row numbers on the table
         labels.append("");
         playlistTable->setVerticalHeaderLabels(labels);
     }
@@ -226,6 +231,7 @@ void MediaControls::setupPlaylists()
     playlistTable->setColumnWidth(0, PLAYLIST_WIDTH - 35);
 }
 
+// Get the name of the playlist, and switch to it.
 void MediaControls::changePlaylist(int row)
 {
     QTableWidgetItem *clickedList = playlistTable->item(row, 0);

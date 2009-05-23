@@ -1,6 +1,6 @@
 /*
  * File:   menubar.cpp
- * Author: casey
+ * Author: Casey Jones
  *
  * Created on March 4, 2009, 4:35 PM
  *

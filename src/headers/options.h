@@ -1,6 +1,6 @@
 /*
  * File:   options.h
- * Author: casey
+ * Author: Casey Jones
  *
  * Created on March 10, 2009, 4:27 PM
  *
