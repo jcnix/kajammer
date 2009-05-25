@@ -89,6 +89,11 @@ void Cli::cliArgs(char *argv[])
         }
     }
     
+    if(!pFlag && !nFlag && !dFlag && !lFlag) {
+        args = getArgList(argv, 1);
+        play(args);
+    }
+    
     if(pFlag) {
         args = getArgList(argv, 2);
         play(args);
