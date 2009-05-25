@@ -145,7 +145,7 @@ void Cli::play(QStringList songs)
     if(!songs.isEmpty())
     {
         //print file names if not using Gui
-        for(int i = 0; i < songs.count() - 1; i++)
+        for(int i = 0; i < songs.count(); i++)
         {
             std::cout << songs.at(i).toStdString() << "\n";
         }
