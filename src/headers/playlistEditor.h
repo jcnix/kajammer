@@ -33,6 +33,7 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QPushButton>
 #include <QtGui/QTextEdit>
+#include <QtGui/QTextBlock>
 #include <QtGui/QTextDocument>
 #include <QtGui/QVBoxLayout>
 
