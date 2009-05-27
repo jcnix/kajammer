@@ -46,7 +46,6 @@ public:
     void resetCurrentList() { currentList = -1; }
     Phonon::AudioOutput* getAudioOutput() { return audioOutput; }
     Phonon::MediaObject* getMediaObject() { return mediaObject; }
-    int getCurrentRow() { return currentRow; }
     
 public slots:
     void setSong(int);
@@ -56,8 +55,9 @@ public slots:
     void setNextSong();
     void setPrevSong();
     void changePlaylist(QString, int);
-    void shuffle();
-
+    void toggleShuffle();
+    void toggleRepeat();
+    
 signals:
     void songChanged(int);
     void queueSet(QList<Phonon::MediaSource>);
@@ -74,8 +74,9 @@ private:
     QMap<int, Phonon::MediaSource> trackQueue;
     int currentSong;
     int currentList;
-    int currentRow;
     bool isShuffle;
+    bool isRepeat;
+    bool repeated;
 };
 
 #endif /* _CONTROLLER_H */

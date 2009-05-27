@@ -30,7 +30,8 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(pause, SIGNAL(clicked()), this, SLOT(pausePressed()));
     connect(next, SIGNAL(clicked()), controller, SLOT(setNextSong()));
     connect(prev, SIGNAL(clicked()), controller, SLOT(setPrevSong()));
-    connect(shuffleBtn, SIGNAL(clicked()), controller, SLOT(shuffle()));
+    connect(shuffleBtn, SIGNAL(clicked()), controller, SLOT(toggleShuffle()));
+    connect(repeatBtn, SIGNAL(clicked()), controller, SLOT(toggleRepeat()));
     
     connect(controller, SIGNAL(songChanged(int)), this, SLOT(songChanged(int)));
     connect(controller, SIGNAL(queueSet(QList<Phonon::MediaSource>)), this,
@@ -68,6 +69,7 @@ void MediaControls::init()
     prev->setShortcut(Qt::Key_Left);
     
     shuffleBtn = new QPushButton("S");
+    repeatBtn = new QPushButton("R");
     
     //Table with meta info
     table = new QTableWidget;
@@ -100,9 +102,13 @@ void MediaControls::init()
     buttonLayout->addWidget(pause);
     buttonLayout->addWidget(next);
     
+    QHBoxLayout *shuffleRepeatLayout = new QHBoxLayout;
+    shuffleRepeatLayout->addWidget(shuffleBtn);
+    shuffleRepeatLayout->addWidget(repeatBtn);
+    
     QHBoxLayout *hLayout = new QHBoxLayout;
     hLayout->addLayout(buttonLayout);
-    hLayout->addWidget(shuffleBtn);
+    hLayout->addLayout(shuffleRepeatLayout);
     hLayout->addWidget(volumeSlider);
 
     QVBoxLayout *vLayout = new QVBoxLayout;

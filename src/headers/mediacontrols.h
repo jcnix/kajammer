@@ -78,13 +78,14 @@ private:
     QPushButton *pause;
     QPushButton *next;
     QPushButton *prev;
+    QPushButton *shuffleBtn;
+    QPushButton *repeatBtn;
     QTableWidget *table;
     QTableWidget *playlistTable;
     QMap<QString, QString> metaMap;
     QList<Phonon::MediaSource> metaSources;
     QList<int> trackOrder;
     QStringList tableLabels;
-    QPushButton *shuffleBtn;
     
     int tableIndex;
 };

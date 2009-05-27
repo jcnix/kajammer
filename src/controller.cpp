@@ -33,8 +33,9 @@ Controller::Controller()
     playlist = Playlist::getInstance();
     currentSong = -1;
     currentList = -1;
-    currentRow = 0;
     isShuffle = false;
+    isRepeat = false;
+    repeated = false;
 
     connect(mediaObject, SIGNAL(finished()), this, SLOT(setNextSong()));
 }
@@ -54,7 +55,6 @@ void Controller::setQueue(QStringList queue)
     // Clean out the queue so we can start empty
     trackQueue.clear();
     currentSong = -1;
-    currentRow = -1;
 
     // _Will_ crash if queue is empty
     if(!queue.isEmpty())
@@ -105,47 +105,76 @@ void Controller::changeSong(Phonon::MediaSource song)
 
 void Controller::setNextSong()
 {
-    //Check for shuffle enabled
-    if(isShuffle)
-    {
-        srand(time(0));
-        currentSong = (rand() % (trackQueue.count() -1));
-        std::cout << "rand: " << currentSong << "\n";
-    }
-    
     //std::cout << "Controller::setNextSong();\n";
     //subtract one to prevent a crash when last song on table finishes.
-    if(currentSong < trackQueue.count() - 1)
+    if(currentSong < trackQueue.count())
     {
-            setSong(currentSong + 1);
+        //Check for shuffle enabled
+        if(isShuffle)
+        {
+            srand(time(0));
+            currentSong = (rand() % (trackQueue.count() -1));
+        }
+        
+        //If the song has not been repeated, do a repeat
+        if(isRepeat && !repeated)
+        {
+            currentSong -= 1;
+            repeated = true;
+        }
+        //if the song has been repeated then reset, so next time it'll come up false;
+        else if(isRepeat && repeated)
+        {
+            repeated = false;
+        }
+    
+        setSong(currentSong + 1);
     }
 }
 
 void Controller::setPrevSong()
 {
-    //Check for shuffle enabled
-    if(isShuffle)
-    {
-        srand(time(0));
-        currentSong = (rand() % trackQueue.count() -1);
-    }
-    
     //std::cout << "Controller::setPrevSong();\n";
-    if(currentSong != 0)
+    if(currentSong != 1)
     {
-            setSong(currentSong - 1);
+        //Check for shuffle enabled
+        if(isShuffle)
+        {
+            srand(time(0));
+            currentSong = (rand() % trackQueue.count() -1);
+        }
+        
+        //If the song has not been repeated, do a repeat
+        if(isRepeat && !repeated)
+        {
+            currentSong -= 1;
+            repeated = true;
+        }
+        //if the song has been repeated then reset, so next time it'll come up false;
+        else if(isRepeat && repeated)
+        {
+            repeated = false;
+        }
+    
+        setSong(currentSong - 1);
     }
 }
 
 //Set isShuffle, if shuffle is enabled disable it and vice versa.
-void Controller::shuffle()
+void Controller::toggleShuffle()
 {
     if(isShuffle)
         isShuffle = false;
     else if(!isShuffle)
         isShuffle = true;
-    
-    std::cout << isShuffle << "\n";
+}
+
+void Controller::toggleRepeat()
+{
+    if(isRepeat)
+        isRepeat = false;
+    else if(!isRepeat)
+        isRepeat = true;
 }
 
 void Controller::changePlaylist(QString name, int index)
