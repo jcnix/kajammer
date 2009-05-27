@@ -107,26 +107,10 @@ void Controller::setNextSong()
 {
     //std::cout << "Controller::setNextSong();\n";
     //subtract one to prevent a crash when last song on table finishes.
-    if(currentSong < trackQueue.count())
+    if(currentSong < trackQueue.count()  || isShuffle || (isRepeat && !repeated))
     {
-        //Check for shuffle enabled
-        if(isShuffle)
-        {
-            srand(time(0));
-            currentSong = (rand() % (trackQueue.count() -1));
-        }
-        
-        //If the song has not been repeated, do a repeat
-        if(isRepeat && !repeated)
-        {
-            currentSong -= 1;
-            repeated = true;
-        }
-        //if the song has been repeated then reset, so next time it'll come up false;
-        else if(isRepeat && repeated)
-        {
-            repeated = false;
-        }
+        if(isShuffle) shuffle();
+        if(isRepeat) repeat();
     
         setSong(currentSong + 1);
     }
@@ -135,26 +119,10 @@ void Controller::setNextSong()
 void Controller::setPrevSong()
 {
     //std::cout << "Controller::setPrevSong();\n";
-    if(currentSong != 1)
+    if(currentSong != 1 || isShuffle)
     {
-        //Check for shuffle enabled
-        if(isShuffle)
-        {
-            srand(time(0));
-            currentSong = (rand() % trackQueue.count() -1);
-        }
-        
-        //If the song has not been repeated, do a repeat
-        if(isRepeat && !repeated)
-        {
-            currentSong -= 1;
-            repeated = true;
-        }
-        //if the song has been repeated then reset, so next time it'll come up false;
-        else if(isRepeat && repeated)
-        {
-            repeated = false;
-        }
+        if(isShuffle) shuffle();
+        if(isRepeat) repeat();
     
         setSong(currentSong - 1);
     }
@@ -167,6 +135,8 @@ void Controller::toggleShuffle()
         isShuffle = false;
     else if(!isShuffle)
         isShuffle = true;
+    
+    std::cout << isShuffle << "\n";
 }
 
 void Controller::toggleRepeat()
@@ -175,6 +145,34 @@ void Controller::toggleRepeat()
         isRepeat = false;
     else if(!isRepeat)
         isRepeat = true;
+    
+    std::cout << isRepeat << "\n";
+}
+
+void Controller::shuffle()
+{
+    //don't shuffle if current song is not repeated
+    if(isRepeat && !repeated) {}
+    else
+    {
+        srand(time(0));
+        currentSong = (rand() % trackQueue.count());
+    }
+}
+
+void Controller::repeat()
+{
+    //If the song has not been repeated, do a repeat
+    if(!repeated)
+    {
+        currentSong -= 1;
+        repeated = true;
+    }
+    //if the song has been repeated then reset, so next time it'll come up false;
+    else if(repeated)
+    {
+        repeated = false;
+    }
 }
 
 void Controller::changePlaylist(QString name, int index)

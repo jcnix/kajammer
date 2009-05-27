@@ -66,6 +66,9 @@ protected:
     Controller();
 
 private:
+    void shuffle();
+    void repeat();
+    
     static Controller *controller;
     Playlist *playlist;
     
