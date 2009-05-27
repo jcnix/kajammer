@@ -34,6 +34,7 @@ Controller::Controller()
     currentSong = -1;
     currentList = -1;
     currentRow = 0;
+    isShuffle = false;
 
     connect(mediaObject, SIGNAL(finished()), this, SLOT(setNextSong()));
 }
@@ -75,15 +76,9 @@ void Controller::setQueue(QStringList queue)
     }
 }
 
+// int row is only used to tell MediaControls which row to highlight
 void Controller::setSong(int index)
 {
-    setSong(index, 0);
-}
-
-// int row is only used to tell MediaControls which row to highlight
-void Controller::setSong(int index, int row)
-{
-    currentRow = row;
     //If user cancels out of open dialog, don't stop playing the current song
     if(!trackQueue.isEmpty() && index >= 0 && index <= trackQueue.count())
     {
@@ -96,7 +91,7 @@ void Controller::setSong(int index, int row)
             Phonon::MediaSource fileName;
             fileName = trackQueue[index];
             changeSong(fileName);
-            emit songChanged(currentRow);
+            emit songChanged(currentSong - 1);
         }
     }
 }
@@ -110,21 +105,47 @@ void Controller::changeSong(Phonon::MediaSource song)
 
 void Controller::setNextSong()
 {
+    //Check for shuffle enabled
+    if(isShuffle)
+    {
+        srand(time(0));
+        currentSong = (rand() % (trackQueue.count() -1));
+        std::cout << "rand: " << currentSong << "\n";
+    }
+    
     //std::cout << "Controller::setNextSong();\n";
     //subtract one to prevent a crash when last song on table finishes.
-    if(currentRow < trackQueue.count() - 1)
+    if(currentSong < trackQueue.count() - 1)
     {
-            setSong(currentSong + 1, currentRow + 1);
+            setSong(currentSong + 1);
     }
 }
 
 void Controller::setPrevSong()
 {
-    //std::cout << "Controller::setPrevSong();\n";
-    if(currentRow != 0)
+    //Check for shuffle enabled
+    if(isShuffle)
     {
-            setSong(currentSong - 1, currentRow -1);
+        srand(time(0));
+        currentSong = (rand() % trackQueue.count() -1);
     }
+    
+    //std::cout << "Controller::setPrevSong();\n";
+    if(currentSong != 0)
+    {
+            setSong(currentSong - 1);
+    }
+}
+
+//Set isShuffle, if shuffle is enabled disable it and vice versa.
+void Controller::shuffle()
+{
+    if(isShuffle)
+        isShuffle = false;
+    else if(!isShuffle)
+        isShuffle = true;
+    
+    std::cout << isShuffle << "\n";
 }
 
 void Controller::changePlaylist(QString name, int index)

@@ -30,6 +30,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(pause, SIGNAL(clicked()), this, SLOT(pausePressed()));
     connect(next, SIGNAL(clicked()), controller, SLOT(setNextSong()));
     connect(prev, SIGNAL(clicked()), controller, SLOT(setPrevSong()));
+    connect(shuffleBtn, SIGNAL(clicked()), controller, SLOT(shuffle()));
     
     connect(controller, SIGNAL(songChanged(int)), this, SLOT(songChanged(int)));
     connect(controller, SIGNAL(queueSet(QList<Phonon::MediaSource>)), this,
@@ -66,6 +67,8 @@ void MediaControls::init()
     next->setShortcut(Qt::Key_Right);
     prev->setShortcut(Qt::Key_Left);
     
+    shuffleBtn = new QPushButton("S");
+    
     //Table with meta info
     table = new QTableWidget;
     table->setColumnCount(4);
@@ -99,6 +102,7 @@ void MediaControls::init()
     
     QHBoxLayout *hLayout = new QHBoxLayout;
     hLayout->addLayout(buttonLayout);
+    hLayout->addWidget(shuffleBtn);
     hLayout->addWidget(volumeSlider);
 
     QVBoxLayout *vLayout = new QVBoxLayout;
@@ -200,7 +204,7 @@ void MediaControls::setMetaData()
 void MediaControls::tableClicked(int row)
 {
     //row 0 is track 1, row 5 is track 6, etc.
-    controller->setSong(row + 1, row);
+    controller->setSong(row + 1);
 }
 
 // Fill playlist table with playlists

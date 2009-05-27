@@ -84,6 +84,7 @@ private:
     QList<Phonon::MediaSource> metaSources;
     QList<int> trackOrder;
     QStringList tableLabels;
+    QPushButton *shuffleBtn;
     
     int tableIndex;
 };

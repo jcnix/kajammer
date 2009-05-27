@@ -31,6 +31,8 @@
 #include <phonon/mediasource.h>
 #include <phonon/audiooutput.h>
 #include <iostream>
+#include <ctime>
+#include <cstdlib>
 
 #include "playlist.h"
 
@@ -48,13 +50,13 @@ public:
     
 public slots:
     void setSong(int);
-    void setSong(int, int);
     void changeSong(Phonon::MediaSource);
     void play() { mediaObject->play(); }
     void pause() { mediaObject->pause(); }
     void setNextSong();
     void setPrevSong();
     void changePlaylist(QString, int);
+    void shuffle();
 
 signals:
     void songChanged(int);
@@ -73,6 +75,7 @@ private:
     int currentSong;
     int currentList;
     int currentRow;
+    bool isShuffle;
 };
 
 #endif /* _CONTROLLER_H */
