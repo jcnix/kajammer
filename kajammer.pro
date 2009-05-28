@@ -6,15 +6,15 @@ CONFIG -= debug_and_release
 CONFIG += debug 
 QT = core gui phonon
 
-SOURCES += src/mainwindow.cpp src/mediacontrols.cpp src/controller.cpp src/menubar.cpp src/main.cpp src/playlist.cpp src/cli.cpp src/optionsPanel.cpp src/options.cpp src/playlistEditor.cpp
+SOURCES += src/mainwindow.cpp src/mediacontrols.cpp src/controller.cpp src/menubar.cpp src/main.cpp src/playlist.cpp src/cli.cpp src/optionsPanel.cpp src/options.cpp src/playlistEditor.cpp src/widgets/togglebutton.cpp
 
-HEADERS += src/headers/menubar.h src/headers/mainwindow.h src/headers/mediacontrols.h src/headers/controller.h src/headers/playlist.h src/headers/cli.h src/headers/optionsPanel.h src/headers/options.h src/headers/playlistEditor.h
+HEADERS += src/headers/menubar.h src/headers/mainwindow.h src/headers/mediacontrols.h src/headers/controller.h src/headers/playlist.h src/headers/cli.h src/headers/optionsPanel.h src/headers/options.h src/headers/playlistEditor.h src/widgets/togglebutton.h
 
 FORMS +=
 RESOURCES +=
 TRANSLATIONS +=
 OBJECTS_DIR = build
-MOC_DIR =  
+MOC_DIR = moc/ 
 RCC_DIR = 
 UI_DIR = 
 QMAKE_CC = gcc

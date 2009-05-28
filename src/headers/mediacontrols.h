@@ -44,6 +44,7 @@
 
 #include "controller.h"
 #include "playlist.h"
+#include "../widgets/togglebutton.h"
 
 #define PLAYLIST_WIDTH 180
 
