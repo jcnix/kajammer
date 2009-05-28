@@ -63,6 +63,8 @@ public slots:
     void playPressed();
     void pausePressed();
     void changePlaylist(int);
+    void shufflePressed();
+    void repeatPressed();
 
 private:
     void init();

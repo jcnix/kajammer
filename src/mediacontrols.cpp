@@ -30,8 +30,8 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(pause, SIGNAL(clicked()), this, SLOT(pausePressed()));
     connect(next, SIGNAL(clicked()), controller, SLOT(setNextSong()));
     connect(prev, SIGNAL(clicked()), controller, SLOT(setPrevSong()));
-    connect(shuffleBtn, SIGNAL(clicked()), controller, SLOT(toggleShuffle()));
-    connect(repeatBtn, SIGNAL(clicked()), controller, SLOT(toggleRepeat()));
+    connect(shuffleBtn, SIGNAL(clicked()), this, SLOT(shufflePressed()));
+    connect(repeatBtn, SIGNAL(clicked()), this, SLOT(repeatPressed()));
     
     connect(controller, SIGNAL(songChanged(int)), this, SLOT(songChanged(int)));
     connect(controller, SIGNAL(queueSet(QList<Phonon::MediaSource>)), this,
@@ -150,6 +150,18 @@ void MediaControls::pausePressed()
     play->setShortcut(Qt::Key_Space);
     pause->setShortcut(NULL);
     controller->pause();
+}
+
+void MediaControls::shufflePressed()
+{
+    //decorating buttons to indicate status will go here soon
+    controller->toggleShuffle();
+}
+
+void MediaControls::repeatPressed()
+{
+    //decorating buttons to indicate status will go here soon
+    controller->toggleRepeat();
 }
 
 //Fills the music table with ID3 tag data.
