@@ -135,8 +135,6 @@ void Controller::toggleShuffle()
         isShuffle = false;
     else if(!isShuffle)
         isShuffle = true;
-    
-    std::cout << isShuffle << "\n";
 }
 
 void Controller::toggleRepeat()
@@ -145,8 +143,6 @@ void Controller::toggleRepeat()
         isRepeat = false;
     else if(!isRepeat)
         isRepeat = true;
-    
-    std::cout << isRepeat << "\n";
 }
 
 void Controller::shuffle()

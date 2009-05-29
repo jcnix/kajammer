@@ -81,8 +81,8 @@ private:
     QPushButton *pause;
     QPushButton *next;
     QPushButton *prev;
-    QPushButton *shuffleBtn;
-    QPushButton *repeatBtn;
+    ToggleButton *shuffleBtn;
+    ToggleButton *repeatBtn;
     QTableWidget *table;
     QTableWidget *playlistTable;
     QMap<QString, QString> metaMap;

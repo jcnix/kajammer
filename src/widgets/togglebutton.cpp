@@ -24,20 +24,23 @@
 
 ToggleButton::ToggleButton(QString title) : QPushButton(title)
 {
+    defaultPal = palette();
+    clickedPal = new QPalette(QColor(0, 0, 255, 196));
+    isClicked = false;
+    
+    connect(this, SIGNAL(clicked()), this, SLOT(click()));
 }
 
 void ToggleButton::click()
 {
-    int x1 = x();
-    int y1 = y();
-    QSize size1 = size();
-    
-    QPoint *point1 = new QPoint(x1, y1);
-    QRect *rect = new QRect(*point1, size1);
-    
-    QPainter *painter = new QPainter();
-    painter->setOpacity(.5);
-    painter->drawRect(*rect);
-    
-    QPushButton::click();
+    if(isClicked)
+    {
+        isClicked = false;
+        this->setPalette(defaultPal);
+    }
+    else if(!isClicked)
+    {
+        isClicked = true;
+        this->setPalette(*clickedPal);
+    }
 }

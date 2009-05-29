@@ -68,8 +68,8 @@ void MediaControls::init()
     next->setShortcut(Qt::Key_Right);
     prev->setShortcut(Qt::Key_Left);
     
-    shuffleBtn = new QPushButton("S");
-    repeatBtn = new QPushButton("R");
+    shuffleBtn = new ToggleButton("S");
+    repeatBtn = new ToggleButton("R");
     
     //Table with meta info
     table = new QTableWidget;
@@ -155,6 +155,7 @@ void MediaControls::pausePressed()
 void MediaControls::shufflePressed()
 {
     //decorating buttons to indicate status will go here soon
+    //shuffleBtn->click();
     controller->toggleShuffle();
 }
 

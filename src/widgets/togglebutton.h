@@ -23,9 +23,11 @@
 #include <QtGui/QPushButton>
 #include <QtGui/QPainter>
 #include <QtGui/QWidget>
-#include <QtCore/QSize>
-#include <QtCore/QRect>
-#include <QtCore/QPoint>
+#include <QtGui/QPaintEvent>
+#include <QtGui/QBrush>
+#include <QtGui/QColor>
+#include <QtGui/QPalette>
+#include <iostream>
 
 //This class will highlight a button when pressed
 class ToggleButton : public QPushButton
@@ -39,4 +41,7 @@ public slots:
     void click();
     
 private:
+    bool isClicked;
+    QPalette defaultPal;
+    QPalette *clickedPal;
 };
