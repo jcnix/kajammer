@@ -25,8 +25,10 @@
 ToggleButton::ToggleButton(QString title) : QPushButton(title)
 {
     defaultPal = palette();
-    clickedPal = new QPalette(QColor(0, 0, 255, 196));
+    clickedPal = new QPalette(QColor(0, 32, 255, 216));
     isClicked = false;
+    
+    setCheckable(true);
     
     connect(this, SIGNAL(clicked()), this, SLOT(click()));
 }
