@@ -35,6 +35,7 @@
 #include <cstdlib>
 
 #include "playlist.h"
+#include "options.h"
 
 class Controller : public QObject
 {
@@ -66,11 +67,12 @@ protected:
     Controller();
 
 private:
-    void shuffle();
+    bool shuffle();
     void repeat();
     
     static Controller *controller;
     Playlist *playlist;
+    Options *options;
     
     Phonon::AudioOutput *audioOutput;
     Phonon::MediaObject *mediaObject;
@@ -80,6 +82,8 @@ private:
     bool isShuffle;
     bool isRepeat;
     bool repeated;
+    
+    QList<int> playedTracks;
 };
 
 #endif /* _CONTROLLER_H */

@@ -29,14 +29,18 @@ Controller::Controller()
     audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory);
     mediaObject = new Phonon::MediaObject;
     Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
-
+    
     playlist = Playlist::getInstance();
+    options = Options::getInstance();
     currentSong = -1;
     currentList = -1;
     isShuffle = false;
     isRepeat = false;
     repeated = false;
-
+    
+    //Track 1 is always played first, so just throw that in played tracks
+    playedTracks.append(0);
+    
     connect(mediaObject, SIGNAL(finished()), this, SLOT(setNextSong()));
 }
 
@@ -109,10 +113,11 @@ void Controller::setNextSong()
     //subtract one to prevent a crash when last song on table finishes.
     if(currentSong < trackQueue.count()  || isShuffle || (isRepeat && !repeated))
     {
-        if(isShuffle) shuffle();
+        bool error = false;
+        if(isShuffle) error = shuffle();
         if(isRepeat) repeat();
     
-        setSong(currentSong + 1);
+        if(!error) setSong(currentSong + 1);
     }
 }
 
@@ -121,10 +126,11 @@ void Controller::setPrevSong()
     //std::cout << "Controller::setPrevSong();\n";
     if(currentSong != 1 || isShuffle)
     {
-        if(isShuffle) shuffle();
+        bool error = false;
+        if(isShuffle) error = shuffle();
         if(isRepeat) repeat();
     
-        setSong(currentSong - 1);
+        if(!error) setSong(currentSong - 1);
     }
 }
 
@@ -145,15 +151,32 @@ void Controller::toggleRepeat()
         isRepeat = true;
 }
 
-void Controller::shuffle()
-{
+bool Controller::shuffle()
+{    
+    bool error = false;
     //don't shuffle if current song is not repeated
-    if(isRepeat && !repeated) {}
-    else
+    if(isRepeat && !repeated) return (error = true);
+    
+    srand(time(0));
+    currentSong = (rand() % trackQueue.count());
+    
+    if(options->isShuff_no_repeat())
     {
-        srand(time(0));
-        currentSong = (rand() % trackQueue.count());
+        if(!playedTracks.contains(currentSong))
+            playedTracks.append(currentSong);
+        //If all the tracks have been played, don't shuffle endlessly
+        else if(playedTracks.count() == trackQueue.count()) return (error = true);
+        else
+        {
+            while(playedTracks.contains(currentSong))    
+            {
+                srand(rand());
+                currentSong = (rand() % trackQueue.count());
+            }
+            playedTracks.append(currentSong);
+        }
     }
+    return error;
 }
 
 void Controller::repeat()
