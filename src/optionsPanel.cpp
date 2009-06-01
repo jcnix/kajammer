@@ -39,18 +39,27 @@ void OptionsPanel::init()
     setWindowTitle("KaJammer Options");
     
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    defaultOpenLabel = new QLabel("Music directory");
+    
+    defaultOpenLabel = new QLabel("Music directory: ");
     defaultOpen = new QLineEdit;
     defaultOpen->setMinimumWidth(175);
     browseDefaultOpenBtn = new QPushButton("...");
+    
+    shuffLabel = new QLabel("Shuffle-no-repeat: ");
+    shuffBox = new QCheckBox;
     
     QHBoxLayout *defaultOpenLayout = new QHBoxLayout;
     defaultOpenLayout->addWidget(defaultOpenLabel);
     defaultOpenLayout->addWidget(defaultOpen);
     defaultOpenLayout->addWidget(browseDefaultOpenBtn);
     
+    QHBoxLayout *shuffLayout = new QHBoxLayout;
+    shuffLayout->addWidget(shuffLabel);
+    shuffLayout->addWidget(shuffBox);
+    
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addLayout(defaultOpenLayout);
+    vLayout->addLayout(shuffLayout);
     vLayout->addWidget(buttonBox);
     setLayout(vLayout);
 }
@@ -59,11 +68,14 @@ void OptionsPanel::populate()
 {    
     QString defaultOpenDir = options->getDefaultOpenDir();
     defaultOpen->setText(defaultOpenDir);
+    
+    shuffBox->setChecked(options->isShuff_no_repeat());
 }
 
 void OptionsPanel::save()
 {
     options->setDefaultOpenDir(defaultOpen->text());
+    options->setShuff_no_repeat(shuffBox->isChecked());
     options->save();
     
     accept();

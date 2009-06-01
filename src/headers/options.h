@@ -37,9 +37,11 @@ public:
     static Options* getInstance();
     void save();
     
-    void setDefaultOpenDir(QString);
+    void setDefaultOpenDir(QString dir) { defaultOpenDir = dir; }
+    void setShuff_no_repeat(bool no_repeat) { shuff_no_repeat = no_repeat; }
     
     QString getDefaultOpenDir();
+    bool isShuff_no_repeat() { return shuff_no_repeat; }
     
 protected:
     Options();
@@ -48,9 +50,11 @@ private:
     static Options *options;
     
     void readOptions();
+    QString bool_to_qstring(bool);
     
     QString confPath;
     QString defaultOpenDir;
+    bool shuff_no_repeat;
 };
 
 #endif /* _OPTIONS_H */

@@ -69,6 +69,14 @@ void Options::readOptions()
         
         if(list.at(0).contains("$MusicDir"))
             defaultOpenDir = list.at(1);
+        
+        else if(list.at(0).contains("$Shuff_No_Repeat"))
+        {
+            if(list.at(1).contains("1"))
+                shuff_no_repeat = true;
+            else
+                shuff_no_repeat = false;
+        }
     }
     
     conf.close();
@@ -83,17 +91,19 @@ void Options::save()
     QTextStream out(&conf);
     
     options.append("$MusicDir=" + defaultOpenDir + "\n");
+    options.append("$Shuff_No_Repeat=" + bool_to_qstring(shuff_no_repeat) + "\n");
     
     //Write to file
     for(int i = 0; i < options.count(); i++)
         out << options.at(i);
-    
-    
 }
 
-void Options::setDefaultOpenDir(QString dir)
+QString Options::bool_to_qstring(bool truthiness)
 {
-    defaultOpenDir = dir;
+    QString truth = "0";
+    if(truthiness)
+        truth = "1";
+    return truth;
 }
 
 QString Options::getDefaultOpenDir()

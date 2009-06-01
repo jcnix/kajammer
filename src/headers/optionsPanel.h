@@ -30,6 +30,7 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QTextStream>
+#include <QtGui/QCheckBox>
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QFileDialog>
@@ -54,15 +55,18 @@ public slots:
 private:
     void init();
     void populate();
-    QString setDefaultOpen();
+    //QString setDefaultOpen();
     
     Options *options;
-    QString confPath;
-    
-    QDialogButtonBox *buttonBox;
+
     QLabel *defaultOpenLabel;
     QLineEdit *defaultOpen;
     QPushButton *browseDefaultOpenBtn;
+    
+    QLabel *shuffLabel;
+    QCheckBox *shuffBox;
+    
+    QDialogButtonBox *buttonBox;
 };
 
 #endif /* _OPTIONSPANEL_H */
