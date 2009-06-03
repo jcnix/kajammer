@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 
     if(!xFlag)
     {
-        app.setWindowIcon(QIcon("/usr/share/icons/oxygen/22x22/categories/applications-multimedia.png"));
+        app.setWindowIcon(QIcon("/usr/share/icons/kajammer.png"));
         app.setQuitOnLastWindowClosed(false);
         
         MainWindow window;

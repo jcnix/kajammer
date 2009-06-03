@@ -24,7 +24,7 @@
 
 TrayIcon::TrayIcon() : QSystemTrayIcon()
 {
-    trayIcon = new QIcon("/usr/share/icons/oxygen/16x16/categories/applications-multimedia.png");
+    trayIcon = new QIcon("/usr/share/icons/kajammer.png");
     setIcon(*trayIcon);
     setVisible(true);
     
