@@ -25,15 +25,26 @@
 
 #include <QtGui/QSystemTrayIcon>
 #include <QtGui/QIcon>
+#include <QtGui/QMenu>
+#include <QtGui/QAction>
+
 #include "controller.h"
 
 class TrayIcon : public QSystemTrayIcon
-{    
+{   
+    Q_OBJECT;
+    
 public:
     TrayIcon();
     
+public slots:
+    void openContextMenu(QSystemTrayIcon::ActivationReason);
+    void quit();
+    
 private:
     QIcon *trayIcon;
+    QMenu *menu;
+    QAction *quitAction;
 };
 
 #endif /* _TRAYICON_H */

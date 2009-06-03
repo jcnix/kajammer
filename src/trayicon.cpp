@@ -28,5 +28,25 @@ TrayIcon::TrayIcon() : QSystemTrayIcon()
     setIcon(*trayIcon);
     setVisible(true);
     
-    //connect(this, SIGNAL(activated(QSystemTrayIcon::Trigger), controller, SLOT(showMainWindow()));
+    menu = new QMenu("KaJammer");
+    quitAction = new QAction("Quit", this);
+    menu->addAction(quitAction);
+    setContextMenu(menu);
+    
+    connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), 
+             this, SLOT(openContextMenu(QSystemTrayIcon::ActivationReason)));
+    connect(quitAction, SIGNAL(triggered()), this, SLOT(quit()));
+}
+
+void TrayIcon::openContextMenu(QSystemTrayIcon::ActivationReason activated)
+{
+    if(activated == QSystemTrayIcon::Context)
+    {
+        menu->show();
+    }
+}
+
+void TrayIcon::quit()
+{
+    exit(0);
 }

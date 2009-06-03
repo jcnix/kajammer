@@ -26,5 +26,7 @@ target.path = /usr/bin
 target.files = bin/kajammer
 menu.path = /usr/share/applications
 menu.files = res/kajammer.desktop
-INSTALLS += target menu
+icon.path = /usr/share/icons
+icon.files = res/kajammer.png
+INSTALLS += target menu icon
 
