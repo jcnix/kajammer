@@ -1,8 +1,8 @@
-/* 
- * File:   togglebutton.h
+/*
+ * File:   trayicon.cpp
  * Author: Casey Jones
  *
- * Created on March 3, 2009, 6:49 PM
+ * Created on March 10, 2009, 4:27 PM
  *
  * This file is part of KaJammer.
  *
@@ -20,33 +20,13 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _TOGGLEBUTTON_H
-#define _TOGGLEBUTTON_H
+#include "headers/trayicon.h"
 
-#include <QtGui/QPushButton>
-#include <QtGui/QPainter>
-#include <QtGui/QWidget>
-#include <QtGui/QPaintEvent>
-#include <QtGui/QBrush>
-#include <QtGui/QColor>
-#include <QtGui/QPalette>
-#include <iostream>
-
-//This class will highlight a button when pressed
-class ToggleButton : public QPushButton
+TrayIcon::TrayIcon() : QSystemTrayIcon()
 {
-    Q_OBJECT;
+    trayIcon = new QIcon("/usr/share/icons/oxygen/16x16/categories/applications-multimedia.png");
+    setIcon(*trayIcon);
+    setVisible(true);
     
-public:
-    ToggleButton(QString);
-    
-public slots:
-    void click();
-    
-private:
-    bool isClicked;
-    QPalette defaultPal;
-    QPalette *clickedPal;
-};
-
-#endif /* _TOGGLEBUTTON_H */
+    //connect(this, SIGNAL(activated(QSystemTrayIcon::Trigger), controller, SLOT(showMainWindow()));
+}

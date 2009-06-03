@@ -32,6 +32,17 @@ MainWindow::MainWindow()
 
     mediaControls = new MediaControls;
     setCentralWidget(mediaControls);
+    
+    TrayIcon *trayIcon = new TrayIcon;
+    
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+             this, SLOT(showWindow(QSystemTrayIcon::ActivationReason)));
 }
 
-
+void MainWindow::showWindow(QSystemTrayIcon::ActivationReason activated)
+{
+    if(activated == QSystemTrayIcon::Trigger)
+    {
+        if(!isVisible()) show();
+    }
+}

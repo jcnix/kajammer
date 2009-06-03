@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     if(!xFlag)
     {
         app.setWindowIcon(QIcon("/usr/share/icons/oxygen/22x22/categories/applications-multimedia.png"));
-        app.setQuitOnLastWindowClosed(true);
+        app.setQuitOnLastWindowClosed(false);
         
         MainWindow window;
         window.resize(640, 380);

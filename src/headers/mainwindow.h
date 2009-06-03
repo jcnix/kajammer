@@ -24,17 +24,24 @@
 #define	_MAINWINDOW_H
 
 #include <QtGui/QMainWindow>
+#include <QtGui/QSystemTrayIcon>
+#include <QtCore/QObject>
 
 #include "mediacontrols.h"
 #include "menubar.h"
+#include "trayicon.h"
 #include "controller.h"
-
 
 class MainWindow : public QMainWindow
 {
+    Q_OBJECT;
+    
 public:
     MainWindow();
 
+public slots:
+    void showWindow(QSystemTrayIcon::ActivationReason);
+    
 private:
     Controller *controller;
     MenuBar *menuBar;
