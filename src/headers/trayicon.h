@@ -42,8 +42,13 @@ public slots:
     void quit();
     
 private:
+    Controller *controller;
     QIcon *trayIcon;
     QMenu *menu;
+    QAction *nextAction;
+    QAction *playAction;
+    QAction *pauseAction;
+    QAction *prevAction;
     QAction *quitAction;
 };
 

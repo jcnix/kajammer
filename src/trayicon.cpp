@@ -24,17 +24,33 @@
 
 TrayIcon::TrayIcon() : QSystemTrayIcon()
 {
+    controller = Controller::getInstance();
+    
     trayIcon = new QIcon("/usr/share/icons/kajammer.png");
     setIcon(*trayIcon);
     setVisible(true);
     
     menu = new QMenu("KaJammer");
+    nextAction = new QAction("Next", this);
+    playAction = new QAction("Play", this);
+    pauseAction = new QAction("Pause", this);
+    prevAction = new QAction("Prev", this);
     quitAction = new QAction("Quit", this);
+    
+    menu->addAction(nextAction);
+    menu->addAction(playAction);
+    menu->addAction(pauseAction);
+    menu->addAction(prevAction);
     menu->addAction(quitAction);
     setContextMenu(menu);
     
     connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), 
              this, SLOT(openContextMenu(QSystemTrayIcon::ActivationReason)));
+    
+    connect(nextAction, SIGNAL(triggered()), controller, SLOT(setNextSong()));
+    connect(playAction, SIGNAL(triggered()), controller, SLOT(play()));
+    connect(pauseAction, SIGNAL(triggered()), controller, SLOT(pause()));
+    connect(prevAction, SIGNAL(triggered()), controller, SLOT(setPrevSong()));
     connect(quitAction, SIGNAL(triggered()), this, SLOT(quit()));
 }
 

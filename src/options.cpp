@@ -26,16 +26,12 @@
 Options* Options::options = 0;
 
 Options::Options()
-{   
-    //QString home = QDir::homePath();
-    //QDir kajamDir = QDir(home + "/.kajammer/");
-    
+{       
     if(!QKAJAM_DIR.exists())
     {
         QKAJAM_DIR.mkdir(KAJAM_DIR);
         QKAJAM_DIR.mkdir(PLAYLIST_DIR);
     }
-    //confPath = kajamDir.path() + "/kajammer.conf";
     
     readOptions();
 }
