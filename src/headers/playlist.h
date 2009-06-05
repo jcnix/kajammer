@@ -33,6 +33,10 @@
 #include <QtCore/QTextStream>
 #include <iostream>
 
+#define KAJAM_DIR QDir::homePath()+"/.kajammer/"
+#define PLAYLIST_DIR KAJAM_DIR+"/playlists/"
+#define QKAJAM_DIR QDir(QDir::homePath()+"/.kajammer/")
+
 class Playlist : public QObject
 {
     Q_OBJECT;
@@ -55,6 +59,7 @@ protected:
     
 private:
     void init();
+    void resetInfo() { info = QDir(PLAYLIST_DIR).entryInfoList(QDir::Files, QDir::Name); }
     
     static Playlist *playlist;
     QList<QFileInfo> info;

@@ -31,16 +31,12 @@ Playlist::Playlist()
 
 void Playlist::init()
 {
-    info = QDir(QDir::homePath() + "/.kajammer/playlists").entryInfoList(QDir::Files, QDir::Name);
-    QString home = QDir::homePath();
-    QDir kajamDir = QDir(home + "/.kajammer/");
+    resetInfo();
     
-    playlistDir = home + "/.kajammer/playlists/";
-    
-    if(!kajamDir.exists())
+    if(!QKAJAM_DIR.exists())
     {
-        kajamDir.mkdir(home + "/.kajammer");
-        kajamDir.mkdir(home + "/.kajammer/playlists");
+        QKAJAM_DIR.mkdir(KAJAM_DIR);
+        QKAJAM_DIR.mkdir(PLAYLIST_DIR);
     }
 }
 
@@ -55,7 +51,7 @@ Playlist* Playlist::getInstance()
 
 void Playlist::newPlaylist(QString name, QStringList newList)
 {
-    QFile newListFile(QDir::homePath() + "/.kajammer/playlists/" + name);
+    QFile newListFile(PLAYLIST_DIR + name);
     newListFile.open(QIODevice::WriteOnly);
     
     QTextStream out(&newListFile);
@@ -63,13 +59,13 @@ void Playlist::newPlaylist(QString name, QStringList newList)
         out << newList.at(i) + "\n";
     
     //Reset Info so it finds the new playlist
-    info = QDir(QDir::homePath() + "/.kajammer/playlists").entryInfoList(QDir::Files, QDir::Name);
+    resetInfo();
     emit resetPlaylists();
 }
 
 void Playlist::delPlaylist(QString playlist)
 {
-    QFile listFile (QDir::homePath() + "/.kajammer/playlists/" + playlist);
+    QFile listFile (PLAYLIST_DIR + playlist);
     
     if(listFile.exists())
     {
@@ -81,7 +77,7 @@ void Playlist::delPlaylist(QString playlist)
     }
     
     //Reset Info so it finds the new playlist
-    info = QDir(QDir::homePath() + "/.kajammer/playlists").entryInfoList(QDir::Files, QDir::Name);
+    resetInfo();
     emit resetPlaylists();
 }
 
@@ -99,7 +95,7 @@ QString Playlist::getPlaylistName(int index)
 
 QStringList Playlist::getPlaylistContents(QString name)
 {
-    QFile playlistFile(playlistDir + name);
+    QFile playlistFile(PLAYLIST_DIR + name);
     playlistFile.open(QIODevice::ReadOnly);
     
     QStringList playlist;    
@@ -113,7 +109,7 @@ QStringList Playlist::getPlaylistContents(QString name)
 
 QString Playlist::getEntirePlaylist(QString name)
 {
-    QFile playlistFile(playlistDir + name);
+    QFile playlistFile(PLAYLIST_DIR + name);
     playlistFile.open(QIODevice::ReadOnly);
     
     QString playlist;    
@@ -124,6 +120,7 @@ QString Playlist::getEntirePlaylist(QString name)
     return playlist;
 }
 
+// Prints list of playlists to terminal
 void Playlist::listPlaylists()
 {
     int lists = count();

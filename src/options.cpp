@@ -27,15 +27,15 @@ Options* Options::options = 0;
 
 Options::Options()
 {   
-    QString home = QDir::homePath();
-    QDir kajamDir = QDir(home + "/.kajammer/");
+    //QString home = QDir::homePath();
+    //QDir kajamDir = QDir(home + "/.kajammer/");
     
-    if(!kajamDir.exists())
+    if(!QKAJAM_DIR.exists())
     {
-        kajamDir.mkdir(home + "/.kajammer");
-        kajamDir.mkdir(home + "/.kajammer/playlists");
+        QKAJAM_DIR.mkdir(KAJAM_DIR);
+        QKAJAM_DIR.mkdir(PLAYLIST_DIR);
     }
-    confPath = kajamDir.path() + "/kajammer.conf";
+    //confPath = kajamDir.path() + "/kajammer.conf";
     
     readOptions();
 }
@@ -51,7 +51,7 @@ Options* Options::getInstance()
 
 void Options::readOptions()
 {    
-    QFile conf(confPath);
+    QFile conf(KAJAM_CONF);
     conf.open(QIODevice::ReadOnly);
     
     QStringList options;
@@ -84,7 +84,7 @@ void Options::readOptions()
 
 void Options::save()
 {
-    QFile conf(confPath);
+    QFile conf(KAJAM_CONF);
     conf.open(QIODevice::WriteOnly);
     
     QStringList options;
@@ -96,6 +96,8 @@ void Options::save()
     //Write to file
     for(int i = 0; i < options.count(); i++)
         out << options.at(i);
+    
+    conf.close();
 }
 
 QString Options::bool_to_qstring(bool truthiness)
