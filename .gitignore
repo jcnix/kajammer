@@ -3,3 +3,4 @@ moc_*
 *~
 bin/
 build/
+res/.directory

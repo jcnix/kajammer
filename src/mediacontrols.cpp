@@ -140,16 +140,26 @@ void MediaControls::getQueue(QList<Phonon::MediaSource> meta)
 //Created these functions to reset keyboard shortcuts
 void MediaControls::playPressed()
 {
-    play->setShortcut(NULL);
-    pause->setShortcut(Qt::Key_Space);
-    controller->play();
+    if(controller->isPaused())
+    {
+        play->setShortcut(NULL);
+        pause->setShortcut(Qt::Key_Space);
+        controller->play();
+    }
+    else
+        pausePressed();
 }
 
 void MediaControls::pausePressed()
 {
-    play->setShortcut(Qt::Key_Space);
-    pause->setShortcut(NULL);
-    controller->pause();
+    if(controller->isPlaying())
+    {
+        play->setShortcut(Qt::Key_Space);
+        pause->setShortcut(NULL);
+        controller->pause();
+    }
+    else
+        playPressed();
 }
 
 void MediaControls::shufflePressed()

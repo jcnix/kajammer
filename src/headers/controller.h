@@ -47,6 +47,8 @@ public:
     void resetCurrentList() { currentList = -1; }
     Phonon::AudioOutput* getAudioOutput() { return audioOutput; }
     Phonon::MediaObject* getMediaObject() { return mediaObject; }
+    bool isPlaying() { return (mediaObject->state() == Phonon::PlayingState); }
+    bool isPaused() { return (mediaObject->state() == Phonon::PausedState); }
     
 public slots:
     void setSong(int);
