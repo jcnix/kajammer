@@ -32,7 +32,7 @@ Controller::Controller()
     
     playlist = Playlist::getInstance();
     options = Options::getInstance();
-    currentSong = -1;
+    currentSong = 0;
     currentList = -1;
     isShuffle = false;
     isRepeat = false;
@@ -59,7 +59,7 @@ void Controller::setQueue(QStringList queue)
     // Clean out the queue so we can start empty
     trackQueue.clear();
     playedTracks.clear();
-    currentSong = -1;
+    currentSong = 0;
 
     // _Will_ crash if queue is empty
     if(!queue.isEmpty())
@@ -77,11 +77,10 @@ void Controller::setQueue(QStringList queue)
             list.append(trackQueue[i + 1]);
         
         emit queueSet(list);
-        setSong(1);
+        setNextSong(); //NextSong is track 1, do this so shuffle can kick in
     }
 }
 
-// int row is only used to tell MediaControls which row to highlight
 void Controller::setSong(int index)
 {
     //If user cancels out of open dialog, don't stop playing the current song
@@ -96,6 +95,8 @@ void Controller::setSong(int index)
             Phonon::MediaSource fileName;
             fileName = trackQueue[index];
             changeSong(fileName);
+            
+            //Tell MediaControls which row to highlight
             emit songChanged(currentSong - 1);
         }
     }
