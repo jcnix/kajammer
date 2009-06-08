@@ -155,7 +155,7 @@ bool Controller::shuffle()
 {    
     bool error = false;
     //don't shuffle if current song is not repeated
-    if(isRepeat && !repeated) return (error = true);
+    if(isRepeat && !repeated) return (error = false);
     
     srand(time(0));
     currentSong = (rand() % trackQueue.count());
