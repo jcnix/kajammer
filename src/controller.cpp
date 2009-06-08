@@ -58,6 +58,7 @@ void Controller::setQueue(QStringList queue)
 {
     // Clean out the queue so we can start empty
     trackQueue.clear();
+    playedTracks.clear();
     currentSong = -1;
 
     // _Will_ crash if queue is empty
@@ -154,7 +155,9 @@ void Controller::toggleRepeat()
 bool Controller::shuffle()
 {    
     bool error = false;
-    //don't shuffle if current song is not repeated
+    /* don't shuffle if current song is not repeated
+     * return false so setNextSong/setPrevSong will work,
+     * and the song can repeat */
     if(isRepeat && !repeated) return (error = false);
     
     srand(time(0));
@@ -162,10 +165,7 @@ bool Controller::shuffle()
     
     if(options->isShuff_no_repeat())
     {
-        if(!playedTracks.contains(currentSong))
-            playedTracks.append(currentSong);
-        //If all the tracks have been played, don't shuffle endlessly
-        else if(playedTracks.count() == trackQueue.count()) return (error = true);
+        if(playedTracks.count() == trackQueue.count()) return (error = true);
         else
         {
             while(playedTracks.contains(currentSong))    
