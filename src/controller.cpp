@@ -38,6 +38,8 @@ Controller::Controller()
     isRepeat = false;
     repeated = false;
     
+    srand(time(0));
+    
     //Track 1 is always played first, so just throw that in played tracks
     playedTracks.append(0);
     
@@ -160,8 +162,7 @@ bool Controller::shuffle()
      * return false so setNextSong/setPrevSong will work,
      * and the song can repeat */
     if(isRepeat && !repeated) return (error = false);
-    
-    srand(time(0));
+
     currentSong = (rand() % trackQueue.count());
     
     if(options->isShuff_no_repeat())
@@ -171,7 +172,6 @@ bool Controller::shuffle()
         {
             while(playedTracks.contains(currentSong))    
             {
-                srand(rand());
                 currentSong = (rand() % trackQueue.count());
             }
             playedTracks.append(currentSong);
