@@ -62,7 +62,6 @@ public slots:
     void setupPlaylists();
     void tableClicked(int);
     void playPressed();
-    void pausePressed();
     void changePlaylist(int);
     void shufflePressed();
     void repeatPressed();
@@ -78,7 +77,6 @@ private:
     Phonon::MediaObject *metaResolver;
 
     QPushButton *play;
-    QPushButton *pause;
     QPushButton *next;
     QPushButton *prev;
     ToggleButton *shuffleBtn;

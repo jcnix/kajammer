@@ -27,7 +27,6 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     init();
 
     connect(play, SIGNAL(clicked()), this, SLOT(playPressed()));
-    connect(pause, SIGNAL(clicked()), this, SLOT(pausePressed()));
     connect(next, SIGNAL(clicked()), controller, SLOT(setNextSong()));
     connect(prev, SIGNAL(clicked()), controller, SLOT(setPrevSong()));
     connect(shuffleBtn, SIGNAL(clicked()), this, SLOT(shufflePressed()));
@@ -60,11 +59,10 @@ void MediaControls::init()
 
     //Media Control buttons
     play = new QPushButton(style()->standardIcon(QStyle::SP_MediaPlay), "", this);
-    pause = new QPushButton(style()->standardIcon(QStyle::SP_MediaPause), "", this);
     next = new QPushButton(style()->standardIcon(QStyle::SP_MediaSkipForward), "", this);
     prev = new QPushButton(style()->standardIcon(QStyle::SP_MediaSkipBackward), "", this);
     
-    pause->setShortcut(Qt::Key_Space);
+    play->setShortcut(Qt::Key_Space);
     next->setShortcut(Qt::Key_Right);
     prev->setShortcut(Qt::Key_Left);
     
@@ -99,7 +97,6 @@ void MediaControls::init()
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     buttonLayout->addWidget(prev);
     buttonLayout->addWidget(play);
-    buttonLayout->addWidget(pause);
     buttonLayout->addWidget(next);
     
     QHBoxLayout *shuffleRepeatLayout = new QHBoxLayout;
@@ -120,10 +117,6 @@ void MediaControls::init()
 
 void MediaControls::songChanged(int row)
 {
-    //We're assuming when the song is changed, it won't be paused.
-    //Which is true for now.
-    play->setShortcut(NULL);
-    pause->setShortcut(Qt::Key_Space);
     table->selectRow(row);
 }
 
@@ -142,24 +135,10 @@ void MediaControls::playPressed()
 {
     if(controller->isPaused())
     {
-        play->setShortcut(NULL);
-        pause->setShortcut(Qt::Key_Space);
         controller->play();
     }
     else
-        pausePressed();
-}
-
-void MediaControls::pausePressed()
-{
-    if(controller->isPlaying())
-    {
-        play->setShortcut(Qt::Key_Space);
-        pause->setShortcut(NULL);
         controller->pause();
-    }
-    else
-        playPressed();
 }
 
 void MediaControls::shufflePressed()
