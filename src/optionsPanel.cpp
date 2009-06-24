@@ -47,7 +47,10 @@ void OptionsPanel::init()
     
     shuffLabel = new QLabel("Shuffle-no-repeat: ");
     shuffBox = new QCheckBox;
-    
+
+	trayIconLabel = new QLabel("Tray Icon");
+    trayIconOption = new QCheckBox;
+
     QHBoxLayout *defaultOpenLayout = new QHBoxLayout;
     defaultOpenLayout->addWidget(defaultOpenLabel);
     defaultOpenLayout->addWidget(defaultOpen);
@@ -57,17 +60,21 @@ void OptionsPanel::init()
     shuffLayout->addWidget(shuffLabel);
     shuffLayout->addWidget(shuffBox);
     
+	QHBoxLayout *trayIconLayout = new QHBoxLayout;
+	trayIconLayout->addWidget(trayIconLabel);
+	trayIconLayout->addWidget(trayIconOption);
+
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addLayout(defaultOpenLayout);
     vLayout->addLayout(shuffLayout);
+	vLayout->addLayout(trayIconLayout);
     vLayout->addWidget(buttonBox);
     setLayout(vLayout);
 }
 
 void OptionsPanel::populate()
 {    
-    QString defaultOpenDir = options->getDefaultOpenDir();
-    defaultOpen->setText(defaultOpenDir);
+    defaultOpen->setText(options->getDefaultOpenDir());
     
     shuffBox->setChecked(options->isShuff_no_repeat());
 }
