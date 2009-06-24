@@ -48,7 +48,7 @@ void OptionsPanel::init()
     shuffLabel = new QLabel("Shuffle-no-repeat: ");
     shuffBox = new QCheckBox;
 
-	trayIconLabel = new QLabel("Tray Icon");
+    trayIconLabel = new QLabel("Tray Icon");
     trayIconOption = new QCheckBox;
 
     QHBoxLayout *defaultOpenLayout = new QHBoxLayout;
@@ -60,14 +60,14 @@ void OptionsPanel::init()
     shuffLayout->addWidget(shuffLabel);
     shuffLayout->addWidget(shuffBox);
     
-	QHBoxLayout *trayIconLayout = new QHBoxLayout;
-	trayIconLayout->addWidget(trayIconLabel);
-	trayIconLayout->addWidget(trayIconOption);
+    QHBoxLayout *trayIconLayout = new QHBoxLayout;
+    trayIconLayout->addWidget(trayIconLabel);
+    trayIconLayout->addWidget(trayIconOption);
 
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addLayout(defaultOpenLayout);
     vLayout->addLayout(shuffLayout);
-	vLayout->addLayout(trayIconLayout);
+    vLayout->addLayout(trayIconLayout);
     vLayout->addWidget(buttonBox);
     setLayout(vLayout);
 }
