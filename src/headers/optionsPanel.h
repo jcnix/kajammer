@@ -65,7 +65,10 @@ private:
     
     QLabel *shuffLabel;
     QCheckBox *shuffBox;
-    
+
+	QLabel *trayIconLabel;
+    QCheckBox *trayIconOption;
+
     QDialogButtonBox *buttonBox;
 };
 
