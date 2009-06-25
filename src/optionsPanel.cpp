@@ -75,14 +75,15 @@ void OptionsPanel::init()
 void OptionsPanel::populate()
 {    
     defaultOpen->setText(options->getDefaultOpenDir());
-    
     shuffBox->setChecked(options->isShuff_no_repeat());
+    trayIconOption->setChecked(options->trayIcon());
 }
 
 void OptionsPanel::save()
 {
     options->setDefaultOpenDir(defaultOpen->text());
     options->setShuff_no_repeat(shuffBox->isChecked());
+    options->setTrayIcon(trayIconOption->isChecked());
     options->save();
     
     accept();

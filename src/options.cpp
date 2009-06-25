@@ -73,6 +73,13 @@ void Options::readOptions()
             else
                 shuff_no_repeat = false;
         }
+        else if(list.at(0).contains("$Use_Tray_Icon"))
+        {
+            if(list.at(1).contains("1"))
+                use_tray_icon = true;
+            else
+                use_tray_icon = false;
+        }
     }
     
     conf.close();
@@ -88,7 +95,8 @@ void Options::save()
     
     options.append("$MusicDir=" + defaultOpenDir + "\n");
     options.append("$Shuff_No_Repeat=" + bool_to_qstring(shuff_no_repeat) + "\n");
-    
+    options.append("$Use_Tray_Icon=" + bool_to_qstring(use_tray_icon) + "\n");
+
     //Write to file
     for(int i = 0; i < options.count(); i++)
         out << options.at(i);

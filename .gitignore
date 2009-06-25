@@ -1,6 +1,7 @@
 Makefile
 moc_*
 *~
+.*.swp
 bin/
 build/
 res/.directory
