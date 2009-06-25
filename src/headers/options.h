@@ -44,9 +44,11 @@ public:
     
     void setDefaultOpenDir(QString dir) { defaultOpenDir = dir; }
     void setShuff_no_repeat(bool no_repeat) { shuff_no_repeat = no_repeat; }
+    void setTrayIcon(bool useTray) { use_tray_icon = useTray; };
     
     QString getDefaultOpenDir();
     bool isShuff_no_repeat() { return shuff_no_repeat; }
+    bool trayIcon() { return use_tray_icon; }
     
 protected:
     Options();
@@ -60,6 +62,7 @@ private:
     QString confPath;
     QString defaultOpenDir;
     bool shuff_no_repeat;
+    bool use_tray_icon;
 };
 
 #endif /* _OPTIONS_H */
