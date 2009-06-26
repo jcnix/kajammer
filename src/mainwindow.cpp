@@ -21,6 +21,7 @@
  */
 
 #include "headers/mainwindow.h"
+#include "headers/trayicon.h"
 #include "headers/options.h"
 
 MainWindow::MainWindow()
