@@ -26,6 +26,7 @@
 
 #include "headers/mainwindow.h"
 #include "headers/cli.h"
+#include "headers/options.h"
 
 int main(int argc, char *argv[]) 
 {  
@@ -37,8 +38,13 @@ int main(int argc, char *argv[])
 
     if(!xFlag)
     {
+        Options *options = Options::getInstance();
         app.setWindowIcon(QIcon("/usr/share/icons/kajammer.png"));
-        app.setQuitOnLastWindowClosed(false);
+        
+        if(options->trayIcon())
+            app.setQuitOnLastWindowClosed(false);
+        else
+            app.setQuitOnLastWindowClosed(true);
         
         MainWindow window;
         window.resize(640, 380);

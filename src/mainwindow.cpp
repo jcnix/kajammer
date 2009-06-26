@@ -21,6 +21,7 @@
  */
 
 #include "headers/mainwindow.h"
+#include "headers/options.h"
 
 MainWindow::MainWindow()
 {
@@ -33,10 +34,15 @@ MainWindow::MainWindow()
     mediaControls = new MediaControls;
     setCentralWidget(mediaControls);
     
-    TrayIcon *trayIcon = new TrayIcon;
+    Options *options = Options::getInstance();
     
-    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-             this, SLOT(showWindow(QSystemTrayIcon::ActivationReason)));
+    if(options->trayIcon())
+    {
+        TrayIcon *trayIcon = new TrayIcon;
+        
+        connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+                this, SLOT(showWindow(QSystemTrayIcon::ActivationReason)));
+    }
 }
 
 void MainWindow::showWindow(QSystemTrayIcon::ActivationReason activated)
