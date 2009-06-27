@@ -40,7 +40,10 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(playlistTable, SIGNAL(cellClicked(int, int)), this, SLOT(changePlaylist(int)));
     connect(playlist, SIGNAL(resetPlaylists()), this, SLOT(setupPlaylists()));
     
-    //if(table->rowCount() == 0)
+    /* If table is empty, re-emit the song list.
+     * If the user used -p on the command line, this class will not
+     * have recieved the first emit */
+    if(table->rowCount() == 0)
         controller->emitList();
 }
 
