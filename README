@@ -18,26 +18,3 @@ To switch to the unstable branch:
 
 Credit for the icon goes to a friend of mine that goes by the name of Mar.
 
-KaJammer 0.4
--Working playlists
--Playlists are saved to ~/.kajammer/playlists as plain text files with filenames to your music files
-
-KaJammer 0.3
--Added table that displays meta data for all open songs
--Ability to click table item and go to that song
--cleaned up sloppy song changing code. Makes much more sense now.
--increased default size of window, was too small to display metadata well.
-
-KaJammer 0.1.1
--Added next and previous buttons.
--Cleaned code up considerably
-
-KaJammer 0.1
--Added seek slider bar
--Added keyboard shorcuts
--Added play and pause icons
--Added ability to queue songs, now you can continuously play through a list of songs
--About Dialog now does something
-
-KaJammer 0.0.1
--Initial Release
