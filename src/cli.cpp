@@ -24,6 +24,13 @@
 
 Cli::Cli(int argc, char *argv[])
 {
+    aFlag = false;
+    pFlag = false;
+    nFlag = false;
+    lFlag = false;
+    dFlag = false;
+    xFlag = false;
+    
     this->argc = argc;
     xFlag = false;
     
@@ -72,7 +79,8 @@ void Cli::cliArgs(char *argv[])
             //Display version info
             case 'v':
                 xFlag = true;
-                std::cout << "KaJammer Music Player 0.4.6\n";
+                std::cout << "KaJammer Music Player 0.9\n";
+                exit(1);
                 break;
             
             //Don't bring up main window, no Xorg mode.

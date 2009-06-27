@@ -142,10 +142,8 @@ void MenuBar::showPlaylistEditor()
 void MenuBar::aboutDialog()
 {
     QMessageBox::information(this, ("About KaJammer"),
-                            "KaJammer Media Player 0.4.6\n"
-                            "Licensed under the GPLv3.\n\n"
-                            "You are using a development version, keep your "
-                            "git repository up to date for the latest version");
+                            "KaJammer Media Player 0.9\n"
+                            "Licensed under the GPLv3.\n\n");
 }
 
 void MenuBar::quit()
