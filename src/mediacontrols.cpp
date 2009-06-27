@@ -25,7 +25,7 @@
 MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 {
     init();
-
+    
     connect(play, SIGNAL(clicked()), this, SLOT(playPressed()));
     connect(next, SIGNAL(clicked()), controller, SLOT(setNextSong()));
     connect(prev, SIGNAL(clicked()), controller, SLOT(setPrevSong()));
@@ -39,6 +39,9 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(table, SIGNAL(cellClicked(int, int)), this, SLOT(tableClicked(int)));
     connect(playlistTable, SIGNAL(cellClicked(int, int)), this, SLOT(changePlaylist(int)));
     connect(playlist, SIGNAL(resetPlaylists()), this, SLOT(setupPlaylists()));
+    
+    //if(table->rowCount() == 0)
+        controller->emitList();
 }
 
 void MediaControls::init()
@@ -144,7 +147,6 @@ void MediaControls::playPressed()
 void MediaControls::shufflePressed()
 {
     //decorating buttons to indicate status will go here soon
-    //shuffleBtn->click();
     controller->toggleShuffle();
 }
 

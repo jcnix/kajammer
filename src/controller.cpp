@@ -74,13 +74,21 @@ void Controller::setQueue(QStringList queue)
             //turn a 0 into a 1, much more easy and standard way of dealing with the tracks.
             trackQueue[i + 1] = source;
         }
-        QList<Phonon::MediaSource> list;
-        for(int i = 0; i < trackQueue.count(); i++)
-            list.append(trackQueue[i + 1]);
+        emitList();
         
-        emit queueSet(list);
         setNextSong(); //NextSong is track 1, do this so shuffle can kick in
     }
+}
+
+/* Mainly used if MediaControls missed the queueSet Signal
+ * Only happens if user uses -p flag on command line */
+void Controller::emitList()
+{
+    QList<Phonon::MediaSource> list;
+    for(int i = 0; i < trackQueue.count(); i++)
+        list.append(trackQueue[i + 1]);
+    
+    emit queueSet(list);
 }
 
 void Controller::setSong(int index)

@@ -44,6 +44,7 @@ class Controller : public QObject
 public:
     static Controller* getInstance();
     void setQueue(QStringList);
+    void emitList();
     void resetCurrentList() { currentList = -1; }
     Phonon::AudioOutput* getAudioOutput() { return audioOutput; }
     Phonon::MediaObject* getMediaObject() { return mediaObject; }
