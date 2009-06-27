@@ -44,11 +44,13 @@ private:
     int argc;
     bool xFlag;
     bool pFlag;
+    bool aFlag;
     bool nFlag;
     bool dFlag;
     bool lFlag;
     
     void play(QStringList);
+    void playPlaylist(QString);
     void newPlaylist(QString, QStringList);
     void delPlaylist(QStringList);
     void listPlaylists();

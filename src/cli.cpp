@@ -37,13 +37,18 @@ void Cli::cliArgs(char *argv[])
     QStringList args;
     opterr = 0;
 
-    while ((c = getopt(argc, argv, "plndvx")) != -1)
+    while ((c = getopt(argc, argv, "aplndvx")) != -1)
     {
         switch (c)
         {
             //Play
             case 'p':
                 pFlag = true;
+                break;
+            
+            //Play Playlist
+            case 'a':
+                aFlag = true;
                 break;
                 
             //List playlists
@@ -81,6 +86,7 @@ void Cli::cliArgs(char *argv[])
                 std::cout << "Usage: kajammer [options...] [arguments...]\n";
                 std::cout << "\t" << "Where options include:\n";
                 std::cout << "\t" << "-p\t" << "play\t\t" << "[Files]\n";
+                std::cout << "\t" << "-a\t" << "play playlist\t\t" << "Playlist name";
                 std::cout << "\t" << "-n\t" << "new playlist\t" << "[Name] [Files]\n";
                 std::cout << "\t" << "-d\t" << "delete playlist\t" << "[Playlists]\n";
                 std::cout << "\t" << "-l\t" << "list playlists\n";
@@ -89,7 +95,8 @@ void Cli::cliArgs(char *argv[])
         }
     }
     
-    if(!pFlag && !nFlag && !dFlag && !lFlag) {
+    //If no flags used, assume -p, File Managers do this
+    if(!pFlag && !nFlag && !dFlag && !lFlag && !aFlag) {
         args = getArgList(argv, 1);
         play(args);
     }
@@ -97,6 +104,11 @@ void Cli::cliArgs(char *argv[])
     if(pFlag) {
         args = getArgList(argv, 2);
         play(args);
+    }
+    
+    if(aFlag) {
+        QString name = argv[2];
+        playPlaylist(name);
     }
     
     if(nFlag) {
@@ -152,6 +164,15 @@ void Cli::play(QStringList songs)
         controller->setQueue(songs);
     }
     if(xFlag) getchar();
+}
+
+void Cli::playPlaylist(QString name)
+{
+    Controller *controller = Controller::getInstance();
+    Playlist *playlist = Playlist::getInstance();
+    
+    QList<QString> list = playlist->getPlaylistContents(name);
+    controller->setQueue(list);
 }
 
 void Cli::newPlaylist(QString name, QStringList songs)
