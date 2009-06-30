@@ -22,11 +22,11 @@ QMAKE_CXX = g++
 DEFINES += 
 INCLUDEPATH += /usr/include/qt4
 LIBS += 
-target.path = /usr/bin
-target.files = bin/kajammer
+bintarget.path = /usr/bin
+bintarget.files = bin/kajammer
 menu.path = /usr/share/applications
 menu.files = res/kajammer.desktop
 icon.path = /usr/share/icons
 icon.files = res/kajammer.png
-INSTALLS += target menu icon
+INSTALLS += bintarget menu icon
 
