@@ -31,6 +31,7 @@
 #include "menubar.h"
 #include "trayicon.h"
 #include "controller.h"
+#include "headers/options.h"
 
 class MainWindow : public QMainWindow
 {
