@@ -19,5 +19,18 @@ To switch to the unstable branch:
     git checkout -b yourBranchName -t origin/myRemoteBranch
     Where yourBranchName is anything you want, and myRemoteBranch is the name of the remote branch.
 
+****************************************************
+Check out the kajamtag branch.
+Kajamtag is an MP3/Ogg tag reader written in C (by me)
+I never really liked Phonon's tag reading capabilities, so I wrote my own.
+Kajamtag is still very unstable, and Kajammer may segfault on you while using it.
+
+You'll need kajamtag to use this branch, absolutely required at the moment.
+Get kajamtag:
+git clone git://github.com/pvtcupcakes/kajamtag.git
+
+Just run make and make install on kajamtag and it should be ready for kajammer to use
+*****************************************************
+
 Credit for the icon goes to a friend of mine that goes by the name of Mar.
 
