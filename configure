@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#create a bin/kajammer file to fool qmake into adding the
+#compiled binary into the Makefile for installation
+
+mkdir -p bin
+touch bin/kajammer
+echo 'touch bin/kajammer'
+
