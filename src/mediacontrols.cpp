@@ -20,6 +20,13 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+//don't put kajamtag.h at the end of includes,
+//mainwindow.cpp thinks it defined k_tags first; it didn't.
+//I don't know why it thinks it did, or why putthing this at the top works
+extern "C" {
+#include <kajamtag/kajamtag.h>
+}
+
 #include "headers/mediacontrols.h"
 
 MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
@@ -161,70 +168,69 @@ void MediaControls::repeatPressed()
 
 //Fills the music table with ID3 tag data.
 void MediaControls::setMetaData()
-{
-    std::string strFile = metaSources.at(0).fileName().toStdString();
-    char* file = new char[strFile.size()+1];
-    strcpy(file, strFile.c_str());
-    
-    kajamtag_init(file);
-    char* ctitle = k_getTitle();
-    char* album = k_getAlbum();
-    char* artist = k_getArtist();
-    
-    printf("%s\n", ctitle);
-    printf("%s\n", album);
-    printf("%s\n", artist);
+{    
+    for(int i = 0; i < metaSources.count() - 1; i++)
+    {
+        std::string strFile = metaSources.at(i).fileName().toStdString();
+        char* file = new char[strFile.size()+1];
+        strcpy(file, strFile.c_str());
+        
+        kajamtag_init(file);
+        
+        char* title = k_getTitle();
+        char* artist = k_getArtist();
+        char* album = k_getAlbum();
 
-//     QMap<QString, QString> metaData = metaResolver->metaData();
-//     
-//     QString title = metaData.value("TITLE");
-//     if (title == "")
-//     {
-//         QFileInfo file(metaResolver->currentSource().fileName());
-//         title = file.baseName();
-//     }
-//     QTableWidgetItem *indexItem = new QTableWidgetItem(QString::number(tableIndex++));
-//     QTableWidgetItem *titleItem = new QTableWidgetItem(title);
-//     QTableWidgetItem *artistItem = new QTableWidgetItem(metaData.value("ARTIST"));
-//     QTableWidgetItem *albumItem = new QTableWidgetItem(metaData.value("ALBUM"));
-//     
-//     titleItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-//     artistItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-//     albumItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-//     indexItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-//     
-//     int row = table->rowCount();
-//     table->insertRow(row);
-//     table->setItem(row, 0, indexItem);
-//     table->setItem(row, 1, titleItem);
-//     table->setItem(row, 2, artistItem);
-//     table->setItem(row, 3, albumItem);
-//     
-//     //Don't put row numbers on the table
-//     tableLabels.append("");
-//     table->setVerticalHeaderLabels(tableLabels);
-// 
-//     Phonon::MediaSource source = metaResolver->currentSource();
-//     int index = metaSources.indexOf(source) + 1;
-//     if (metaSources.count() > index) 
-//     {
-//         /* emit a signal so we can loop through the queue and
-//          * set the table up */
-//         metaResolver->setCurrentSource(metaSources.at(index));
-//     }
-//     else {        
-//         table->resizeColumnsToContents();
-//         
-//         if (table->columnWidth(1) > 300)
-//             table->setColumnWidth(1, 300);
-//         else 
-//         {
-//             //Make columns just a bit bigger, so things aren't squeezed
-//             table->setColumnWidth(1, table->columnWidth(1) + 20);
-//             table->setColumnWidth(2, table->columnWidth(2) + 20);
-//             table->resizeColumnToContents(0);
-//         }
-//     }
+        if (strcmp(title, "") == 0)
+        {
+            QFileInfo file(metaResolver->currentSource().fileName());
+            std::string strTitle = file.baseName().toStdString();
+            strcpy(title, strTitle.c_str());
+        }
+        
+        QTableWidgetItem *indexItem = new QTableWidgetItem(QString::number(tableIndex++));
+        QTableWidgetItem *titleItem = new QTableWidgetItem(title);
+        QTableWidgetItem *artistItem = new QTableWidgetItem(artist);
+        QTableWidgetItem *albumItem = new QTableWidgetItem(album);
+    
+        titleItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        artistItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        albumItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        indexItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+    
+        int row = table->rowCount();
+        table->insertRow(row);
+        table->setItem(row, 0, indexItem);
+        table->setItem(row, 1, titleItem);
+        table->setItem(row, 2, artistItem);
+        table->setItem(row, 3, albumItem);
+        
+        //Don't put row numbers on the table
+        tableLabels.append("");
+        table->setVerticalHeaderLabels(tableLabels);
+
+        Phonon::MediaSource source = metaResolver->currentSource();
+        int index = metaSources.indexOf(source) + 1;
+        if (metaSources.count() > index) 
+        {
+            /* emit a signal so we can loop through the queue and
+            * set the table up */
+            metaResolver->setCurrentSource(metaSources.at(index));
+        }
+        else {        
+            table->resizeColumnsToContents();
+            
+            if (table->columnWidth(1) > 300)
+                table->setColumnWidth(1, 300);
+            else 
+            {
+                //Make columns just a bit bigger, so things aren't squeezed
+                table->setColumnWidth(1, table->columnWidth(1) + 20);
+                table->setColumnWidth(2, table->columnWidth(2) + 20);
+                table->resizeColumnToContents(0);
+            }
+        }
+    }
 }
 
 void MediaControls::tableClicked(int row)
