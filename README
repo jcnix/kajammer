@@ -4,13 +4,11 @@ See INSTALLING for dependencies.
 
 To build:
 -Change directory to where you downloaded KaJammer
--Run qmake
--Run make
--Run qmake
--sudo make install
--Use the command kajammer to run
-
-There is a bug with qmake and it's not generating the makefile correctly, so it won't install the compiled binary unless you run qmake again since the binary didn't exist before you compiled.
+- ./configure
+- qmake
+- make
+- sudo make install
+- Use the command kajammer to run
 
 To switch to the unstable branch:
 1.  Check out the current branches:
