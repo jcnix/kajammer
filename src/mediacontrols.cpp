@@ -139,6 +139,7 @@ void MediaControls::getQueue(QList<Phonon::MediaSource> meta)
     metaSources = meta;
     //Set source so we activate metaDataChanged(), so it loops through our table
     metaResolver->setCurrentSource(metaSources.at(0));
+    //setMetaData();
     table->setRowCount(0);
     tableIndex = 1;
 }
@@ -213,9 +214,6 @@ void MediaControls::setMetaData()
         int index = metaSources.indexOf(source) + 1;
         if (metaSources.count() > index) 
         {
-            /* emit a signal so we can loop through the queue and
-            * set the table up */
-            metaResolver->setCurrentSource(metaSources.at(index));
         }
         else {        
             table->resizeColumnsToContents();
