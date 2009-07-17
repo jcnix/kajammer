@@ -20,9 +20,6 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-extern "C" { 
-#include <kajamtag/kajamtag.h>
-}
 #include "headers/mediacontrols.h"
 
 MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
@@ -177,7 +174,7 @@ void MediaControls::setMetaData()
     printf("%s\n", ctitle);
     printf("%s\n", album);
     printf("%s\n", artist);
-    
+
 //     QMap<QString, QString> metaData = metaResolver->metaData();
 //     
 //     QString title = metaData.value("TITLE");

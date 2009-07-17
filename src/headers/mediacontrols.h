@@ -26,6 +26,9 @@
 //don't put kajamtag.h at the end of includes,
 //mainwindow.cpp thinks it defined k_tags first; it didn't.
 //I don't know why it thinks it did, or why putthing this at the top works
+extern "C" { 
+#include <kajamtag/kajamtag.h>
+}
 
 #include <QtGui/QWidget>
 #include <QtGui/QAbstractItemView>
