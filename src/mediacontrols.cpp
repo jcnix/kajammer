@@ -170,7 +170,7 @@ void MediaControls::repeatPressed()
 //Fills the music table with ID3 tag data.
 void MediaControls::setMetaData()
 {    
-    for(int i = 0; i < metaSources.count() - 1; i++)
+    for(int i = 0; i < metaSources.count(); i++)
     {
         std::string strFile = metaSources.at(i).fileName().toStdString();
         char* file = new char[strFile.size()+1];
