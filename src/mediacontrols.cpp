@@ -213,9 +213,7 @@ void MediaControls::setMetaData()
         Phonon::MediaSource source = metaResolver->currentSource();
         int index = metaSources.indexOf(source) + 1;
         if (metaSources.count() > index) 
-        {
-        }
-        else {        
+        {            
             table->resizeColumnsToContents();
             
             if (table->columnWidth(1) > 300)
@@ -225,7 +223,6 @@ void MediaControls::setMetaData()
                 //Make columns just a bit bigger, so things aren't squeezed
                 table->setColumnWidth(1, table->columnWidth(1) + 20);
                 table->setColumnWidth(2, table->columnWidth(2) + 20);
-                table->resizeColumnToContents(0);
             }
         }
     }
