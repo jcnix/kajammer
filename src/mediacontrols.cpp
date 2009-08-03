@@ -178,21 +178,31 @@ void MediaControls::setMetaData()
         
         kajamtag_init(file);
         
-        char* title = k_getTitle();
-        char* artist = k_getArtist();
-        char* album = k_getAlbum();
-
-        if (strcmp(title, "") == 0)
+        char* c_title = k_getTitle();
+        char* c_artist = k_getArtist();
+        char* c_album = k_getAlbum();
+        
+        QString *title = new QString(c_title);
+        QString *artist = new QString(c_artist);
+        QString *album = new QString(c_album);
+        
+        //"BAD_TAG" means Kajamtag doesn't recognize the tag format.
+        if (title->compare("") == 0 || title->compare("BAD_TAG") == 0)
         {
             QFileInfo file(metaResolver->currentSource().fileName());
-            std::string strTitle = file.baseName().toStdString();
-            strcpy(title, strTitle.c_str());
+            *title = file.baseName();
+        }
+        
+        //If one is bad, they're all bad.
+        if(title->compare("BAD_TAG") == 0) {
+            *artist = "";
+            *album = "";
         }
         
         QTableWidgetItem *indexItem = new QTableWidgetItem(QString::number(tableIndex++));
-        QTableWidgetItem *titleItem = new QTableWidgetItem(title);
-        QTableWidgetItem *artistItem = new QTableWidgetItem(artist);
-        QTableWidgetItem *albumItem = new QTableWidgetItem(album);
+        QTableWidgetItem *titleItem = new QTableWidgetItem(*title);
+        QTableWidgetItem *artistItem = new QTableWidgetItem(*artist);
+        QTableWidgetItem *albumItem = new QTableWidgetItem(*album);
     
         titleItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         artistItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
