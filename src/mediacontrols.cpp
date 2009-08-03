@@ -172,9 +172,9 @@ void MediaControls::setMetaData()
 {    
     for(int i = 0; i < metaSources.count(); i++)
     {
-        std::string strFile = metaSources.at(i).fileName().toStdString();
+        QString strFile = metaSources.at(i).fileName();
         char* file = new char[strFile.size()+1];
-        strcpy(file, strFile.c_str());
+        strcpy(file, strFile.toStdString().c_str());
         
         kajamtag_init(file);
         
@@ -189,12 +189,12 @@ void MediaControls::setMetaData()
         //"BAD_TAG" means Kajamtag doesn't recognize the tag format.
         if (title->compare("") == 0 || title->compare("BAD_TAG") == 0)
         {
-            QFileInfo file(metaResolver->currentSource().fileName());
+            QFileInfo file(strFile);
             *title = file.baseName();
         }
         
         //If one is bad, they're all bad.
-        if(title->compare("BAD_TAG") == 0) {
+        if(artist->compare("BAD_TAG") == 0) {
             *artist = "";
             *album = "";
         }
