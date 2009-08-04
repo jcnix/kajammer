@@ -20,6 +20,8 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef _WINDOWS
+
 #include "headers/cli.h"
 
 Cli::Cli(int argc, char *argv[])
@@ -212,3 +214,5 @@ bool Cli::getXFlag()
 {
     return xFlag;
 }
+
+#endif
