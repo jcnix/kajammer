@@ -20,6 +20,8 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef _WINDOWS
+
 #include "headers/cli.h"
 
 Cli::Cli(int argc, char *argv[])
@@ -94,7 +96,7 @@ void Cli::cliArgs(char *argv[])
                 std::cout << "Usage: kajammer [options...] [arguments...]\n";
                 std::cout << "\t" << "Where options include:\n";
                 std::cout << "\t" << "-p\t" << "play\t\t" << "[Files]\n";
-                std::cout << "\t" << "-a\t" << "play playlist\t\t" << "Playlist name";
+                std::cout << "\t" << "-a\t" << "play playlist\t" << "Playlist name\n";
                 std::cout << "\t" << "-n\t" << "new playlist\t" << "[Name] [Files]\n";
                 std::cout << "\t" << "-d\t" << "delete playlist\t" << "[Playlists]\n";
                 std::cout << "\t" << "-l\t" << "list playlists\n";
@@ -212,3 +214,5 @@ bool Cli::getXFlag()
 {
     return xFlag;
 }
+
+#endif

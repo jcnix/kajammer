@@ -157,13 +157,11 @@ void MediaControls::playPressed()
 
 void MediaControls::shufflePressed()
 {
-    //decorating buttons to indicate status will go here soon
     controller->toggleShuffle();
 }
 
 void MediaControls::repeatPressed()
 {
-    //decorating buttons to indicate status will go here soon
     controller->toggleRepeat();
 }
 

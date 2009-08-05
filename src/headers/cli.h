@@ -23,6 +23,8 @@
 #ifndef _CLI_H
 #define _CLI_H
 
+#ifndef _WINDOWS
+
 #include <iostream>
 #include <unistd.h>
 #include <QtCore/QString>
@@ -57,4 +59,6 @@ private:
     QStringList getArgList(char *argv[], int);
     QStringList appendFilePath(QStringList);
 };
+
+#endif
 #endif /* _CLI_H */
