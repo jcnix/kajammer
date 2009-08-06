@@ -69,7 +69,7 @@ void PlaylistEditor::save()
     {
         QTextBlock block = document->findBlockByLineNumber(i);
         QString blockText = block.text();
-        while(blockText.endsWith(" "))
+        while(blockText.endsWith(" ") || blockText.startsWith("\n"))
         {
             blockText.chop(1);
         }
