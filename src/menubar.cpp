@@ -86,7 +86,8 @@ void MenuBar::createNewPlaylist()
                                            &ok);
     if(ok && !input.isEmpty())
     {
-        addToList = QFileDialog::getOpenFileNames(this, tr("Open File"), "~/", 
+        QString defaultDir = options->getDefaultOpenDir();
+        addToList = QFileDialog::getOpenFileNames(this, tr("Open File"), defaultDir, 
                                                    tr("Music Files (*.mp3 *.ogg *.aac)"));
                                                    
         if(!addToList.isEmpty())
