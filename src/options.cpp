@@ -29,7 +29,7 @@ Options::Options()
 {       
     //if height and width aren't found, these are defaults
     main_width = 640;
-    main_height = 380;
+    main_height = 360;
     
     if(!QKAJAM_DIR.exists())
     {
