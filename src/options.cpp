@@ -27,6 +27,10 @@ Options* Options::options = 0;
 
 Options::Options()
 {       
+    //if height and width aren't found, these are defaults
+    main_width = 640;
+    main_height = 380;
+    
     if(!QKAJAM_DIR.exists())
     {
         QKAJAM_DIR.mkdir(KAJAM_DIR);
@@ -80,6 +84,16 @@ void Options::readOptions()
             else
                 use_tray_icon = false;
         }
+        else if(list.at(0).contains("$Main_Width")) {
+            main_width = list.at(1).toInt();
+            if(main_width < 200)
+                main_width = 640;
+        }
+        else if(list.at(0).contains("$Main_Height")) {
+            main_height = list.at(1).toInt();
+            if(main_height < 100)
+                main_height = 360;
+        }
     }
     
     conf.close();
@@ -96,6 +110,8 @@ void Options::save()
     options.append("$MusicDir=" + defaultOpenDir + "\n");
     options.append("$Shuff_No_Repeat=" + bool_to_qstring(shuff_no_repeat) + "\n");
     options.append("$Use_Tray_Icon=" + bool_to_qstring(use_tray_icon) + "\n");
+    options.append("$Main_Width=" + QString::number(main_width) + "\n");
+    options.append("$Main_Height=" + QString::number(main_height) + "\n");
 
     //Write to file
     for(int i = 0; i < options.count(); i++)
