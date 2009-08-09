@@ -44,11 +44,15 @@ public:
     
     void setDefaultOpenDir(QString dir) { defaultOpenDir = dir; }
     void setShuff_no_repeat(bool no_repeat) { shuff_no_repeat = no_repeat; }
-    void setTrayIcon(bool useTray) { use_tray_icon = useTray; };
+    void setTrayIcon(bool useTray) { use_tray_icon = useTray; }
+    void setMainHeight(int height) { main_height = height; }
+    void setMainWidth(int width) { main_width = width; }
     
     QString getDefaultOpenDir();
     bool isShuff_no_repeat() { return shuff_no_repeat; }
     bool trayIcon() { return use_tray_icon; }
+    int getMainWidth() { return main_width; }
+    int getMainHeight() { return main_height; }
     
 protected:
     Options();
@@ -63,6 +67,8 @@ private:
     QString defaultOpenDir;
     bool shuff_no_repeat;
     bool use_tray_icon;
+    int main_width;
+    int main_height;
 };
 
 #endif /* _OPTIONS_H */

@@ -51,3 +51,12 @@ void MainWindow::showWindow(QSystemTrayIcon::ActivationReason activated)
         if(!isVisible()) show();
     }
 }
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    Options *options = Options::getInstance();
+    options->setMainWidth(width());
+    options->setMainHeight(height());
+    options->save();
+    event->accept();
+}

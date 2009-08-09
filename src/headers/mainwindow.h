@@ -43,7 +43,10 @@ public:
 public slots:
     void showWindow(QSystemTrayIcon::ActivationReason);
     
-private:
+protected:
+    void closeEvent(QCloseEvent*);    
+    
+private:    
     Controller *controller;
     MenuBar *menuBar;
     MediaControls *mediaControls;
