@@ -20,7 +20,7 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "togglebutton.h"
+#include "headers/togglebutton.h"
 
 ToggleButton::ToggleButton(QString title) : QPushButton(title)
 {
