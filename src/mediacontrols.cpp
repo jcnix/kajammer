@@ -23,7 +23,7 @@
 //don't put kajamtag.h at the end of includes,
 //mainwindow.cpp thinks it defined k_tags first; it didn't.
 //I don't know why it thinks it did, or why putting this at the top works
-#include <kajamtag/kajamtag.h>
+#include <kajamtag.h>
 #include "headers/mediacontrols.h"
 
 MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
