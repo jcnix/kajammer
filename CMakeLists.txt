@@ -6,4 +6,25 @@ SET( CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake )
 FIND_PACKAGE( Qt4 REQUIRED )
 FIND_PACKAGE( Phonon REQUIRED )
 FIND_PACKAGE( Kajamtag )
-ADD_SUBDIRECTORY( src )
+
+SET( QT_USE_GUI TRUE )
+INCLUDE( ${QT_USE_FILE} )
+INCLUDE ( CheckIncludeFiles )
+CHECK_INCLUDE_FILES ( kajamtag.h HAVE_KAJAMTAG_H )
+CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/headers/config.h )
+
+SET( kajammer_SRCS src/main.cpp src/cli.cpp src/controller.cpp src/mainwindow.cpp src/mediacontrols.cpp src/menubar.cpp src/options.cpp src/optionsPanel.cpp src/playlist.cpp src/playlistEditor.cpp src/togglebutton.cpp src/trayicon.cpp )
+
+SET( kajammer_MOC_HEADERS src/headers/cli.h src/headers/controller.h src/headers/mainwindow.h src/headers/mediacontrols.h src/headers/menubar.h src/headers/optionsPanel.h src/headers/playlist.h src/headers/playlistEditor.h src/headers/togglebutton.h src/headers/trayicon.h )
+
+QT4_WRAP_CPP( kajammer_MOC_HEADERS ${kajammer_MOC_HEADERS} )
+
+IF( Kajamtag_LIBRARY )
+  SET( Kajamtag_LIB ${Kajamtag_LIBRARY} )
+ENDIF( Kajamtag_LIBRARY )
+
+INCLUDE_DIRECTORIES( headers/ ${QT_INCLUDE_DIR} ${QT_GUI_INCLUDE_DIR} )
+ADD_EXECUTABLE( kajammer ${kajammer_SRCS} ${kajammer_MOC_HEADERS} )
+
+TARGET_LINK_LIBRARIES( kajammer ${QT_LIBRARIES} ${QT_GUI_LIBRARIES} ${Phonon_LIBRARY} ${Kajamtag_LIB} )
+INSTALL(TARGETS kajammer DESTINATION bin)

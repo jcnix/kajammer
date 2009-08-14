@@ -23,7 +23,7 @@
 #ifndef _CONTROLS_H
 #define _CONTROLS_H
 
-#include "headers/config.h"
+#include "config.h"
 #include <QtGui/QWidget>
 #include <QtGui/QAbstractItemView>
 #include <QtCore/QFileInfo>

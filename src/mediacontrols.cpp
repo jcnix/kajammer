@@ -20,14 +20,13 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-//don't put kajamtag.h at the end of includes,
-//mainwindow.cpp thinks it defined k_tags first; it didn't.
-//I don't know why it thinks it did, or why putting this at the top works
+#include "headers/mediacontrols.h"
+
+//I get errors if I include kajamtag.h in mediacontrols.h
+//but I don't get any here.
 #ifdef HAVE_KAJAMTAG_H
 #include <kajamtag.h>
 #endif
-
-#include "headers/mediacontrols.h"
 
 MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 {
