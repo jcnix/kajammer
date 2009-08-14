@@ -23,7 +23,7 @@
 //don't put kajamtag.h at the end of includes,
 //mainwindow.cpp thinks it defined k_tags first; it didn't.
 //I don't know why it thinks it did, or why putting this at the top works
-#if HAVE_KAJAMTAG_H
+#ifdef HAVE_KAJAMTAG_H
 #include <kajamtag.h>
 #endif
 
@@ -174,11 +174,11 @@ void MediaControls::setMetaData()
         char* file = new char[strFile.size()+1];
         strcpy(file, strFile.toStdString().c_str());
         
-        char* c_title = "";
-        char* c_artist = "";
-        char* c_album = "";
+        char* c_title = '\0';
+        char* c_artist = '\0';
+        char* c_album = '\0';
         
-        #if HAVE_KAJAMTAG_H
+        #ifdef HAVE_KAJAMTAG_H
         kajamtag_init(file);
         
         c_title = k_getTitle();
