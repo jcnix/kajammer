@@ -190,17 +190,18 @@ void MediaControls::setMetaData()
         QString *artist = new QString(c_artist);
         QString *album = new QString(c_album);
         
+        //If one is bad, they're all bad.
+        if(title->compare("BAD_TAG") == 0) {
+            *title = "";
+            *artist = "";
+            *album = "";
+        }
+        
         //"BAD_TAG" means Kajamtag doesn't recognize the tag format.
-        if (title->compare("") == 0 || title->compare("BAD_TAG") == 0)
+        if (title->compare("") == 0)
         {
             QFileInfo file(strFile);
             *title = file.baseName();
-        }
-        
-        //If one is bad, they're all bad.
-        if(artist->compare("BAD_TAG") == 0) {
-            *artist = "";
-            *album = "";
         }
         
         QTableWidgetItem *indexItem = new QTableWidgetItem(QString::number(tableIndex++));
