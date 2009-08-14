@@ -23,7 +23,6 @@ Kajamtag is an MP3/Ogg tag reader written in C (by me)
 I never really liked Phonon's tag reading capabilities, so I wrote my own.
 Kajamtag is still very unstable, and Kajammer may segfault on you while using it.
 
-You'll need kajamtag to use this branch, absolutely required at the moment.
 Get kajamtag:
 git clone git://github.com/pvtcupcakes/kajamtag.git
 
