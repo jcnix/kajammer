@@ -5,3 +5,6 @@ moc_*
 bin/
 build/
 res/.directory
+src/cmake_install.cmake
+src/headers/config.h
+
