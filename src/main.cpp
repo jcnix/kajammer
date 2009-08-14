@@ -39,7 +39,10 @@ int main(int argc, char *argv[])
     if(!xFlag)
     {
         Options *options = Options::getInstance();
-        app.setWindowIcon(QIcon("/usr/share/icons/kajammer.png"));
+        
+        QString icon = "/usr/share/icons/kajammer.png";
+        if(QFile::exists(icon))            
+            app.setWindowIcon(QIcon(icon));
         
         if(options->trayIcon())
             app.setQuitOnLastWindowClosed(false);
