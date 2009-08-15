@@ -138,7 +138,9 @@ void MediaControls::getQueue(QList<Phonon::MediaSource> meta)
     metaSources = meta;
     //Set source so we activate metaDataChanged(), so it loops through our table
     metaResolver->setCurrentSource(metaSources.at(0));
-    //setMetaData();
+    #ifndef HAVE_KAJAMTAG_H
+    setMetaData();
+    #endif
     table->setRowCount(0);
     tableIndex = 1;
 }
@@ -167,11 +169,13 @@ void MediaControls::repeatPressed()
 //Fills the music table with ID3 tag data.
 void MediaControls::setMetaData()
 {    
+    #ifdef HAVE_KAJAMTAG_H
     for(int i = 0; i < metaSources.count(); i++)
     {
         QString strFile = metaSources.at(i).fileName();
         char* file = new char[strFile.size()+1];
         strcpy(file, strFile.toStdString().c_str());
+    #endif
         
         char* c_title = '\0';
         char* c_artist = '\0';
@@ -189,17 +193,30 @@ void MediaControls::setMetaData()
         QString *artist = new QString(c_artist);
         QString *album = new QString(c_album);
         
+        #ifndef HAVE_KAJAMTAG_H
+        QMap<QString, QString> metaData = metaResolver->metaData();
+        *title = metaData.value("TITLE");
+        *artist = metaData.value("ARTIST");
+        *album = metaData.value("ALBUM");
+        #endif
+        
+        #ifdef HAVE_KAJAMTAG_H
         //If one is bad, they're all bad.
         if(title->compare("BAD_TAG") == 0) {
             *title = "";
             *artist = "";
             *album = "";
         }
+        #endif
         
         //"BAD_TAG" means Kajamtag doesn't recognize the tag format.
         if (title->compare("") == 0)
         {
+            #ifdef HAVE_KAJAMTAG_H
             QFileInfo file(strFile);
+            #else
+            QFileInfo file(metaResolver->currentSource().fileName());
+            #endif
             *title = file.baseName();
         }
         
@@ -227,7 +244,13 @@ void MediaControls::setMetaData()
         Phonon::MediaSource source = metaResolver->currentSource();
         int index = metaSources.indexOf(source) + 1;
         if (metaSources.count() > index) 
-        {            
+        {
+            #ifndef HAVE_KAJAMTAG_H
+            /* emit a signal so we can loop through the queue and
+            * set the table up */
+            metaResolver->setCurrentSource(metaSources.at(index));
+            #endif
+            
             table->resizeColumnsToContents();
             
             if (table->columnWidth(1) > 300)
@@ -239,7 +262,9 @@ void MediaControls::setMetaData()
                 table->setColumnWidth(2, table->columnWidth(2) + 20);
             }
         }
+    #ifdef HAVE_KAJAMTAG_H
     }
+    #endif
 }
 
 void MediaControls::tableClicked(int row)
