@@ -27,4 +27,6 @@ INCLUDE_DIRECTORIES( headers/ ${QT_INCLUDE_DIR} ${QT_GUI_INCLUDE_DIR} )
 ADD_EXECUTABLE( kajammer ${kajammer_SRCS} ${kajammer_MOC_HEADERS} )
 
 TARGET_LINK_LIBRARIES( kajammer ${QT_LIBRARIES} ${QT_GUI_LIBRARIES} ${Phonon_LIBRARY} ${Kajamtag_LIB} )
-INSTALL(TARGETS kajammer DESTINATION bin)
+INSTALL(TARGETS kajammer DESTINATION /usr/bin)
+INSTALL(FILES res/kajammer.png DESTINATION /usr/share/icons)
+INSTALL(FILES res/kajammer.desktop DESTINATION /usr/share/applications)
