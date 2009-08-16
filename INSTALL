@@ -1,3 +1,5 @@
+CMake is required to build kajammer.
+
 Dependencies for Fedora (Gnome):
 qt-x11
 qt-devel

@@ -1,11 +1,11 @@
 Currently, only Linux is supported by me.  You can try to run Kajammer on OS X or Windows, but I have not tested those platforms, and I don't really plan to.  The only Linux specific thing I use is the unistd.h header, which is part of GNU, and I use it for my Cli interface.  So I don't see why it wouldn't run on OS X or Windows, just don't bet on it.
  
-See INSTALLING for dependencies.
+See INSTALL for dependencies.
+cmake is required to build kajammer
 
 To build:
--Change directory to where you downloaded KaJammer
+- Change directory to where you downloaded KaJammer
 - ./configure
-- qmake
 - make
 - sudo make install
 - Use the command kajammer to run
@@ -18,15 +18,15 @@ To switch to the unstable branch:
     Where yourBranchName is anything you want, and myRemoteBranch is the name of the remote branch.
 
 ****************************************************
-Check out the kajamtag branch.
+Check out kajamtag.
 Kajamtag is an MP3/Ogg tag reader written in C (by me)
 I never really liked Phonon's tag reading capabilities, so I wrote my own.
-Kajamtag is still very unstable, and Kajammer may segfault on you while using it.
+Kajamtag is still unstable, and Kajammer may segfault on you while using it.
 
 Get kajamtag:
 git clone git://github.com/pvtcupcakes/kajamtag.git
 
-Just run make and make install on kajamtag and it should be ready for kajammer to use
+Just run ./configure, make and make install on kajamtag and reinstall kajammer 
 *****************************************************
 
 Credit for the icon goes to a friend of mine that goes by the name of Mar.
