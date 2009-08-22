@@ -184,9 +184,9 @@ void MediaControls::setMetaData()
         #ifdef HAVE_KAJAMTAG_H
         kajamtag_init(file);
         
-        c_title = k_getTitle();
-        c_artist = k_getArtist();
-        c_album = k_getAlbum();
+        c_title =   k_getTag(KTITLE);
+        c_artist =  k_getTag(KARTIST);
+        c_album =   k_getTag(KALBUM);
         #endif
         
         QString *title = new QString(c_title);

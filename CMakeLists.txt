@@ -30,3 +30,4 @@ TARGET_LINK_LIBRARIES( kajammer ${QT_LIBRARIES} ${QT_GUI_LIBRARIES} ${Phonon_LIB
 INSTALL(TARGETS kajammer DESTINATION /usr/bin)
 INSTALL(FILES res/kajammer.png DESTINATION /usr/share/icons)
 INSTALL(FILES res/kajammer.desktop DESTINATION /usr/share/applications)
+
