@@ -182,7 +182,7 @@ void MediaControls::setMetaData()
         char* c_album = '\0';
         
         #ifdef HAVE_KAJAMTAG_H
-        kajamtag_init(file);
+        kajamtag_read(file);
         
         c_title =   k_getTag(KTITLE);
         c_artist =  k_getTag(KARTIST);
