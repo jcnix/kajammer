@@ -25,7 +25,7 @@
 //I get errors if I include kajamtag.h in mediacontrols.h
 //but I don't get any here.
 #ifdef HAVE_KAJAMTAG_H
-#include <kajamtag.h>
+#include <kajamtag/kajamtag.h>
 #endif
 
 MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
