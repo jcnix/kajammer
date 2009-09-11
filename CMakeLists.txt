@@ -10,7 +10,7 @@ FIND_PACKAGE( Kajamtag )
 SET( QT_USE_GUI TRUE )
 INCLUDE( ${QT_USE_FILE} )
 INCLUDE ( CheckIncludeFiles )
-CHECK_INCLUDE_FILES ( kajamtag.h HAVE_KAJAMTAG_H )
+CHECK_INCLUDE_FILES ( kajamtag/kajamtag.h HAVE_KAJAMTAG_H )
 CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/headers/config.h )
 
 SET( kajammer_SRCS src/main.cpp src/cli.cpp src/controller.cpp src/mainwindow.cpp src/mediacontrols.cpp src/menubar.cpp src/options.cpp src/optionsPanel.cpp src/playlist.cpp src/playlistEditor.cpp src/togglebutton.cpp src/trayicon.cpp )
