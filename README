@@ -10,23 +10,27 @@ To build:
 - sudo make install
 - Use the command kajammer to run
 
-To switch to the unstable branch:
-1.  Check out the current branches:
-    git branch -r
-2.  Switch to the desired branch:
-    git checkout -b yourBranchName -t origin/myRemoteBranch
-    Where yourBranchName is anything you want, and myRemoteBranch is the name of the remote branch.
+If you are using git:
+    To switch to the unstable branch:
+    1.  Check out the current branches:
+        git branch -r
+    2.  Switch to the desired branch:
+        git checkout -b yourBranchName -t origin/myRemoteBranch
+        Where yourBranchName is anything you want, and myRemoteBranch is the name of the remote branch.
 
 ****************************************************
 Check out kajamtag.
 Kajamtag is an MP3/Ogg tag reader written in C (by me)
 I never really liked Phonon's tag reading capabilities, so I wrote my own.
-Kajamtag is still unstable, and Kajammer may segfault on you while using it.
 
 Get kajamtag:
-git clone git://github.com/pvtcupcakes/kajamtag.git
+    If you are using kajammer from git:
+        git://kajamtag.git.sourceforge.net/gitroot/kajamtag/kajamtag
+    If you are using a release version of kajammer:
+        https://sourceforge.net/projects/kajamtag/files/
 
-Just run ./configure, make and make install on kajamtag and reinstall kajammer 
+Just run ./configure, make and make install on kajamtag
+and reinstall kajammer.  Make sure you rerurn ./configure 
 *****************************************************
 
 Credit for the icon goes to a friend of mine that goes by the name of Mar.
