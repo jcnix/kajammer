@@ -30,7 +30,7 @@ Get kajamtag:
         https://sourceforge.net/projects/kajamtag/files/
 
 Just run ./configure, make and make install on kajamtag
-and reinstall kajammer.  Make sure you rerurn ./configure 
+and reinstall kajammer.  Make sure you rerun ./configure 
 *****************************************************
 
 Credit for the icon goes to a friend of mine that goes by the name of Mar.
