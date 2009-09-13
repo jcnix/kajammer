@@ -51,6 +51,11 @@ void OptionsPanel::init()
     trayIconLabel = new QLabel("Tray Icon");
     trayIconOption = new QCheckBox;
 
+    lastfmUserLabel = new QLabel("Last.fm Username");
+    lastfmUser = new QLineEdit;
+    lastfmPassLabel = new QLabel("Last.fm Password");
+    lastfmPass = new QLineEdit;
+    
     QHBoxLayout *defaultOpenLayout = new QHBoxLayout;
     defaultOpenLayout->addWidget(defaultOpenLabel);
     defaultOpenLayout->addWidget(defaultOpen);
@@ -63,11 +68,21 @@ void OptionsPanel::init()
     QHBoxLayout *trayIconLayout = new QHBoxLayout;
     trayIconLayout->addWidget(trayIconLabel);
     trayIconLayout->addWidget(trayIconOption);
+    
+    QHBoxLayout *lastfmUserLayout = new QHBoxLayout;
+    lastfmUserLayout->addWidget(lastfmUserLabel);
+    lastfmUserLayout->addWidget(lastfmUser);
+    
+    QHBoxLayout *lastfmPassLayout = new QHBoxLayout;
+    lastfmPassLayout->addWidget(lastfmPassLabel);
+    lastfmPassLayout->addWidget(lastfmPass);
 
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addLayout(defaultOpenLayout);
     vLayout->addLayout(shuffLayout);
     vLayout->addLayout(trayIconLayout);
+    vLayout->addLayout(lastfmUserLayout);
+    vLayout->addLayout(lastfmPassLayout);
     vLayout->addWidget(buttonBox);
     setLayout(vLayout);
 }
@@ -77,6 +92,8 @@ void OptionsPanel::populate()
     defaultOpen->setText(options->getDefaultOpenDir());
     shuffBox->setChecked(options->isShuff_no_repeat());
     trayIconOption->setChecked(options->trayIcon());
+    lastfmUser->setText(options->getLastFmUser());
+    lastfmPass->setText(options->getLastFmPass());
 }
 
 void OptionsPanel::save()
@@ -84,6 +101,8 @@ void OptionsPanel::save()
     options->setDefaultOpenDir(defaultOpen->text());
     options->setShuff_no_repeat(shuffBox->isChecked());
     options->setTrayIcon(trayIconOption->isChecked());
+    options->setLastFmUser(lastfmUser->text());
+    options->setLastFmPass(lastfmPass->text());
     options->save();
     
     accept();

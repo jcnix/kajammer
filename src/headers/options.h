@@ -47,12 +47,16 @@ public:
     void setTrayIcon(bool useTray) { use_tray_icon = useTray; }
     void setMainHeight(int height) { main_height = height; }
     void setMainWidth(int width) { main_width = width; }
+    void setLastFmUser(QString user) { lastfmUser = user; }
+    void setLastFmPass(QString pass) { lastfmPass = pass; }
     
     QString getDefaultOpenDir();
     bool isShuff_no_repeat() { return shuff_no_repeat; }
     bool trayIcon() { return use_tray_icon; }
     int getMainWidth() { return main_width; }
     int getMainHeight() { return main_height; }
+    QString getLastFmUser() { return lastfmUser; }
+    QString getLastFmPass() { return lastfmPass; }
     
 protected:
     Options();
@@ -69,6 +73,8 @@ private:
     bool use_tray_icon;
     int main_width;
     int main_height;
+    QString lastfmUser;
+    QString lastfmPass;
 };
 
 #endif /* _OPTIONS_H */

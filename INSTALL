@@ -22,7 +22,7 @@ phonon-backend-xine
 I couldn't get gstreamer to work, although it did work on Fedora
 
 Dependencies for KDE:
-Qt 4.4 or newer, if not 4.5
+Qt 4.4 or newer
 Phonon is not supported in anything older than 4.4.  
 This also applies to Gnome.
 

@@ -21,7 +21,6 @@
  */
 
 #include "headers/options.h"
-#include <iostream>
 
 Options* Options::options = 0;
 
@@ -94,6 +93,12 @@ void Options::readOptions()
             if(main_height < 100)
                 main_height = 360;
         }
+        else if(list.at(0).contains("$LastFM_User")) {
+            lastfmUser = list.at(1);
+        }
+        else if(list.at(0).contains("$LastFM_Pass")) {
+            lastfmPass = list.at(1);
+        }
     }
     
     conf.close();
@@ -112,6 +117,8 @@ void Options::save()
     options.append("$Use_Tray_Icon=" + bool_to_qstring(use_tray_icon) + "\n");
     options.append("$Main_Width=" + QString::number(main_width) + "\n");
     options.append("$Main_Height=" + QString::number(main_height) + "\n");
+    options.append("$LastFM_User=" + lastfmUser + "\n");
+    options.append("$LastFM_Pass=" + lastfmPass + "\n");
 
     //Write to file
     for(int i = 0; i < options.count(); i++)

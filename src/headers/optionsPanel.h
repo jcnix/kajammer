@@ -68,6 +68,11 @@ private:
 
     QLabel *trayIconLabel;
     QCheckBox *trayIconOption;
+    
+    QLabel *lastfmUserLabel;
+    QLineEdit *lastfmUser;
+    QLabel *lastfmPassLabel;
+    QLineEdit *lastfmPass;
 
     QDialogButtonBox *buttonBox;
 };
