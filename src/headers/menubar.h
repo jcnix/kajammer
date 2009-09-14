@@ -78,8 +78,6 @@ private:
     
     QMenu *help;
     QAction *about;
-    
-    QStringList fileQueue;
 };
 
 #endif	/* _MENUBAR_H */
