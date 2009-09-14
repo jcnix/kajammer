@@ -32,6 +32,7 @@ MenuBar::MenuBar()
     connect(close, SIGNAL(triggered()), this, SLOT(quit()));
     connect(optionsAction, SIGNAL(triggered()), this, SLOT(showOptions()));
     connect(playlistEditAction, SIGNAL(triggered()), this, SLOT(showPlaylistEditor()));
+    connect(scanAction, SIGNAL(triggered()), this, SLOT(showCollectionScanner()));
     connect(about, SIGNAL(triggered()), this, SLOT(aboutDialog()));
 }
 
@@ -55,8 +56,11 @@ void MenuBar::init()
     openFile = new QAction("&Open...", this);
     delPlaylist = new QAction("&Delete Playlist...", this);
     close = new QAction("E&xit", this);
+    
     optionsAction = new QAction("&Options", this);
     playlistEditAction = new QAction("&Playlist Editor", this);
+    scanAction = new QAction("&Scan Collection", this);
+    
     about = new QAction("&About", this);
     
     newPlaylist->setShortcut(QKeySequence::New);
@@ -71,6 +75,7 @@ void MenuBar::init()
     
     tools->addAction(optionsAction);
     tools->addAction(playlistEditAction);
+    tools->addAction(scanAction);
     
     help->addAction(about);
 }
@@ -115,7 +120,7 @@ void MenuBar::open()
     QString defaultDir = options->getDefaultOpenDir();
     
     QStringList fileQueue = QFileDialog::getOpenFileNames(this, tr("Open File"), defaultDir, 
-                                               tr("Music Files (*.mp3 *.ogg *.aac *.flac *.wma *.wav)"));
+                                    tr("Music Files (*.mp3 *.ogg *.aac *.flac *.wma *.wav)"));
     //Make sure user didn't cancel out of the dialog
     if(!fileQueue.isEmpty())
     {
@@ -137,7 +142,13 @@ void MenuBar::showPlaylistEditor()
     editor = new PlaylistEditor;
     editor->show();
 }
-    
+
+void MenuBar::showCollectionScanner()
+{
+    CollectionScanner *cs;
+    cs = new CollectionScanner;
+    cs->show();
+}
 
 void MenuBar::aboutDialog()
 {

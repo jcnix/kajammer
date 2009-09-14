@@ -60,5 +60,5 @@ private:
     QStringList appendFilePath(QStringList);
 };
 
-#endif
+#endif /* Windows */
 #endif /* _CLI_H */

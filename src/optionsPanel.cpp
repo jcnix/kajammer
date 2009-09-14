@@ -112,10 +112,9 @@ void OptionsPanel::browseDefaultOpen()
 {
     QString dir;
     dir = QFileDialog::getExistingDirectory(NULL, 
-                                             "Open Directory", 
-                                             QDir::homePath(),
-                                             QFileDialog::ShowDirsOnly
-                                             | QFileDialog::DontResolveSymlinks);
+                                            "Open Directory", 
+                                            QDir::homePath(),
+                                            QFileDialog::ShowDirsOnly);
                                              
      defaultOpen->setText(dir);
 }

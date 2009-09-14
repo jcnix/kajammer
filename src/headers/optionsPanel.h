@@ -55,7 +55,6 @@ public slots:
 private:
     void init();
     void populate();
-    //QString setDefaultOpen();
     
     Options *options;
 
