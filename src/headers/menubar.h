@@ -64,17 +64,21 @@ private:
     Playlist *playlist;
     Options *options;
     
+    QMenuBar *menuBar;
+    
+    QMenu *file;
     QAction *newPlaylist;
     QAction *delPlaylist;
     QAction *openFile;
     QAction *close;
+    
+    QMenu *tools;
     QAction *optionsAction;
     QAction *playlistEditAction;
-    QAction *about;
-    QMenuBar *menuBar;
-    QMenu *file;
-    QMenu *tools;
+    
     QMenu *help;
+    QAction *about;
+    
     QStringList fileQueue;
 };
 
