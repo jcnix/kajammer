@@ -36,6 +36,7 @@ void CollectionScanner::init()
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     dirLabel = new QLabel("Scan Directory");
     dirInput = new QLineEdit;
+    dirInput->setText("/home/casey/music");
     browseDirButton = new QPushButton("...");
     
     QHBoxLayout *hLayout = new QHBoxLayout;
@@ -57,4 +58,62 @@ void CollectionScanner::browseDir()
                                             QDir::homePath(),
                                             QFileDialog::ShowDirsOnly);
     dirInput->setText(dir);
+}
+
+void CollectionScanner::scan()
+{
+    QString strDir = dirInput->text() + "/";
+    QDir dir (strDir);
+    QStringList list = dir.entryList();
+    
+    for(int i = 0; i < list.length(); i++)
+    {
+        QFileInfo *file = new QFileInfo(strDir + list.at(i));
+        
+        if(file->isDir())
+        {
+            QDir playlist (strDir + list.at(i));
+            std::cout << "Path: " << playlist.absolutePath().toStdString() << "\n";
+            QString playlistName = playlist.dirName();
+            
+            if( playlistName.compare(".") == 0 ||
+                playlistName.compare("..") == 0 )
+            {
+                continue;
+            }
+            
+            QStringList music = ls(playlist);
+            
+            Playlist *p = Playlist::getInstance();
+            p->newPlaylist(playlistName, music);
+        }
+    }
+    accept();
+}
+
+/* Returns full path, not just file names */
+QStringList CollectionScanner::ls(QDir dir)
+{
+    QStringList filters;
+    filters << "*.mp3" << "*.og" << "*.flac" << "*.aac";
+    filters << "*.wma" << "*.wav";
+    
+    dir.setNameFilters(filters);
+    QStringList files = dir.entryList();
+    QStringList filePaths;
+    
+    QString path = dir.absolutePath() + "/";
+    
+    for(int i = 0; i < files.length(); i++) {
+        QString file = files.at(i);
+        if( file.compare(".") == 0 ||
+            file.compare("..") == 0 )
+        {
+            continue;
+        }
+        
+        filePaths.append(path + file);
+    }
+    
+    return filePaths;
 }

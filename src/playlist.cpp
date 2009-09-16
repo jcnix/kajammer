@@ -51,16 +51,23 @@ Playlist* Playlist::getInstance()
 
 void Playlist::newPlaylist(QString name, QStringList newList)
 {
-    QFile newListFile(PLAYLIST_DIR + name);
-    newListFile.open(QIODevice::WriteOnly);
-    
-    QTextStream out(&newListFile);
-    for(int i = 0; i < newList.count(); i++)
-        out << newList.at(i) + "\n";
-    
-    //Reset Info so it finds the new playlist
-    resetInfo();
-    emit resetPlaylists();
+    if(!playlistExists(name))
+    {
+        QFile newListFile(PLAYLIST_DIR + name);
+        newListFile.open(QIODevice::WriteOnly);
+        
+        //std::cout << "Name: " << name.toStdString() << "\n";
+        
+        QTextStream out(&newListFile);
+        for(int i = 0; i < newList.count(); i++) {
+            out << newList.at(i) + "\n";
+            std::cout << newList.at(i).toStdString() << "\n";
+        }
+        
+        //Reset Info so it finds the new playlist
+        resetInfo();
+        emit resetPlaylists();
+    }
 }
 
 void Playlist::delPlaylist(QString playlist)
@@ -120,10 +127,19 @@ QString Playlist::getEntirePlaylist(QString name)
     return playlist;
 }
 
+bool Playlist::playlistExists(QString name)
+{
+    for(int i = 0; i < count(); i ++)
+    {
+        if(getPlaylistName(i).compare(name) == 0)
+            return true;
+    }
+    return false;
+}
+
 // Prints list of playlists to terminal
 void Playlist::listPlaylists()
 {
-    int lists = count();
-    for(int i = 0; i < lists; i++)
+    for(int i = 0; i < count(); i++)
         std::cout << getPlaylistName(i).toStdString() << "\n";
 }

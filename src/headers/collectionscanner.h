@@ -33,6 +33,8 @@
 #include <QtGui/QHBoxLayout>
 #include <QtCore/QDir>
 
+#include "playlist.h"
+
 class CollectionScanner : public QDialog
 {
     Q_OBJECT;
@@ -46,6 +48,7 @@ public slots:
     
 private:
     void init();
+    QStringList ls(QDir);
 
     QLabel *dirLabel;
     QLineEdit *dirInput;

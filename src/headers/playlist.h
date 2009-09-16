@@ -50,6 +50,7 @@ public:
     int count();
     void listPlaylists();
     QString getEntirePlaylist(QString);
+    bool playlistExists(QString);
     
 signals:
     void resetPlaylists();
