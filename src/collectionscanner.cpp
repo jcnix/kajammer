@@ -95,7 +95,7 @@ void CollectionScanner::scan()
 QStringList CollectionScanner::ls(QDir dir)
 {
     QStringList filters;
-    filters << "*.mp3" << "*.og" << "*.flac" << "*.aac";
+    filters << "*.mp3" << "*.ogg" << "*.flac" << "*.aac";
     filters << "*.wma" << "*.wav";
     
     dir.setNameFilters(filters);
