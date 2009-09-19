@@ -60,8 +60,6 @@ void Playlist::newPlaylist(QString name, QStringList newList)
         QFile newListFile(PLAYLIST_DIR + name);
         newListFile.open(QIODevice::WriteOnly);
         
-        //std::cout << "Name: " << name.toStdString() << "\n";
-        
         QTextStream out(&newListFile);
         for(int i = 0; i < newList.count(); i++) {
             out << newList.at(i) + "\n";
