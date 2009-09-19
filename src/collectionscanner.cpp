@@ -63,6 +63,7 @@ void CollectionScanner::browseDir()
 void CollectionScanner::scan()
 {
     QString startDir = dirInput->text();
+    Playlist *p = Playlist::getInstance();
     
     QList<QString> dirs;
     dirs.append(startDir);
@@ -99,8 +100,8 @@ void CollectionScanner::scan()
 
             QStringList music = ls_music(playlist);
             
-            Playlist *p = Playlist::getInstance();
-            p->newPlaylist(playlistName, music);
+            if(music.length() > 0)
+                p->newPlaylist(playlistName, music);
         }
     }
     
