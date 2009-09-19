@@ -51,6 +51,10 @@ Playlist* Playlist::getInstance()
 
 void Playlist::newPlaylist(QString name, QStringList newList)
 {
+    QDir playlistDir(PLAYLIST_DIR);
+    if(!playlistDir.exists())
+        playlistDir.mkpath(PLAYLIST_DIR);
+    
     if(!playlistExists(name))
     {
         QFile newListFile(PLAYLIST_DIR + name);
