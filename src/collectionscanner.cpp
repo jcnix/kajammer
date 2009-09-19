@@ -36,7 +36,6 @@ void CollectionScanner::init()
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     dirLabel = new QLabel("Scan Directory");
     dirInput = new QLineEdit;
-    dirInput->setText("/home/casey/music");
     browseDirButton = new QPushButton("...");
     
     QHBoxLayout *hLayout = new QHBoxLayout;
