@@ -48,7 +48,7 @@ public slots:
     
 private:
     void init();
-    QStringList ls(QDir);
+    QStringList ls_music(QDir);
 
     QLabel *dirLabel;
     QLineEdit *dirInput;

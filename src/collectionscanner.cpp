@@ -62,37 +62,53 @@ void CollectionScanner::browseDir()
 
 void CollectionScanner::scan()
 {
-    QString strDir = dirInput->text() + "/";
-    QDir dir (strDir);
-    QStringList list = dir.entryList();
+    QString startDir = dirInput->text();
     
-    for(int i = 0; i < list.length(); i++)
+    QList<QString> dirs;
+    dirs.append(startDir);
+    
+    while(!dirs.isEmpty())
     {
-        QFileInfo *file = new QFileInfo(strDir + list.at(i));
+        QString sdir = dirs.takeFirst();
+        sdir += "/";
+        QDir dir(sdir);
+        
+        if( dir.dirName().compare(".") == 0 ||
+            dir.dirName().compare("..") == 0 )
+        {
+            continue;
+        }
+        
+        QFileInfo *file = new QFileInfo(sdir);
         
         if(file->isDir())
         {
-            QDir playlist (strDir + list.at(i));
-            std::cout << "Path: " << playlist.absolutePath().toStdString() << "\n";
-            QString playlistName = playlist.dirName();
+            QStringList contents = dir.entryList();
             
-            if( playlistName.compare(".") == 0 ||
-                playlistName.compare("..") == 0 )
+            //Queue up new dirs
+            for(int i = 0; i < contents.length(); i++)
             {
-                continue;
+                QFileInfo *lsfile = new QFileInfo(sdir);
+                if(lsfile->isDir()) {
+                    dirs.append(sdir + contents.at(i));
+                }
             }
             
-            QStringList music = ls(playlist);
+            QDir playlist (dir);
+            QString playlistName = playlist.dirName();
+
+            QStringList music = ls_music(playlist);
             
             Playlist *p = Playlist::getInstance();
             p->newPlaylist(playlistName, music);
         }
     }
+    
     accept();
 }
 
 /* Returns full path, not just file names */
-QStringList CollectionScanner::ls(QDir dir)
+QStringList CollectionScanner::ls_music(QDir dir)
 {
     QStringList filters;
     filters << "*.mp3" << "*.ogg" << "*.flac" << "*.aac";
