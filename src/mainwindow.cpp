@@ -48,7 +48,10 @@ void MainWindow::showWindow(QSystemTrayIcon::ActivationReason activated)
 {
     if(activated == QSystemTrayIcon::Trigger)
     {
-        if(!isVisible()) show();
+        if(!isVisible())
+            show();
+        else if(isVisible())
+            hide();
     }
 }
 
