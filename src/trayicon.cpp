@@ -41,6 +41,7 @@ TrayIcon::TrayIcon() : QSystemTrayIcon()
     menu->addAction(playAction);
     menu->addAction(pauseAction);
     menu->addAction(prevAction);
+    menu->addAction(menu->addSeparator());
     menu->addAction(quitAction);
     setContextMenu(menu);
     
