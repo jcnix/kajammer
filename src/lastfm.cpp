@@ -26,17 +26,21 @@
 LastFm::LastFm()
 {
     options = Options::getInstance();
+    
+    lastfm::ws::Username = options->getLastFmUser();
+    lastfm::ws::ApiKey = "519604ab5a867081cbb9a1edaf75ded4";
+    lastfm::ws::SharedSecret = "d5d1806ea34cea02336917b15bff9dec";
+    
     QString token = options->getLastFmToken();
     
     if(token.compare("") == 0)
         authenticate();
+    
+    lastfm::ws::SessionKey = options->getLastFmToken();
 }
 
 void LastFm::authenticate()
 {
-    lastfm::ws::Username = options->getLastFmUser();
-    lastfm::ws::ApiKey = "519604ab5a867081cbb9a1edaf75ded4";
-    lastfm::ws::SharedSecret = "d5d1806ea34cea02336917b15bff9dec";
     QString password = options->getLastFmPass();
     
     QMap<QString, QString> params;
