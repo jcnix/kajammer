@@ -67,8 +67,9 @@ void Options::readOptions()
         QStringList list = option.split("=");
         
         if(list.at(0).contains("$MusicDir"))
+        {
             defaultOpenDir = list.at(1);
-        
+        }
         else if(list.at(0).contains("$Shuff_No_Repeat"))
         {
             if(list.at(1).contains("1"))

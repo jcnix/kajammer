@@ -15,9 +15,9 @@ CHECK_INCLUDE_FILES ( kajamtag/kajamtag.h HAVE_KAJAMTAG_H )
 FIND_PATH( HAVE_LASTFM_H lastfm.h /usr/include /usr/local/include )
 CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/headers/config.h )
 
-SET( kajammer_SRCS src/main.cpp src/cli.cpp src/collectionscanner.cpp src/controller.cpp src/mainwindow.cpp src/mediacontrols.cpp src/menubar.cpp src/options.cpp src/optionsPanel.cpp src/playlist.cpp src/playlistEditor.cpp src/togglebutton.cpp src/trayicon.cpp )
+SET( kajammer_SRCS src/main.cpp src/cli.cpp src/collectionscanner.cpp src/controller.cpp src/lastfm.cpp src/mainwindow.cpp src/mediacontrols.cpp src/menubar.cpp src/options.cpp src/optionsPanel.cpp src/playlist.cpp src/playlistEditor.cpp src/togglebutton.cpp src/trayicon.cpp )
 
-SET( kajammer_MOC_HEADERS src/headers/cli.h src/headers/collectionscanner.h src/headers/controller.h src/headers/mainwindow.h src/headers/mediacontrols.h src/headers/menubar.h src/headers/optionsPanel.h src/headers/playlist.h src/headers/playlistEditor.h src/headers/togglebutton.h src/headers/trayicon.h )
+SET( kajammer_MOC_HEADERS src/headers/cli.h src/headers/collectionscanner.h src/headers/controller.h src/headers/lastfm.h src/headers/mainwindow.h src/headers/mediacontrols.h src/headers/menubar.h src/headers/optionsPanel.h src/headers/playlist.h src/headers/playlistEditor.h src/headers/togglebutton.h src/headers/trayicon.h )
 
 QT4_WRAP_CPP( kajammer_MOC_HEADERS ${kajammer_MOC_HEADERS} )
 

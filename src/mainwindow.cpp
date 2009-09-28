@@ -21,6 +21,7 @@
  */
 
 #include "headers/mainwindow.h"
+#include "headers/lastfm.h"
 
 MainWindow::MainWindow()
 {
@@ -34,6 +35,7 @@ MainWindow::MainWindow()
     setCentralWidget(mediaControls);
     
     Options *options = Options::getInstance();
+    LastFm *lfm = new LastFm();
     
     if(options->trayIcon())
     {
