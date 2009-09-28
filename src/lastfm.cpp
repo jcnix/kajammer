@@ -58,6 +58,7 @@ void LastFm::parse()
         xmlList = xmlList.at(1).split("</token>");
         token = xmlList.at(0);
         options->setLastFmToken(token);
+        options->save();
     }
     catch (lastfm::ws::ParseError& e)
     {
