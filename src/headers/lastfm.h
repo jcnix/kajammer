@@ -39,6 +39,8 @@ private slots:
     void parse();
     
 private:
+    void authenticate();
+    
     Options *options;
     QNetworkReply* reply;
 };

@@ -26,7 +26,14 @@
 LastFm::LastFm()
 {
     options = Options::getInstance();
+    QString token = options->getLastFmToken();
     
+    if(token.compare("") == 0)
+        authenticate();
+}
+
+void LastFm::authenticate()
+{
     lastfm::ws::Username = options->getLastFmUser();
     lastfm::ws::ApiKey = "519604ab5a867081cbb9a1edaf75ded4";
     lastfm::ws::SharedSecret = "d5d1806ea34cea02336917b15bff9dec";
@@ -37,8 +44,6 @@ LastFm::LastFm()
     params["username"] = lastfm::ws::Username;
     params["authToken"] = lastfm::md5((lastfm::ws::Username + lastfm::md5(password.toUtf8())).toUtf8());
     reply = lastfm::ws::post(params);
-    
-    std::cout << "Params: " << params["authToken"].toStdString() << "\n";
     
     connect(reply, SIGNAL(finished()), this, SLOT(parse()));
 }
