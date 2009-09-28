@@ -49,6 +49,7 @@ public:
     void setMainWidth(int width) { main_width = width; }
     void setLastFmUser(QString user) { lastfmUser = user; }
     void setLastFmPass(QString pass) { lastfmPass = pass; }
+    void setLastFmToken(QString token) { lastfmToken = token; }
     
     QString getDefaultOpenDir();
     bool isShuff_no_repeat() { return shuff_no_repeat; }
@@ -57,6 +58,7 @@ public:
     int getMainHeight() { return main_height; }
     QString getLastFmUser() { return lastfmUser; }
     QString getLastFmPass() { return lastfmPass; }
+    QString getLastFmToken() { return lastfmToken; }
     
 protected:
     Options();
@@ -75,6 +77,7 @@ private:
     int main_height;
     QString lastfmUser;
     QString lastfmPass;
+    QString lastfmToken;
 };
 
 #endif /* _OPTIONS_H */

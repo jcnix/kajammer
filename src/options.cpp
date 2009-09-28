@@ -100,6 +100,9 @@ void Options::readOptions()
         else if(list.at(0).contains("$LastFM_Pass")) {
             lastfmPass = list.at(1);
         }
+        else if(list.at(0).contains("$LastFM_Token")) {
+            lastfmToken = list.at(1);
+        }
     }
     
     conf.close();
@@ -120,6 +123,7 @@ void Options::save()
     options.append("$Main_Height=" + QString::number(main_height) + "\n");
     options.append("$LastFM_User=" + lastfmUser + "\n");
     options.append("$LastFM_Pass=" + lastfmPass + "\n");
+    options.append("$LastFM_Token=" + lastfmToken + "\n");
 
     //Write to file
     for(int i = 0; i < options.count(); i++)

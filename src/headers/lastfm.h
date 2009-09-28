@@ -39,6 +39,7 @@ private slots:
     void parse();
     
 private:
+    Options *options;
     QNetworkReply* reply;
 };
 

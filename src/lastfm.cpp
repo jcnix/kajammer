@@ -25,10 +25,7 @@
 
 LastFm::LastFm()
 {
-    Options *options = Options::getInstance();
-    
-    std::cout << "Username: " << options->getLastFmUser().toStdString() << "\n";
-    std::cout << "Password: " << options->getLastFmPass().toStdString() << "\n";
+    options = Options::getInstance();
     
     lastfm::ws::Username = options->getLastFmUser();
     lastfm::ws::ApiKey = "519604ab5a867081cbb9a1edaf75ded4";
@@ -36,7 +33,7 @@ LastFm::LastFm()
     QString password = options->getLastFmPass();
     
     QMap<QString, QString> params;
-    params["method"] = "auth.getMobileSession";
+    params["method"] = "auth.getToken";
     params["username"] = lastfm::ws::Username;
     params["authToken"] = lastfm::md5((lastfm::ws::Username + lastfm::md5(password.toUtf8())).toUtf8());
     reply = lastfm::ws::post(params);
@@ -56,8 +53,11 @@ void LastFm::parse()
     
     try
     {
-        QString qba = QString(reply->readAll());
-        std::cout << "Have? " << qba.toStdString() << "\n";
+        QString token = QString(reply->readAll());
+        QStringList xmlList = token.split("<token>");
+        xmlList = xmlList.at(1).split("</token>");
+        token = xmlList.at(0);
+        options->setLastFmToken(token);
     }
     catch (lastfm::ws::ParseError& e)
     {
