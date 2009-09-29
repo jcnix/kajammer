@@ -30,6 +30,10 @@ Controller::Controller()
     mediaObject = new Phonon::MediaObject;
     Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
     
+    #ifdef HAVE_LASTFM_H
+    lfm = new LastFm();
+    #endif
+    
     playlist = Playlist::getInstance();
     options = Options::getInstance();
     currentSong = 0;

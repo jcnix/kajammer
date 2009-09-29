@@ -34,8 +34,13 @@
 #include <ctime>
 #include <cstdlib>
 
+#include "config.h"
 #include "playlist.h"
 #include "options.h"
+
+#ifdef HAVE_LASTFM_H
+#include "lastfm.h"
+#endif
 
 class Controller : public QObject
 {
@@ -76,6 +81,7 @@ private:
     static Controller *controller;
     Playlist *playlist;
     Options *options;
+    LastFm *lfm;
     
     Phonon::AudioOutput *audioOutput;
     Phonon::MediaObject *mediaObject;
