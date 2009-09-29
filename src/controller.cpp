@@ -22,6 +22,10 @@
 
 #include "headers/controller.h"
 
+#ifdef HAVE_KAJAMTAG_H
+#include <kajamtag/kajamtag.h>
+#endif
+
 Controller* Controller::controller = 0;
 
 Controller::Controller()
@@ -93,6 +97,57 @@ void Controller::emitList()
         list.append(trackQueue[i + 1]);
     
     emit queueSet(list);
+}
+
+QMap<QString, QString> Controller::getMetadata(QString file)
+{
+    QMap<QString, QString> data;
+    
+    #ifdef HAVE_KAJAMTAG_H
+    char* cfile = new char[file.size()+1];
+    strcpy(cfile, file.toStdString().c_str());
+    
+    kajamtag_read(cfile);
+        
+    char* c_title =   k_getTag(KTITLE);
+    char* c_artist =  k_getTag(KARTIST);
+    char* c_album =   k_getTag(KALBUM);
+    
+    QString title(c_title);
+    QString artist(c_artist);
+    QString album(c_album);
+    
+    //If one is bad, they're all bad.
+    if(title.compare("BAD_TAG") == 0) {
+        title = "";
+        artist = "";
+        album = "";
+    }
+    #endif
+    
+    #ifndef HAVE_KAJAMTAG_H
+    data = metaResolver->metaData();
+    title = metaData.value("TITLE");
+    artist = metaData.value("ARTIST");
+    album = metaData.value("ALBUM");
+    #endif
+    
+    //"BAD_TAG" means Kajamtag doesn't recognize the tag format.
+    if (title.compare("") == 0)
+    {
+        #ifdef HAVE_KAJAMTAG_H
+        QFileInfo fileInfo(file);
+        #else
+        QFileInfo fileInfo(metaResolver->currentSource().fileName());
+        #endif
+        title = fileInfo.baseName();
+    }
+    
+    data.insert("TITLE", title);
+    data.insert("ARTIST", artist);
+    data.insert("ALBUM", album);
+    
+    return data;
 }
 
 void Controller::setSong(int index)

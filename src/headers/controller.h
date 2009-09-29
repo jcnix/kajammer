@@ -50,6 +50,7 @@ public:
     static Controller* getInstance();
     void setQueue(QStringList);
     void emitList();
+    static QMap<QString, QString> getMetadata(QString file);
     void resetCurrentList() { currentList = -1; }
     Phonon::AudioOutput* getAudioOutput() { return audioOutput; }
     Phonon::MediaObject* getMediaObject() { return mediaObject; }

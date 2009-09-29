@@ -22,12 +22,6 @@
 
 #include "headers/mediacontrols.h"
 
-//I get errors if I include kajamtag.h in mediacontrols.h
-//but I don't get any here.
-#ifdef HAVE_KAJAMTAG_H
-#include <kajamtag/kajamtag.h>
-#endif
-
 MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 {
     init();
@@ -169,61 +163,23 @@ void MediaControls::repeatPressed()
 //Fills the music table with ID3 tag data.
 void MediaControls::setMetaData()
 {    
+    //kajamtag will only read one file at a time
+    //Phonon will use signals to advance to the next file
     #ifdef HAVE_KAJAMTAG_H
     for(int i = 0; i < metaSources.count(); i++)
     {
         QString strFile = metaSources.at(i).fileName();
-        char* file = new char[strFile.size()+1];
-        strcpy(file, strFile.toStdString().c_str());
     #endif
-        
-        char* c_title = '\0';
-        char* c_artist = '\0';
-        char* c_album = '\0';
-        
-        #ifdef HAVE_KAJAMTAG_H
-        kajamtag_read(file);
-        
-        c_title =   k_getTag(KTITLE);
-        c_artist =  k_getTag(KARTIST);
-        c_album =   k_getTag(KALBUM);
-        #endif
-        
-        QString *title = new QString(c_title);
-        QString *artist = new QString(c_artist);
-        QString *album = new QString(c_album);
-        
-        #ifndef HAVE_KAJAMTAG_H
-        QMap<QString, QString> metaData = metaResolver->metaData();
-        *title = metaData.value("TITLE");
-        *artist = metaData.value("ARTIST");
-        *album = metaData.value("ALBUM");
-        #endif
-        
-        #ifdef HAVE_KAJAMTAG_H
-        //If one is bad, they're all bad.
-        if(title->compare("BAD_TAG") == 0) {
-            *title = "";
-            *artist = "";
-            *album = "";
-        }
-        #endif
-        
-        //"BAD_TAG" means Kajamtag doesn't recognize the tag format.
-        if (title->compare("") == 0)
-        {
-            #ifdef HAVE_KAJAMTAG_H
-            QFileInfo file(strFile);
-            #else
-            QFileInfo file(metaResolver->currentSource().fileName());
-            #endif
-            *title = file.baseName();
-        }
+    
+        QMap<QString, QString> metaData = Controller::getMetadata(strFile);
+        QString title = metaData.value("TITLE");
+        QString artist = metaData.value("ARTIST");
+        QString album = metaData.value("ALBUM");
         
         QTableWidgetItem *indexItem = new QTableWidgetItem(QString::number(tableIndex++));
-        QTableWidgetItem *titleItem = new QTableWidgetItem(*title);
-        QTableWidgetItem *artistItem = new QTableWidgetItem(*artist);
-        QTableWidgetItem *albumItem = new QTableWidgetItem(*album);
+        QTableWidgetItem *titleItem = new QTableWidgetItem(title);
+        QTableWidgetItem *artistItem = new QTableWidgetItem(artist);
+        QTableWidgetItem *albumItem = new QTableWidgetItem(album);
     
         titleItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         artistItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
