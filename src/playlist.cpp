@@ -97,6 +97,7 @@ QString Playlist::getPlaylistName(int index)
     return name;
 }
 
+/* Returns each line of a playlist in a QStringList */
 QStringList Playlist::getPlaylistContents(QString name)
 {
     QFile playlistFile(PLAYLIST_DIR + name);
@@ -105,12 +106,16 @@ QStringList Playlist::getPlaylistContents(QString name)
     QStringList playlist;    
     QTextStream in(&playlistFile);
     
-    while(!in.atEnd())
-        playlist.append(in.readLine(0));
+    while(!in.atEnd()) {
+        QString file = in.readLine(0);
+        if(QFile::exists(file))
+            playlist.append(file);
+    }
     
     return playlist;
 }
 
+/* Returns the entire playlist as a single string */
 QString Playlist::getEntirePlaylist(QString name)
 {
     QFile playlistFile(PLAYLIST_DIR + name);
@@ -124,6 +129,9 @@ QString Playlist::getEntirePlaylist(QString name)
     return playlist;
 }
 
+/* Ensures that the playlist given exists.
+ * Only used to check for collisions
+ * when creating a new playlist */
 bool Playlist::playlistExists(QString name)
 {
     for(int i = 0; i < count(); i ++)
