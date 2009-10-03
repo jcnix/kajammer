@@ -42,6 +42,12 @@ MainWindow::MainWindow()
         connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
                 this, SLOT(showWindow(QSystemTrayIcon::ActivationReason)));
     }
+    
+    #ifdef HAVE_LASTFM_H
+    lastfm = new LastFm();
+    connect(controller, SIGNAL(songChanged(int)), lastfm, SLOT(nowPlaying()));
+    connect(controller, SIGNAL(songFinished()), lastfm, SLOT(scrobble()));
+    #endif
 }
 
 void MainWindow::showWindow(QSystemTrayIcon::ActivationReason activated)

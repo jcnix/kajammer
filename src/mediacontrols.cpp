@@ -171,7 +171,7 @@ void MediaControls::setMetaData()
         QString strFile = metaSources.at(i).fileName();
     #endif
     
-        QMap<QString, QString> metaData = Controller::getMetadata(strFile);
+        QMap<QString, QString> metaData = controller->getMetadata(strFile);
         QString title = metaData.value("TITLE");
         QString artist = metaData.value("ARTIST");
         QString album = metaData.value("ALBUM");

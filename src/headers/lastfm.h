@@ -23,26 +23,44 @@
 #ifndef _LASTFM_H
 #define _LASTFM_H
 
+#include <iostream>
 #include <lastfm.h>
+#include <QtCore/QCoreApplication>
 #include <QtCore/QEventLoop>
+#include <QtCore/QMap>
+#include <QtCore/QTimer>
 
+#include "controller.h"
 #include "options.h"
 
-class LastFm :QObject
+/* Using some of the Last.fm code from Amarok.
+ * Thank you Amarok team. :-) 
+ * Liblastfm's documentation is kind of lacking,
+ * but Amarok has helped tremendously */
+
+class Controller; //forward declaration
+
+class LastFm : public QObject
 {
     Q_OBJECT;
     
 public:
     LastFm();
+    void init();
 
 private slots:
-    void parse();
+    void nowPlaying();
+    void scrobble();
+    void parseReply();
     
 private:
     void authenticate();
     
+    lastfm::Audioscrobbler *as;
+    Controller *controller;
     Options *options;
     QNetworkReply* reply;
+    QString sessionKey;
 };
 
 #endif //_LASTFM_H

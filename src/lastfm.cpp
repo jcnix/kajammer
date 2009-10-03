@@ -21,57 +21,141 @@
  */
 
 #include "headers/lastfm.h"
-#include <iostream>
 
 LastFm::LastFm()
 {
+    //HACK work around a bug in liblastfm; it doesn't create its config dir, so when it
+    // tries to write the track cache, it fails silently.
+    QString lpath = QDir::home().filePath( ".local/share/Last.fm" );
+    QDir ldir = QDir( lpath );
+    if( !ldir.exists() )
+    {
+        ldir.mkpath( lpath );
+    }
+    
+    controller = Controller::getInstance();
     options = Options::getInstance();
     
-    lastfm::ws::Username = options->getLastFmUser();
+    QCoreApplication::setApplicationName("kjm");
+    QCoreApplication::setApplicationVersion("1.0");
+    
+    init();
+}
+
+void LastFm::init()
+{
+    const QString password = options->getLastFmPass();
+    const QString sessionKey = options->getLastFmKey();
+    const QString userName = options->getLastFmUser();
     lastfm::ws::ApiKey = "519604ab5a867081cbb9a1edaf75ded4";
     lastfm::ws::SharedSecret = "d5d1806ea34cea02336917b15bff9dec";
-    
-    QString token = options->getLastFmToken();
-    
-    if(token.compare("") == 0)
-        authenticate();
-    
-    lastfm::ws::SessionKey = options->getLastFmToken();
+    lastfm::ws::Username = userName;
+
+    QString authToken = lastfm::md5((userName + lastfm::md5(password.toUtf8())).toUtf8());
+
+    //we don't have a session key; get one
+    if(sessionKey.isEmpty())
+    {
+        std::cout << "No saved session key, authenticating with last.fm\n";
+        QMap<QString, QString> query;
+        query[ "method" ] = "auth.getMobileSession";
+        query[ "username" ] = userName;
+        query[ "authToken" ] = authToken;
+        reply = lastfm::ws::post( query );
+
+        connect(reply, SIGNAL(finished()), SLOT(parseReply()));
+    } 
+    else
+    {
+        std::cout << "Using saved SessionKey\n";
+        lastfm::ws::SessionKey = sessionKey.toLatin1().data();
+
+        as = new lastfm::Audioscrobbler("kjm");
+        QMap< QString, QString > params;
+        params["method"] = "user.getInfo";
+    }
 }
 
-void LastFm::authenticate()
+void LastFm::nowPlaying()
 {
-    QString password = options->getLastFmPass();
-    
-    QMap<QString, QString> params;
-    params["method"] = "auth.getToken";
-    params["username"] = lastfm::ws::Username;
-    params["authToken"] = lastfm::md5((lastfm::ws::Username + lastfm::md5(password.toUtf8())).toUtf8());
-    reply = lastfm::ws::post(params);
-    
-    connect(reply, SIGNAL(finished()), this, SLOT(parse()));
-}
-
-void LastFm::parse()
-{
-    //TODO: Parse this sucka myself.
-    //lastfm::ws::parse() is failing me.
-    //after that store the key in kajammer.conf
-    //and use lastfm::getSession
-    //see demo3.cpp
-    
+    std::cout << "Now Playing\n";
     try
     {
-        QString token = QString(reply->readAll());
-        QStringList xmlList = token.split("<token>");
-        xmlList = xmlList.at(1).split("</token>");
-        token = xmlList.at(0);
-        options->setLastFmToken(token);
-        options->save();
+        QMap<QString, QString> data = controller->getCurrentMetadata();
+        
+        lastfm::MutableTrack t;
+        t.stamp(); //sets track start time
+        t.setTitle(data["TITLE"]);
+        t.setArtist(data["ARTIST"]);
+        t.setAlbum(data["ALBUM"]);
+        
+        qint64 time = controller->getMediaObject()->remainingTime() / 1000;
+        t.setDuration(time);
+        
+        t.setSource(lastfm::Track::Player);
+        
+        as->nowPlaying(t);
+        //Audioscrobbler will submit whatever is in the cache when you call submit.
+        //And the cache is persistent between sessions. So you should cache at the
+        //scrobble point usually, not before
+        as->cache(t);
     }
     catch (lastfm::ws::ParseError& e)
     {
         std::cout << "Error Code: " << e.enumValue() << "\n";
         qWarning() << e.what();
     }
+}
+
+void LastFm::scrobble()
+{
+    std::cout << "Srobble\n";
+    try
+    {
+        as->submit();
+    }
+    catch (lastfm::ws::ParseError& e)
+    {
+        std::cout << "Error Code: " << e.enumValue() << "\n";
+        qWarning() << e.what();
+    }
+}
+
+void LastFm::parseReply()
+{
+    if( !reply )
+    {
+        std::cout << "WARNING: GOT RESULT but no object";
+        return;
+    }
+
+    switch ( reply->error() )
+    {
+        case QNetworkReply::NoError:
+        {
+            lastfm::XmlQuery lfm = lastfm::XmlQuery(reply->readAll());
+
+            if( lfm.children( "error" ).size() > 0 )
+            {
+                std::cout << "error from authenticating with last.fm service:" << lfm.text().toStdString();
+                options->setLastFmKey("");
+                options->save();
+                break;
+            }
+            sessionKey = lfm[ "session" ][ "key" ].text();
+
+            lastfm::ws::SessionKey = sessionKey.toLatin1().data();
+            options->setLastFmKey(sessionKey);
+            options->save();
+
+            break;
+        } case QNetworkReply::AuthenticationRequiredError:
+            std::cout << "Last.fm: errorMessage Either the username was not recognized, or the password was incorrect.";
+            break;
+
+        default:
+            std::cout << "Last.fm: errorMessage There was a problem communicating with the Last.fm services. Please try again later.";
+            break;
+    }
+    reply->deleteLater();
 }

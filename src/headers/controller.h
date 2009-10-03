@@ -21,7 +21,7 @@
  */
 
 #ifndef _CONTROLLER_H
-#define	_CONTROLLER_H
+#define _CONTROLLER_H
 
 #include <QtCore/QObject>
 #include <QtCore/QStringList>
@@ -38,10 +38,6 @@
 #include "playlist.h"
 #include "options.h"
 
-#ifdef HAVE_LASTFM_H
-#include "lastfm.h"
-#endif
-
 class Controller : public QObject
 {
     Q_OBJECT;
@@ -50,7 +46,8 @@ public:
     static Controller* getInstance();
     void setQueue(QStringList);
     void emitList();
-    static QMap<QString, QString> getMetadata(QString file);
+    QMap<QString, QString> getMetadata(QString file);
+    QMap<QString, QString> getCurrentMetadata();
     void resetCurrentList() { currentList = -1; }
     Phonon::AudioOutput* getAudioOutput() { return audioOutput; }
     Phonon::MediaObject* getMediaObject() { return mediaObject; }
@@ -67,10 +64,12 @@ public slots:
     void changePlaylist(QString, int);
     void toggleShuffle();
     void toggleRepeat();
+    void emitSongFinished();
     
 signals:
     void songChanged(int);
     void queueSet(QList<Phonon::MediaSource>);
+    void songFinished();
 
 protected:
     Controller();
@@ -82,7 +81,6 @@ private:
     static Controller *controller;
     Playlist *playlist;
     Options *options;
-    LastFm *lfm;
     
     Phonon::AudioOutput *audioOutput;
     Phonon::MediaObject *mediaObject;

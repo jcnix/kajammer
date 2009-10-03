@@ -33,6 +33,10 @@
 #include "controller.h"
 #include "options.h"
 
+#ifdef HAVE_LASTFM_H
+#include "lastfm.h"
+#endif
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT;
@@ -50,6 +54,7 @@ private:
     Controller *controller;
     MenuBar *menuBar;
     MediaControls *mediaControls;
+    LastFm *lastfm;
 };
 
 #endif	/* _MAINWINDOW_H */

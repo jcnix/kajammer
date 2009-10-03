@@ -25,10 +25,11 @@
 Options* Options::options = 0;
 
 Options::Options()
-{       
+{
     //if height and width aren't found, these are defaults
     main_width = 640;
     main_height = 360;
+    
     
     if(!QKAJAM_DIR.exists())
     {
@@ -100,8 +101,8 @@ void Options::readOptions()
         else if(list.at(0).contains("$LastFM_Pass")) {
             lastfmPass = list.at(1);
         }
-        else if(list.at(0).contains("$LastFM_Token")) {
-            lastfmToken = list.at(1);
+        else if(list.at(0).contains("$LastFM_Key")) {
+            lastfmKey = list.at(1);
         }
     }
     
@@ -123,7 +124,7 @@ void Options::save()
     options.append("$Main_Height=" + QString::number(main_height) + "\n");
     options.append("$LastFM_User=" + lastfmUser + "\n");
     options.append("$LastFM_Pass=" + lastfmPass + "\n");
-    options.append("$LastFM_Token=" + lastfmToken + "\n");
+    options.append("$LastFM_Key=" + lastfmKey + "\n");
 
     //Write to file
     for(int i = 0; i < options.count(); i++)

@@ -34,12 +34,9 @@ Controller::Controller()
     mediaObject = new Phonon::MediaObject;
     Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
     
-    #ifdef HAVE_LASTFM_H
-    lfm = new LastFm();
-    #endif
-    
     playlist = Playlist::getInstance();
     options = Options::getInstance();
+    
     currentSong = 0;
     currentList = -1;
     isShuffle = false;
@@ -52,6 +49,7 @@ Controller::Controller()
     playedTracks.append(0);
     
     connect(mediaObject, SIGNAL(finished()), this, SLOT(setNextSong()));
+    connect(mediaObject, SIGNAL(finished()), this, SLOT(emitSongFinished()));
 }
 
 Controller* Controller::getInstance()
@@ -97,6 +95,11 @@ void Controller::emitList()
         list.append(trackQueue[i + 1]);
     
     emit queueSet(list);
+}
+
+QMap<QString, QString> Controller::getCurrentMetadata()
+{
+    return getMetadata(trackQueue[currentSong].fileName());
 }
 
 QMap<QString, QString> Controller::getMetadata(QString file)
@@ -203,6 +206,11 @@ void Controller::setPrevSong()
     
         if(!error) setSong(currentSong - 1);
     }
+}
+
+void Controller::emitSongFinished()
+{
+    emit songFinished();
 }
 
 //Set isShuffle, if shuffle is enabled disable it and vice versa.
