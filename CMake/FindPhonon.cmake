@@ -1,4 +1,4 @@
-FIND_PATH( Phonon_INCLUDE_DIR phononnamespace.h /usr/include /usr/include/phonon /usr/local/include/phonon )
+FIND_PATH( Phonon_INCLUDE_DIR phononnamespace.h /usr/include /usr/include/phonon /usr/local/include/phonon /usr/include/qt4/phonon )
 
 FIND_LIBRARY( Phonon_LIBRARY NAMES phonon PATH /usr/lib /usr/local/lib /usr/lib64 /usr/local/lib64 ) 
 
