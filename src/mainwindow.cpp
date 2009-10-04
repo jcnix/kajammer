@@ -67,5 +67,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
     options->setMainWidth(width());
     options->setMainHeight(height());
     options->save();
+    
+    //Submit whats left over in the cache.
+    #ifdef HAVE_LASTFM_H
+    lastfm->scrobble();
+    #endif
+    
     event->accept();
 }

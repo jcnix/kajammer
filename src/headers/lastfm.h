@@ -48,9 +48,11 @@ public:
     LastFm();
     void init();
 
-private slots:
-    void nowPlaying();
+public slots:
     void scrobble();
+    void nowPlaying();
+    
+private slots:
     void parseReply();
     
 private:
