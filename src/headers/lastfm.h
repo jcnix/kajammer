@@ -23,6 +23,9 @@
 #ifndef _LASTFM_H
 #define _LASTFM_H
 
+#include "config.h"
+#ifdef HAVE_LASTFM_H
+
 #include <iostream>
 #include <lastfm.h>
 #include <QtCore/QCoreApplication>
@@ -65,4 +68,5 @@ private:
     QString sessionKey;
 };
 
+#endif //HAVE_LASTFM_H
 #endif //_LASTFM_H

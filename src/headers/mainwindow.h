@@ -54,7 +54,11 @@ private:
     Controller *controller;
     MenuBar *menuBar;
     MediaControls *mediaControls;
+    
+    #ifdef HAVE_LASTFM_H
     LastFm *lastfm;
+    #endif
+    
 };
 
 #endif	/* _MAINWINDOW_H */

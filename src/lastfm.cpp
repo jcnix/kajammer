@@ -21,6 +21,7 @@
  */
 
 #include "headers/lastfm.h"
+#ifdef HAVE_LASTFM_H
 
 LastFm::LastFm()
 {
@@ -159,3 +160,5 @@ void LastFm::parseReply()
     }
     reply->deleteLater();
 }
+
+#endif //HAVE_LASTFM_H
