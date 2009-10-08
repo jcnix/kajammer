@@ -1,6 +1,8 @@
 Kajammer 0.9.2
 -Collection Scanner
+-Last.fm support
 -Clicking tray icon can hide active window
+-Prevent a crash if a file no longer exists in a playlist.
 
 Kajammer 0.9.1
 -Kajamtag support
