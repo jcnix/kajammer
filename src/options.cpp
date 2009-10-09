@@ -67,41 +67,41 @@ void Options::readOptions()
         QString option = options.at(i);
         QStringList list = option.split("=");
         
-        if(list.at(0).contains("$MusicDir"))
+        if(list.at(0) == "$MusicDir")
         {
             defaultOpenDir = list.at(1);
         }
-        else if(list.at(0).contains("$Shuff_No_Repeat"))
+        else if(list.at(0) == "$Shuff_No_Repeat")
         {
             if(list.at(1).contains("1"))
                 shuff_no_repeat = true;
             else
                 shuff_no_repeat = false;
         }
-        else if(list.at(0).contains("$Use_Tray_Icon"))
+        else if(list.at(0) == "$Use_Tray_Icon")
         {
-            if(list.at(1).contains("1"))
+            if(list.at(1) == "1")
                 use_tray_icon = true;
             else
                 use_tray_icon = false;
         }
-        else if(list.at(0).contains("$Main_Width")) {
+        else if(list.at(0) == "$Main_Width") {
             main_width = list.at(1).toInt();
             if(main_width < 200)
                 main_width = 640;
         }
-        else if(list.at(0).contains("$Main_Height")) {
+        else if(list.at(0) == "$Main_Height") {
             main_height = list.at(1).toInt();
             if(main_height < 100)
                 main_height = 360;
         }
-        else if(list.at(0).contains("$LastFM_User")) {
+        else if(list.at(0) == "$LastFM_User") {
             lastfmUser = list.at(1);
         }
-        else if(list.at(0).contains("$LastFM_Pass")) {
+        else if(list.at(0) == "$LastFM_Pass") {
             lastfmPass = list.at(1);
         }
-        else if(list.at(0).contains("$LastFM_Key")) {
+        else if(list.at(0) == "$LastFM_Key") {
             lastfmKey = list.at(1);
         }
     }
