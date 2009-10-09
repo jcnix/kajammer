@@ -47,6 +47,7 @@ public:
     void setTrayIcon(bool useTray) { use_tray_icon = useTray; }
     void setMainHeight(int height) { main_height = height; }
     void setMainWidth(int width) { main_width = width; }
+    void setLastFm(bool use) { use_last_fm = use; }
     void setLastFmUser(QString user) { lastfmUser = user; }
     void setLastFmPass(QString pass) { lastfmPass = pass; }
     void setLastFmKey(QString key) { lastfmKey = key; }
@@ -56,6 +57,7 @@ public:
     bool trayIcon() { return use_tray_icon; }
     int getMainWidth() { return main_width; }
     int getMainHeight() { return main_height; }
+    int getLastFm() { return use_last_fm; }
     QString getLastFmUser() { return lastfmUser; }
     QString getLastFmPass() { return lastfmPass; }
     QString getLastFmKey() { return lastfmKey; }
@@ -75,6 +77,7 @@ private:
     bool use_tray_icon;
     int main_width;
     int main_height;
+    bool use_last_fm;
     QString lastfmUser;
     QString lastfmPass;
     QString lastfmKey;

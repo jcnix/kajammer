@@ -95,6 +95,12 @@ void Options::readOptions()
             if(main_height < 100)
                 main_height = 360;
         }
+        else if(list.at(0) == "$LastFM") {
+            if(list.at(1) == "1")
+                use_last_fm = true;
+            else
+                use_last_fm = false;
+        }
         else if(list.at(0) == "$LastFM_User") {
             lastfmUser = list.at(1);
         }
@@ -122,6 +128,7 @@ void Options::save()
     options.append("$Use_Tray_Icon=" + bool_to_qstring(use_tray_icon) + "\n");
     options.append("$Main_Width=" + QString::number(main_width) + "\n");
     options.append("$Main_Height=" + QString::number(main_height) + "\n");
+    options.append("$LastFM=" + bool_to_qstring(use_last_fm) + "\n");
     options.append("$LastFM_User=" + lastfmUser + "\n");
     options.append("$LastFM_Pass=" + lastfmPass + "\n");
     options.append("$LastFM_Key=" + lastfmKey + "\n");
