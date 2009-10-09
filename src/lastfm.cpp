@@ -136,26 +136,30 @@ void LastFm::parseReply()
         {
             lastfm::XmlQuery lfm = lastfm::XmlQuery(reply->readAll());
 
-            if( lfm.children( "error" ).size() > 0 )
+            if( lfm.children("error").size() > 0 )
             {
-                std::cout << "error from authenticating with last.fm service:" << lfm.text().toStdString();
+                std::cout << "error from authenticating with last.fm service:"
+                        << lfm.text().toStdString();
                 options->setLastFmKey("");
                 options->save();
                 break;
             }
-            sessionKey = lfm[ "session" ][ "key" ].text();
+            sessionKey = lfm["session"]["key"].text();
 
             lastfm::ws::SessionKey = sessionKey.toLatin1().data();
             options->setLastFmKey(sessionKey);
             options->save();
 
             break;
-        } case QNetworkReply::AuthenticationRequiredError:
-            std::cout << "Last.fm: errorMessage Either the username was not recognized, or the password was incorrect.";
+        } 
+        case QNetworkReply::AuthenticationRequiredError:
+            std::cout << "Last.fm: errorMessage Either the username was not recognized, "
+                    << "or the password was incorrect.";
             break;
 
         default:
-            std::cout << "Last.fm: errorMessage There was a problem communicating with the Last.fm services. Please try again later.";
+            std::cout << "Last.fm: errorMessage There was a problem communicating with "
+                    << "the Last.fm services. Please try again later.";
             break;
     }
     reply->deleteLater();
