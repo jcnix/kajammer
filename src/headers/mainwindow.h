@@ -21,7 +21,7 @@
  */
 
 #ifndef _MAINWINDOW_H
-#define	_MAINWINDOW_H
+#define _MAINWINDOW_H
 
 #include <QtGui/QMainWindow>
 #include <QtGui/QSystemTrayIcon>
@@ -61,4 +61,4 @@ private:
     
 };
 
-#endif	/* _MAINWINDOW_H */
+#endif  /* _MAINWINDOW_H */

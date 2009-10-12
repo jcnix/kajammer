@@ -21,6 +21,7 @@
  */
 
 #include "headers/options.h"
+#include <iostream>
 
 Options* Options::options = 0;
 
@@ -105,7 +106,7 @@ void Options::readOptions()
             lastfmUser = list.at(1);
         }
         else if(list.at(0) == "$LastFM_Pass") {
-            lastfmPass = list.at(1);
+            lastfmPass = encrypt(list.at(1));
         }
         else if(list.at(0) == "$LastFM_Key") {
             lastfmKey = list.at(1);
@@ -130,7 +131,7 @@ void Options::save()
     options.append("$Main_Height=" + QString::number(main_height) + "\n");
     options.append("$LastFM=" + bool_to_qstring(use_last_fm) + "\n");
     options.append("$LastFM_User=" + lastfmUser + "\n");
-    options.append("$LastFM_Pass=" + lastfmPass + "\n");
+    options.append("$LastFM_Pass=" + encrypt(lastfmPass) + "\n");
     options.append("$LastFM_Key=" + lastfmKey + "\n");
 
     //Write to file
@@ -146,6 +147,28 @@ QString Options::bool_to_qstring(bool truthiness)
     if(truthiness)
         truth = "1";
     return truth;
+}
+
+QString Options::encrypt(QString stringToEncrypt)
+{    
+    const char* cstring = stringToEncrypt.toStdString().c_str();
+    int length = strlen(cstring);
+    
+    char alphabet[26] = "ABCDEFGHIJKLMOPQRSTUVWXYZ";
+    
+    char crypto[length + 1];
+    int key_index = 0;
+    for(int i = 0; i < length; i++)
+    {
+        key_index++;
+        if(key_index == 26)
+            key_index = 0;
+        
+        crypto[i] = cstring[i]^alphabet[key_index];
+    }
+    crypto[length] = '\0';
+    
+    return QString(crypto);
 }
 
 QString Options::getDefaultOpenDir()

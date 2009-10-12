@@ -30,6 +30,8 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QTextStream>
+#include <cstdlib>
+#include <cstring>
 
 #define KAJAM_DIR QDir::homePath()+"/.kajammer/"
 #define PLAYLIST_DIR KAJAM_DIR+"/playlists/"
@@ -70,6 +72,7 @@ private:
     
     void readOptions();
     QString bool_to_qstring(bool);
+    QString encrypt(QString);
     
     QString confPath;
     QString defaultOpenDir;
