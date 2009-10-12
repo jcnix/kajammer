@@ -40,6 +40,7 @@
 #include <QtGui/QVBoxLayout>
 
 #include "options.h"
+#include "config.h"
 
 class OptionsPanel : public QDialog
 {
@@ -71,10 +72,12 @@ private:
     QLabel *lastfmLabel;
     QCheckBox *lastfmBox;
     
+    #ifdef HAVE_LASTFM_H
     QLabel *lastfmUserLabel;
     QLineEdit *lastfmUser;
     QLabel *lastfmPassLabel;
     QLineEdit *lastfmPass;
+    #endif
 
     QDialogButtonBox *buttonBox;
 };

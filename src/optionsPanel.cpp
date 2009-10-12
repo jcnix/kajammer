@@ -51,6 +51,7 @@ void OptionsPanel::init()
     trayIconLabel = new QLabel("Tray Icon");
     trayIconOption = new QCheckBox;
 
+    #ifdef HAVE_LASTFM_H
     lastfmLabel = new QLabel("Use Last.fm");
     lastfmBox = new QCheckBox;
     
@@ -59,6 +60,7 @@ void OptionsPanel::init()
     
     lastfmPassLabel = new QLabel("Last.fm Password");
     lastfmPass = new QLineEdit;
+    #endif
     
     QHBoxLayout *defaultOpenLayout = new QHBoxLayout;
     defaultOpenLayout->addWidget(defaultOpenLabel);
@@ -73,6 +75,7 @@ void OptionsPanel::init()
     trayIconLayout->addWidget(trayIconLabel);
     trayIconLayout->addWidget(trayIconOption);
     
+    #ifdef HAVE_LASTFM_H
     QHBoxLayout *lastfmLayout = new QHBoxLayout;
     lastfmLayout->addWidget(lastfmLabel);
     lastfmLayout->addWidget(lastfmBox);
@@ -84,14 +87,17 @@ void OptionsPanel::init()
     QHBoxLayout *lastfmPassLayout = new QHBoxLayout;
     lastfmPassLayout->addWidget(lastfmPassLabel);
     lastfmPassLayout->addWidget(lastfmPass);
-
+    #endif
+    
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addLayout(defaultOpenLayout);
     vLayout->addLayout(shuffLayout);
     vLayout->addLayout(trayIconLayout);
+    #ifdef HAVE_LASTFM_H
     vLayout->addLayout(lastfmLayout);
     vLayout->addLayout(lastfmUserLayout);
     vLayout->addLayout(lastfmPassLayout);
+    #endif
     vLayout->addWidget(buttonBox);
     setLayout(vLayout);
 }
@@ -101,9 +107,11 @@ void OptionsPanel::populate()
     defaultOpen->setText(options->getDefaultOpenDir());
     shuffBox->setChecked(options->isShuff_no_repeat());
     trayIconOption->setChecked(options->trayIcon());
+    #ifdef HAVE_LASTFM_H
     lastfmBox->setChecked(options->getLastFm());
     lastfmUser->setText(options->getLastFmUser());
     lastfmPass->setText(options->getLastFmPass());
+    #endif
 }
 
 void OptionsPanel::save()
@@ -111,9 +119,11 @@ void OptionsPanel::save()
     options->setDefaultOpenDir(defaultOpen->text());
     options->setShuff_no_repeat(shuffBox->isChecked());
     options->setTrayIcon(trayIconOption->isChecked());
+    #ifdef HAVE_LASTFM_H
     options->setLastFm(lastfmBox->isChecked());
     options->setLastFmUser(lastfmUser->text());
     options->setLastFmPass(lastfmPass->text());
+    #endif
     options->save();
     
     accept();

@@ -30,8 +30,7 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QTextStream>
-#include <cstdlib>
-#include <cstring>
+#include "config.h"
 
 #define KAJAM_DIR QDir::homePath()+"/.kajammer/"
 #define PLAYLIST_DIR KAJAM_DIR+"/playlists/"
@@ -49,20 +48,26 @@ public:
     void setTrayIcon(bool useTray) { use_tray_icon = useTray; }
     void setMainHeight(int height) { main_height = height; }
     void setMainWidth(int width) { main_width = width; }
+    
+    #ifdef HAVE_LASTFM_H
     void setLastFm(bool use) { use_last_fm = use; }
     void setLastFmUser(QString user) { lastfmUser = user; }
     void setLastFmPass(QString pass) { lastfmPass = pass; }
     void setLastFmKey(QString key) { lastfmKey = key; }
+    #endif
     
     QString getDefaultOpenDir();
     bool isShuff_no_repeat() { return shuff_no_repeat; }
     bool trayIcon() { return use_tray_icon; }
     int getMainWidth() { return main_width; }
     int getMainHeight() { return main_height; }
+    
+    #ifdef HAVE_LASTFM_H
     int getLastFm() { return use_last_fm; }
     QString getLastFmUser() { return lastfmUser; }
     QString getLastFmPass() { return lastfmPass; }
     QString getLastFmKey() { return lastfmKey; }
+    #endif
     
 protected:
     Options();
@@ -81,9 +86,11 @@ private:
     int main_width;
     int main_height;
     bool use_last_fm;
+    #ifdef HAVE_LASTFM_H
     QString lastfmUser;
     QString lastfmPass;
     QString lastfmKey;
+    #endif
 };
 
 #endif /* _OPTIONS_H */
