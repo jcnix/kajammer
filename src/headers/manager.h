@@ -1,8 +1,8 @@
 /*
- * File:   lastfm.h
+ * File:   manager.h
  * Author: Casey Jones
  *
- * Created on September 26, 2009, 4:27 PM
+ * Created on October, 11 2009, 7:41 PM
  *
  * This file is part of KaJammer.
  *
@@ -20,51 +20,38 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _LASTFM_H
-#define _LASTFM_H
+#ifndef _MANAGER_H
+#define _MANAGER_H
+
+#include <QtCore/QObject>
 
 #include "config.h"
-#ifdef HAVE_LASTFM_H
-
-#include <iostream>
-#include <lastfm.h>
-#include <QtCore/QCoreApplication>
-#include <QtCore/QEventLoop>
-#include <QtCore/QMap>
-#include <QtCore/QTimer>
-
 #include "controller.h"
 #include "options.h"
 
-/* Using some of the Last.fm code from Amarok.
- * Thank you Amarok team. :-) 
- * Liblastfm's documentation is kind of lacking,
- * but Amarok has helped tremendously */
+#ifdef HAVE_LASTFM_H
+#include "lastfm.h"
+#endif
 
-class LastFm : public QObject
+class Manager : public QObject
 {
     Q_OBJECT;
-    
-public:
-    LastFm();
-    void init();
 
-public slots:
-    void scrobble();
-    void nowPlaying();
-    
-private slots:
-    void parseReply();
-    
+public:
+    static Manager* getInstance();
+    void exit();
+
+protected:
+    Manager();
+
 private:
-    void authenticate();
+    static Manager *manager;
     
-    lastfm::Audioscrobbler *as;
     Controller *controller;
     Options *options;
-    QNetworkReply* reply;
-    QString sessionKey;
+    #ifdef HAVE_LASTFM_H
+    LastFm *lastfm;
+    #endif
 };
 
-#endif //HAVE_LASTFM_H
-#endif //_LASTFM_H
+#endif /* _MANAGER_H */

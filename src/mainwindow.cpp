@@ -42,15 +42,6 @@ MainWindow::MainWindow()
         connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
                 this, SLOT(showWindow(QSystemTrayIcon::ActivationReason)));
     }
-    
-    #ifdef HAVE_LASTFM_H
-    if(options->getLastFm())
-    {
-        lastfm = new LastFm();
-        connect(controller, SIGNAL(songChanged(int)), lastfm, SLOT(nowPlaying()));
-        connect(controller, SIGNAL(songFinished()), lastfm, SLOT(scrobble()));
-    }
-    #endif
 }
 
 void MainWindow::showWindow(QSystemTrayIcon::ActivationReason activated)
@@ -70,12 +61,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
     options->setMainWidth(width());
     options->setMainHeight(height());
     options->save();
-    
-    //Submit whats left over in the cache.
-    #ifdef HAVE_LASTFM_H
-    if(options->getLastFm())
-        lastfm->scrobble();
-    #endif
     
     event->accept();
 }

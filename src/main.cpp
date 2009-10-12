@@ -27,6 +27,7 @@
 #include "headers/mainwindow.h"
 #include "headers/cli.h"
 #include "headers/options.h"
+#include "headers/manager.h"
 
 int main(int argc, char *argv[]) 
 {  
@@ -38,6 +39,7 @@ int main(int argc, char *argv[])
 
     if(!xFlag)
     {
+        Manager *manager = Manager::getInstance();
         Options *options = Options::getInstance();
         
         QString icon = "/usr/share/icons/kajammer.png";
