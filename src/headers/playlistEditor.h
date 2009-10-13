@@ -31,8 +31,9 @@
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QFileDialog>
 #include <QtGui/QHBoxLayout>
-#include <QtGui/QPushButton>
 #include <QtGui/QListWidget>
+#include <QtGui/QListWidgetItem>
+#include <QtGui/QPushButton>
 #include <QtGui/QVBoxLayout>
 
 #include "playlist.h"
@@ -59,6 +60,19 @@ private:
     QListWidget *listView;
     QPushButton *open;
     QPushButton *add;
+};
+
+/* PlaylistItem is an extenstion of QListWidgetItem
+ * that will display a string of text while storing
+ * a path to a file */
+class PlaylistItem : public QListWidgetItem
+{    
+public:
+    PlaylistItem(QString, QString);
+    QString getPath();
+    
+private:
+    QString path;
 };
 
 #endif /* _PLAYLISTEDITOR_H */

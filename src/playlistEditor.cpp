@@ -121,3 +121,14 @@ void PlaylistEditor::addTracks()
 //     playlistDocument = new QTextDocument(currentDocument + newTracks);
 //     textEdit->setDocument(playlistDocument);
 }
+
+PlaylistItem::PlaylistItem(QString text, QString path)
+    : QListWidgetItem(text)
+{
+    this->path = path;
+}
+
+QString PlaylistItem::getPath()
+{
+    return path;
+}
