@@ -96,11 +96,13 @@ void PlaylistEditor::openPlaylist()
         // figure out the file's name, we don't need the full path
         QFileInfo file(playlistFile);
         playlistFile = file.fileName();
-//         playlistDocument = new QTextDocument(playlist->getEntirePlaylist(playlistFile));
-//         textEdit->setDocument(playlistDocument);
         QStringList list = playlist->getPlaylistContents(playlistFile);
-        for(int i = 0; i < list.length(); i++)
-            listView->addItem(list.at(i));
+        
+        for(int i = 0; i < list.length(); i++) {
+            QFileInfo f(list.at(i));
+            PlaylistItem *item = new PlaylistItem(f.fileName(), list.at(i));
+            listView->addItem(item);
+        }
     }
 }
 
