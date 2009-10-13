@@ -32,9 +32,7 @@
 #include <QtGui/QFileDialog>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QPushButton>
-#include <QtGui/QTextEdit>
-#include <QtGui/QTextBlock>
-#include <QtGui/QTextDocument>
+#include <QtGui/QListWidget>
 #include <QtGui/QVBoxLayout>
 
 #include "playlist.h"
@@ -58,8 +56,7 @@ private:
     Playlist *playlist;
     QDialogButtonBox *buttonBox;
     QString playlistFile;
-    QTextEdit *textEdit;
-    QTextDocument *playlistDocument;
+    QListWidget *listView;
     QPushButton *open;
     QPushButton *add;
 };

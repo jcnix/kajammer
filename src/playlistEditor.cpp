@@ -38,8 +38,8 @@ void PlaylistEditor::init()
     setWindowTitle("KaJammer Playlist Editor");
     
     playlist = Playlist::getInstance();
-    textEdit = new QTextEdit;
-    textEdit->setMinimumSize(550, 300);
+    
+    listView = new QListWidget(this);
     
     open = new QPushButton("Open");
     add = new QPushButton("Add...");
@@ -54,7 +54,7 @@ void PlaylistEditor::init()
     hLayout->addWidget(add);
     
     QVBoxLayout *vLayout = new QVBoxLayout;
-    vLayout->addWidget(textEdit);
+    vLayout->addWidget(listView);
     vLayout->addLayout(hLayout);
     vLayout->addWidget(buttonBox);
     setLayout(vLayout);
@@ -62,24 +62,24 @@ void PlaylistEditor::init()
 
 void PlaylistEditor::save()
 {
-    QTextDocument *document = textEdit->document();
-    QStringList text;
-    
-    for(int i = 0; i <= document->lineCount(); i++)
-    {
-        QTextBlock block = document->findBlockByLineNumber(i);
-        QString blockText = block.text();
-        while(blockText.endsWith(" ") || blockText.startsWith("\n"))
-        {
-            blockText.chop(1);
-        }
-        text.append(blockText);
-    }
-    
-    //Delete old Playlist and replace with new
-    playlist->delPlaylist(playlistFile);
-    playlist->newPlaylist(playlistFile, text);
-    
+//     QTextDocument *document = textEdit->document();
+//     QStringList text;
+//     
+//     for(int i = 0; i <= document->lineCount(); i++)
+//     {
+//         QTextBlock block = document->findBlockByLineNumber(i);
+//         QString blockText = block.text();
+//         while(blockText.endsWith(" ") || blockText.startsWith("\n"))
+//         {
+//             blockText.chop(1);
+//         }
+//         text.append(blockText);
+//     }
+//     
+//     //Delete old Playlist and replace with new
+//     playlist->delPlaylist(playlistFile);
+//     playlist->newPlaylist(playlistFile, text);
+//     
     accept();
 }
 
@@ -96,8 +96,11 @@ void PlaylistEditor::openPlaylist()
         // figure out the file's name, we don't need the full path
         QFileInfo file(playlistFile);
         playlistFile = file.fileName();
-        playlistDocument = new QTextDocument(playlist->getEntirePlaylist(playlistFile));
-        textEdit->setDocument(playlistDocument);
+//         playlistDocument = new QTextDocument(playlist->getEntirePlaylist(playlistFile));
+//         textEdit->setDocument(playlistDocument);
+        QStringList list = playlist->getPlaylistContents(playlistFile);
+        for(int i = 0; i < list.length(); i++)
+            listView->addItem(list.at(i));
     }
 }
 
@@ -109,12 +112,12 @@ void PlaylistEditor::addTracks()
     QStringList fileQueue = QFileDialog::getOpenFileNames(this, tr("Open File"), defaultDir, 
                                                tr("Music Files (*.mp3 *.ogg *.aac *.flac *.wma *.wav)"));
                                                
-    QString currentDocument = textEdit->document()->toPlainText();
-    
-    QString newTracks;
-    for(int i = 0; i < fileQueue.count(); i++)
-        newTracks += fileQueue.at(i) + "\n";
-    
-    playlistDocument = new QTextDocument(currentDocument + newTracks);
-    textEdit->setDocument(playlistDocument);
+//     QString currentDocument = textEdit->document()->toPlainText();
+//     
+//     QString newTracks;
+//     for(int i = 0; i < fileQueue.count(); i++)
+//         newTracks += fileQueue.at(i) + "\n";
+//     
+//     playlistDocument = new QTextDocument(currentDocument + newTracks);
+//     textEdit->setDocument(playlistDocument);
 }
