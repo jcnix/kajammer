@@ -44,12 +44,9 @@ MainWindow::MainWindow()
     }
     
     #ifdef HAVE_LASTFM_H
-    if(options->getLastFm())
-    {
-        lastfm = new LastFm();
-        connect(controller, SIGNAL(songChanged(int)), lastfm, SLOT(nowPlaying()));
-        connect(controller, SIGNAL(songFinished()), lastfm, SLOT(scrobble()));
-    }
+    lastfm = new LastFm();
+    connect(controller, SIGNAL(songChanged(int)), lastfm, SLOT(nowPlaying()));
+    connect(controller, SIGNAL(songFinished()), lastfm, SLOT(scrobble()));
     #endif
 }
 
@@ -73,8 +70,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     
     //Submit whats left over in the cache.
     #ifdef HAVE_LASTFM_H
-    if(options->getLastFm())
-        lastfm->scrobble();
+    lastfm->scrobble();
     #endif
     
     event->accept();

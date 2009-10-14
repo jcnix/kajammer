@@ -45,80 +45,89 @@ LastFm::LastFm()
 
 void LastFm::init()
 {
-    const QString password = options->getLastFmPass();
-    const QString sessionKey = options->getLastFmKey();
-    const QString userName = options->getLastFmUser();
-    lastfm::ws::ApiKey = "519604ab5a867081cbb9a1edaf75ded4";
-    lastfm::ws::SharedSecret = "d5d1806ea34cea02336917b15bff9dec";
-    lastfm::ws::Username = userName;
-
-    QString authToken = lastfm::md5((userName + lastfm::md5(password.toUtf8())).toUtf8());
-
-    //we don't have a session key; get one
-    if(sessionKey.isEmpty())
+    if(options->useLastFm())
     {
-        std::cout << "No saved session key, authenticating with last.fm\n";
-        QMap<QString, QString> query;
-        query[ "method" ] = "auth.getMobileSession";
-        query[ "username" ] = userName;
-        query[ "authToken" ] = authToken;
-        reply = lastfm::ws::post( query );
+        const QString password = options->getLastFmPass();
+        const QString sessionKey = options->getLastFmKey();
+        const QString userName = options->getLastFmUser();
+        lastfm::ws::ApiKey = "519604ab5a867081cbb9a1edaf75ded4";
+        lastfm::ws::SharedSecret = "d5d1806ea34cea02336917b15bff9dec";
+        lastfm::ws::Username = userName;
 
-        connect(reply, SIGNAL(finished()), SLOT(parseReply()));
-    } 
-    else
-    {
-        std::cout << "Using saved SessionKey\n";
-        lastfm::ws::SessionKey = sessionKey.toLatin1().data();
+        QString authToken = lastfm::md5((userName + lastfm::md5(password.toUtf8())).toUtf8());
 
-        as = new lastfm::Audioscrobbler("kjm");
-        QMap< QString, QString > params;
-        params["method"] = "user.getInfo";
+        //we don't have a session key; get one
+        if(sessionKey.isEmpty())
+        {
+            std::cout << "No saved session key, authenticating with last.fm\n";
+            QMap<QString, QString> query;
+            query[ "method" ] = "auth.getMobileSession";
+            query[ "username" ] = userName;
+            query[ "authToken" ] = authToken;
+            reply = lastfm::ws::post( query );
+
+            connect(reply, SIGNAL(finished()), SLOT(parseReply()));
+        } 
+        else
+        {
+            std::cout << "Using saved SessionKey\n";
+            lastfm::ws::SessionKey = sessionKey.toLatin1().data();
+
+            as = new lastfm::Audioscrobbler("kjm");
+            QMap< QString, QString > params;
+            params["method"] = "user.getInfo";
+        }
     }
 }
 
 void LastFm::nowPlaying()
 {
-    std::cout << "Now Playing\n";
-    try
+    if(options->useLastFm())
     {
-        QMap<QString, QString> data = controller->getCurrentMetadata();
-        
-        lastfm::MutableTrack t;
-        t.stamp(); //sets track start time
-        t.setTitle(data["TITLE"]);
-        t.setArtist(data["ARTIST"]);
-        t.setAlbum(data["ALBUM"]);
-        
-        qint64 time = controller->getMediaObject()->remainingTime() / 1000;
-        t.setDuration(time);
-        
-        t.setSource(lastfm::Track::Player);
-        
-        as->nowPlaying(t);
-        //Audioscrobbler will submit whatever is in the cache when you call submit.
-        //And the cache is persistent between sessions. So you should cache at the
-        //scrobble point usually, not before
-        as->cache(t);
-    }
-    catch (lastfm::ws::ParseError& e)
-    {
-        std::cout << "Error Code: " << e.enumValue() << "\n";
-        qWarning() << e.what();
+        std::cout << "Now Playing\n";
+        try
+        {
+            QMap<QString, QString> data = controller->getCurrentMetadata();
+            
+            lastfm::MutableTrack t;
+            t.stamp(); //sets track start time
+            t.setTitle(data["TITLE"]);
+            t.setArtist(data["ARTIST"]);
+            t.setAlbum(data["ALBUM"]);
+            
+            qint64 time = controller->getMediaObject()->remainingTime() / 1000;
+            t.setDuration(time);
+            
+            t.setSource(lastfm::Track::Player);
+            
+            as->nowPlaying(t);
+            //Audioscrobbler will submit whatever is in the cache when you call submit.
+            //And the cache is persistent between sessions. So you should cache at the
+            //scrobble point usually, not before
+            as->cache(t);
+        }
+        catch (lastfm::ws::ParseError& e)
+        {
+            std::cout << "Error Code: " << e.enumValue() << "\n";
+            qWarning() << e.what();
+        }
     }
 }
 
 void LastFm::scrobble()
 {
-    std::cout << "Srobble\n";
-    try
+    if(options->useLastFm())
     {
-        as->submit();
-    }
-    catch (lastfm::ws::ParseError& e)
-    {
-        std::cout << "Error Code: " << e.enumValue() << "\n";
-        qWarning() << e.what();
+        std::cout << "Srobble\n";
+        try
+        {
+            as->submit();
+        }
+        catch (lastfm::ws::ParseError& e)
+        {
+            std::cout << "Error Code: " << e.enumValue() << "\n";
+            qWarning() << e.what();
+        }
     }
 }
 
