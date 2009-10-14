@@ -35,7 +35,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(controller, SIGNAL(songChanged(int)), this, SLOT(songChanged(int)));
     connect(controller, SIGNAL(queueSet(QList<Phonon::MediaSource>)), this,
             SLOT(getQueue(QList<Phonon::MediaSource>)));
-    connect(controller->getMediaObject(), SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));
+    connect(controller->getMetaResolver(), SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));
     connect(table, SIGNAL(cellClicked(int, int)), this, SLOT(tableClicked(int)));
     connect(playlistTable, SIGNAL(cellClicked(int, int)), this, SLOT(changePlaylist(int)));
     connect(playlist, SIGNAL(resetPlaylists()), this, SLOT(setupPlaylists()));
@@ -198,13 +198,7 @@ void MediaControls::setMetaData()
         Phonon::MediaSource source = controller->getMetaResolver()->currentSource();
         int index = metaSources.indexOf(source) + 1;
         if (metaSources.count() > index) 
-        {
-            #ifndef HAVE_KAJAMTAG_H
-            /* emit a signal so we can loop through the queue and
-            * set the table up */
-            controller->getMetaResolver()->setCurrentSource(metaSources.at(index));
-            #endif
-            
+        {            
             table->resizeColumnsToContents();
             
             if (table->columnWidth(1) > 300)

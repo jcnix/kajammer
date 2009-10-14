@@ -98,6 +98,7 @@ void Controller::emitList()
     
     //Set source so we activate metaDataChanged(), so it loops through our table
     metaResolver->setCurrentSource(list.at(0));
+    metaSources = list;
     
     emit queueSet(list);
 }
@@ -158,6 +159,17 @@ QMap<QString, QString> Controller::getMetadata(QString file)
     metaData.insert("TITLE", title);
     metaData.insert("ARTIST", artist);
     metaData.insert("ALBUM", album);
+    
+    #ifndef HAVE_KAJAMTAG_H
+    Phonon::MediaSource source = metaResolver->currentSource();
+    int index = metaSources.indexOf(source) + 1;
+    if (metaSources.count() > index) 
+    {            
+        /* emit a signal so we can loop through the queue and
+        * set the table up */
+        metaResolver->setCurrentSource(metaSources.at(index));
+    }
+    #endif
     
     return metaData;
 }

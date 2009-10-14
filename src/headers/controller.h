@@ -90,6 +90,7 @@ private:
     Phonon::MediaObject *metaResolver;
     
     QMap<int, Phonon::MediaSource> trackQueue;
+    QList<Phonon::MediaSource> metaSources;
     int currentSong;
     int currentList;
     bool isShuffle;
