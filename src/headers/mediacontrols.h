@@ -75,7 +75,6 @@ private:
 
     Phonon::VolumeSlider *volumeSlider;
     Phonon::SeekSlider *seekSlider;
-    Phonon::MediaObject *metaResolver;
 
     QPushButton *play;
     QPushButton *next;

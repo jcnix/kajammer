@@ -35,7 +35,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(controller, SIGNAL(songChanged(int)), this, SLOT(songChanged(int)));
     connect(controller, SIGNAL(queueSet(QList<Phonon::MediaSource>)), this,
             SLOT(getQueue(QList<Phonon::MediaSource>)));
-    connect(metaResolver, SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));
+    connect(controller->getMediaObject(), SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));
     connect(table, SIGNAL(cellClicked(int, int)), this, SLOT(tableClicked(int)));
     connect(playlistTable, SIGNAL(cellClicked(int, int)), this, SLOT(changePlaylist(int)));
     connect(playlist, SIGNAL(resetPlaylists()), this, SLOT(setupPlaylists()));
@@ -52,8 +52,6 @@ void MediaControls::init()
     controller = Controller::getInstance();
     playlist = Playlist::getInstance();
     tableIndex = 0;
-
-    metaResolver = new Phonon::MediaObject;  //Used for finding metadata
     
     volumeSlider = new Phonon::VolumeSlider;
     volumeSlider->setAudioOutput(controller->getAudioOutput());
@@ -130,8 +128,6 @@ void MediaControls::songChanged(int row)
 void MediaControls::getQueue(QList<Phonon::MediaSource> meta)
 {
     metaSources = meta;
-    //Set source so we activate metaDataChanged(), so it loops through our table
-    metaResolver->setCurrentSource(metaSources.at(0));
     #ifndef HAVE_KAJAMTAG_H
     setMetaData();
     #endif
@@ -169,9 +165,11 @@ void MediaControls::setMetaData()
     for(int i = 0; i < metaSources.count(); i++)
     {
         QString strFile = metaSources.at(i).fileName();
-    #endif
-    
         QMap<QString, QString> metaData = controller->getMetadata(strFile);
+        #else
+        QMap<QString, QString> metaData = controller->getMetadata("");
+        #endif
+    
         QString title = metaData.value("TITLE");
         QString artist = metaData.value("ARTIST");
         QString album = metaData.value("ALBUM");
@@ -197,14 +195,14 @@ void MediaControls::setMetaData()
         tableLabels.append("");
         table->setVerticalHeaderLabels(tableLabels);
 
-        Phonon::MediaSource source = metaResolver->currentSource();
+        Phonon::MediaSource source = controller->getMetaResolver()->currentSource();
         int index = metaSources.indexOf(source) + 1;
         if (metaSources.count() > index) 
         {
             #ifndef HAVE_KAJAMTAG_H
             /* emit a signal so we can loop through the queue and
             * set the table up */
-            metaResolver->setCurrentSource(metaSources.at(index));
+            controller->getMetaResolver()->setCurrentSource(metaSources.at(index));
             #endif
             
             table->resizeColumnsToContents();
