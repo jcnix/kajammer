@@ -122,9 +122,9 @@ QMap<QString, QString> Controller::getMetadata(QString file)
     
     kajamtag_read(cfile);
         
-    char* c_title =   k_getTag(KTITLE);
-    char* c_artist =  k_getTag(KARTIST);
-    char* c_album =   k_getTag(KALBUM);
+    char* c_title =   k_getData(KTITLE);
+    char* c_artist =  k_getData(KARTIST);
+    char* c_album =   k_getData(KALBUM);
     
     title = QString(c_title);
     artist = QString(c_artist);
