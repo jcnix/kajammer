@@ -34,6 +34,8 @@ Controller::Controller()
     mediaObject = new Phonon::MediaObject;
     Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
     
+    metaResolver = new Phonon::MediaObject;  //Used for finding metadata
+    
     playlist = Playlist::getInstance();
     options = Options::getInstance();
     
@@ -94,6 +96,10 @@ void Controller::emitList()
     for(int i = 0; i < trackQueue.count(); i++)
         list.append(trackQueue[i + 1]);
     
+    //Set source so we activate metaDataChanged(), so it loops through our table
+    metaResolver->setCurrentSource(list.at(0));
+    metaSources = list;
+    
     emit queueSet(list);
 }
 
@@ -104,7 +110,11 @@ QMap<QString, QString> Controller::getCurrentMetadata()
 
 QMap<QString, QString> Controller::getMetadata(QString file)
 {
-    QMap<QString, QString> data;
+    QMap<QString, QString> metaData;
+    
+    QString title;
+    QString artist;
+    QString album;
     
     #ifdef HAVE_KAJAMTAG_H
     char* cfile = new char[file.size()+1];
@@ -112,13 +122,13 @@ QMap<QString, QString> Controller::getMetadata(QString file)
     
     kajamtag_read(cfile);
         
-    char* c_title =   k_getTag(KTITLE);
-    char* c_artist =  k_getTag(KARTIST);
-    char* c_album =   k_getTag(KALBUM);
+    char* c_title =   k_getData(KTITLE);
+    char* c_artist =  k_getData(KARTIST);
+    char* c_album =   k_getData(KALBUM);
     
-    QString title(c_title);
-    QString artist(c_artist);
-    QString album(c_album);
+    title = QString(c_title);
+    artist = QString(c_artist);
+    album = QString(c_album);
     
     //If one is bad, they're all bad.
     if(title.compare("BAD_TAG") == 0) {
@@ -129,7 +139,7 @@ QMap<QString, QString> Controller::getMetadata(QString file)
     #endif
     
     #ifndef HAVE_KAJAMTAG_H
-    data = metaResolver->metaData();
+    metaData = metaResolver->metaData();
     title = metaData.value("TITLE");
     artist = metaData.value("ARTIST");
     album = metaData.value("ALBUM");
@@ -146,11 +156,22 @@ QMap<QString, QString> Controller::getMetadata(QString file)
         title = fileInfo.baseName();
     }
     
-    data.insert("TITLE", title);
-    data.insert("ARTIST", artist);
-    data.insert("ALBUM", album);
+    metaData.insert("TITLE", title);
+    metaData.insert("ARTIST", artist);
+    metaData.insert("ALBUM", album);
     
-    return data;
+    #ifndef HAVE_KAJAMTAG_H
+    Phonon::MediaSource source = metaResolver->currentSource();
+    int index = metaSources.indexOf(source) + 1;
+    if (metaSources.count() > index) 
+    {            
+        /* emit a signal so we can loop through the queue and
+        * set the table up */
+        metaResolver->setCurrentSource(metaSources.at(index));
+    }
+    #endif
+    
+    return metaData;
 }
 
 void Controller::setSong(int index)

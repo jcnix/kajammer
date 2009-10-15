@@ -81,7 +81,7 @@ void Cli::cliArgs(char *argv[])
             //Display version info
             case 'v':
                 xFlag = true;
-                std::cout << "KaJammer Music Player 0.9.2.1\n";
+                std::cout << "KaJammer Music Player 0.9.2.2\n";
                 exit(1);
                 break;
             

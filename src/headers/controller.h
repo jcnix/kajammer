@@ -49,8 +49,11 @@ public:
     QMap<QString, QString> getMetadata(QString file);
     QMap<QString, QString> getCurrentMetadata();
     void resetCurrentList() { currentList = -1; }
+    
     Phonon::AudioOutput* getAudioOutput() { return audioOutput; }
     Phonon::MediaObject* getMediaObject() { return mediaObject; }
+    Phonon::MediaObject* getMetaResolver() { return metaResolver; }
+    
     bool isPlaying() { return (mediaObject->state() == Phonon::PlayingState); }
     bool isPaused() { return (mediaObject->state() == Phonon::PausedState); }
     
@@ -84,7 +87,10 @@ private:
     
     Phonon::AudioOutput *audioOutput;
     Phonon::MediaObject *mediaObject;
+    Phonon::MediaObject *metaResolver;
+    
     QMap<int, Phonon::MediaSource> trackQueue;
+    QList<Phonon::MediaSource> metaSources;
     int currentSong;
     int currentList;
     bool isShuffle;

@@ -108,7 +108,7 @@ void OptionsPanel::populate()
     shuffBox->setChecked(options->isShuff_no_repeat());
     trayIconOption->setChecked(options->trayIcon());
     #ifdef HAVE_LASTFM_H
-    lastfmBox->setChecked(options->getLastFm());
+    lastfmBox->setChecked(options->useLastFm());
     lastfmUser->setText(options->getLastFmUser());
     lastfmPass->setText(options->getLastFmPass());
     #endif

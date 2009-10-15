@@ -63,7 +63,7 @@ public:
     int getMainHeight() { return main_height; }
     
     #ifdef HAVE_LASTFM_H
-    int getLastFm() { return use_last_fm; }
+    int useLastFm() { return use_last_fm; }
     QString getLastFmUser() { return lastfmUser; }
     QString getLastFmPass() { return lastfmPass; }
     QString getLastFmKey() { return lastfmKey; }
