@@ -30,7 +30,7 @@ Manager::Manager()
     options = Options::getInstance();
     
     #ifdef HAVE_LASTFM_H
-    if(options->getLastFm())
+    if(options->useLastFm())
     {
         lastfm = new LastFm();
         connect(controller, SIGNAL(songChanged(int)), lastfm, SLOT(nowPlaying()));
@@ -52,7 +52,7 @@ void Manager::exit()
 {
     //Submit whats left over in the cache.
     #ifdef HAVE_LASTFM_H
-    if(options->getLastFm())
+    if(options->useLastFm())
         lastfm->scrobble();
     #endif
 }

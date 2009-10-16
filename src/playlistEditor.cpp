@@ -93,7 +93,7 @@ void PlaylistEditor::openPlaylist()
                                                 
     if(!playlistFile.isEmpty())
     {
-        // figure out the file's name, we don't need the full path
+        // figure out the playlist's name, we don't need the full path
         QFileInfo file(playlistFile);
         playlistFile = file.fileName();
         QStringList list = playlist->getPlaylistContents(playlistFile);
