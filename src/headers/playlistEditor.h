@@ -55,6 +55,8 @@ private:
     void init();
     
     Playlist *playlist;
+    Options *options;
+    
     QDialogButtonBox *buttonBox;
     QString playlistFile;
     QListWidget *listView;

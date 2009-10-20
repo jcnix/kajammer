@@ -38,6 +38,7 @@ void PlaylistEditor::init()
     setWindowTitle("KaJammer Playlist Editor");
     
     playlist = Playlist::getInstance();
+    options = Options::getInstance();
     
     listView = new QListWidget(this);
     
@@ -108,12 +109,17 @@ void PlaylistEditor::openPlaylist()
 
 void PlaylistEditor::addTracks()
 {
-    Options *options = Options::getInstance();
     QString defaultDir = options->getDefaultOpenDir();
     
-    QStringList fileQueue = QFileDialog::getOpenFileNames(this, tr("Open File"), defaultDir, 
+    QStringList list = QFileDialog::getOpenFileNames(this, tr("Open File"), defaultDir, 
                                                tr("Music Files (*.mp3 *.ogg *.aac *.flac *.wma *.wav)"));
-                                               
+    
+    for(int i = 0; i < list.length(); i++) {
+        QFileInfo f(list.at(i));
+        PlaylistItem *item = new PlaylistItem(f.fileName(), list.at(i));
+        listView->addItem(item);
+    }
+    
 //     QString currentDocument = textEdit->document()->toPlainText();
 //     
 //     QString newTracks;
