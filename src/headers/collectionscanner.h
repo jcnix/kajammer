@@ -29,6 +29,7 @@
 #include <QtGui/QPushButton>
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QFileDialog>
+#include <QtGui/QStyle>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QHBoxLayout>
 #include <QtCore/QDir>

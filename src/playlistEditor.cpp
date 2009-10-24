@@ -43,7 +43,7 @@ void PlaylistEditor::init()
     listView = new QListWidget(this);
     
     open = new QPushButton("Open");
-    add = new QPushButton("Add...");
+    add = new QPushButton("Add");
     
     open->setMaximumWidth(75);
     add->setMaximumWidth(75);

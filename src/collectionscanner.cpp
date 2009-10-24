@@ -36,7 +36,7 @@ void CollectionScanner::init()
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     dirLabel = new QLabel("Scan Directory");
     dirInput = new QLineEdit;
-    browseDirButton = new QPushButton("...");
+    browseDirButton = new QPushButton(style()->standardIcon(QStyle::SP_DialogOpenButton), "", this);
     
     QHBoxLayout *hLayout = new QHBoxLayout;
     hLayout->addWidget(dirLabel);

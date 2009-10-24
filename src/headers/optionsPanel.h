@@ -37,6 +37,7 @@
 #include <QtGui/QLineEdit>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QPushButton>
+#include <QtGui/QStyle>
 #include <QtGui/QVBoxLayout>
 
 #include "options.h"

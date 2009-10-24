@@ -43,7 +43,7 @@ void OptionsPanel::init()
     defaultOpenLabel = new QLabel("Music directory: ");
     defaultOpen = new QLineEdit;
     defaultOpen->setMinimumWidth(175);
-    browseDefaultOpenBtn = new QPushButton("...");
+    browseDefaultOpenBtn = new QPushButton(style()->standardIcon(QStyle::SP_DialogOpenButton), "", this);
     
     shuffLabel = new QLabel("Shuffle-no-repeat: ");
     shuffBox = new QCheckBox;
