@@ -30,8 +30,9 @@ Options::Options()
     //if height and width aren't found, these are defaults
     main_width = 640;
     main_height = 360;
-    
-    
+    use_last_fm = false;
+	use_tray_icon = false;
+	
     if(!QKAJAM_DIR.exists())
     {
         QKAJAM_DIR.mkdir(KAJAM_DIR);
