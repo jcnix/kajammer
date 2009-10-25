@@ -62,8 +62,8 @@ private:
     QDialogButtonBox *buttonBox;
     QString playlistFile;
     QListWidget *listView;
-    QPushButton *open;
-    QPushButton *add;
+    QPushButton *btnOpen;
+    QPushButton *btnAdd;
 	QPushButton *btnUp;
 	QPushButton *btnDown;
 	QPushButton *btnRemove;

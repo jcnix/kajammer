@@ -29,8 +29,8 @@ PlaylistEditor::PlaylistEditor()
     
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(save()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
-    connect(open, SIGNAL(clicked()), this, SLOT(openPlaylist()));
-    connect(add, SIGNAL(clicked()), this, SLOT(addTracks()));
+    connect(btnOpen, SIGNAL(clicked()), this, SLOT(openPlaylist()));
+    connect(btnAdd, SIGNAL(clicked()), this, SLOT(addTracks()));
 }
 
 void PlaylistEditor::init()
@@ -42,29 +42,31 @@ void PlaylistEditor::init()
     
     listView = new QListWidget;
     
-    open = new QPushButton("Open");
-    add = new QPushButton("Add");
+    btnOpen = new QPushButton("Open");
+    btnAdd = new QPushButton("Add");
 	btnUp = new QPushButton(style()->standardIcon(QStyle::SP_ArrowUp), "");
 	btnDown = new QPushButton(style()->standardIcon(QStyle::SP_ArrowDown), "");
-    
-    open->setMaximumWidth(75);
-    add->setMaximumWidth(75);
+    btnRemove = new QPushButton("Remove");
+	
+    btnOpen->setMaximumWidth(75);
+    btnAdd->setMaximumWidth(75);
     
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | 
 			QDialogButtonBox::Cancel);
     
     QHBoxLayout *hLayout = new QHBoxLayout;
-    hLayout->addWidget(open);
-    hLayout->addWidget(add);
+    hLayout->addWidget(btnOpen);
+    hLayout->addWidget(btnAdd);
 	
-	QHBoxLayout *updownLayout = new QHBoxLayout;
-	updownLayout->addWidget(btnUp);
-	updownLayout->addWidget(btnDown);
+	QHBoxLayout *controlLayout = new QHBoxLayout;
+	controlLayout->addWidget(btnUp);
+	controlLayout->addWidget(btnDown);
+	controlLayout->addWidget(btnRemove);
     
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addWidget(listView);
     vLayout->addLayout(hLayout);
-	vLayout->addLayout(updownLayout);
+	vLayout->addLayout(controlLayout);
     vLayout->addWidget(buttonBox);
     setLayout(vLayout);
 }
