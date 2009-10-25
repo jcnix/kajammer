@@ -73,24 +73,19 @@ void PlaylistEditor::init()
 
 void PlaylistEditor::save()
 {
-//     QTextDocument *document = textEdit->document();
-//     QStringList text;
-//     
-//     for(int i = 0; i <= document->lineCount(); i++)
-//     {
-//         QTextBlock block = document->findBlockByLineNumber(i);
-//         QString blockText = block.text();
-//         while(blockText.endsWith(" ") || blockText.startsWith("\n"))
-//         {
-//             blockText.chop(1);
-//         }
-//         text.append(blockText);
-//     }
-//     
-//     //Delete old Playlist and replace with new
+//      QStringList text;
+	
+	//TODO: uncomment this when PlaylistView is ready
+// 	int rows = listView->count();
+// 	for(int i = 0; i < rows; i++) {
+// 		PlaylistItem *item = listView->item(i);
+// 		text.append(item->path());
+// 	}
+	
+     //Delete old Playlist and replace with new
 //     playlist->delPlaylist(playlistFile);
 //     playlist->newPlaylist(playlistFile, text);
-//     
+	
     accept();
 }
 
