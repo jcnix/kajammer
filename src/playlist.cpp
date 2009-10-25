@@ -58,7 +58,10 @@ void Playlist::newPlaylist(QString name, QStringList newList)
         
         QTextStream out(&newListFile);
         for(int i = 0; i < newList.count(); i++) {
-            out << newList.at(i) + "\n";
+            if(newList.at(i) == "")
+				continue;
+			
+			out << newList.at(i) + "\n";
         }
         
         //Reset Info so it finds the new playlist

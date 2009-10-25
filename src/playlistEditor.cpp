@@ -102,7 +102,8 @@ void PlaylistEditor::openPlaylist()
         playlistFile = file.fileName();
         QStringList list = playlist->getPlaylistContents(playlistFile);
         
-        for(int i = 0; i < list.length(); i++) {
+        for(int i = 0; i < list.length(); i++)
+		{
             QFileInfo f(list.at(i));
             QListWidgetItem *item = new QListWidgetItem(f.fileName());
             listView->addItem(item);
@@ -118,7 +119,8 @@ void PlaylistEditor::addTracks()
     QStringList list = QFileDialog::getOpenFileNames(this, tr("Open File"), defaultDir, 
 										tr("Music Files (*.mp3 *.ogg *.aac *.flac *.wma *.wav)"));
     
-    for(int i = 0; i < list.length(); i++) {
+    for(int i = 0; i < list.length(); i++)
+	{
         QFileInfo f(list.at(i));
         QListWidgetItem *item = new QListWidgetItem(f.fileName());
         listView->addItem(item);
@@ -129,7 +131,8 @@ void PlaylistEditor::addTracks()
 void PlaylistEditor::removeTracks()
 {
 	QList<QListWidgetItem*> items = listView->selectedItems();
-	for(int i = 0; i < items.length(); i++) {
+	for(int i = 0; i < items.length(); i++)
+	{
 		listView->takeItem(i);
 		playlistMap.remove(items.at(i));
 	}
