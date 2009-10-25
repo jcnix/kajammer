@@ -41,6 +41,7 @@ void PlaylistEditor::init()
     options = Options::getInstance();
     
     listView = new QListWidget;
+	listView->setSelectionMode(QAbstractItemView::MultiSelection);
     
     btnOpen = new QPushButton("Open");
     btnAdd = new QPushButton("Add");
