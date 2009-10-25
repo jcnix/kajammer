@@ -44,19 +44,29 @@ void PlaylistEditor::init()
     
     open = new QPushButton("Open");
     add = new QPushButton("Add");
+	btnUp = new QPushButton(style()->standardIcon(QStyle::SP_ArrowUp),
+							"", this);
+	btnDown = new QPushButton(style()->standardIcon(QStyle::SP_ArrowDown),
+							  "", this);
     
     open->setMaximumWidth(75);
     add->setMaximumWidth(75);
     
-    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | 
+			QDialogButtonBox::Cancel);
     
     QHBoxLayout *hLayout = new QHBoxLayout;
     hLayout->addWidget(open);
     hLayout->addWidget(add);
+	
+	QHBoxLayout *updownLayout = new QHBoxLayout;
+	updownLayout->addWidget(btnUp);
+	updownLayout->addWidget(btnDown);
     
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addWidget(listView);
     vLayout->addLayout(hLayout);
+	vLayout->addLayout(updownLayout);
     vLayout->addWidget(buttonBox);
     setLayout(vLayout);
 }

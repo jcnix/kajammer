@@ -34,6 +34,7 @@
 #include <QtGui/QListWidget>
 #include <QtGui/QListWidgetItem>
 #include <QtGui/QPushButton>
+#include <QtGui/QStyle>
 #include <QtGui/QVBoxLayout>
 
 #include "playlist.h"
@@ -62,6 +63,8 @@ private:
     QListWidget *listView;
     QPushButton *open;
     QPushButton *add;
+	QPushButton *btnUp;
+	QPushButton *btnDown;
 };
 
 /* PlaylistItem is an extenstion of QListWidgetItem
