@@ -40,14 +40,12 @@ void PlaylistEditor::init()
     playlist = Playlist::getInstance();
     options = Options::getInstance();
     
-    listView = new QListWidget(this);
+    listView = new QListWidget;
     
     open = new QPushButton("Open");
     add = new QPushButton("Add");
-	btnUp = new QPushButton(style()->standardIcon(QStyle::SP_ArrowUp),
-							"", this);
-	btnDown = new QPushButton(style()->standardIcon(QStyle::SP_ArrowDown),
-							  "", this);
+	btnUp = new QPushButton(style()->standardIcon(QStyle::SP_ArrowUp), "");
+	btnDown = new QPushButton(style()->standardIcon(QStyle::SP_ArrowDown), "");
     
     open->setMaximumWidth(75);
     add->setMaximumWidth(75);

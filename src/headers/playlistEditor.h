@@ -66,6 +66,7 @@ private:
     QPushButton *add;
 	QPushButton *btnUp;
 	QPushButton *btnDown;
+	QPushButton *btnRemove;
 	
 	QMap<QListWidgetItem*, QString> playlistMap;
 };
