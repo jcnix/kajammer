@@ -73,18 +73,15 @@ void PlaylistEditor::init()
 
 void PlaylistEditor::save()
 {
-//      QStringList text;
+	QStringList text;
+	int rows = listView->count();
+	for(int i = 0; i < rows; i++) {
+		QListWidgetItem *item = listView->item(i);
+		text.append(playlistMap.value(item));
+	}
 	
-	//TODO: uncomment this when PlaylistView is ready
-// 	int rows = listView->count();
-// 	for(int i = 0; i < rows; i++) {
-// 		PlaylistItem *item = listView->item(i);
-// 		text.append(item->path());
-// 	}
-	
-     //Delete old Playlist and replace with new
-//     playlist->delPlaylist(playlistFile);
-//     playlist->newPlaylist(playlistFile, text);
+    playlist->delPlaylist(playlistFile);
+    playlist->newPlaylist(playlistFile, text);
 	
     accept();
 }
@@ -95,7 +92,6 @@ void PlaylistEditor::openPlaylist()
     
     playlistFile = QFileDialog::getOpenFileName(this, tr("Open File"), 
                                                 playlistDir, "");
-    
                                                 
     if(!playlistFile.isEmpty())
     {
@@ -106,8 +102,9 @@ void PlaylistEditor::openPlaylist()
         
         for(int i = 0; i < list.length(); i++) {
             QFileInfo f(list.at(i));
-            PlaylistItem *item = new PlaylistItem(f.fileName(), list.at(i));
+            QListWidgetItem *item = new QListWidgetItem(f.fileName());
             listView->addItem(item);
+			playlistMap.insert(item, list.at(i));
         }
     }
 }
@@ -117,31 +114,12 @@ void PlaylistEditor::addTracks()
     QString defaultDir = options->getDefaultOpenDir();
     
     QStringList list = QFileDialog::getOpenFileNames(this, tr("Open File"), defaultDir, 
-                                               tr("Music Files (*.mp3 *.ogg *.aac *.flac *.wma *.wav)"));
+										tr("Music Files (*.mp3 *.ogg *.aac *.flac *.wma *.wav)"));
     
     for(int i = 0; i < list.length(); i++) {
         QFileInfo f(list.at(i));
-        PlaylistItem *item = new PlaylistItem(f.fileName(), list.at(i));
+        QListWidgetItem *item = new QListWidgetItem(f.fileName());
         listView->addItem(item);
+		playlistMap.insert(item, list.at(i));
     }
-    
-//     QString currentDocument = textEdit->document()->toPlainText();
-//     
-//     QString newTracks;
-//     for(int i = 0; i < fileQueue.count(); i++)
-//         newTracks += fileQueue.at(i) + "\n";
-//     
-//     playlistDocument = new QTextDocument(currentDocument + newTracks);
-//     textEdit->setDocument(playlistDocument);
-}
-
-PlaylistItem::PlaylistItem(QString text, QString path)
-    : QListWidgetItem(text)
-{
-    this->path = path;
-}
-
-QString PlaylistItem::getPath()
-{
-    return path;
 }
