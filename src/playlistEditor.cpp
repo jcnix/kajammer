@@ -31,6 +31,7 @@ PlaylistEditor::PlaylistEditor()
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
     connect(btnOpen, SIGNAL(clicked()), this, SLOT(openPlaylist()));
     connect(btnAdd, SIGNAL(clicked()), this, SLOT(addTracks()));
+	connect(btnRemove, SIGNAL(clicked()), this, SLOT(removeTracks()));
 }
 
 void PlaylistEditor::init()
@@ -123,4 +124,13 @@ void PlaylistEditor::addTracks()
         listView->addItem(item);
 		playlistMap.insert(item, list.at(i));
     }
+}
+
+void PlaylistEditor::removeTracks()
+{
+	QList<QListWidgetItem*> items = listView->selectedItems();
+	for(int i = 0; i < items.length(); i++) {
+		listView->takeItem(i);
+		playlistMap.remove(items.at(i));
+	}
 }

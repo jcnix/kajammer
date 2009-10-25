@@ -52,6 +52,7 @@ public slots:
     void save();
     void openPlaylist();
     void addTracks();
+	void removeTracks();
     
 private:
     void init();
