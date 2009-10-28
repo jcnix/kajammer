@@ -32,6 +32,8 @@ PlaylistEditor::PlaylistEditor()
     connect(btnOpen, SIGNAL(clicked()), this, SLOT(openPlaylist()));
     connect(btnAdd, SIGNAL(clicked()), this, SLOT(addTracks()));
 	connect(btnRemove, SIGNAL(clicked()), this, SLOT(removeTracks()));
+	connect(btnUp, SIGNAL(clicked()), this, SLOT(moveTracksUp()));
+	connect(btnDown, SIGNAL(clicked()), this, SLOT(moveTracksDown()));
 }
 
 void PlaylistEditor::init()
@@ -136,4 +138,22 @@ void PlaylistEditor::removeTracks()
 		listView->takeItem(i);
 		playlistMap.remove(items.at(i));
 	}
+}
+
+void PlaylistEditor::moveTracksUp()
+{
+	QList<QListWidgetItem*> items = listView->selectedItems();
+	QListWidgetItem *item = items.at(0);
+	int row = listView->row(item);
+	item = listView->takeItem(row);
+	listView->insertItem(--row, item); //moves up
+}
+
+void PlaylistEditor::moveTracksDown()
+{
+	QList<QListWidgetItem*> items = listView->selectedItems();
+	QListWidgetItem *item = items.at(0);
+	int row = listView->row(item);
+	item = listView->takeItem(row);
+	listView->insertItem(++row, item); //moves up
 }
