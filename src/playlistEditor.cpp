@@ -156,6 +156,6 @@ void PlaylistEditor::moveTracksDown()
 	QListWidgetItem *item = items.at(0);
 	int row = listView->row(item);
 	item = listView->takeItem(row);
-	listView->insertItem(++row, item); //moves up
+	listView->insertItem(++row, item); //moves down
 	listView->setCurrentRow(row);
 }
