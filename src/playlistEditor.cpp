@@ -147,6 +147,7 @@ void PlaylistEditor::moveTracksUp()
 	int row = listView->row(item);
 	item = listView->takeItem(row);
 	listView->insertItem(--row, item); //moves up
+	listView->setCurrentRow(row);
 }
 
 void PlaylistEditor::moveTracksDown()
@@ -156,4 +157,5 @@ void PlaylistEditor::moveTracksDown()
 	int row = listView->row(item);
 	item = listView->takeItem(row);
 	listView->insertItem(++row, item); //moves up
+	listView->setCurrentRow(row);
 }
