@@ -26,7 +26,9 @@
 #include <QtGui/QDialog>
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
+#include <QtCore/QList>
 #include <QtCore/QMap>
+#include <QtCore/QSet>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtGui/QDialogButtonBox>
