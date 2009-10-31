@@ -151,7 +151,7 @@ void PlaylistEditor::moveTracksUp()
 	 * selected row. So always make the above rows go first
 	 */
 	QSet<int> set;
-	for(int i = items.size() -1; i >= 0; i--)
+	for(int i = 0; i < items.size(); i++)
 	{
 		QListWidgetItem *item = items.at(i);
 		int row = listView->row(item);
@@ -162,6 +162,7 @@ void PlaylistEditor::moveTracksUp()
 	QList<int> rowList = QList<int>::fromSet(set);
 	qSort(rowList);
 	
+	//Now move the item
 	for(int i = 0; i < rowList.size(); i++)
 	{
 		int row = rowList.at(i);
@@ -175,9 +176,32 @@ void PlaylistEditor::moveTracksUp()
 void PlaylistEditor::moveTracksDown()
 {
 	QList<QListWidgetItem*> items = listView->selectedItems();
-	QListWidgetItem *item = items.at(0);
-	int row = listView->row(item);
-	item = listView->takeItem(row);
-	listView->insertItem(++row, item); //moves down
-	listView->setCurrentRow(row);
+	
+	/* We need to sort the selected rows.
+	 * If they're unsorted, adjacent selected rows
+	 * will alternate which row goes first.  If a lower
+	 * row goes first it conflicts with the above 
+	 * selected row. So always make the above rows go first
+	 */
+	QSet<int> set;
+	for(int i = 0; i < items.size(); i++)
+	{
+		QListWidgetItem *item = items.at(i);
+		int row = listView->row(item);
+
+		set << row;
+	}
+	
+	QList<int> rowList = QList<int>::fromSet(set);
+	qSort(rowList);
+	
+	//Now move the item, iterate backwards
+	for(int i = rowList.size() - 1; i >= 0; i--)
+	{
+		int row = rowList.at(i);
+		QListWidgetItem *item = listView->takeItem(row);
+		
+		listView->insertItem(++row, item); //moves up
+		listView->setCurrentRow(row);
+	}
 }
