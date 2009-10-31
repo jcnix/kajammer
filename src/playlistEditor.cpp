@@ -54,22 +54,33 @@ void PlaylistEditor::init()
 	
     btnOpen->setMaximumWidth(75);
     btnAdd->setMaximumWidth(75);
+	btnUp->setMaximumWidth(50);
+	btnDown->setMaximumWidth(50);
+	btnRemove->setMaximumWidth(75);
     
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | 
 			QDialogButtonBox::Cancel);
     
-    QHBoxLayout *hLayout = new QHBoxLayout;
-    hLayout->addWidget(btnOpen);
-    hLayout->addWidget(btnAdd);
+	//Squeeze Layout "squeezes" widgets together so they don't spread
+			
+	QHBoxLayout *squeezeTopLayout = new QHBoxLayout;
+	squeezeTopLayout->addWidget(btnOpen);
+    squeezeTopLayout->addWidget(btnAdd);		
+	
+    QHBoxLayout *topLayout = new QHBoxLayout;
+	topLayout->addLayout(squeezeTopLayout);
+	
+	QHBoxLayout *controlSqueezeLayout = new QHBoxLayout;
+	controlSqueezeLayout->addWidget(btnUp);
+	controlSqueezeLayout->addWidget(btnDown);
+	controlSqueezeLayout->addWidget(btnRemove);
 	
 	QHBoxLayout *controlLayout = new QHBoxLayout;
-	controlLayout->addWidget(btnUp);
-	controlLayout->addWidget(btnDown);
-	controlLayout->addWidget(btnRemove);
-    
+	controlLayout->addLayout(controlSqueezeLayout);
+	
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addWidget(listView);
-    vLayout->addLayout(hLayout);
+    vLayout->addLayout(topLayout);
 	vLayout->addLayout(controlLayout);
     vLayout->addWidget(buttonBox);
     setLayout(vLayout);
