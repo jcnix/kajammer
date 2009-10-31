@@ -24,7 +24,11 @@
 #define _MANAGER_H
 
 #include <QtCore/QObject>
+#include <QtGui/QApplication>
+#include <QtGui/QIcon>
 
+#include "mainwindow.h"
+#include "cli.h"
 #include "config.h"
 #include "controller.h"
 #include "options.h"
@@ -39,6 +43,7 @@ class Manager : public QObject
 
 public:
     static Manager* getInstance();
+    int start(int argc, char *argv[], QApplication*);
     void exit();
 
 protected:

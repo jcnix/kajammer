@@ -22,40 +22,16 @@
 
 #include <iostream>
 #include <QtGui/QApplication>
-#include <QtGui/QIcon>
-
-#include "headers/mainwindow.h"
-#include "headers/cli.h"
-#include "headers/options.h"
 #include "headers/manager.h"
 
 int main(int argc, char *argv[]) 
-{  
+{
     QApplication app(argc, argv);
     app.setApplicationName("KaJammer");
     
-    Cli *cli = new Cli(argc, argv);
-    bool xFlag = cli->getXFlag();
-
-    if(!xFlag)
-    {
-        Manager *manager = Manager::getInstance();
-        Options *options = Options::getInstance();
-        
-        QString icon = "/usr/share/icons/kajammer.png";
-        if(QFile::exists(icon))            
-            app.setWindowIcon(QIcon(icon));
-        
-        if(options->trayIcon())
-            app.setQuitOnLastWindowClosed(false);
-        else
-            app.setQuitOnLastWindowClosed(true);
-        
-        MainWindow window;
-        window.resize(options->getMainWidth(), options->getMainHeight());
-        window.show();
-        return app.exec();
-    }
-    app.exit();
+    QApplication *pApp = &app;
+    
+    Manager *manager = Manager::getInstance();
+    manager->start(argc, argv, pApp);
 }
 

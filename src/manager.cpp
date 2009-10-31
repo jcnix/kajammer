@@ -48,6 +48,32 @@ Manager* Manager::getInstance()
     return manager;
 }
 
+int Manager::start(int argc, char *argv[], QApplication *app)
+{    
+    Cli *cli = new Cli(argc, argv);
+    bool xFlag = cli->getXFlag();
+    
+    if(!xFlag)
+    {
+        Options *options = Options::getInstance();
+        
+        QString icon = "/usr/share/icons/kajammer.png";
+        if(QFile::exists(icon))            
+            app->setWindowIcon(QIcon(icon));
+        
+        if(options->trayIcon())
+            app->setQuitOnLastWindowClosed(false);
+        else
+            app->setQuitOnLastWindowClosed(true);
+        
+        MainWindow window;
+        window.resize(options->getMainWidth(), options->getMainHeight());
+        window.show();
+        return app->exec();
+    }
+    app->exit();
+}
+
 void Manager::exit()
 {
     //Submit whats left over in the cache.
