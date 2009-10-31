@@ -38,7 +38,8 @@ PlaylistEditor::PlaylistEditor()
 void PlaylistEditor::init()
 {
     setWindowTitle("KaJammer Playlist Editor");
-    
+    setMinimumSize(480,480);
+	
     playlist = Playlist::getInstance();
     options = Options::getInstance();
     
