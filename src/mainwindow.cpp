@@ -25,23 +25,12 @@
 MainWindow::MainWindow()
 {
     setWindowTitle("KaJammer Music Player");
-    controller = Controller::getInstance();
 
     menuBar = new MenuBar;
     setMenuBar(menuBar);
 
     mediaControls = new MediaControls;
     setCentralWidget(mediaControls);
-    
-    Options *options = Options::getInstance();
-    
-    if(options->trayIcon())
-    {
-        TrayIcon *trayIcon = new TrayIcon;
-        
-        connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-                this, SLOT(showWindow(QSystemTrayIcon::ActivationReason)));
-    }
 }
 
 void MainWindow::showWindow(QSystemTrayIcon::ActivationReason activated)

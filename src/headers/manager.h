@@ -32,6 +32,7 @@
 #include "config.h"
 #include "controller.h"
 #include "options.h"
+#include "trayicon.h"
 
 #ifdef HAVE_LASTFM_H
 #include "lastfm.h"

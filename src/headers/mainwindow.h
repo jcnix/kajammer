@@ -29,8 +29,6 @@
 
 #include "mediacontrols.h"
 #include "menubar.h"
-#include "trayicon.h"
-#include "controller.h"
 #include "options.h"
 
 class MainWindow : public QMainWindow
