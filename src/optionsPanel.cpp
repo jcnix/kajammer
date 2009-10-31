@@ -52,6 +52,7 @@ void OptionsPanel::init()
     lastfmBox = new QCheckBox;
     lastfmUser = new QLineEdit;
     lastfmPass = new QLineEdit;
+    lastfmPass->setEchoMode(QLineEdit::Password);
     #endif
     
     QHBoxLayout *defaultOpenLayout = new QHBoxLayout;
