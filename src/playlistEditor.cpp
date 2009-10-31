@@ -21,7 +21,6 @@
  */
 
 #include "headers/playlistEditor.h"
-#include <iostream>
 
 PlaylistEditor::PlaylistEditor()
 {
