@@ -54,26 +54,26 @@ public slots:
     void save();
     void openPlaylist();
     void addTracks();
-	void removeTracks();
-	void moveTracksUp();
-	void moveTracksDown();
+    void removeTracks();
+    void moveTracksUp();
+    void moveTracksDown();
     
 private:
     void init();
     
     Playlist *playlist;
     Options *options;
-    
+
     QDialogButtonBox *buttonBox;
     QString playlistFile;
     QListWidget *listView;
     QPushButton *btnOpen;
     QPushButton *btnAdd;
-	QPushButton *btnUp;
-	QPushButton *btnDown;
-	QPushButton *btnRemove;
-	
-	QMap<QListWidgetItem*, QString> playlistMap;
+    QPushButton *btnUp;
+    QPushButton *btnDown;
+    QPushButton *btnRemove;
+
+    QMap<QListWidgetItem*, QString> playlistMap;
 };
 
 #endif /* _PLAYLISTEDITOR_H */

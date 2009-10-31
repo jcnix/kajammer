@@ -30,7 +30,7 @@ OptionsPanel::OptionsPanel()
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(save()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
     connect(browseDefaultOpenBtn, SIGNAL(clicked()), this, 
-			SLOT(browseDefaultOpen()));
+            SLOT(browseDefaultOpen()));
 }
 
 void OptionsPanel::init()
@@ -39,7 +39,7 @@ void OptionsPanel::init()
 	
     options = Options::getInstance();
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok |
-									QDialogButtonBox::Cancel);
+                                    QDialogButtonBox::Cancel);
     
     defaultOpen = new QLineEdit;
     defaultOpen->setMinimumWidth(175);
@@ -57,18 +57,18 @@ void OptionsPanel::init()
     QHBoxLayout *defaultOpenLayout = new QHBoxLayout;
     defaultOpenLayout->addWidget(defaultOpen);
     defaultOpenLayout->addWidget(browseDefaultOpenBtn);
-    
-	QFormLayout *formLayout = new QFormLayout;
-	formLayout->addRow("Music directory", defaultOpenLayout);
-	formLayout->addRow("No repeat on shuffle", shuffBox);
-	formLayout->addRow("Enable Tray Icon", trayIconOption);
-	#ifdef HAVE_LASTFM_H
-	formLayout->addRow("Enable Last.fm", lastfmBox);
-	formLayout->addRow("Last.fm Username", lastfmUser);
-	formLayout->addRow("Last.fm Password", lastfmPass);
-	formLayout->addRow("", buttonBox);
-	#endif
-	
+
+    QFormLayout *formLayout = new QFormLayout;
+    formLayout->addRow("Music directory", defaultOpenLayout);
+    formLayout->addRow("No repeat on shuffle", shuffBox);
+    formLayout->addRow("Enable Tray Icon", trayIconOption);
+    #ifdef HAVE_LASTFM_H
+    formLayout->addRow("Enable Last.fm", lastfmBox);
+    formLayout->addRow("Last.fm Username", lastfmUser);
+    formLayout->addRow("Last.fm Password", lastfmPass);
+    formLayout->addRow("", buttonBox);
+    #endif
+
     setLayout(formLayout);
 }
 
