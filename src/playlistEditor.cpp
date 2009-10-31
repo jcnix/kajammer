@@ -65,7 +65,7 @@ void PlaylistEditor::init()
 			
 	QHBoxLayout *squeezeTopLayout = new QHBoxLayout;
 	squeezeTopLayout->addWidget(btnOpen);
-    squeezeTopLayout->addWidget(btnAdd);		
+    squeezeTopLayout->addWidget(btnAdd);
 	
     QHBoxLayout *topLayout = new QHBoxLayout;
 	topLayout->addLayout(squeezeTopLayout);

@@ -34,11 +34,11 @@
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QFileDialog>
-#include <QtGui/QLineEdit>
+#include <QtGui/QFormLayout>
 #include <QtGui/QHBoxLayout>
+#include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
 #include <QtGui/QStyle>
-#include <QtGui/QVBoxLayout>
 
 #include "options.h"
 #include "config.h"
@@ -59,24 +59,15 @@ private:
     void populate();
     
     Options *options;
-
-    QLabel *defaultOpenLabel;
+	
     QLineEdit *defaultOpen;
     QPushButton *browseDefaultOpenBtn;
-    
-    QLabel *shuffLabel;
     QCheckBox *shuffBox;
-
-    QLabel *trayIconLabel;
     QCheckBox *trayIconOption;
-    
-    QLabel *lastfmLabel;
     QCheckBox *lastfmBox;
     
     #ifdef HAVE_LASTFM_H
-    QLabel *lastfmUserLabel;
     QLineEdit *lastfmUser;
-    QLabel *lastfmPassLabel;
     QLineEdit *lastfmPass;
     #endif
 

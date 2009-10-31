@@ -29,77 +29,47 @@ OptionsPanel::OptionsPanel()
     
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(save()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
-    connect(browseDefaultOpenBtn, SIGNAL(clicked()), this, SLOT(browseDefaultOpen()));
+    connect(browseDefaultOpenBtn, SIGNAL(clicked()), this, 
+			SLOT(browseDefaultOpen()));
 }
 
 void OptionsPanel::init()
 {   
+	setWindowTitle("KaJammer Options");
+	
     options = Options::getInstance();
-
-    setWindowTitle("KaJammer Options");
+    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok |
+									QDialogButtonBox::Cancel);
     
-    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    
-    defaultOpenLabel = new QLabel("Music directory: ");
     defaultOpen = new QLineEdit;
     defaultOpen->setMinimumWidth(175);
     browseDefaultOpenBtn = new QPushButton(style()->standardIcon(QStyle::SP_DialogOpenButton), "", this);
     
-    shuffLabel = new QLabel("Shuffle-no-repeat: ");
     shuffBox = new QCheckBox;
-
-    trayIconLabel = new QLabel("Tray Icon");
     trayIconOption = new QCheckBox;
 
     #ifdef HAVE_LASTFM_H
-    lastfmLabel = new QLabel("Use Last.fm");
     lastfmBox = new QCheckBox;
-    
-    lastfmUserLabel = new QLabel("Last.fm Username");
     lastfmUser = new QLineEdit;
-    
-    lastfmPassLabel = new QLabel("Last.fm Password");
     lastfmPass = new QLineEdit;
     #endif
     
     QHBoxLayout *defaultOpenLayout = new QHBoxLayout;
-    defaultOpenLayout->addWidget(defaultOpenLabel);
     defaultOpenLayout->addWidget(defaultOpen);
     defaultOpenLayout->addWidget(browseDefaultOpenBtn);
     
-    QHBoxLayout *shuffLayout = new QHBoxLayout;
-    shuffLayout->addWidget(shuffLabel);
-    shuffLayout->addWidget(shuffBox);
-    
-    QHBoxLayout *trayIconLayout = new QHBoxLayout;
-    trayIconLayout->addWidget(trayIconLabel);
-    trayIconLayout->addWidget(trayIconOption);
-    
-    #ifdef HAVE_LASTFM_H
-    QHBoxLayout *lastfmLayout = new QHBoxLayout;
-    lastfmLayout->addWidget(lastfmLabel);
-    lastfmLayout->addWidget(lastfmBox);
-    
-    QHBoxLayout *lastfmUserLayout = new QHBoxLayout;
-    lastfmUserLayout->addWidget(lastfmUserLabel);
-    lastfmUserLayout->addWidget(lastfmUser);
-    
-    QHBoxLayout *lastfmPassLayout = new QHBoxLayout;
-    lastfmPassLayout->addWidget(lastfmPassLabel);
-    lastfmPassLayout->addWidget(lastfmPass);
-    #endif
-    
-    QVBoxLayout *vLayout = new QVBoxLayout;
-    vLayout->addLayout(defaultOpenLayout);
-    vLayout->addLayout(shuffLayout);
-    vLayout->addLayout(trayIconLayout);
-    #ifdef HAVE_LASTFM_H
-    vLayout->addLayout(lastfmLayout);
-    vLayout->addLayout(lastfmUserLayout);
-    vLayout->addLayout(lastfmPassLayout);
-    #endif
-    vLayout->addWidget(buttonBox);
-    setLayout(vLayout);
+	QFormLayout *formLayout = new QFormLayout;
+	formLayout->addRow("Music directory", defaultOpenLayout);
+	formLayout->addRow("No repeat on shuffle", shuffBox);
+	formLayout->addRow("Enable Tray Icon", trayIconOption);
+	#ifdef HAVE_LASTFM_H
+	formLayout->addRow("Enable Last.fm", lastfmBox);
+	formLayout->addRow("Last.fm Username", lastfmUser);
+	formLayout->addRow("Last.fm Password", lastfmPass);
+	formLayout->addRow("", buttonBox);
+	#endif
+	
+    setLayout(formLayout);
 }
 
 void OptionsPanel::populate()
