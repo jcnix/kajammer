@@ -33,6 +33,23 @@ OptionsPanel::OptionsPanel()
             SLOT(browseDefaultOpen()));
 }
 
+OptionsPanel::~OptionsPanel()
+{    
+    delete defaultOpen;
+    delete browseDefaultOpenBtn;
+    delete shuffBox;
+    delete trayIconOption;
+    
+    #ifdef HAVE_LASTFM_H
+    delete lastfmBox;
+    delete lastfmUser;
+    delete lastfmPass;
+    #endif
+    
+    delete defaultOpenLayout;
+    delete formLayout;
+}
+
 void OptionsPanel::init()
 {   
 	setWindowTitle("KaJammer Options");
@@ -55,11 +72,11 @@ void OptionsPanel::init()
     lastfmPass->setEchoMode(QLineEdit::Password);
     #endif
     
-    QHBoxLayout *defaultOpenLayout = new QHBoxLayout;
+    defaultOpenLayout = new QHBoxLayout;
     defaultOpenLayout->addWidget(defaultOpen);
     defaultOpenLayout->addWidget(browseDefaultOpenBtn);
 
-    QFormLayout *formLayout = new QFormLayout;
+    formLayout = new QFormLayout;
     formLayout->addRow("Music directory", defaultOpenLayout);
     formLayout->addRow("No repeat on shuffle", shuffBox);
     formLayout->addRow("Enable Tray Icon", trayIconOption);
@@ -109,4 +126,10 @@ void OptionsPanel::browseDefaultOpen()
                                             QFileDialog::ShowDirsOnly);
                                              
      defaultOpen->setText(dir);
+}
+
+void OptionsPanel::closeEvent(QCloseEvent *event)
+{
+    delete this;
+    event->accept();
 }

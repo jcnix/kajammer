@@ -26,11 +26,11 @@
 #include <iostream>
 #include <QtCore/QObject>
 #include <QtCore/QDir>
-#include <QtGui/QLabel>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QTextStream>
 #include <QtGui/QCheckBox>
+#include <QtGui/QCloseEvent>
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QFileDialog>
@@ -49,10 +49,14 @@ class OptionsPanel : public QDialog
     
 public:
     OptionsPanel();
+    ~OptionsPanel();
     
 public slots:
     void save();
     void browseDefaultOpen();
+    
+protected:
+    void closeEvent(QCloseEvent *event);    
     
 private:
     void init();
@@ -72,6 +76,9 @@ private:
     #endif
 
     QDialogButtonBox *buttonBox;
+    
+    QHBoxLayout *defaultOpenLayout;
+    QFormLayout *formLayout;
 };
 
 #endif /* _OPTIONSPANEL_H */
