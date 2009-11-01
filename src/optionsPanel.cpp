@@ -130,6 +130,7 @@ void OptionsPanel::browseDefaultOpen()
 
 void OptionsPanel::closeEvent(QCloseEvent *event)
 {
+    done(0);
     delete this;
     event->accept();
 }
