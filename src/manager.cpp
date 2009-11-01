@@ -66,16 +66,16 @@ int Manager::start(int argc, char *argv[], QApplication *app)
         else
             app->setQuitOnLastWindowClosed(true);
         
-        MainWindow window;
-        window.resize(options->getMainWidth(), options->getMainHeight());
-        window.show();
+        MainWindow *window = new MainWindow;
+        window->resize(options->getMainWidth(), options->getMainHeight());
+        window->show();
         
         if(options->trayIcon())
         {
             TrayIcon *trayIcon = new TrayIcon;
             
             connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-                    this, SLOT(showWindow(QSystemTrayIcon::ActivationReason)));
+                    window, SLOT(showWindow(QSystemTrayIcon::ActivationReason)));
         }
         
         return app->exec();
