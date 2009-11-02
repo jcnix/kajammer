@@ -35,6 +35,21 @@ PlaylistEditor::PlaylistEditor()
     connect(btnDown, SIGNAL(clicked()), this, SLOT(moveTracksDown()));
 }
 
+PlaylistEditor::~PlaylistEditor()
+{
+    delete listView;
+    delete btnOpen;
+    delete btnAdd;
+    delete btnDown;
+    delete btnRemove;
+    delete buttonBox;
+    delete squeezeTopLayout;
+    delete topLayout;
+    delete controlSqueezeLayout;
+    delete controlLayout;
+    delete vLayout;
+}
+
 void PlaylistEditor::init()
 {
     setWindowTitle("KaJammer Playlist Editor");
@@ -63,26 +78,27 @@ void PlaylistEditor::init()
 
     //Squeeze Layout "squeezes" widgets together so they don't spread
             
-    QHBoxLayout *squeezeTopLayout = new QHBoxLayout;
+    squeezeTopLayout = new QHBoxLayout;
     squeezeTopLayout->addWidget(btnOpen);
     squeezeTopLayout->addWidget(btnAdd);
 
     QHBoxLayout *topLayout = new QHBoxLayout;
     topLayout->addLayout(squeezeTopLayout);
 
-    QHBoxLayout *controlSqueezeLayout = new QHBoxLayout;
+    controlSqueezeLayout = new QHBoxLayout;
     controlSqueezeLayout->addWidget(btnUp);
     controlSqueezeLayout->addWidget(btnDown);
     controlSqueezeLayout->addWidget(btnRemove);
 
-    QHBoxLayout *controlLayout = new QHBoxLayout;
+    controlLayout = new QHBoxLayout;
     controlLayout->addLayout(controlSqueezeLayout);
 
-    QVBoxLayout *vLayout = new QVBoxLayout;
+    vLayout = new QVBoxLayout;
     vLayout->addWidget(listView);
     vLayout->addLayout(topLayout);
     vLayout->addLayout(controlLayout);
     vLayout->addWidget(buttonBox);
+    
     setLayout(vLayout);
 }
 
@@ -215,4 +231,11 @@ void PlaylistEditor::moveTracksDown()
         listView->insertItem(++row, item); //moves up
         listView->setCurrentRow(row);
     }
+}
+
+void PlaylistEditor::closeEvent(QCloseEvent *event)
+{
+    done(0);
+    delete this;
+    event->accept();
 }

@@ -31,6 +31,7 @@
 #include <QtCore/QSet>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
+#include <QtGui/QCloseEvent>
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QFileDialog>
 #include <QtGui/QHBoxLayout>
@@ -49,6 +50,7 @@ class PlaylistEditor : public QDialog
   
 public:
     PlaylistEditor();
+    ~PlaylistEditor();
     
 public slots:
     void save();
@@ -57,6 +59,9 @@ public slots:
     void removeTracks();
     void moveTracksUp();
     void moveTracksDown();
+    
+protected:
+    void closeEvent(QCloseEvent *event);
     
 private:
     void init();
@@ -74,6 +79,12 @@ private:
     QPushButton *btnRemove;
 
     QMap<QListWidgetItem*, QString> playlistMap;
+    
+    QHBoxLayout *squeezeTopLayout;
+    QHBoxLayout *topLayout;
+    QHBoxLayout *controlSqueezeLayout;
+    QHBoxLayout *controlLayout;
+    QVBoxLayout *vLayout;
 };
 
 #endif /* _PLAYLISTEDITOR_H */
