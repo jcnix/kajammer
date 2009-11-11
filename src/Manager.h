@@ -45,7 +45,7 @@ class Manager : public QObject
 public:
     static Manager* getInstance();
     int start(int argc, char *argv[], QApplication*);
-    void exit();
+    int exit();
 
 protected:
     Manager();

@@ -159,5 +159,6 @@ void MenuBar::aboutDialog()
 
 void MenuBar::quit()
 {
-    exit(0);
+    //Manager *manager = Manager::getInstance();
+    //manager->exit();
 }

@@ -79,13 +79,11 @@ int Manager::start(int argc, char *argv[], QApplication *app)
             connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
                     window, SLOT(showWindow(QSystemTrayIcon::ActivationReason)));
         }
-        
-        return m_app->exec();
     }
-    m_app->exit();
+    return m_app->exec();
 }
 
-void Manager::exit()
+int Manager::exit()
 {
     //Submit whats left over in the cache.
     #ifdef HAVE_LASTFM_H
@@ -95,4 +93,6 @@ void Manager::exit()
     
     //Quit now that everything is cleaned up.
     m_app->exit(0);
+    
+    return 1;
 }
