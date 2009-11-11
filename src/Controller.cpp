@@ -20,7 +20,7 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "headers/controller.h"
+#include "Controller.h"
 
 #ifdef HAVE_KAJAMTAG_H
 #include <kajamtag/kajamtag.h>

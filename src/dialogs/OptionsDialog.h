@@ -40,8 +40,8 @@
 #include <QtGui/QPushButton>
 #include <QtGui/QStyle>
 
-#include "options.h"
-#include "config.h"
+#include "../config.h"
+#include "../Options.h"
 
 class OptionsPanel : public QDialog
 {

@@ -1,8 +1,8 @@
 /*
- * File:   manager.h
+ * File:   trayicon.h
  * Author: Casey Jones
  *
- * Created on October, 11 2009, 7:41 PM
+ * Created on March 10, 2009, 4:27 PM
  *
  * This file is part of KaJammer.
  *
@@ -20,44 +20,36 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _MANAGER_H
-#define _MANAGER_H
+#ifndef _TRAYICON_H
+#define _TRAYICON_H
 
-#include <QtCore/QObject>
-#include <QtGui/QApplication>
+#include <QtGui/QSystemTrayIcon>
 #include <QtGui/QIcon>
+#include <QtGui/QMenu>
+#include <QtGui/QAction>
 
-#include "mainwindow.h"
-#include "cli.h"
-#include "config.h"
-#include "controller.h"
-#include "options.h"
-#include "trayicon.h"
+#include "../../Controller.h"
 
-#ifdef HAVE_LASTFM_H
-#include "lastfm.h"
-#endif
-
-class Manager : public QObject
-{
+class TrayIcon : public QSystemTrayIcon
+{   
     Q_OBJECT;
-
-public:
-    static Manager* getInstance();
-    int start(int argc, char *argv[], QApplication*);
-    void exit();
-
-protected:
-    Manager();
-
-private:
-    static Manager *manager;
     
+public:
+    TrayIcon();
+    
+public slots:
+    void openContextMenu(QSystemTrayIcon::ActivationReason);
+    void quit();
+    
+private:
     Controller *controller;
-    Options *options;
-    #ifdef HAVE_LASTFM_H
-    LastFm *lastfm;
-    #endif
+    QIcon *trayIcon;
+    QMenu *menu;
+    QAction *nextAction;
+    QAction *playAction;
+    QAction *pauseAction;
+    QAction *prevAction;
+    QAction *quitAction;
 };
 
-#endif /* _MANAGER_H */
+#endif /* _TRAYICON_H */

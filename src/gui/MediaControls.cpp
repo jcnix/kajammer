@@ -20,7 +20,7 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "headers/mediacontrols.h"
+#include "MediaControls.h"
 
 MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 {

@@ -23,7 +23,7 @@
 #ifndef _LASTFM_H
 #define _LASTFM_H
 
-#include "config.h"
+#include "../config.h"
 #ifdef HAVE_LASTFM_H
 
 #include <iostream>
@@ -33,8 +33,8 @@
 #include <QtCore/QMap>
 #include <QtCore/QTimer>
 
-#include "controller.h"
-#include "options.h"
+#include "../Controller.h"
+#include "../Options.h"
 
 /* Using some of the Last.fm code from Amarok.
  * Thank you Amarok team. :-) 

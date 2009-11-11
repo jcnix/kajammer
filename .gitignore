@@ -5,4 +5,5 @@ res/.directory
 src/headers/config.h
 *.tar.gz
 dist
+config.h
 

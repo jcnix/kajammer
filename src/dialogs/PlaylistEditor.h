@@ -41,8 +41,8 @@
 #include <QtGui/QStyle>
 #include <QtGui/QVBoxLayout>
 
-#include "playlist.h"
-#include "options.h"
+#include "../playlists/Playlist.h"
+#include "../Options.h"
 
 class PlaylistEditor : public QDialog
 {

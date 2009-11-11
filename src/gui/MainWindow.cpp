@@ -1,8 +1,8 @@
 /*
- * File:   togglebutton.cpp
+ * File:   mainwindow.h
  * Author: Casey Jones
  *
- * Created on March 10, 2009, 4:27 PM
+ * Created on March 2, 2009, 6:47 PM
  *
  * This file is part of KaJammer.
  *
@@ -20,29 +20,36 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "headers/togglebutton.h"
+#include "MainWindow.h"
 
-ToggleButton::ToggleButton(QString title) : QPushButton(title)
+MainWindow::MainWindow()
 {
-    defaultPal = palette();
-    clickedPal = new QPalette(QColor(0, 32, 255, 216));
-    isClicked = false;
-    
-    setCheckable(true);
-    
-    connect(this, SIGNAL(clicked()), this, SLOT(click()));
+    setWindowTitle("KaJammer Music Player");
+
+    menuBar = new MenuBar;
+    setMenuBar(menuBar);
+
+    mediaControls = new MediaControls;
+    setCentralWidget(mediaControls);
 }
 
-void ToggleButton::click()
+void MainWindow::showWindow(QSystemTrayIcon::ActivationReason activated)
 {
-    if(isClicked)
+    if(activated == QSystemTrayIcon::Trigger)
     {
-        isClicked = false;
-        this->setPalette(defaultPal);
+        if(!isVisible())
+            show();
+        else if(isVisible())
+            hide();
     }
-    else if(!isClicked)
-    {
-        isClicked = true;
-        this->setPalette(*clickedPal);
-    }
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    Options *options = Options::getInstance();
+    options->setMainWidth(width());
+    options->setMainHeight(height());
+    options->save();
+    
+    event->accept();
 }

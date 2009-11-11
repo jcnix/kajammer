@@ -23,7 +23,6 @@
 #ifndef _CONTROLS_H
 #define _CONTROLS_H
 
-#include "config.h"
 #include <QtGui/QWidget>
 #include <QtGui/QAbstractItemView>
 #include <QtCore/QFileInfo>
@@ -43,9 +42,10 @@
 #include <phonon/volumeslider.h>
 #include <iostream>
 
-#include "controller.h"
-#include "playlist.h"
-#include "togglebutton.h"
+#include "../config.h"
+#include "../Controller.h"
+#include "../playlists/Playlist.h"
+#include "../gui/widgets/ToggleButton.h"
 
 #define PLAYLIST_WIDTH 180
 

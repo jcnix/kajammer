@@ -34,12 +34,12 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 
-#include "controller.h"
-#include "playlist.h"
-#include "optionsPanel.h"
-#include "options.h"
-#include "playlistEditor.h"
-#include "collectionscanner.h"
+#include "../Controller.h"
+#include "../playlists/Playlist.h"
+#include "../dialogs/OptionsDialog.h"
+#include "../Options.h"
+#include "../dialogs/PlaylistEditor.h"
+#include "../dialogs/CollectionScanner.h"
 
 class MenuBar : public QMenuBar
 {

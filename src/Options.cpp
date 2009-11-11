@@ -20,7 +20,7 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "headers/options.h"
+#include "Options.h"
 #include <iostream>
 
 Options* Options::options = 0;

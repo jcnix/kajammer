@@ -30,8 +30,8 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 
-#include "controller.h"
-#include "playlist.h"
+#include "Controller.h"
+#include "playlists/Playlist.h"
 
 class Cli : public QObject
 {

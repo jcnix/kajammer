@@ -20,7 +20,7 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "headers/collectionscanner.h"
+#include "CollectionScanner.h"
 
 CollectionScanner::CollectionScanner()
 {

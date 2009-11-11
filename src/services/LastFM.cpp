@@ -20,7 +20,7 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "headers/lastfm.h"
+#include "LastFM.h"
 #ifdef HAVE_LASTFM_H
 
 LastFm::LastFm()

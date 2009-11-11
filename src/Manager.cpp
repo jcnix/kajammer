@@ -20,7 +20,7 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "headers/manager.h"
+#include "Manager.h"
 
 Manager* Manager::manager = 0;
 

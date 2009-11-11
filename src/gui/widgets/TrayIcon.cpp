@@ -20,7 +20,7 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "headers/trayicon.h"
+#include "TrayIcon.h"
 
 TrayIcon::TrayIcon() : QSystemTrayIcon()
 {

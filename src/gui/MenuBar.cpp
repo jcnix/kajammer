@@ -20,7 +20,7 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "headers/menubar.h"
+#include "MenuBar.h"
 
 MenuBar::MenuBar()
 {

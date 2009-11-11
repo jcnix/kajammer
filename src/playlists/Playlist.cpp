@@ -20,7 +20,7 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "headers/playlist.h"
+#include "Playlist.h"
 
 Playlist* Playlist::playlist = 0;
 

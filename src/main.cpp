@@ -22,7 +22,7 @@
 
 #include <iostream>
 #include <QtGui/QApplication>
-#include "headers/manager.h"
+#include "Manager.h"
 
 int main(int argc, char *argv[]) 
 {

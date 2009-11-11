@@ -27,9 +27,9 @@
 #include <QtGui/QSystemTrayIcon>
 #include <QtCore/QObject>
 
-#include "mediacontrols.h"
-#include "menubar.h"
-#include "options.h"
+#include "MediaControls.h"
+#include "MenuBar.h"
+#include "../Options.h"
 
 class MainWindow : public QMainWindow
 {
