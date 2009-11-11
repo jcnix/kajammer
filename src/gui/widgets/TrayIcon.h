@@ -29,6 +29,7 @@
 #include <QtGui/QAction>
 
 #include "../../Controller.h"
+#include "../../Manager.h"
 
 class TrayIcon : public QSystemTrayIcon
 {   
