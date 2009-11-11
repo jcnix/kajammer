@@ -52,6 +52,7 @@ protected:
 
 private:
     static Manager *manager;
+    QApplication *m_app;
     
     Controller *controller;
     Options *options;

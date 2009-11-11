@@ -32,6 +32,6 @@ int main(int argc, char *argv[])
     QApplication *pApp = &app;
     
     Manager *manager = Manager::getInstance();
-    manager->start(argc, argv, pApp);
+    return manager->start(argc, argv, pApp);
 }
 

@@ -49,7 +49,9 @@ Manager* Manager::getInstance()
 }
 
 int Manager::start(int argc, char *argv[], QApplication *app)
-{    
+{
+    m_app = app;
+    
     Cli *cli = new Cli(argc, argv);
     bool xFlag = cli->getXFlag();
     
@@ -78,9 +80,9 @@ int Manager::start(int argc, char *argv[], QApplication *app)
                     window, SLOT(showWindow(QSystemTrayIcon::ActivationReason)));
         }
         
-        return app->exec();
+        return m_app->exec();
     }
-    app->exit();
+    m_app->exit();
 }
 
 void Manager::exit()
@@ -90,4 +92,7 @@ void Manager::exit()
     if(options->useLastFm())
         lastfm->scrobble();
     #endif
+    
+    //Quit now that everything is cleaned up.
+    m_app->exit(0);
 }
