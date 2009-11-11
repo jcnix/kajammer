@@ -14,7 +14,7 @@ INCLUDE( ${QT_USE_FILE} )
 INCLUDE ( CheckIncludeFiles )
 CHECK_INCLUDE_FILES ( kajamtag/kajamtag.h HAVE_KAJAMTAG_H )
 FIND_PATH( HAVE_LASTFM_H lastfm.h /usr/include /usr/local/include )
-CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/headers/config.h )
+CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/config.h )
 
 SET( kajammer_SRCS
 	src/main.cpp 
