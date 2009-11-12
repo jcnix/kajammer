@@ -31,6 +31,8 @@
 #include "MenuBar.h"
 #include "../Options.h"
 
+class MenuBar; //forward declaration
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT;

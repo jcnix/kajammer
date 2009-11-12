@@ -40,7 +40,7 @@
 #include "../Options.h"
 #include "../dialogs/PlaylistEditor.h"
 #include "../dialogs/CollectionScanner.h"
-//#include "../Manager.h"
+#include "../Manager.h"
 
 class MenuBar : public QMenuBar
 {
