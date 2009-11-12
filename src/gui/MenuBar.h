@@ -34,6 +34,7 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 
+#include "../kajammer.h"
 #include "../Controller.h"
 #include "../playlists/Playlist.h"
 #include "../dialogs/OptionsDialog.h"
