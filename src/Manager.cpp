@@ -28,15 +28,6 @@ Manager::Manager()
 {
     controller = Controller::getInstance();
     options = Options::getInstance();
-    
-    #ifdef HAVE_LASTFM_H
-    if(options->useLastFm())
-    {
-        lastfm = new LastFm();
-        connect(controller, SIGNAL(songChanged(int)), lastfm, SLOT(nowPlaying()));
-        connect(controller, SIGNAL(songFinished()), lastfm, SLOT(scrobble()));
-    }
-    #endif
 }
 
 Manager* Manager::getInstance()
@@ -79,6 +70,15 @@ int Manager::start(int argc, char *argv[], QApplication *app)
             connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
                     window, SLOT(showWindow(QSystemTrayIcon::ActivationReason)));
         }
+        
+        #ifdef HAVE_LASTFM_H
+        if(options->useLastFm())
+        {
+            lastfm = new LastFm();
+            connect(controller, SIGNAL(songChanged(int)), lastfm, SLOT(nowPlaying()));
+            connect(controller, SIGNAL(songFinished()), lastfm, SLOT(scrobble()));
+        }
+        #endif
     }
     return m_app->exec();
 }
