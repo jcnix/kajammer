@@ -23,6 +23,7 @@
 #ifndef _ABOUTDIALOG_H
 #define _ABOUTDIALOG_H
 
+#include <sstream>
 #include <QtGui/QDialog>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLabel>
@@ -42,6 +43,8 @@ private:
     void init();
     
     QLabel *iconLabel;
+    QLabel *aboutLabel;
+    QLabel *authorsLabel;
     
     QHBoxLayout *topLayout;
     QVBoxLayout *layout;

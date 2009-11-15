@@ -138,8 +138,7 @@ void MenuBar::showOptions()
 
 void MenuBar::showPlaylistEditor() 
 {
-    PlaylistEditor *editor;
-    editor = new PlaylistEditor;
+    PlaylistEditor *editor = new PlaylistEditor;
     editor->show();
 }
 

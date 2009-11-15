@@ -37,11 +37,20 @@ void AboutDialog::init()
     iconLabel = new QLabel();
     iconLabel->setPixmap(icon);
     
+    std::stringstream s;
+    s << "Kajammer " << KAJAMMER_VER << "\nis licensed under the GPLv3.";
+    QString about(QString::fromStdString(s.str()));
+    aboutLabel = new QLabel(about);
+        
+    authorsLabel = new QLabel("By Casey Jones");
+    
     topLayout = new QHBoxLayout;
     topLayout->addWidget(iconLabel);
+    topLayout->addWidget(aboutLabel);
     
     layout = new QVBoxLayout;
     layout->addLayout(topLayout);
+    layout->addWidget(authorsLabel);
     
     setLayout(layout);
 }
