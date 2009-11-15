@@ -17,7 +17,8 @@ FIND_PATH( HAVE_LASTFM_H lastfm.h /usr/include /usr/local/include )
 CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/config.h )
 
 SET( kajammer_SRCS
-	src/main.cpp 
+	src/main.cpp
+	src/dialogs/AboutDialog.cpp
 	src/Cli.cpp
 	src/dialogs/CollectionScanner.cpp
 	src/Controller.cpp
@@ -35,6 +36,7 @@ SET( kajammer_SRCS
 )
 
 SET( kajammer_MOC_HEADERS
+	src/dialogs/AboutDialog.h
 	src/Cli.h
 	src/dialogs/CollectionScanner.h
 	src/Controller.h
