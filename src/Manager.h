@@ -27,6 +27,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QIcon>
 
+#include "kajammer.h"
 #include "gui/MainWindow.h"
 #include "Cli.h"
 #include "config.h"

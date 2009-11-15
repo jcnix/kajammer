@@ -50,7 +50,7 @@ int Manager::start(int argc, char *argv[], QApplication *app)
     {
         Options *options = Options::getInstance();
         
-        QString icon = "/usr/share/icons/kajammer.png";
+        QString icon = KAJAMMER_ICON;
         if(QFile::exists(icon))            
             app->setWindowIcon(QIcon(icon));
         

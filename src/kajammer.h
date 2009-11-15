@@ -26,5 +26,6 @@
 #define _KAJAMMER_H
 
 #define KAJAMMER_VER "0.9.3-dev"
+#define KAJAMMER_ICON "/usr/share/icons/kajammer.png"
 
 #endif //_KAJAMMER_H
