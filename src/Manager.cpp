@@ -50,9 +50,8 @@ int Manager::start(int argc, char *argv[], QApplication *app)
     {
         Options *options = Options::getInstance();
         
-        QString icon = KAJAMMER_ICON;
         if(QFile::exists(icon))            
-            app->setWindowIcon(QIcon(icon));
+            app->setWindowIcon(QIcon(KAJAMMER_ICON));
         
         if(options->trayIcon())
             app->setQuitOnLastWindowClosed(false);
