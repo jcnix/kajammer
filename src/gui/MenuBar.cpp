@@ -145,16 +145,14 @@ void MenuBar::showPlaylistEditor()
 
 void MenuBar::showCollectionScanner()
 {
-    CollectionScanner *cs;
-    cs = new CollectionScanner;
+    CollectionScanner *cs = new CollectionScanner;
     cs->show();
 }
 
 void MenuBar::aboutDialog()
 {
-    QMessageBox::information(this, ("About KaJammer"),
-                            "KaJammer Media Player " KAJAMMER_VER "\n"
-                            "Licensed under the GPLv3.\n\n");
+    AboutDialog *about = new AboutDialog;
+    about->show();
 }
 
 void MenuBar::quit()
