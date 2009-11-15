@@ -35,7 +35,6 @@ SET( kajammer_SRCS
 )
 
 SET( kajammer_MOC_HEADERS
-	src/kajammer.h
 	src/Cli.h
 	src/dialogs/CollectionScanner.h
 	src/Controller.h
