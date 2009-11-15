@@ -25,6 +25,7 @@
 
 #include <sstream>
 #include <QtGui/QDialog>
+#include <QtGui/QDialogButtonBox>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLabel>
 #include <QtGui/QPixmap>
@@ -45,6 +46,8 @@ private:
     QLabel *iconLabel;
     QLabel *aboutLabel;
     QLabel *authorsLabel;
+    
+    QDialogButtonBox *buttonBox;
     
     QHBoxLayout *topLayout;
     QVBoxLayout *layout;

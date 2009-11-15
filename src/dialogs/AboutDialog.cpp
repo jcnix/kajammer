@@ -25,11 +25,15 @@
 AboutDialog::AboutDialog()
 {
     init();
+    
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
 }
 
 void AboutDialog::init()
 {
     setWindowTitle("About KaJammer");
+    
+    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok);
     
     QPixmap icon(KAJAMMER_ICON);
     icon = icon.scaled(64,64);
@@ -51,6 +55,7 @@ void AboutDialog::init()
     layout = new QVBoxLayout;
     layout->addLayout(topLayout);
     layout->addWidget(authorsLabel);
+    layout->addWidget(buttonBox);
     
     setLayout(layout);
 }
