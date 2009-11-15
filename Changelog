@@ -1,3 +1,18 @@
+Kajammer 0.9.3
+-Redid About Dialog
+-Redid Options Dialog
+-Redid Playlist Editor
+-Better exiting
+-Memory optimizations
+
+Kajammer 0.9.2.2 -Bugfix
+-Don't use Last.fm if it's supposed to be disabled
+-Fixed compile errors when using Phonon tag reader
+
+Kajammer 0.9.2.1 -Bugfix
+-Encrypt Last.fm password
+-Don't display Last.fm options if liblastfm isn't available
+
 Kajammer 0.9.2
 -Collection Scanner
 -Last.fm support
