@@ -41,8 +41,8 @@ void AboutDialog::init()
     s << "Kajammer " << KAJAMMER_VER << "\nis licensed under the GPLv3.";
     QString about(QString::fromStdString(s.str()));
     aboutLabel = new QLabel(about);
-        
-    authorsLabel = new QLabel("By Casey Jones");
+    
+    authorsLabel = new QLabel("\nBy Casey Jones");
     
     topLayout = new QHBoxLayout;
     topLayout->addWidget(iconLabel);
