@@ -25,6 +25,8 @@
 
 #include <QtGui/QDialog>
 #include <QtGui/QHBoxLayout>
+#include <QtGui/QLabel>
+#include <QtGui/QPixmap>
 #include <QtGui/QVBoxLayout>
 
 #include "../kajammer.h"
@@ -39,7 +41,10 @@ public:
 private:
     void init();
     
-    QIcon *icon
+    QLabel *iconLabel;
+    
+    QHBoxLayout *topLayout;
+    QVBoxLayout *layout;
 };
 
 #endif //_ABOUTDIALOG_H

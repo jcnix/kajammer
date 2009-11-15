@@ -30,4 +30,18 @@ AboutDialog::AboutDialog()
 void AboutDialog::init()
 {
     setWindowTitle("About KaJammer");
+    
+    QPixmap icon(KAJAMMER_ICON);
+    icon = icon.scaled(64,64);
+    
+    iconLabel = new QLabel();
+    iconLabel->setPixmap(icon);
+    
+    topLayout = new QHBoxLayout;
+    topLayout->addWidget(iconLabel);
+    
+    layout = new QVBoxLayout;
+    layout->addLayout(topLayout);
+    
+    setLayout(layout);
 }
