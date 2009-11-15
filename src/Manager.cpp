@@ -50,7 +50,7 @@ int Manager::start(int argc, char *argv[], QApplication *app)
     {
         Options *options = Options::getInstance();
         
-        if(QFile::exists(icon))            
+        if(QFile::exists(KAJAMMER_ICON))            
             app->setWindowIcon(QIcon(KAJAMMER_ICON));
         
         if(options->trayIcon())
