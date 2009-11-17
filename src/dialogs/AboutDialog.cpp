@@ -29,6 +29,16 @@ AboutDialog::AboutDialog()
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
 }
 
+AboutDialog::AboutDialog()
+{
+    delete iconLabel;
+    delete aboutLabel;
+    delete authorsLabel;
+    delete buttonBox;
+    delete topLayout;
+    delete layout;
+}
+
 void AboutDialog::init()
 {
     setWindowTitle("About KaJammer");
@@ -58,4 +68,11 @@ void AboutDialog::init()
     layout->addWidget(buttonBox);
     
     setLayout(layout);
+}
+
+void PlaylistEditor::closeEvent(QCloseEvent *event)
+{
+    done(0);
+    delete this;
+    event->accept();
 }

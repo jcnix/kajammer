@@ -39,6 +39,10 @@ class AboutDialog : public QDialog
     
 public:
     AboutDialog();
+    ~AboutDialog();
+    
+protected:
+    void closeEvent(QCloseEvent *event);
     
 private:
     void init();
