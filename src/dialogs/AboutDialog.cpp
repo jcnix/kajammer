@@ -70,7 +70,7 @@ void AboutDialog::init()
     setLayout(layout);
 }
 
-void PlaylistEditor::closeEvent(QCloseEvent *event)
+void AboutDialog::closeEvent(QCloseEvent *event)
 {
     done(0);
     delete this;
