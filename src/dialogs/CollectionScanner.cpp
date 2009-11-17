@@ -30,6 +30,15 @@ CollectionScanner::CollectionScanner()
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 }
 
+CollectionScanner::~CollectionScanner()
+{
+    delete dirLabel;
+    delete dirInput;
+    delete browseDirButton;
+
+    delete buttonBox;
+}
+
 void CollectionScanner::init()
 {
     setWindowTitle("Scan Collection : KaJammer");
@@ -132,4 +141,11 @@ QStringList CollectionScanner::ls_music(QDir dir)
     }
     
     return filePaths;
+}
+
+void CollectionScanner::closeEvent(QCloseEvent *event)
+{
+    done(0);
+    delete this;
+    event->accept();
 }

@@ -23,6 +23,7 @@
 #ifndef _COLLECTIONSCANNER_H
 #define _COLLECTIONSCANNER_H
 
+#include <QtGui/QCloseEvent>
 #include <QtGui/QDialog>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
@@ -42,10 +43,14 @@ class CollectionScanner : public QDialog
     
 public:
     CollectionScanner();
+    ~CollectionScanner();
     
 public slots:
     void browseDir();
     void scan();
+    
+protected:
+    void closeEvent(QCloseEvent *event);
     
 private:
     void init();
