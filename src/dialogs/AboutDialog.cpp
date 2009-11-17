@@ -29,7 +29,7 @@ AboutDialog::AboutDialog()
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
 }
 
-AboutDialog::AboutDialog()
+AboutDialog::~AboutDialog()
 {
     delete iconLabel;
     delete aboutLabel;

@@ -24,6 +24,7 @@
 #define _ABOUTDIALOG_H
 
 #include <sstream>
+#include <QtGui/QCloseEvent>
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QHBoxLayout>
