@@ -22,9 +22,14 @@
 
 #include "CollectionManager.h"
 
-CollectionManager::CollectionManager() {
+CollectionManager::CollectionManager()
+{
     const char* db = DB_PATH.toStdString().c_str();
-    sqlite3 *pDB;
     
-    int status = sqlite3_open(db, &pDB);
+    int status = sqlite3_open(db, &pdb);
+}
+
+int CollectionManager::close_db()
+{
+    sqlite3_close(pdb);
 }

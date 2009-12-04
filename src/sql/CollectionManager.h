@@ -34,6 +34,10 @@ class CollectionManager : public QObject {
     
 public:
     CollectionManager();
+    int close();
+    
+private:
+    sqlite3 *pdb;
 };
 
 #endif //_COLLECTIONMNAGER_H
