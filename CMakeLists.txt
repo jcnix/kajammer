@@ -8,6 +8,7 @@ FIND_PACKAGE( Qt4 REQUIRED )
 FIND_PACKAGE( Phonon REQUIRED )
 FIND_PACKAGE( Kajamtag )
 FIND_PACKAGE( LastFM )
+FIND_PACKAGE( Sqlite3 )
 
 SET( QT_USE_GUI TRUE )
 INCLUDE( ${QT_USE_FILE} )
@@ -32,7 +33,8 @@ SET( kajammer_SRCS
 	src/playlists/Playlist.cpp
 	src/dialogs/PlaylistEditor.cpp
 	src/gui/widgets/ToggleButton.cpp
-	src/gui/widgets/TrayIcon.cpp 
+	src/gui/widgets/TrayIcon.cpp
+	src/sql/CollectionManager.cpp
 )
 
 SET( kajammer_MOC_HEADERS
@@ -50,6 +52,7 @@ SET( kajammer_MOC_HEADERS
 	src/dialogs/PlaylistEditor.h
 	src/gui/widgets/ToggleButton.h
 	src/gui/widgets/TrayIcon.h
+	src/sql/CollectionManager.h
 )
 
 QT4_WRAP_CPP( kajammer_MOC_HEADERS ${kajammer_MOC_HEADERS} )
@@ -85,6 +88,7 @@ TARGET_LINK_LIBRARIES(
         ${LastFM_LIB}
         ${QTNETWORKLIB}
         ${QTXMLLIB}
+		${Sqlite3_LIBRARY}
 )
 
 INSTALL(TARGETS kajammer DESTINATION /usr/bin)
