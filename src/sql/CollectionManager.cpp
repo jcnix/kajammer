@@ -32,4 +32,5 @@ CollectionManager::CollectionManager()
 int CollectionManager::close_db()
 {
     sqlite3_close(pdb);
+    return 1;
 }

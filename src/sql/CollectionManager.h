@@ -34,7 +34,7 @@ class CollectionManager : public QObject {
     
 public:
     CollectionManager();
-    int close();
+    int close_db();
     
 private:
     sqlite3 *pdb;
