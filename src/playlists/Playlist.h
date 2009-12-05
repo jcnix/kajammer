@@ -33,9 +33,7 @@
 #include <QtCore/QTextStream>
 #include <iostream>
 
-#define KAJAM_DIR QDir::homePath()+"/.kajammer/"
-#define PLAYLIST_DIR KAJAM_DIR+"/playlists/"
-#define QKAJAM_DIR QDir(QDir::homePath()+"/.kajammer/")
+#include "../kajammer.h"
 
 class Playlist : public QObject
 {
