@@ -37,7 +37,7 @@ PlaylistEditor::PlaylistEditor()
 
 PlaylistEditor::~PlaylistEditor()
 {
-    delete listView;
+    delete playlistContents;
     delete btnOpen;
     delete btnAdd;
     delete btnDown;
@@ -58,8 +58,8 @@ void PlaylistEditor::init()
     playlist = Playlist::getInstance();
     options = Options::getInstance();
 
-    listView = new QListWidget;
-    listView->setSelectionMode(QAbstractItemView::MultiSelection);
+    playlistContents = new QListWidget;
+    playlistContents->setSelectionMode(QAbstractItemView::MultiSelection);
 
     btnOpen = new QPushButton("Open");
     btnAdd = new QPushButton("Add");
@@ -94,7 +94,7 @@ void PlaylistEditor::init()
     controlLayout->addLayout(controlSqueezeLayout);
 
     vLayout = new QVBoxLayout;
-    vLayout->addWidget(listView);
+    vLayout->addWidget(playlistContents);
     vLayout->addLayout(topLayout);
     vLayout->addLayout(controlLayout);
     vLayout->addWidget(buttonBox);
@@ -105,9 +105,9 @@ void PlaylistEditor::init()
 void PlaylistEditor::save()
 {
     QStringList text;
-    int rows = listView->count();
+    int rows = playlistContents->count();
     for(int i = 0; i < rows; i++) {
-        QListWidgetItem *item = listView->item(i);
+        QListWidgetItem *item = playlistContents->item(i);
         text.append(playlistMap.value(item));
     }
 
@@ -135,7 +135,7 @@ void PlaylistEditor::openPlaylist()
         {
             QFileInfo f(list.at(i));
             QListWidgetItem *item = new QListWidgetItem(f.fileName());
-            listView->addItem(item);
+            playlistContents->addItem(item);
             playlistMap.insert(item, list.at(i));
         }
     }
@@ -152,24 +152,24 @@ void PlaylistEditor::addTracks()
     {
         QFileInfo f(list.at(i));
         QListWidgetItem *item = new QListWidgetItem(f.fileName());
-        listView->addItem(item);
+        playlistContents->addItem(item);
         playlistMap.insert(item, list.at(i));
     }
 }
 
 void PlaylistEditor::removeTracks()
 {
-    QList<QListWidgetItem*> items = listView->selectedItems();
+    QList<QListWidgetItem*> items = playlistContents->selectedItems();
     for(int i = 0; i < items.length(); i++)
     {
-        listView->takeItem(listView->row(items.at(i)));
+        playlistContents->takeItem(playlistContents->row(items.at(i)));
         playlistMap.remove(items.at(i));
     }
 }
 
 void PlaylistEditor::moveTracksUp()
 {
-    QList<QListWidgetItem*> items = listView->selectedItems();
+    QList<QListWidgetItem*> items = playlistContents->selectedItems();
 
     /* We need to sort the selected rows.
         * If they're unsorted, adjacent selected rows
@@ -181,7 +181,7 @@ void PlaylistEditor::moveTracksUp()
     for(int i = 0; i < items.size(); i++)
     {
         QListWidgetItem *item = items.at(i);
-        int row = listView->row(item);
+        int row = playlistContents->row(item);
 
         set << row;
     }
@@ -193,16 +193,16 @@ void PlaylistEditor::moveTracksUp()
     for(int i = 0; i < rowList.size(); i++)
     {
         int row = rowList.at(i);
-        QListWidgetItem *item = listView->takeItem(row);
+        QListWidgetItem *item = playlistContents->takeItem(row);
         
-        listView->insertItem(--row, item); //moves up
-        listView->setCurrentRow(row);
+        playlistContents->insertItem(--row, item); //moves up
+        playlistContents->setCurrentRow(row);
     }
 }
 
 void PlaylistEditor::moveTracksDown()
 {
-    QList<QListWidgetItem*> items = listView->selectedItems();
+    QList<QListWidgetItem*> items = playlistContents->selectedItems();
 
     /* We need to sort the selected rows.
         * If they're unsorted, adjacent selected rows
@@ -214,7 +214,7 @@ void PlaylistEditor::moveTracksDown()
     for(int i = 0; i < items.size(); i++)
     {
         QListWidgetItem *item = items.at(i);
-        int row = listView->row(item);
+        int row = playlistContents->row(item);
 
         set << row;
     }
@@ -226,10 +226,10 @@ void PlaylistEditor::moveTracksDown()
     for(int i = rowList.size() - 1; i >= 0; i--)
     {
         int row = rowList.at(i);
-        QListWidgetItem *item = listView->takeItem(row);
+        QListWidgetItem *item = playlistContents->takeItem(row);
         
-        listView->insertItem(++row, item); //moves up
-        listView->setCurrentRow(row);
+        playlistContents->insertItem(++row, item); //moves up
+        playlistContents->setCurrentRow(row);
     }
 }
 

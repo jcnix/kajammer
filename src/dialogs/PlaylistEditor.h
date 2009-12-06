@@ -69,9 +69,11 @@ private:
     Playlist *playlist;
     Options *options;
 
+    QListWidget *playlistContents;
+    
     QDialogButtonBox *buttonBox;
     QString playlistFile;
-    QListWidget *listView;
+    
     QPushButton *btnOpen;
     QPushButton *btnAdd;
     QPushButton *btnUp;
