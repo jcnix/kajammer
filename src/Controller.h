@@ -35,7 +35,7 @@
 #include <cstdlib>
 
 #include "config.h"
-#include "playlists/Playlist.h"
+#include "playlists/PlaylistManager.h"
 #include "Options.h"
 
 class Controller : public QObject
@@ -82,7 +82,7 @@ private:
     void repeat();
     
     static Controller *controller;
-    Playlist *playlist;
+    PlaylistManager *listManager;
     Options *options;
     
     Phonon::AudioOutput *audioOutput;

@@ -32,7 +32,7 @@
 
 #include "kajammer.h"
 #include "Controller.h"
-#include "playlists/Playlist.h"
+#include "playlists/PlaylistManager.h"
 
 class Cli : public QObject
 {

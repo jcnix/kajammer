@@ -55,7 +55,7 @@ void PlaylistEditor::init()
     setWindowTitle("KaJammer Playlist Editor");
     setMinimumSize(480,480);
 
-    playlist = Playlist::getInstance();
+    listManager = PlaylistManager::getInstance();
     options = Options::getInstance();
 
     playlistContents = new QListWidget;
@@ -111,8 +111,8 @@ void PlaylistEditor::save()
         text.append(playlistMap.value(item));
     }
 
-    playlist->delPlaylist(playlistFile);
-    playlist->newPlaylist(playlistFile, text);
+    listManager->delPlaylist(playlistFile);
+    listManager->newPlaylist(playlistFile, text);
 
     accept();
 }
@@ -129,7 +129,7 @@ void PlaylistEditor::openPlaylist()
         // figure out the playlist's name, we don't need the full path
         QFileInfo file(playlistFile);
         playlistFile = file.fileName();
-        QStringList list = playlist->getPlaylistContents(playlistFile);
+        QStringList list = listManager->getPlaylistContents(playlistFile);
         
         for(int i = 0; i < list.length(); i++)
         {

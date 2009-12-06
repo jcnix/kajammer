@@ -38,7 +38,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(controller->getMetaResolver(), SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));
     connect(table, SIGNAL(cellClicked(int, int)), this, SLOT(tableClicked(int)));
     connect(playlistTable, SIGNAL(cellClicked(int, int)), this, SLOT(changePlaylist(int)));
-    connect(playlist, SIGNAL(resetPlaylists()), this, SLOT(setupPlaylists()));
+    connect(listManager, SIGNAL(resetPlaylists()), this, SLOT(setupPlaylists()));
     
     /* If table is empty, re-emit the song list.
      * If the user used -p on the command line, this class will not
@@ -50,7 +50,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 void MediaControls::init()
 {
     controller = Controller::getInstance();
-    playlist = Playlist::getInstance();
+    listManager = PlaylistManager::getInstance();
     tableIndex = 0;
     
     volumeSlider = new Phonon::VolumeSlider;
@@ -229,9 +229,9 @@ void MediaControls::setupPlaylists()
     
     QStringList labels;
     
-    for(int i = 0; i < playlist->count(); i++)
+    for(int i = 0; i < listManager->count(); i++)
     {
-        QString list = playlist->getPlaylistName(i);
+        QString list = listManager->getPlaylistName(i);
         
         QTableWidgetItem *listName = new QTableWidgetItem(list);
         listName->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);

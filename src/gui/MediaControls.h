@@ -44,7 +44,7 @@
 
 #include "../config.h"
 #include "../Controller.h"
-#include "../playlists/Playlist.h"
+#include "../playlists/PlaylistManager.h"
 #include "../gui/widgets/ToggleButton.h"
 
 #define PLAYLIST_WIDTH 180
@@ -71,7 +71,7 @@ private:
     void init();
 
     Controller *controller;
-    Playlist *playlist;
+    PlaylistManager *listManager;
 
     Phonon::VolumeSlider *volumeSlider;
     Phonon::SeekSlider *seekSlider;

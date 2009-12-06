@@ -1,5 +1,5 @@
 /*
- * File:   playlist.h
+ * File:   PlaylistManager.h
  * Author: Casey Jones
  *
  * Created on December 5, 2009, 4:48 PM
@@ -20,12 +20,14 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _PLAYLIST_H
-#define _PLAYLIST_H
+#ifndef _PLAYLISTMANAGER_H
+#define _PLAYLISTMANAGER_H
 
 #include <QtCore/QObject>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
+#include <QtCore/QFileInfo>
+#include <QtCore/QIODevice>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QTextStream>
@@ -33,27 +35,34 @@
 
 #include "../kajammer.h"
 
-class Playlist : public QObject
+class PlaylistManager : public QObject
 {
     Q_OBJECT;
     
 public:
-    //Opens an existing playlist
-    Playlist(QString);
-    //Creates a brand new playlist
-    Playlist(QString, QStringList);
-    
-    void addTrack(QString);
-    void addTracks(QStringList);
-    void deleteList();
-    bool exists();
+    static PlaylistManager* getInstance();
+    void newPlaylist(QString, QStringList);
+    void delPlaylist(QString);
+    QString getPlaylistName(int);
+    QStringList getPlaylistContents(QString);
+    int count();
+    void listPlaylists();
+    QString getEntirePlaylist(QString);
+    bool playlistExists(QString);
     
 signals:
     void resetPlaylists();
     
+protected:
+    PlaylistManager();
+    
 private:
-    QString playlist;
-    QString playlistFile;
+    void init();
+    void resetInfo() { info = QDir(PLAYLIST_DIR).entryInfoList(QDir::Files, QDir::Name); }
+    
+    static PlaylistManager *listManager;
+    QList<QFileInfo> info;
+    QString playlistDir;
 };
 
-#endif /* _PLAYLIST_H */
+#endif /* _PLAYLISTMANAGER_H */

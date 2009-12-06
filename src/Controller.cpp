@@ -36,7 +36,7 @@ Controller::Controller()
     
     metaResolver = new Phonon::MediaObject;  //Used for finding metadata
     
-    playlist = Playlist::getInstance();
+    listManager = PlaylistManager::getInstance();
     options = Options::getInstance();
     
     currentSong = 0;
@@ -297,7 +297,7 @@ void Controller::changePlaylist(QString name, int index)
     if(currentList != index)
     {
         currentList = index;
-        QStringList list = playlist->getPlaylistContents(name);
+        QStringList list = listManager->getPlaylistContents(name);
         controller->setQueue(list);
     }
 }
