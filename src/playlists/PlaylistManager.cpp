@@ -105,20 +105,6 @@ QStringList PlaylistManager::getPlaylistContents(QString name)
     return playlist;
 }
 
-/* Returns the entire playlist as a single string */
-QString PlaylistManager::getEntirePlaylist(QString name)
-{
-    QFile playlistFile(PLAYLIST_DIR + name);
-    playlistFile.open(QIODevice::ReadOnly);
-    
-    QString playlist;    
-    QTextStream in(&playlistFile);
-    
-    playlist = in.readAll();
-    
-    return playlist;
-}
-
 /* Ensures that the playlist given exists.
  * Only used to check for collisions
  * when creating a new playlist */

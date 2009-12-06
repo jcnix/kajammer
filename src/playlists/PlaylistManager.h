@@ -48,7 +48,6 @@ public:
     QStringList getPlaylistContents(QString);
     int count();
     void listPlaylists();
-    QString getEntirePlaylist(QString);
     bool playlistExists(QString);
     
 signals:
