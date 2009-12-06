@@ -47,6 +47,7 @@ public:
     void addTracks(QStringList);
     void deleteList();
     bool exists();
+    QStringList getContents();
     
 signals:
     void resetPlaylists();

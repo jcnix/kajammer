@@ -86,3 +86,23 @@ bool Playlist::exists()
 {
     return QFile(playlistFile).exists();
 }
+
+/* Returns each line of a playlist in a QStringList */
+QStringList Playlist::getContents()
+{
+    QFile file(playlistFile);
+    file.open(QIODevice::ReadOnly);
+    
+    QStringList playlist;    
+    QTextStream in(&file);
+    
+    while(!in.atEnd()) {
+        QString track = in.readLine(0);
+        
+        //Make sure the track exists before adding it
+        if(QFile::exists(track))
+            playlist.append(track);
+    }
+    
+    return playlist;
+}

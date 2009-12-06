@@ -90,19 +90,10 @@ QString PlaylistManager::getPlaylistName(int index)
 /* Returns each line of a playlist in a QStringList */
 QStringList PlaylistManager::getPlaylistContents(QString name)
 {
-    QFile playlistFile(PLAYLIST_DIR + name);
-    playlistFile.open(QIODevice::ReadOnly);
+    Playlist *playlist = new Playlist(name);
+    QStringList tracks = playlist->getContents();
     
-    QStringList playlist;    
-    QTextStream in(&playlistFile);
-    
-    while(!in.atEnd()) {
-        QString file = in.readLine(0);
-        if(QFile::exists(file))
-            playlist.append(file);
-    }
-    
-    return playlist;
+    return tracks;
 }
 
 /* Ensures that the playlist given exists.
