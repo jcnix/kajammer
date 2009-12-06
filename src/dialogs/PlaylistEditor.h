@@ -65,10 +65,12 @@ protected:
     
 private:
     void init();
+    void fillPlaylists();
     
     PlaylistManager *listManager;
     Options *options;
 
+    QListWidget *playlistList;
     QListWidget *playlistContents;
     
     QDialogButtonBox *buttonBox;

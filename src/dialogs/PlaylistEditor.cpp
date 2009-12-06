@@ -37,6 +37,7 @@ PlaylistEditor::PlaylistEditor()
 
 PlaylistEditor::~PlaylistEditor()
 {
+    delete playlistList;
     delete playlistContents;
     delete btnOpen;
     delete btnAdd;
@@ -58,6 +59,8 @@ void PlaylistEditor::init()
     listManager = PlaylistManager::getInstance();
     options = Options::getInstance();
 
+    playlistList = new QListWidget;
+    
     playlistContents = new QListWidget;
     playlistContents->setSelectionMode(QAbstractItemView::MultiSelection);
 
@@ -94,12 +97,17 @@ void PlaylistEditor::init()
     controlLayout->addLayout(controlSqueezeLayout);
 
     vLayout = new QVBoxLayout;
+    vLayout->addWidget(playlistList);
     vLayout->addWidget(playlistContents);
     vLayout->addLayout(topLayout);
     vLayout->addLayout(controlLayout);
     vLayout->addWidget(buttonBox);
     
     setLayout(vLayout);
+}
+
+void PlaylistEditor::fillPlaylists()
+{
 }
 
 void PlaylistEditor::save()
