@@ -33,6 +33,7 @@
 #include <QtCore/QTextStream>
 #include <iostream>
 
+#include "Playlist.h"
 #include "../kajammer.h"
 
 class PlaylistManager : public QObject

@@ -50,38 +50,24 @@ PlaylistManager* PlaylistManager::getInstance()
     return listManager;
 }
 
-void PlaylistManager::newPlaylist(QString name, QStringList newList)
+void PlaylistManager::newPlaylist(QString name, QStringList tracks)
 {
-    if(!playlistExists(name))
+    Playlist *playlist = new Playlist(name);
+    if(!playlist->exists())
     {
-        QFile newListFile(PLAYLIST_DIR + name);
-        newListFile.open(QIODevice::WriteOnly);
-        
-        QTextStream out(&newListFile);
-        for(int i = 0; i < newList.count(); i++) {
-            if(newList.at(i) == "")
-                continue;
-            
-            out << newList.at(i) + "\n";
-        }
-        
-        //Reset Info so it finds the new playlist
-        resetInfo();
-        emit resetPlaylists();
+        playlist->addTracks(tracks);
     }
+    
+    //Reset Info so it finds the new playlist
+    resetInfo();
+    emit resetPlaylists();
 }
 
-void PlaylistManager::delPlaylist(QString playlist)
+void PlaylistManager::delPlaylist(QString name)
 {
-    QFile listFile (PLAYLIST_DIR + playlist);
-    
-    if(listFile.exists())
-    {
-        listFile.remove();
-    }
-    else
-    {
-        std::cout << "Playlist does not exist: " << playlist.toStdString() << "\n";
+    Playlist *playlist = new Playlist(name);
+    if(playlist->exists()) {
+        playlist->deleteList();
     }
     
     //Reset Info so it finds the new playlist
@@ -95,7 +81,7 @@ int PlaylistManager::count()
 }
 
 QString PlaylistManager::getPlaylistName(int index)
-{    
+{
     QString name = info.at(index).baseName();
     
     return name;
