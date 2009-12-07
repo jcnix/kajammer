@@ -228,6 +228,7 @@ void MediaControls::setupPlaylists()
     playlistTable->setRowCount(0);
     
     QStringList labels = listManager->getPlaylistNames();
+    QStringList emptyLabels;
     
     for(int i = 0; i < labels.count(); i++)
     {
@@ -240,8 +241,8 @@ void MediaControls::setupPlaylists()
         playlistTable->setItem(i, 0, listName);
         
         //Don't put row numbers on the table
-        labels.append("");
-        playlistTable->setVerticalHeaderLabels(labels);
+        emptyLabels.append("");
+        playlistTable->setVerticalHeaderLabels(emptyLabels);
     }
     
     /* Subtract 35, so the column doesn't stretch past the table width
