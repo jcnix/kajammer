@@ -60,6 +60,7 @@ void PlaylistEditor::init()
     options = Options::getInstance();
 
     playlistList = new QListWidget;
+    fillPlaylists();
     
     playlistContents = new QListWidget;
     playlistContents->setSelectionMode(QAbstractItemView::MultiSelection);
@@ -108,6 +109,11 @@ void PlaylistEditor::init()
 
 void PlaylistEditor::fillPlaylists()
 {
+    QStringList lists = listManager->getPlaylistNames();
+    for(int i = 0; i < lists.count(); i++)
+    {
+        playlistList->addItem(lists.at(i));
+    }
 }
 
 void PlaylistEditor::save()
