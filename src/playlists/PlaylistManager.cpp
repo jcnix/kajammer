@@ -85,11 +85,15 @@ int PlaylistManager::count()
     return info.count();
 }
 
-QString PlaylistManager::getPlaylistName(int index)
+QStringList PlaylistManager::getPlaylistNames()
 {
-    QString name = info.at(index).baseName();
+    QStringList names;
+    for(int i = 0; i < count(); i++)
+    {
+        names.append(info.at(i).baseName());
+    }
     
-    return name;
+    return names;
 }
 
 /* Returns each line of a playlist in a QStringList */
@@ -115,6 +119,7 @@ bool PlaylistManager::playlistExists(QString name)
 // Prints list of playlists to stdout
 void PlaylistManager::listPlaylists()
 {
+    QStringList lists = getPlaylistNames();
     for(int i = 0; i < count(); i++)
-        std::cout << getPlaylistName(i).toStdString() << "\n";
+        std::cout << lists.at(i).toStdString() << "\n";
 }

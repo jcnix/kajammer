@@ -227,11 +227,11 @@ void MediaControls::setupPlaylists()
     //Clear out playlistTable
     playlistTable->setRowCount(0);
     
-    QStringList labels;
+    QStringList labels = listManager->getPlaylistNames();
     
-    for(int i = 0; i < listManager->count(); i++)
+    for(int i = 0; i < labels.count(); i++)
     {
-        QString list = listManager->getPlaylistName(i);
+        QString list = labels.at(i);
         
         QTableWidgetItem *listName = new QTableWidgetItem(list);
         listName->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);

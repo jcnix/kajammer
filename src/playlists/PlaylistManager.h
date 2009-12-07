@@ -44,7 +44,7 @@ public:
     static PlaylistManager* getInstance();
     void newPlaylist(QString, QStringList);
     void delPlaylist(QString);
-    QString getPlaylistName(int);
+    QStringList getPlaylistNames();
     QStringList getPlaylistContents(QString);
     int count();
     void listPlaylists();
