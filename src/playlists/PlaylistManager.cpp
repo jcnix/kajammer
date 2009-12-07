@@ -101,12 +101,10 @@ QStringList PlaylistManager::getPlaylistContents(QString name)
  * when creating a new playlist */
 bool PlaylistManager::playlistExists(QString name)
 {
-    for(int i = 0; i < count(); i ++)
-    {
-        if(getPlaylistName(i).compare(name) == 0)
-            return true;
-    }
-    return false;
+    Playlist *playlist = new Playlist(name);
+    
+    bool b = playlist->exists();
+    return b;
 }
 
 // Prints list of playlists to terminal
