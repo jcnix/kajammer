@@ -106,3 +106,13 @@ QStringList Playlist::getContents()
     
     return playlist;
 }
+
+QString Playlist::getName()
+{
+    return playlist;
+}
+
+QString Playlist::getPath()
+{
+    return playlistFile;
+}

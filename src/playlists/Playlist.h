@@ -48,6 +48,8 @@ public:
     void deleteList();
     bool exists();
     QStringList getContents();
+    QString getName();
+    QString getPath();
     
 signals:
     void resetPlaylists();
