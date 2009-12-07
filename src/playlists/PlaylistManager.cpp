@@ -50,6 +50,11 @@ PlaylistManager* PlaylistManager::getInstance()
     return listManager;
 }
 
+void PlaylistManager::resetInfo()
+{
+    info = QDir(PLAYLIST_DIR).entryInfoList(QDir::Files, QDir::Name);
+}
+
 void PlaylistManager::newPlaylist(QString name, QStringList tracks)
 {
     Playlist *playlist = new Playlist(name);
@@ -107,7 +112,7 @@ bool PlaylistManager::playlistExists(QString name)
     return b;
 }
 
-// Prints list of playlists to terminal
+// Prints list of playlists to stdout
 void PlaylistManager::listPlaylists()
 {
     for(int i = 0; i < count(); i++)

@@ -58,7 +58,7 @@ protected:
     
 private:
     void init();
-    void resetInfo() { info = QDir(PLAYLIST_DIR).entryInfoList(QDir::Files, QDir::Name); }
+    void resetInfo();
     
     static PlaylistManager *listManager;
     QList<QFileInfo> info;
