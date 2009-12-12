@@ -30,7 +30,6 @@ PlaylistEditor::PlaylistEditor()
             this, SLOT(openPlaylist(QListWidgetItem*)));
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(save()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
-    connect(btnOpen, SIGNAL(clicked()), this, SLOT(openPlaylist()));
     connect(btnAdd, SIGNAL(clicked()), this, SLOT(addTracks()));
     connect(btnRemove, SIGNAL(clicked()), this, SLOT(removeTracks()));
     connect(btnUp, SIGNAL(clicked()), this, SLOT(moveTracksUp()));
@@ -41,7 +40,6 @@ PlaylistEditor::~PlaylistEditor()
 {
     delete playlistList;
     delete playlistContents;
-    delete btnOpen;
     delete btnAdd;
     delete btnDown;
     delete btnRemove;
@@ -67,13 +65,11 @@ void PlaylistEditor::init()
     playlistContents = new QListWidget;
     playlistContents->setSelectionMode(QAbstractItemView::MultiSelection);
 
-    btnOpen = new QPushButton("Open");
     btnAdd = new QPushButton("Add");
     btnUp = new QPushButton(style()->standardIcon(QStyle::SP_ArrowUp), "");
     btnDown = new QPushButton(style()->standardIcon(QStyle::SP_ArrowDown), "");
     btnRemove = new QPushButton("Remove");
 
-    btnOpen->setMaximumWidth(75);
     btnAdd->setMaximumWidth(75);
     btnUp->setMaximumWidth(50);
     btnDown->setMaximumWidth(50);
@@ -85,7 +81,6 @@ void PlaylistEditor::init()
     //Squeeze Layout "squeezes" widgets together so they don't spread
             
     squeezeTopLayout = new QHBoxLayout;
-    squeezeTopLayout->addWidget(btnOpen);
     squeezeTopLayout->addWidget(btnAdd);
 
     QHBoxLayout *topLayout = new QHBoxLayout;
