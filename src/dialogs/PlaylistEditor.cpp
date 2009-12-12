@@ -26,6 +26,8 @@ PlaylistEditor::PlaylistEditor()
 {
     init();
     
+    connect(playlistList, SIGNAL(itemActivated(QListWidgetItem*)), 
+            this, SLOT(openPlaylist(QListWidgetItem*)));
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(save()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
     connect(btnOpen, SIGNAL(clicked()), this, SLOT(openPlaylist()));
@@ -131,27 +133,22 @@ void PlaylistEditor::save()
     accept();
 }
 
-void PlaylistEditor::openPlaylist()
-{
-    QString playlistDir = QDir::homePath() + "/.kajammer/playlists";
-
-    playlistFile = QFileDialog::getOpenFileName(this, tr("Open File"), 
-                                                playlistDir, "");
-                                                
-    if(!playlistFile.isEmpty())
+void PlaylistEditor::openPlaylist(QListWidgetItem* item)
+{    
+    QString playlistDir = QDir::homePath() + "/.kajammer/playlists/";
+    QString playlistFile = playlistDir + item->text();
+    
+    // figure out the playlist's name, we don't need the full path
+    QFileInfo file(playlistFile);
+    playlistFile = file.fileName();
+    QStringList list = listManager->getPlaylistContents(playlistFile);
+    
+    for(int i = 0; i < list.length(); i++)
     {
-        // figure out the playlist's name, we don't need the full path
-        QFileInfo file(playlistFile);
-        playlistFile = file.fileName();
-        QStringList list = listManager->getPlaylistContents(playlistFile);
-        
-        for(int i = 0; i < list.length(); i++)
-        {
-            QFileInfo f(list.at(i));
-            QListWidgetItem *item = new QListWidgetItem(f.fileName());
-            playlistContents->addItem(item);
-            playlistMap.insert(item, list.at(i));
-        }
+        QFileInfo f(list.at(i));
+        QListWidgetItem *item = new QListWidgetItem(f.fileName());
+        playlistContents->addItem(item);
+        playlistMap.insert(item, list.at(i));
     }
 }
 
