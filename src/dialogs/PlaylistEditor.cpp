@@ -82,6 +82,7 @@ void PlaylistEditor::init()
             
     squeezeTopLayout = new QHBoxLayout;
     squeezeTopLayout->addWidget(btnAdd);
+    squeezeTopLayout->addWidget(btnRemove);
 
     QHBoxLayout *topLayout = new QHBoxLayout;
     topLayout->addLayout(squeezeTopLayout);
@@ -89,7 +90,6 @@ void PlaylistEditor::init()
     controlSqueezeLayout = new QHBoxLayout;
     controlSqueezeLayout->addWidget(btnUp);
     controlSqueezeLayout->addWidget(btnDown);
-    controlSqueezeLayout->addWidget(btnRemove);
 
     controlLayout = new QHBoxLayout;
     controlLayout->addLayout(controlSqueezeLayout);
