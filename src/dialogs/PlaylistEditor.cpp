@@ -40,10 +40,14 @@ PlaylistEditor::~PlaylistEditor()
 {
     delete playlistList;
     delete playlistContents;
+    delete btnNew;
+    delete btnDelete;
     delete btnAdd;
     delete btnDown;
     delete btnRemove;
     delete buttonBox;
+    delete playlistLayout;
+    delete playlistControlsLayout;
     delete squeezeTopLayout;
     delete topLayout;
     delete controlSqueezeLayout;
@@ -65,11 +69,17 @@ void PlaylistEditor::init()
     playlistContents = new QListWidget;
     playlistContents->setSelectionMode(QAbstractItemView::MultiSelection);
 
+    btnNew = new QPushButton("New");
+    btnDelete = new QPushButton("Delete");
+    
     btnAdd = new QPushButton("Add");
     btnUp = new QPushButton(style()->standardIcon(QStyle::SP_ArrowUp), "");
     btnDown = new QPushButton(style()->standardIcon(QStyle::SP_ArrowDown), "");
     btnRemove = new QPushButton("Remove");
 
+    btnNew->setMaximumWidth(75);
+    btnDelete->setMaximumWidth(75);
+    
     btnAdd->setMaximumWidth(75);
     btnUp->setMaximumWidth(50);
     btnDown->setMaximumWidth(50);
@@ -78,6 +88,14 @@ void PlaylistEditor::init()
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | 
             QDialogButtonBox::Cancel);
 
+    playlistControlsLayout = new QVBoxLayout;
+    playlistControlsLayout->addWidget(btnNew);
+    playlistControlsLayout->addWidget(btnDelete);
+            
+    playlistLayout = new QHBoxLayout;
+    playlistLayout->addWidget(playlistList);
+    playlistLayout->addLayout(playlistControlsLayout);
+            
     //Squeeze Layout "squeezes" widgets together so they don't spread
             
     squeezeTopLayout = new QHBoxLayout;
@@ -95,7 +113,7 @@ void PlaylistEditor::init()
     controlLayout->addLayout(controlSqueezeLayout);
 
     vLayout = new QVBoxLayout;
-    vLayout->addWidget(playlistList);
+    vLayout->addLayout(playlistLayout);
     vLayout->addWidget(playlistContents);
     vLayout->addLayout(topLayout);
     vLayout->addLayout(controlLayout);

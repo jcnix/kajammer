@@ -76,6 +76,9 @@ private:
     QDialogButtonBox *buttonBox;
     QString playlistFile;
     
+    QPushButton *btnNew;
+    QPushButton *btnDelete;
+    
     QPushButton *btnAdd;
     QPushButton *btnUp;
     QPushButton *btnDown;
@@ -83,6 +86,8 @@ private:
 
     QMap<QListWidgetItem*, QString> playlistMap;
     
+    QHBoxLayout *playlistLayout;
+    QVBoxLayout *playlistControlsLayout;
     QHBoxLayout *squeezeTopLayout;
     QHBoxLayout *topLayout;
     QHBoxLayout *controlSqueezeLayout;
