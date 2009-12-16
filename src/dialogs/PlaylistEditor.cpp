@@ -30,6 +30,7 @@ PlaylistEditor::PlaylistEditor()
             this, SLOT(openPlaylist(QListWidgetItem*)));
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(save()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(btnNew, SIGNAL(clicked()), this, SLOT(newPlaylist()));
     connect(btnAdd, SIGNAL(clicked()), this, SLOT(addTracks()));
     connect(btnRemove, SIGNAL(clicked()), this, SLOT(removeTracks()));
     connect(btnUp, SIGNAL(clicked()), this, SLOT(moveTracksUp()));
@@ -128,6 +129,20 @@ void PlaylistEditor::fillPlaylists()
     for(int i = 0; i < lists.count(); i++)
     {
         playlistList->addItem(lists.at(i));
+    }
+}
+
+void PlaylistEditor::newPlaylist()
+{
+    QString name = "";
+    name = QInputDialog::getText(this, "New Playlist", 
+                                    "Enter Playlist Name:",
+                                    QLineEdit::Normal, "",
+                                    &ok);
+    
+    if(name != "")
+    {
+        Playlist *playlist = new Playlist(input);
     }
 }
 
