@@ -146,6 +146,7 @@ void PlaylistEditor::newPlaylist()
     if(name != "")
     {
         new Playlist(name);
+        fillPlaylists();
     }
 }
 
