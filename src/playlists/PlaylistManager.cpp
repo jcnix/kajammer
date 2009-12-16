@@ -87,6 +87,8 @@ int PlaylistManager::count()
 
 QStringList PlaylistManager::getPlaylistNames()
 {
+    resetInfo();
+    
     QStringList names;
     for(int i = 0; i < count(); i++)
     {
