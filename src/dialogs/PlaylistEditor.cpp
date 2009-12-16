@@ -166,7 +166,9 @@ void PlaylistEditor::save()
 }
 
 void PlaylistEditor::openPlaylist(QListWidgetItem* item)
-{    
+{
+    playlistContents->clear();
+    
     QString playlistDir = QDir::homePath() + "/.kajammer/playlists/";
     QString playlistFile = playlistDir + item->text();
     
