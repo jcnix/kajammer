@@ -125,6 +125,8 @@ void PlaylistEditor::init()
 
 void PlaylistEditor::fillPlaylists()
 {
+    playlistList->clear();
+    
     QStringList lists = listManager->getPlaylistNames();
     for(int i = 0; i < lists.count(); i++)
     {
