@@ -154,6 +154,7 @@ void PlaylistEditor::save()
 {
     QStringList text;
     int rows = playlistContents->count();
+    
     for(int i = 0; i < rows; i++) {
         QListWidgetItem *item = playlistContents->item(i);
         text.append(playlistMap.value(item));
@@ -170,10 +171,11 @@ void PlaylistEditor::openPlaylist(QListWidgetItem* item)
     playlistContents->clear();
     
     QString playlistDir = QDir::homePath() + "/.kajammer/playlists/";
-    QString playlistFile = playlistDir + item->text();
+    playlistFile = item->text();
+    QString pFile = playlistDir + playlistFile;
     
     // figure out the playlist's name, we don't need the full path
-    QFileInfo file(playlistFile);
+    QFileInfo file(pFile);
     playlistFile = file.fileName();
     QStringList list = listManager->getPlaylistContents(playlistFile);
     

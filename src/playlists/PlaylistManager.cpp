@@ -58,10 +58,7 @@ void PlaylistManager::resetInfo()
 void PlaylistManager::newPlaylist(QString name, QStringList tracks)
 {
     Playlist *playlist = new Playlist(name);
-    if(!playlist->exists())
-    {
-        playlist->addTracks(tracks);
-    }
+    playlist->addTracks(tracks);
     
     //Reset Info so it finds the new playlist
     resetInfo();
