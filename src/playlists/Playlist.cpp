@@ -26,6 +26,15 @@ Playlist::Playlist(QString name)
 {
     playlist = name;
     playlistFile = PLAYLIST_DIR + name;
+    
+    QFile file(playlistFile);
+    if(!file.exists())
+    {
+        //Create a blank list to write a new file
+        QStringList list;
+        list.append("");
+        addTracks(list);
+    }
 }
 
 Playlist::Playlist(QString name, QStringList tracks)

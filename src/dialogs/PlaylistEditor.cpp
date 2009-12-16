@@ -134,6 +134,7 @@ void PlaylistEditor::fillPlaylists()
 
 void PlaylistEditor::newPlaylist()
 {
+    bool ok;
     QString name = "";
     name = QInputDialog::getText(this, "New Playlist", 
                                     "Enter Playlist Name:",
@@ -142,7 +143,7 @@ void PlaylistEditor::newPlaylist()
     
     if(name != "")
     {
-        Playlist *playlist = new Playlist(input);
+        new Playlist(name);
     }
 }
 

@@ -40,6 +40,7 @@
 #include <QtGui/QPushButton>
 #include <QtGui/QStyle>
 #include <QtGui/QVBoxLayout>
+#include <QtGui/QInputDialog>
 
 #include "../playlists/PlaylistManager.h"
 #include "../Options.h"
