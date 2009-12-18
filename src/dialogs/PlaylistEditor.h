@@ -82,9 +82,9 @@ private:
     QPushButton *btnDelete;
     
     QPushButton *btnAdd;
+    QPushButton *btnRemove;
     QPushButton *btnUp;
     QPushButton *btnDown;
-    QPushButton *btnRemove;
 
     QMap<QListWidgetItem*, QString> playlistMap;
     

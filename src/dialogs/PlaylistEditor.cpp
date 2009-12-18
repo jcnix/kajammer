@@ -44,11 +44,11 @@ PlaylistEditor::~PlaylistEditor()
     delete btnNew;
     delete btnDelete;
     delete btnAdd;
-    delete btnDown;
     delete btnRemove;
+    delete btnUp;
+    delete btnDown;
     delete buttonBox;
     delete playlistLayout;
-    delete playlistControlsLayout;
     delete squeezeTopLayout;
     delete topLayout;
     delete controlSqueezeLayout;
