@@ -56,6 +56,7 @@ public:
 public slots:
     void save();
     void newPlaylist();
+    void removePlaylist();
     void openPlaylist(QListWidgetItem*);
     void addTracks();
     void removeTracks();

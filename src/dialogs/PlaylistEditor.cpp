@@ -31,6 +31,7 @@ PlaylistEditor::PlaylistEditor()
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(save()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
     connect(btnNew, SIGNAL(clicked()), this, SLOT(newPlaylist()));
+    connect(btnDelete, SIGNAL(clicked()), this, SLOT(removePlaylist()));
     connect(btnAdd, SIGNAL(clicked()), this, SLOT(addTracks()));
     connect(btnRemove, SIGNAL(clicked()), this, SLOT(removeTracks()));
     connect(btnUp, SIGNAL(clicked()), this, SLOT(moveTracksUp()));
@@ -148,6 +149,15 @@ void PlaylistEditor::newPlaylist()
         new Playlist(name);
         fillPlaylists();
     }
+}
+
+void PlaylistEditor::removePlaylist()
+{
+    QList<QListWidgetItem*> items = playlistList->selectedItems();
+    QString name = items.at(0)->text();
+    
+    listManager->delPlaylist(name);
+    fillPlaylists();
 }
 
 void PlaylistEditor::save()
