@@ -24,9 +24,10 @@
 
 CollectionManager::CollectionManager()
 {
-    const char* db1 = QDir::homePath().toStdString().c_str();
-    char *db = (char*) malloc(50);
-    sprintf(db, "%s/.kajammer/kj.db", db1);
+    const char* home = QDir::homePath().toStdString().c_str();
+    const char* kjdb = "/.kajammer/kj.db";
+    char *db = (char*) malloc(strlen(home) + strlen(kjdb));
+    sprintf(db, "%s%s", home, kjdb);
     printf("db: %s\n", db);
     int status = sqlite3_open(db, &pdb);
     
@@ -38,6 +39,11 @@ CollectionManager::CollectionManager()
     {
         printf("error: %d\n", status);
     }
+    
+    //Figure out why C++ is retarded and can't free const chars.
+    //free(home);
+    //free(kjdb);
+    free(db);
 }
 
 int CollectionManager::close_db()
