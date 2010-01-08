@@ -24,9 +24,20 @@
 
 CollectionManager::CollectionManager()
 {
-    const char* db = DB_PATH.toStdString().c_str();
-    
+    const char* db1 = QDir::homePath().toStdString().c_str();
+    char *db = (char*) malloc(50);
+    sprintf(db, "%s/.kajammer/kj.db", db1);
+    printf("db: %s\n", db);
     int status = sqlite3_open(db, &pdb);
+    
+    if(status == SQLITE_OK)
+    {
+        printf("status is okay\n");
+    }
+    else
+    {
+        printf("error: %d\n", status);
+    }
 }
 
 int CollectionManager::close_db()
