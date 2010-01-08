@@ -40,8 +40,9 @@
 #include <QtGui/QPushButton>
 #include <QtGui/QStyle>
 #include <QtGui/QVBoxLayout>
+#include <QtGui/QInputDialog>
 
-#include "../playlists/Playlist.h"
+#include "../playlists/PlaylistManager.h"
 #include "../Options.h"
 
 class PlaylistEditor : public QDialog
@@ -54,7 +55,9 @@ public:
     
 public slots:
     void save();
-    void openPlaylist();
+    void newPlaylist();
+    void removePlaylist();
+    void openPlaylist(QListWidgetItem*);
     void addTracks();
     void removeTracks();
     void moveTracksUp();
@@ -65,21 +68,29 @@ protected:
     
 private:
     void init();
+    void fillPlaylists();
     
-    Playlist *playlist;
+    PlaylistManager *listManager;
     Options *options;
 
+    QListWidget *playlistList;
+    QListWidget *playlistContents;
+    
     QDialogButtonBox *buttonBox;
     QString playlistFile;
-    QListWidget *listView;
-    QPushButton *btnOpen;
+    
+    QPushButton *btnNew;
+    QPushButton *btnDelete;
+    
     QPushButton *btnAdd;
+    QPushButton *btnRemove;
     QPushButton *btnUp;
     QPushButton *btnDown;
-    QPushButton *btnRemove;
 
     QMap<QListWidgetItem*, QString> playlistMap;
     
+    QHBoxLayout *playlistLayout;
+    QVBoxLayout *playlistControlsLayout;
     QHBoxLayout *squeezeTopLayout;
     QHBoxLayout *topLayout;
     QHBoxLayout *controlSqueezeLayout;

@@ -39,7 +39,7 @@ MenuBar::MenuBar()
 void MenuBar::init()
 {
     controller = Controller::getInstance();
-    playlist = Playlist::getInstance();
+    listManager = PlaylistManager::getInstance();
     options = Options::getInstance();
     
     menuBar = new QMenuBar;
@@ -96,7 +96,7 @@ void MenuBar::createNewPlaylist()
                                                    
         if(!addToList.isEmpty())
         {
-            playlist->newPlaylist(input, addToList);
+            listManager->newPlaylist(input, addToList);
             controller->resetCurrentList();
         }
     }
@@ -111,7 +111,7 @@ void MenuBar::deletePlaylist()
                                            &ok);
     if(ok && !input.isEmpty())
     {
-        playlist->delPlaylist(input);
+        listManager->delPlaylist(input);
     }
 }
 

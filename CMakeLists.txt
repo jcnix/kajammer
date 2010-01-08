@@ -2,7 +2,7 @@ CMAKE_MINIMUM_REQUIRED( VERSION 2.6 )
 PROJECT( kajammer )
 
 SET( CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake )
-set(CMAKE_CXX_FLAGS "-g -Wall")
+SET(CMAKE_CXX_FLAGS "-g -Wall")
 
 FIND_PACKAGE( Qt4 REQUIRED )
 FIND_PACKAGE( Phonon REQUIRED )
@@ -31,6 +31,7 @@ SET( kajammer_SRCS
 	src/Options.cpp
 	src/dialogs/OptionsDialog.cpp
 	src/playlists/Playlist.cpp
+	src/playlists/PlaylistManager.cpp
 	src/dialogs/PlaylistEditor.cpp
 	src/gui/widgets/ToggleButton.cpp
 	src/gui/widgets/TrayIcon.cpp
@@ -49,6 +50,7 @@ SET( kajammer_MOC_HEADERS
 	src/gui/MenuBar.h
 	src/dialogs/OptionsDialog.h
 	src/playlists/Playlist.h
+	src/playlists/PlaylistManager.h
 	src/dialogs/PlaylistEditor.h
 	src/gui/widgets/ToggleButton.h
 	src/gui/widgets/TrayIcon.h

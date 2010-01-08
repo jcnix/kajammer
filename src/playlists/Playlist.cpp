@@ -2,7 +2,7 @@
  * File:   playlist.cpp
  * Author: Casey Jones
  *
- * Created on March 24, 2009, 4:48 PM
+ * Created on December 5, 2009, 4:48 PM
  *
  * This file is part of KaJammer.
  *
@@ -22,57 +22,61 @@
 
 #include "Playlist.h"
 
-Playlist* Playlist::playlist = 0;
-
-Playlist::Playlist()
+Playlist::Playlist(QString name)
 {
-    init();
-}
-
-void Playlist::init()
-{
-    resetInfo();
+    playlist = name;
+    playlistFile = PLAYLIST_DIR + name;
     
-    if(!QKAJAM_DIR.exists())
+    QFile file(playlistFile);
+    if(!file.exists())
     {
-        QKAJAM_DIR.mkdir(KAJAM_DIR);
-        QKAJAM_DIR.mkdir(PLAYLIST_DIR);
+        //Create a blank list to write a new file
+        QStringList list;
+        list.append("");
+        addTracks(list);
     }
 }
 
-Playlist* Playlist::getInstance()
+Playlist::Playlist(QString name, QStringList tracks)
 {
-    if(playlist == 0)
-    {
-        playlist = new Playlist;
-    }
-    return playlist;
+    addTracks(tracks);
+    playlist = name;
+    playlistFile = PLAYLIST_DIR + name;
 }
 
-void Playlist::newPlaylist(QString name, QStringList newList)
+void Playlist::addTrack(QString track)
 {
-    if(!playlistExists(name))
+    QStringList tracks(track);
+    addTracks(tracks);
+}
+
+void Playlist::addTracks(QStringList tracks)
+{
+    if(!exists())
     {
-        QFile newListFile(PLAYLIST_DIR + name);
-        newListFile.open(QIODevice::WriteOnly);
+        QFile newList(playlistFile);
+    }
+    
+    QFile file(playlistFile);
+    file.open(QIODevice::WriteOnly);
+    
+    QTextStream out(&file);
+    for(int i = 0; i < tracks.count(); i++) {
+        if(tracks.at(i) == "")
+            continue;
         
-        QTextStream out(&newListFile);
-        for(int i = 0; i < newList.count(); i++) {
-            if(newList.at(i) == "")
-                continue;
-            
-            out << newList.at(i) + "\n";
-        }
-        
-        //Reset Info so it finds the new playlist
-        resetInfo();
-        emit resetPlaylists();
+        out << tracks.at(i) + "\n";
     }
+    out.flush();
+    file.close();
+    
+    //Reset Info so it finds the new playlist
+    emit resetPlaylists();
 }
 
-void Playlist::delPlaylist(QString playlist)
+void Playlist::deleteList()
 {
-    QFile listFile (PLAYLIST_DIR + playlist);
+    QFile listFile (playlistFile);
     
     if(listFile.exists())
     {
@@ -84,70 +88,40 @@ void Playlist::delPlaylist(QString playlist)
     }
     
     //Reset Info so it finds the new playlist
-    resetInfo();
     emit resetPlaylists();
 }
 
-int Playlist::count()
-{    
-    return info.count();
-}
-
-QString Playlist::getPlaylistName(int index)
-{    
-    QString name = info.at(index).baseName();
-    
-    return name;
+bool Playlist::exists()
+{
+    return QFile(playlistFile).exists();
 }
 
 /* Returns each line of a playlist in a QStringList */
-QStringList Playlist::getPlaylistContents(QString name)
+QStringList Playlist::getContents()
 {
-    QFile playlistFile(PLAYLIST_DIR + name);
-    playlistFile.open(QIODevice::ReadOnly);
+    QFile file(playlistFile);
+    file.open(QIODevice::ReadOnly);
     
     QStringList playlist;    
-    QTextStream in(&playlistFile);
+    QTextStream in(&file);
     
     while(!in.atEnd()) {
-        QString file = in.readLine(0);
-        if(QFile::exists(file))
-            playlist.append(file);
+        QString track = in.readLine(0);
+        
+        //Make sure the track exists before adding it
+        if(QFile::exists(track))
+            playlist.append(track);
     }
     
     return playlist;
 }
 
-/* Returns the entire playlist as a single string */
-QString Playlist::getEntirePlaylist(QString name)
+QString Playlist::getName()
 {
-    QFile playlistFile(PLAYLIST_DIR + name);
-    playlistFile.open(QIODevice::ReadOnly);
-    
-    QString playlist;    
-    QTextStream in(&playlistFile);
-    
-    playlist = in.readAll();
-    
     return playlist;
 }
 
-/* Ensures that the playlist given exists.
- * Only used to check for collisions
- * when creating a new playlist */
-bool Playlist::playlistExists(QString name)
+QString Playlist::getPath()
 {
-    for(int i = 0; i < count(); i ++)
-    {
-        if(getPlaylistName(i).compare(name) == 0)
-            return true;
-    }
-    return false;
-}
-
-// Prints list of playlists to terminal
-void Playlist::listPlaylists()
-{
-    for(int i = 0; i < count(); i++)
-        std::cout << getPlaylistName(i).toStdString() << "\n";
+    return playlistFile;
 }

@@ -179,35 +179,35 @@ void Cli::play(QStringList songs)
 void Cli::playPlaylist(QString name)
 {
     Controller *controller = Controller::getInstance();
-    Playlist *playlist = Playlist::getInstance();
+    PlaylistManager *listManager = PlaylistManager::getInstance();
     
-    QList<QString> list = playlist->getPlaylistContents(name);
+    QList<QString> list = listManager->getPlaylistContents(name);
     controller->setQueue(list);
 }
 
 void Cli::newPlaylist(QString name, QStringList songs)
 {
-    Playlist *playlist = Playlist::getInstance();
-    playlist->newPlaylist(name, songs);
+    PlaylistManager *listManager = PlaylistManager::getInstance();
+    listManager->newPlaylist(name, songs);
 }
 
 //Delete all playlists given
 void Cli::delPlaylist(QStringList names)
 {
-    Playlist *playlist = Playlist::getInstance();
+    PlaylistManager *listManager = PlaylistManager::getInstance();
     QString name;
 
     for(int i = 0; i < names.count(); i++)
     {
         name = names.at(i);
-        playlist->delPlaylist(name);
+        listManager->delPlaylist(name);
     }
 }
 
 void Cli::listPlaylists()
 {
-    Playlist *playlist = Playlist::getInstance();
-    playlist->listPlaylists();
+    PlaylistManager *listManager = PlaylistManager::getInstance();
+    listManager->listPlaylists();
 }
 
 bool Cli::getXFlag()

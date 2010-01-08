@@ -28,4 +28,9 @@
 #define KAJAMMER_VER "0.9.3-dev"
 #define KAJAMMER_ICON "/usr/share/icons/kajammer.png"
 
+#define KAJAM_DIR QDir::homePath()+"/.kajammer/"
+#define PLAYLIST_DIR KAJAM_DIR+"/playlists/"
+#define KAJAM_QDIR QDir(QDir::homePath()+"/.kajammer/")
+#define KAJAM_CONF KAJAM_DIR+"kajammer.conf"
+
 #endif //_KAJAMMER_H
