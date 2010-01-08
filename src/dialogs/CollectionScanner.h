@@ -35,7 +35,7 @@
 #include <QtGui/QHBoxLayout>
 #include <QtCore/QDir>
 
-#include "../playlists/Playlist.h"
+#include "../playlists/PlaylistManager.h"
 
 class CollectionScanner : public QDialog
 {

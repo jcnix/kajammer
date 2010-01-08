@@ -26,9 +26,12 @@ PlaylistEditor::PlaylistEditor()
 {
     init();
     
+    connect(playlistList, SIGNAL(itemActivated(QListWidgetItem*)), 
+            this, SLOT(openPlaylist(QListWidgetItem*)));
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(save()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
-    connect(btnOpen, SIGNAL(clicked()), this, SLOT(openPlaylist()));
+    connect(btnNew, SIGNAL(clicked()), this, SLOT(newPlaylist()));
+    connect(btnDelete, SIGNAL(clicked()), this, SLOT(removePlaylist()));
     connect(btnAdd, SIGNAL(clicked()), this, SLOT(addTracks()));
     connect(btnRemove, SIGNAL(clicked()), this, SLOT(removeTracks()));
     connect(btnUp, SIGNAL(clicked()), this, SLOT(moveTracksUp()));
@@ -37,12 +40,16 @@ PlaylistEditor::PlaylistEditor()
 
 PlaylistEditor::~PlaylistEditor()
 {
-    delete listView;
-    delete btnOpen;
+    delete playlistList;
+    delete playlistContents;
+    delete btnNew;
+    delete btnDelete;
     delete btnAdd;
-    delete btnDown;
     delete btnRemove;
+    delete btnUp;
+    delete btnDown;
     delete buttonBox;
+    delete playlistLayout;
     delete squeezeTopLayout;
     delete topLayout;
     delete controlSqueezeLayout;
@@ -53,21 +60,28 @@ PlaylistEditor::~PlaylistEditor()
 void PlaylistEditor::init()
 {
     setWindowTitle("KaJammer Playlist Editor");
-    setMinimumSize(480,480);
+    setMinimumSize(500,400);
 
-    playlist = Playlist::getInstance();
+    listManager = PlaylistManager::getInstance();
     options = Options::getInstance();
 
-    listView = new QListWidget;
-    listView->setSelectionMode(QAbstractItemView::MultiSelection);
+    playlistList = new QListWidget;
+    fillPlaylists();
+    
+    playlistContents = new QListWidget;
+    playlistContents->setSelectionMode(QAbstractItemView::MultiSelection);
 
-    btnOpen = new QPushButton("Open");
+    btnNew = new QPushButton("New");
+    btnDelete = new QPushButton("Delete");
+    
     btnAdd = new QPushButton("Add");
     btnUp = new QPushButton(style()->standardIcon(QStyle::SP_ArrowUp), "");
     btnDown = new QPushButton(style()->standardIcon(QStyle::SP_ArrowDown), "");
     btnRemove = new QPushButton("Remove");
 
-    btnOpen->setMaximumWidth(75);
+    btnNew->setMaximumWidth(75);
+    btnDelete->setMaximumWidth(75);
+    
     btnAdd->setMaximumWidth(75);
     btnUp->setMaximumWidth(50);
     btnDown->setMaximumWidth(50);
@@ -76,25 +90,33 @@ void PlaylistEditor::init()
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | 
             QDialogButtonBox::Cancel);
 
+    playlistControlsLayout = new QVBoxLayout;
+    playlistControlsLayout->addWidget(btnNew);
+    playlistControlsLayout->addWidget(btnDelete);
+            
+    playlistLayout = new QHBoxLayout;
+    playlistLayout->addWidget(playlistList);
+    playlistLayout->addLayout(playlistControlsLayout);
+            
     //Squeeze Layout "squeezes" widgets together so they don't spread
             
     squeezeTopLayout = new QHBoxLayout;
-    squeezeTopLayout->addWidget(btnOpen);
     squeezeTopLayout->addWidget(btnAdd);
+    squeezeTopLayout->addWidget(btnRemove);
 
-    QHBoxLayout *topLayout = new QHBoxLayout;
+    topLayout = new QHBoxLayout;
     topLayout->addLayout(squeezeTopLayout);
 
     controlSqueezeLayout = new QHBoxLayout;
     controlSqueezeLayout->addWidget(btnUp);
     controlSqueezeLayout->addWidget(btnDown);
-    controlSqueezeLayout->addWidget(btnRemove);
 
     controlLayout = new QHBoxLayout;
     controlLayout->addLayout(controlSqueezeLayout);
 
     vLayout = new QVBoxLayout;
-    vLayout->addWidget(listView);
+    vLayout->addLayout(playlistLayout);
+    vLayout->addWidget(playlistContents);
     vLayout->addLayout(topLayout);
     vLayout->addLayout(controlLayout);
     vLayout->addWidget(buttonBox);
@@ -102,42 +124,77 @@ void PlaylistEditor::init()
     setLayout(vLayout);
 }
 
+void PlaylistEditor::fillPlaylists()
+{
+    playlistList->clear();
+    
+    QStringList lists = listManager->getPlaylistNames();
+    for(int i = 0; i < lists.count(); i++)
+    {
+        playlistList->addItem(lists.at(i));
+    }
+}
+
+void PlaylistEditor::newPlaylist()
+{
+    bool ok;
+    QString name = "";
+    name = QInputDialog::getText(this, "New Playlist", 
+                                    "Enter Playlist Name:",
+                                    QLineEdit::Normal, "",
+                                    &ok);
+    
+    if(name != "")
+    {
+        new Playlist(name);
+        fillPlaylists();
+    }
+}
+
+void PlaylistEditor::removePlaylist()
+{
+    QList<QListWidgetItem*> items = playlistList->selectedItems();
+    QString name = items.at(0)->text();
+    
+    listManager->delPlaylist(name);
+    fillPlaylists();
+}
+
 void PlaylistEditor::save()
 {
     QStringList text;
-    int rows = listView->count();
+    int rows = playlistContents->count();
+    
     for(int i = 0; i < rows; i++) {
-        QListWidgetItem *item = listView->item(i);
+        QListWidgetItem *item = playlistContents->item(i);
         text.append(playlistMap.value(item));
     }
 
-    playlist->delPlaylist(playlistFile);
-    playlist->newPlaylist(playlistFile, text);
+    listManager->delPlaylist(playlistFile);
+    listManager->newPlaylist(playlistFile, text);
 
     accept();
 }
 
-void PlaylistEditor::openPlaylist()
+void PlaylistEditor::openPlaylist(QListWidgetItem* item)
 {
-    QString playlistDir = QDir::homePath() + "/.kajammer/playlists";
-
-    playlistFile = QFileDialog::getOpenFileName(this, tr("Open File"), 
-                                                playlistDir, "");
-                                                
-    if(!playlistFile.isEmpty())
+    playlistContents->clear();
+    
+    QString playlistDir = QDir::homePath() + "/.kajammer/playlists/";
+    playlistFile = item->text();
+    QString pFile = playlistDir + playlistFile;
+    
+    // figure out the playlist's name, we don't need the full path
+    QFileInfo file(pFile);
+    playlistFile = file.fileName();
+    QStringList list = listManager->getPlaylistContents(playlistFile);
+    
+    for(int i = 0; i < list.length(); i++)
     {
-        // figure out the playlist's name, we don't need the full path
-        QFileInfo file(playlistFile);
-        playlistFile = file.fileName();
-        QStringList list = playlist->getPlaylistContents(playlistFile);
-        
-        for(int i = 0; i < list.length(); i++)
-        {
-            QFileInfo f(list.at(i));
-            QListWidgetItem *item = new QListWidgetItem(f.fileName());
-            listView->addItem(item);
-            playlistMap.insert(item, list.at(i));
-        }
+        QFileInfo f(list.at(i));
+        QListWidgetItem *item = new QListWidgetItem(f.fileName());
+        playlistContents->addItem(item);
+        playlistMap.insert(item, list.at(i));
     }
 }
 
@@ -152,24 +209,24 @@ void PlaylistEditor::addTracks()
     {
         QFileInfo f(list.at(i));
         QListWidgetItem *item = new QListWidgetItem(f.fileName());
-        listView->addItem(item);
+        playlistContents->addItem(item);
         playlistMap.insert(item, list.at(i));
     }
 }
 
 void PlaylistEditor::removeTracks()
 {
-    QList<QListWidgetItem*> items = listView->selectedItems();
+    QList<QListWidgetItem*> items = playlistContents->selectedItems();
     for(int i = 0; i < items.length(); i++)
     {
-        listView->takeItem(listView->row(items.at(i)));
+        playlistContents->takeItem(playlistContents->row(items.at(i)));
         playlistMap.remove(items.at(i));
     }
 }
 
 void PlaylistEditor::moveTracksUp()
 {
-    QList<QListWidgetItem*> items = listView->selectedItems();
+    QList<QListWidgetItem*> items = playlistContents->selectedItems();
 
     /* We need to sort the selected rows.
         * If they're unsorted, adjacent selected rows
@@ -181,7 +238,7 @@ void PlaylistEditor::moveTracksUp()
     for(int i = 0; i < items.size(); i++)
     {
         QListWidgetItem *item = items.at(i);
-        int row = listView->row(item);
+        int row = playlistContents->row(item);
 
         set << row;
     }
@@ -193,16 +250,16 @@ void PlaylistEditor::moveTracksUp()
     for(int i = 0; i < rowList.size(); i++)
     {
         int row = rowList.at(i);
-        QListWidgetItem *item = listView->takeItem(row);
+        QListWidgetItem *item = playlistContents->takeItem(row);
         
-        listView->insertItem(--row, item); //moves up
-        listView->setCurrentRow(row);
+        playlistContents->insertItem(--row, item); //moves up
+        playlistContents->setCurrentRow(row);
     }
 }
 
 void PlaylistEditor::moveTracksDown()
 {
-    QList<QListWidgetItem*> items = listView->selectedItems();
+    QList<QListWidgetItem*> items = playlistContents->selectedItems();
 
     /* We need to sort the selected rows.
         * If they're unsorted, adjacent selected rows
@@ -214,7 +271,7 @@ void PlaylistEditor::moveTracksDown()
     for(int i = 0; i < items.size(); i++)
     {
         QListWidgetItem *item = items.at(i);
-        int row = listView->row(item);
+        int row = playlistContents->row(item);
 
         set << row;
     }
@@ -226,10 +283,10 @@ void PlaylistEditor::moveTracksDown()
     for(int i = rowList.size() - 1; i >= 0; i--)
     {
         int row = rowList.at(i);
-        QListWidgetItem *item = listView->takeItem(row);
+        QListWidgetItem *item = playlistContents->takeItem(row);
         
-        listView->insertItem(++row, item); //moves up
-        listView->setCurrentRow(row);
+        playlistContents->insertItem(++row, item); //moves up
+        playlistContents->setCurrentRow(row);
     }
 }
 

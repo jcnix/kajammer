@@ -21,7 +21,6 @@
  */
 
 #include "Options.h"
-#include <iostream>
 
 Options* Options::options = 0;
 
@@ -33,10 +32,10 @@ Options::Options()
     use_last_fm = false;
 	use_tray_icon = false;
 	
-    if(!QKAJAM_DIR.exists())
+    if(!KAJAM_QDIR.exists())
     {
-        QKAJAM_DIR.mkdir(KAJAM_DIR);
-        QKAJAM_DIR.mkdir(PLAYLIST_DIR);
+        KAJAM_QDIR.mkdir(KAJAM_DIR);
+        KAJAM_QDIR.mkdir(PLAYLIST_DIR);
     }
     
     readOptions();

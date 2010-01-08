@@ -37,7 +37,7 @@
 #include "../kajammer.h"
 #include "../dialogs/AboutDialog.h"
 #include "../Controller.h"
-#include "../playlists/Playlist.h"
+#include "../playlists/PlaylistManager.h"
 #include "../dialogs/OptionsDialog.h"
 #include "../Options.h"
 #include "../dialogs/PlaylistEditor.h"
@@ -66,7 +66,7 @@ private:
     void init();
     
     Controller *controller;
-    Playlist *playlist;
+    PlaylistManager *listManager;
     Options *options;
     
     QMenuBar *menuBar;

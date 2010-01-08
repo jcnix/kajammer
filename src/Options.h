@@ -30,12 +30,10 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QTextStream>
-#include "config.h"
+#include <iostream>
 
-#define KAJAM_DIR QDir::homePath()+"/.kajammer/"
-#define PLAYLIST_DIR KAJAM_DIR+"/playlists/"
-#define QKAJAM_DIR QDir(QDir::homePath()+"/.kajammer/")
-#define KAJAM_CONF KAJAM_DIR+"kajammer.conf"
+#include "config.h"
+#include "kajammer.h"
 
 class Options
 {

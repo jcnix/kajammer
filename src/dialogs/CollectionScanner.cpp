@@ -71,7 +71,7 @@ void CollectionScanner::browseDir()
 void CollectionScanner::scan()
 {
     QString startDir = dirInput->text();
-    Playlist *p = Playlist::getInstance();
+    PlaylistManager *p = PlaylistManager::getInstance();
     
     QList<QString> dirs;
     dirs.append(startDir);
