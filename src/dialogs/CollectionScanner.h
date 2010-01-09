@@ -36,6 +36,7 @@
 #include <QtCore/QDir>
 
 #include "../playlists/PlaylistManager.h"
+#include "../sql/CollectionManager.h"
 
 class CollectionScanner : public QDialog
 {

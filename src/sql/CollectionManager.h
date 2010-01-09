@@ -25,12 +25,9 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QDir>
-#include <sqlite3.h>
-#include <iostream>
-#include <cstdio>
-#include <cstdlib>
+#include <QtSql/QSqlDatabase>
 
-#define DB_PATH QString(QDir::homePath()+"/.kajammer/kj.db")
+#include "../Controller.h"
 
 class CollectionManager : public QObject {
     Q_OBJECT;
@@ -38,9 +35,7 @@ class CollectionManager : public QObject {
 public:
     CollectionManager();
     int close_db();
-    
-private:
-    sqlite3 *pdb;
+    int addTrack(QString);
 };
 
 #endif //_COLLECTIONMNAGER_H

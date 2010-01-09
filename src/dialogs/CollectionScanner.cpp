@@ -108,8 +108,13 @@ void CollectionScanner::scan()
 
             QStringList music = ls_music(playlist);
             
-            if(music.length() > 0)
+            if(music.length() > 0) {
                 p->newPlaylist(playlistName, music);
+                CollectionManager *cm = new CollectionManager;
+                
+                for(int i = 0; i < music.length(); i++)
+                    cm->addTrack(music.at(i));                
+            }
         }
     }
     

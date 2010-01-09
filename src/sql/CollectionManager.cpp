@@ -24,39 +24,16 @@
 
 CollectionManager::CollectionManager()
 {
-    const char* home = QDir::homePath().toStdString().c_str();
-    const char* kjdb = "/.kajammer/kj.db";
-    char *db = (char*) malloc(strlen(home) + strlen(kjdb));
-    sprintf(db, "%s%s", home, kjdb);
-    printf("db: %s\n", db);
-    int status = sqlite3_open(db, &pdb);
-    
-    const char* sql_stmt = "CREATE TABLE IF NOT EXISTS music("
-                            "file text,"
-                            "title text,"
-                            "artist text,"
-                            "album text"
-                            ");";
-    sqlite3_stmt *stmt;
-    const char *tail;
-    status = sqlite3_prepare(pdb, sql_stmt, -1, &stmt, &tail);
-    
-    status = sqlite3_step(stmt);
-    status = sqlite3_finalize(stmt);
-    
-    if(status != SQLITE_OK)
-    {
-        printf("db error: %d\n", status);
-    }
-    
-    //Figure out why C++ is retarded and can't free const chars.
-    //free(home);
-    //free(kjdb);
-    free(db);
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    addTrack("/home/casey/music/tetris.mp3");
+}
+
+int CollectionManager::addTrack(QString qtrack)
+{
+    return 1;
 }
 
 int CollectionManager::close_db()
 {
-    sqlite3_close(pdb);
     return 1;
 }
