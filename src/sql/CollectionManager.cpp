@@ -31,13 +31,22 @@ CollectionManager::CollectionManager()
     printf("db: %s\n", db);
     int status = sqlite3_open(db, &pdb);
     
-    if(status == SQLITE_OK)
+    const char* sql_stmt = "CREATE TABLE IF NOT EXISTS music("
+                            "file text,"
+                            "title text,"
+                            "artist text,"
+                            "album text"
+                            ");";
+    sqlite3_stmt *stmt;
+    const char *tail;
+    status = sqlite3_prepare(pdb, sql_stmt, -1, &stmt, &tail);
+    
+    status = sqlite3_step(stmt);
+    status = sqlite3_finalize(stmt);
+    
+    if(status != SQLITE_OK)
     {
-        printf("status is okay\n");
-    }
-    else
-    {
-        printf("error: %d\n", status);
+        printf("db error: %d\n", status);
     }
     
     //Figure out why C++ is retarded and can't free const chars.
