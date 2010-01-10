@@ -48,13 +48,27 @@ bool CollectionManager::connect_db()
     return open;
 }
 
-bool CollectionManager::addTrack(QString qtrack)
+bool CollectionManager::addTrack(QString track)
 {
-    return 1;
+    Controller *c = Controller::getInstance();
+    QMap<QString, QString> metaData = c->getMetadata(track);
+    QString title = metaData.value("TITLE");
+    QString artist = metaData.value("ARTIST");
+    QString album = metaData.value("ALBUM");
+    
+    QSqlQuery query;
+    query.exec("INSERT INTO music VALUES("
+                "'"+track+"',"
+                "'"+title+"',"
+                "'"+artist+"',"
+                "'"+album+"'"
+                ");");
+    
+    return true;
 }
 
 bool CollectionManager::close_db()
 {
     db.close();
-    return 1;
+    return true;
 }
