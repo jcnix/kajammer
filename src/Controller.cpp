@@ -209,10 +209,13 @@ void Controller::setNextSong()
     if(currentSong < trackQueue.count()  || isShuffle || (isRepeat && !repeated))
     {
         bool error = false;
-        if(isShuffle) error = shuffle();
-        if(isRepeat) repeat();
+        if(isShuffle)
+            error = shuffle();
+        if(isRepeat)
+            repeat();
     
-        if(!error) setSong(currentSong + 1);
+        if(!error)
+            setSong(currentSong + 1);
     }
 }
 
