@@ -24,6 +24,7 @@
 
 CollectionManager::CollectionManager()
 {
+    connect_db();
 }
 
 bool CollectionManager::connect_db()
@@ -80,7 +81,6 @@ QStringList CollectionManager::search(QString q)
     while(query.next())
     {
         QString track = query.value(0).toString();
-        std::cout << track.toStdString() << "\n";
         tracks.append(track);        
     }
     

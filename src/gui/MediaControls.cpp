@@ -166,8 +166,11 @@ void MediaControls::search()
     CollectionManager *cm = new CollectionManager;
     
     QString query = searchBar->text();
-    QList<QString> result = cm->search(query);
+    QStringList result = cm->search(query);
+    
     controller->setQueue(result);
+    
+    cm->close_db();
 }
 
 //Fills the music table with ID3 tag data.
