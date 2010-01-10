@@ -29,6 +29,7 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QKeySequence>
 #include <QtCore/QList>
+#include <QtGui/QLineEdit>
 #include <QtCore/QMap>
 #include <QtGui/QPushButton>
 #include <QtCore/QString>
@@ -46,6 +47,7 @@
 #include "../Controller.h"
 #include "../playlists/PlaylistManager.h"
 #include "../gui/widgets/ToggleButton.h"
+#include "../sql/CollectionManager.h"
 
 #define PLAYLIST_WIDTH 180
 
@@ -66,6 +68,7 @@ public slots:
     void changePlaylist(int);
     void shufflePressed();
     void repeatPressed();
+    void search();
 
 private:
     void init();
@@ -81,6 +84,7 @@ private:
     QPushButton *prev;
     ToggleButton *shuffleBtn;
     ToggleButton *repeatBtn;
+    QLineEdit *searchBar;
     QTableWidget *table;
     QTableWidget *playlistTable;
     QMap<QString, QString> metaMap;

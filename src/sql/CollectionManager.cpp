@@ -24,13 +24,14 @@
 
 CollectionManager::CollectionManager()
 {
+    connect_db();
 }
 
 bool CollectionManager::connect_db()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db = QSqlDatabase::addDatabase("QSQLITE");
     QString dbPath = QDir::homePath() + "/.kajammer/kj.db";
-
+    
     db.setDatabaseName(dbPath);
     bool open = db.open();
     
@@ -48,12 +49,46 @@ bool CollectionManager::connect_db()
     return open;
 }
 
-bool CollectionManager::addTrack(QString qtrack)
+bool CollectionManager::addTrack(QString track)
 {
-    return 1;
+    Controller *c = Controller::getInstance();
+    QMap<QString, QString> metaData = c->getMetadata(track);
+    QString title = metaData.value("TITLE");
+    QString artist = metaData.value("ARTIST");
+    QString album = metaData.value("ALBUM");
+    
+    QSqlQuery query;
+    query.exec("INSERT INTO music VALUES("
+                "'"+track+"',"
+                "'"+title+"',"
+                "'"+artist+"',"
+                "'"+album+"'"
+                ");");
+    
+    return true;
+}
+
+QStringList CollectionManager::search(QString q)
+{
+    QStringList tracks;
+    QSqlQuery query;
+    
+    query.exec("SELECT file FROM music WHERE "
+                "title LIKE '%"+q+"%'"
+                "OR artist LIKE '%"+q+"%'"
+                "OR album LIKE '%"+q+"%';");
+                
+    while(query.next())
+    {
+        QString track = query.value(0).toString();
+        tracks.append(track);        
+    }
+    
+    return tracks;
 }
 
 bool CollectionManager::close_db()
 {
-    return 1;
+    db.close();
+    return true;
 }

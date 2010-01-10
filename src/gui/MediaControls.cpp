@@ -39,6 +39,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(table, SIGNAL(cellClicked(int, int)), this, SLOT(tableClicked(int)));
     connect(playlistTable, SIGNAL(cellClicked(int, int)), this, SLOT(changePlaylist(int)));
     connect(listManager, SIGNAL(resetPlaylists()), this, SLOT(setupPlaylists()));
+    connect(searchBar, SIGNAL(returnPressed()), this, SLOT(search()));
     
     /* If table is empty, re-emit the song list.
      * If the user used -p on the command line, this class will not
@@ -72,6 +73,9 @@ void MediaControls::init()
     
     shuffleBtn = new ToggleButton("S");
     repeatBtn = new ToggleButton("R");
+    
+    searchBar = new QLineEdit("Search");
+    searchBar->setFixedWidth(150);
     
     //Table with meta info
     table = new QTableWidget;
@@ -113,6 +117,7 @@ void MediaControls::init()
     hLayout->addWidget(volumeSlider);
 
     QVBoxLayout *vLayout = new QVBoxLayout;
+    vLayout->addWidget(searchBar);
     vLayout->addLayout(tableLayout);
     vLayout->addWidget(seekSlider);
     vLayout->addLayout(hLayout);
@@ -154,6 +159,18 @@ void MediaControls::shufflePressed()
 void MediaControls::repeatPressed()
 {
     controller->toggleRepeat();
+}
+
+void MediaControls::search()
+{
+    CollectionManager *cm = new CollectionManager;
+    
+    QString query = searchBar->text();
+    QStringList result = cm->search(query);
+    
+    controller->setQueue(result);
+    
+    cm->close_db();
 }
 
 //Fills the music table with ID3 tag data.

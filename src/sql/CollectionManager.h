@@ -25,6 +25,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QDir>
+#include <QtCore/QList>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 
@@ -35,9 +36,13 @@ class CollectionManager : public QObject {
     
 public:
     CollectionManager();
-    static bool connect_db();
-    static bool close_db();
-    static bool addTrack(QString);
+    bool connect_db();
+    bool close_db();
+    bool addTrack(QString);
+    QStringList search(QString);
+    
+private:
+    QSqlDatabase db;    
 };
 
 #endif //_COLLECTIONMNAGER_H
