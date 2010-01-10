@@ -225,10 +225,13 @@ void Controller::setPrevSong()
     if(currentSong != 1 || isShuffle)
     {
         bool error = false;
-        if(isShuffle) error = shuffle();
-        if(isRepeat) repeat();
+        if(isShuffle)
+            error = shuffle();
+        if(isRepeat)
+            repeat();
     
-        if(!error) setSong(currentSong - 1);
+        if(!error)
+            setSong(currentSong - 1);
     }
 }
 
@@ -260,7 +263,8 @@ bool Controller::shuffle()
     /* don't shuffle if current song is not repeated
      * return false so setNextSong/setPrevSong will work,
      * and the song can repeat */
-    if(isRepeat && !repeated) return (error = false);
+    if(isRepeat && !repeated)
+        return (error = false);
 
     currentSong = (rand() % trackQueue.count());
     
