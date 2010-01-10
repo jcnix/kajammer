@@ -35,9 +35,12 @@ class CollectionManager : public QObject {
     
 public:
     CollectionManager();
-    static bool connect_db();
-    static bool close_db();
-    static bool addTrack(QString);
+    bool connect_db();
+    bool close_db();
+    bool addTrack(QString);
+    
+private:
+    QSqlDatabase db;    
 };
 
 #endif //_COLLECTIONMNAGER_H

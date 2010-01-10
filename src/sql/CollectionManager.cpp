@@ -28,9 +28,9 @@ CollectionManager::CollectionManager()
 
 bool CollectionManager::connect_db()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db = QSqlDatabase::addDatabase("QSQLITE");
     QString dbPath = QDir::homePath() + "/.kajammer/kj.db";
-
+    
     db.setDatabaseName(dbPath);
     bool open = db.open();
     
@@ -55,5 +55,6 @@ bool CollectionManager::addTrack(QString qtrack)
 
 bool CollectionManager::close_db()
 {
+    db.close();
     return 1;
 }
