@@ -29,8 +29,23 @@ CollectionManager::CollectionManager()
 bool CollectionManager::connect_db()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("/home/casey/.kajammer/kj.db");
-    return db.open();
+    QString dbPath = QDir::homePath() + "/.kajammer/kj.db";
+
+    db.setDatabaseName(dbPath);
+    bool open = db.open();
+    
+    if(open)
+    {
+        QSqlQuery query;
+        query.exec("CREATE TABLE IF NOT EXISTS music("
+                    "file text,"
+                    "title text,"
+                    "artist text,"
+                    "albmu text"
+                    ");");
+    }
+    
+    return open;
 }
 
 bool CollectionManager::addTrack(QString qtrack)

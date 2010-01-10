@@ -26,6 +26,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QDir>
 #include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
 
 #include "../Controller.h"
 
