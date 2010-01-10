@@ -111,9 +111,12 @@ void CollectionScanner::scan()
             if(music.length() > 0) {
                 p->newPlaylist(playlistName, music);
                 CollectionManager *cm = new CollectionManager;
+                cm->connect_db();
                 
                 for(int i = 0; i < music.length(); i++)
-                    cm->addTrack(music.at(i));                
+                    cm->addTrack(music.at(i));
+                
+                cm->close_db();
             }
         }
     }

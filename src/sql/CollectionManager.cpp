@@ -24,16 +24,21 @@
 
 CollectionManager::CollectionManager()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    addTrack("/home/casey/music/tetris.mp3");
 }
 
-int CollectionManager::addTrack(QString qtrack)
+bool CollectionManager::connect_db()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("/home/casey/.kajammer/kj.db");
+    return db.open();
+}
+
+bool CollectionManager::addTrack(QString qtrack)
 {
     return 1;
 }
 
-int CollectionManager::close_db()
+bool CollectionManager::close_db()
 {
     return 1;
 }
