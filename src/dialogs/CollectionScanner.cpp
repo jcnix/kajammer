@@ -70,6 +70,7 @@ void CollectionScanner::browseDir()
 
 void CollectionScanner::scan()
 {
+    CollectionManager *cm = new CollectionManager;
     QString startDir = dirInput->text();
     PlaylistManager *p = PlaylistManager::getInstance();
     
@@ -110,17 +111,15 @@ void CollectionScanner::scan()
             
             if(music.length() > 0) {
                 p->newPlaylist(playlistName, music);
-                CollectionManager *cm = new CollectionManager;
-                cm->connect_db();
                 
-                for(int i = 0; i < music.length(); i++)
+                for(int i = 0; i < music.length(); i++) {
                     cm->addTrack(music.at(i));
-                
-                cm->close_db();
+                }
             }
         }
     }
     
+    cm->close_db();
     accept();
 }
 
