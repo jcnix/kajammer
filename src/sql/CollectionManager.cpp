@@ -41,7 +41,7 @@ bool CollectionManager::connect_db()
                     "file text,"
                     "title text,"
                     "artist text,"
-                    "albmu text"
+                    "album text"
                     ");");
     }
     
