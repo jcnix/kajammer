@@ -71,6 +71,7 @@ int Manager::start(int argc, char *argv[], QApplication *app)
         }
         
         CollectionManager *cm = new CollectionManager();
+        cm->connect_db();
         cm->close_db();
         
         #ifdef HAVE_LASTFM_H

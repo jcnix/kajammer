@@ -8,9 +8,8 @@ FIND_PACKAGE( Qt4 REQUIRED )
 FIND_PACKAGE( Phonon REQUIRED )
 FIND_PACKAGE( Kajamtag )
 FIND_PACKAGE( LastFM )
-FIND_PACKAGE( Sqlite3 )
 
-SET( QT_USE_GUI TRUE )
+SET( QT_USE_QTSQL TRUE )
 INCLUDE( ${QT_USE_FILE} )
 INCLUDE ( CheckIncludeFiles )
 CHECK_INCLUDE_FILES ( kajamtag/kajamtag.h HAVE_KAJAMTAG_H )
@@ -74,7 +73,7 @@ ENDIF( LastFM_LIBRARY )
 INCLUDE_DIRECTORIES(
         headers/
         ${QT_INCLUDE_DIR}
-        ${QT_GUI_INCLUDE_DIR}
+        ${QT_QTSQL_INCLUDE_DIR}
         ${QTNETWORKHEAD}
         ${QTXMLHEAD}
 )
@@ -84,7 +83,7 @@ ADD_EXECUTABLE( kajammer ${kajammer_SRCS} ${kajammer_MOC_HEADERS} )
 TARGET_LINK_LIBRARIES(
         kajammer
         ${QT_LIBRARIES}
-        ${QT_GUI_LIBRARIES}
+        ${QT_QTSQL_LIBRARIES}
         ${Phonon_LIBRARY}
         ${Kajamtag_LIB}
         ${LastFM_LIB}
