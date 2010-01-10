@@ -47,6 +47,7 @@
 #include "../Controller.h"
 #include "../playlists/PlaylistManager.h"
 #include "../gui/widgets/ToggleButton.h"
+#include "../sql/CollectionManager.h"
 
 #define PLAYLIST_WIDTH 180
 
@@ -67,6 +68,7 @@ public slots:
     void changePlaylist(int);
     void shufflePressed();
     void repeatPressed();
+    void search();
 
 private:
     void init();

@@ -67,9 +67,9 @@ bool CollectionManager::addTrack(QString track)
     return true;
 }
 
-QList<QString> CollectionManager::search(QString q)
+QStringList CollectionManager::search(QString q)
 {
-    QList<QString> tracks;
+    QStringList tracks;
     QSqlQuery query;
     
     query.exec("SELECT file FROM music WHERE "

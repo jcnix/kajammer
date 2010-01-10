@@ -39,6 +39,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(table, SIGNAL(cellClicked(int, int)), this, SLOT(tableClicked(int)));
     connect(playlistTable, SIGNAL(cellClicked(int, int)), this, SLOT(changePlaylist(int)));
     connect(listManager, SIGNAL(resetPlaylists()), this, SLOT(setupPlaylists()));
+    connect(searchBar, SIGNAL(returnPressed()), this, SLOT(search()));
     
     /* If table is empty, re-emit the song list.
      * If the user used -p on the command line, this class will not
@@ -158,6 +159,15 @@ void MediaControls::shufflePressed()
 void MediaControls::repeatPressed()
 {
     controller->toggleRepeat();
+}
+
+void MediaControls::search()
+{
+    CollectionManager *cm = new CollectionManager;
+    
+    QString query = searchBar->text();
+    QList<QString> result = cm->search(query);
+    controller->setQueue(result);
 }
 
 //Fills the music table with ID3 tag data.

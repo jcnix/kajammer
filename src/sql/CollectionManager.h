@@ -39,7 +39,7 @@ public:
     bool connect_db();
     bool close_db();
     bool addTrack(QString);
-    QList<QString> search(QString);
+    QStringList search(QString);
     
 private:
     QSqlDatabase db;    
