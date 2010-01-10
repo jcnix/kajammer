@@ -29,6 +29,7 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QKeySequence>
 #include <QtCore/QList>
+#include <QtGui/QLineEdit>
 #include <QtCore/QMap>
 #include <QtGui/QPushButton>
 #include <QtCore/QString>
@@ -81,6 +82,7 @@ private:
     QPushButton *prev;
     ToggleButton *shuffleBtn;
     ToggleButton *repeatBtn;
+    QLineEdit *searchBar;
     QTableWidget *table;
     QTableWidget *playlistTable;
     QMap<QString, QString> metaMap;

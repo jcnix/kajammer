@@ -73,6 +73,9 @@ void MediaControls::init()
     shuffleBtn = new ToggleButton("S");
     repeatBtn = new ToggleButton("R");
     
+    searchBar = new QLineEdit("Search");
+    searchBar->setFixedWidth(150);
+    
     //Table with meta info
     table = new QTableWidget;
     table->setColumnCount(4);
@@ -113,6 +116,7 @@ void MediaControls::init()
     hLayout->addWidget(volumeSlider);
 
     QVBoxLayout *vLayout = new QVBoxLayout;
+    vLayout->addWidget(searchBar);
     vLayout->addLayout(tableLayout);
     vLayout->addWidget(seekSlider);
     vLayout->addLayout(hLayout);
