@@ -25,6 +25,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QDir>
+#include <QtCore/QList>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 
@@ -38,6 +39,7 @@ public:
     bool connect_db();
     bool close_db();
     bool addTrack(QString);
+    QList<QString> search(QString);
     
 private:
     QSqlDatabase db;    

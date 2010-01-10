@@ -67,6 +67,26 @@ bool CollectionManager::addTrack(QString track)
     return true;
 }
 
+QList<QString> CollectionManager::search(QString q)
+{
+    QList<QString> tracks;
+    QSqlQuery query;
+    
+    query.exec("SELECT file FROM music WHERE "
+                "title LIKE '%"+q+"%'"
+                "OR artist LIKE '%"+q+"%'"
+                "OR album LIKE '%"+q+"%';");
+                
+    while(query.next())
+    {
+        QString track = query.value(0).toString();
+        std::cout << track.toStdString() << "\n";
+        tracks.append(track);        
+    }
+    
+    return tracks;
+}
+
 bool CollectionManager::close_db()
 {
     db.close();
