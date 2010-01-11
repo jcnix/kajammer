@@ -47,13 +47,22 @@ void CollectionScanner::init()
     dirInput = new QLineEdit;
     browseDirButton = new QPushButton(style()->standardIcon(QStyle::SP_DialogOpenButton), "", this);
     
+    chkPlaylists = new QCheckBox("Playlists");
+    chkDb = new QCheckBox("Database");
+    chkDb->setCheckState(Qt::Checked);
+    
     QHBoxLayout *hLayout = new QHBoxLayout;
     hLayout->addWidget(dirLabel);
     hLayout->addWidget(dirInput);
     hLayout->addWidget(browseDirButton);
     
+    QHBoxLayout *checkBoxes = new QHBoxLayout;
+    checkBoxes->addWidget(chkPlaylists);
+    checkBoxes->addWidget(chkDb);
+    
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addLayout(hLayout);
+    vLayout->addLayout(checkBoxes);
     vLayout->addWidget(buttonBox);
     setLayout(vLayout);
 }
