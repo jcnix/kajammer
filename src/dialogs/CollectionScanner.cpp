@@ -35,8 +35,12 @@ CollectionScanner::~CollectionScanner()
     delete dirLabel;
     delete dirInput;
     delete browseDirButton;
-
+    delete chkPlaylists;
+    delete chkDb;
     delete buttonBox;
+    delete hLayout;
+    delete checkBoxes;
+    delete vLayout;
 }
 
 void CollectionScanner::init()
@@ -51,16 +55,16 @@ void CollectionScanner::init()
     chkDb = new QCheckBox("Database");
     chkDb->setCheckState(Qt::Checked);
     
-    QHBoxLayout *hLayout = new QHBoxLayout;
+    hLayout = new QHBoxLayout;
     hLayout->addWidget(dirLabel);
     hLayout->addWidget(dirInput);
     hLayout->addWidget(browseDirButton);
     
-    QHBoxLayout *checkBoxes = new QHBoxLayout;
+    checkBoxes = new QHBoxLayout;
     checkBoxes->addWidget(chkPlaylists);
     checkBoxes->addWidget(chkDb);
     
-    QVBoxLayout *vLayout = new QVBoxLayout;
+    vLayout = new QVBoxLayout;
     vLayout->addLayout(hLayout);
     vLayout->addLayout(checkBoxes);
     vLayout->addWidget(buttonBox);

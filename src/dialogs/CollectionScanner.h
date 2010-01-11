@@ -63,6 +63,10 @@ private:
     QPushButton *browseDirButton;
     QCheckBox *chkPlaylists;
     QCheckBox *chkDb;
+    
+    QHBoxLayout *hLayout;
+    QHBoxLayout *checkBoxes;
+    QVBoxLayout *vLayout;
 
     QDialogButtonBox *buttonBox;
 };
