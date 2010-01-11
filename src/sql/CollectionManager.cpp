@@ -39,7 +39,7 @@ bool CollectionManager::connect_db()
     {
         QSqlQuery query;
         query.exec("CREATE TABLE IF NOT EXISTS music("
-                    "file text,"
+                    "file text UNIQUE,"
                     "title text,"
                     "artist text,"
                     "album text"
