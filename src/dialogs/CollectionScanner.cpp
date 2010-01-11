@@ -83,6 +83,13 @@ void CollectionScanner::browseDir()
 
 void CollectionScanner::scan()
 {
+    if(chkPlaylists->checkState() == Qt::Unchecked  &&
+        chkDb->checkState() == Qt::Unchecked)
+    {
+        //Looks like we're not doing anything
+        return;
+    }
+    
     CollectionManager *cm = new CollectionManager;
     QString startDir = dirInput->text();
     PlaylistManager *p = PlaylistManager::getInstance();
@@ -123,10 +130,14 @@ void CollectionScanner::scan()
             QStringList music = ls_music(playlist);
             
             if(music.length() > 0) {
-                p->newPlaylist(playlistName, music);
+                if(chkPlaylists->checkState() == Qt::Checked)
+                    p->newPlaylist(playlistName, music);
                 
-                for(int i = 0; i < music.length(); i++) {
-                    cm->addTrack(music.at(i));
+                if(chkDb->checkState() == Qt::Checked)
+                {
+                    for(int i = 0; i < music.length(); i++) {
+                        cm->addTrack(music.at(i));
+                    }
                 }
             }
         }
