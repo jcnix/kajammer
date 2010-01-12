@@ -92,6 +92,9 @@ int Manager::exit()
     
     //Quit now that everything is cleaned up.
     m_app->exit(0);
+    delete lastfm;
+    delete controller;
+    delete options;
     
     return 1;
 }
