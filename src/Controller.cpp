@@ -130,17 +130,21 @@ QMap<QString, QString> Controller::getMetadata(QString file)
     artist = QString(c_artist);
     album = QString(c_album);
     
-    free(cfile);
-    free(c_title);
-    free(c_artist);
-    free(c_album);
-    
+    //"BAD_TAG" means Kajamtag doesn't 
+    //recognize the tag format.
     //If one is bad, they're all bad.
     if(title.compare("BAD_TAG") == 0) {
         title = "";
         artist = "";
         album = "";
     }
+    else
+    {
+        free(c_title);
+        free(c_artist);
+        free(c_album);
+    }
+    free(cfile);
     #endif
     
     #ifndef HAVE_KAJAMTAG_H
@@ -150,7 +154,6 @@ QMap<QString, QString> Controller::getMetadata(QString file)
     album = metaData.value("ALBUM");
     #endif
     
-    //"BAD_TAG" means Kajamtag doesn't recognize the tag format.
     if (title.compare("") == 0)
     {
         #ifdef HAVE_KAJAMTAG_H
