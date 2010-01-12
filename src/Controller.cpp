@@ -130,6 +130,11 @@ QMap<QString, QString> Controller::getMetadata(QString file)
     artist = QString(c_artist);
     album = QString(c_album);
     
+    free(cfile);
+    free(c_title);
+    free(c_artist);
+    free(c_album);
+    
     //If one is bad, they're all bad.
     if(title.compare("BAD_TAG") == 0) {
         title = "";
