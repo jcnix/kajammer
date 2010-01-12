@@ -58,6 +58,7 @@ private:
     
     Controller *controller;
     Options *options;
+    Cli *cli;
     #ifdef HAVE_LASTFM_H
     LastFm *lastfm;
     #endif
