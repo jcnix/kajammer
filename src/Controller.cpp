@@ -83,8 +83,6 @@ void Controller::setQueue(QStringList queue)
             trackQueue[i + 1] = source;
         }
         emitList();
-        
-        setNextSong(); //NextSong is track 1, do this so shuffle can kick in
     }
 }
 
