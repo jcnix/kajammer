@@ -79,7 +79,8 @@ void Controller::setQueue(QStringList queue)
         {
             Phonon::MediaSource source = queue.at(i);
             
-            //turn a 0 into a 1, much more easy and standard way of dealing with the tracks.
+            //turn a 0 into a 1, much more easy and standard way of dealing
+            //with the tracks.
             trackQueue[i + 1] = source;
         }
         emitList();

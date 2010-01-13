@@ -171,6 +171,7 @@ void MediaControls::search()
     controller->setQueue(result);
     
     cm->close_db();
+    delete cm;
 }
 
 //Fills the music table with ID3 tag data.
