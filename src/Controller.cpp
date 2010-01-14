@@ -139,9 +139,9 @@ QMap<QString, QString> Controller::getMetadata(QString file)
     }
     else
     {
-        free(c_title);
-        free(c_artist);
-        free(c_album);
+        //free(c_title);
+        //free(c_artist);
+        //free(c_album);
     }
     free(cfile);
     #endif
@@ -308,10 +308,10 @@ void Controller::repeat()
 void Controller::changePlaylist(QString name, int index)
 {
     // Clicking the current List won't restart it
-    if(currentList != index)
-    {
+    //if(currentList != index)
+    //{
         currentList = index;
         QStringList list = listManager->getPlaylistContents(name);
         controller->setQueue(list);
-    }
+    //}
 }

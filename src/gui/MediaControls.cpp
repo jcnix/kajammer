@@ -172,11 +172,13 @@ void MediaControls::search()
     
     cm->close_db();
     delete cm;
+    
+    setMetaData();
 }
 
 //Fills the music table with ID3 tag data.
 void MediaControls::setMetaData()
-{    
+{
     //kajamtag will only read one file at a time
     //Phonon will use signals to advance to the next file
     #ifdef HAVE_KAJAMTAG_H
@@ -187,7 +189,7 @@ void MediaControls::setMetaData()
         #else
         QMap<QString, QString> metaData = controller->getMetadata("");
         #endif
-    
+        
         QString title = metaData.value("TITLE");
         QString artist = metaData.value("ARTIST");
         QString album = metaData.value("ALBUM");
@@ -216,7 +218,7 @@ void MediaControls::setMetaData()
         Phonon::MediaSource source = controller->getMetaResolver()->currentSource();
         int index = metaSources.indexOf(source) + 1;
         if (metaSources.count() > index) 
-        {            
+        {
             table->resizeColumnsToContents();
             
             if (table->columnWidth(1) > 300)
