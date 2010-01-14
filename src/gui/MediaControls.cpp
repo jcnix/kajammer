@@ -35,7 +35,9 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(controller, SIGNAL(songChanged(int)), this, SLOT(songChanged(int)));
     connect(controller, SIGNAL(queueSet(QList<Phonon::MediaSource>)), this,
             SLOT(getQueue(QList<Phonon::MediaSource>)));
+    #ifndef HAVE_KAJAMTAG_H
     connect(controller->getMetaResolver(), SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));
+    #endif
     connect(table, SIGNAL(cellClicked(int, int)), this, SLOT(tableClicked(int)));
     connect(playlistTable, SIGNAL(cellClicked(int, int)), this, SLOT(changePlaylist(int)));
     connect(listManager, SIGNAL(resetPlaylists()), this, SLOT(setupPlaylists()));
@@ -134,11 +136,11 @@ void MediaControls::songChanged(int row)
 void MediaControls::getQueue(QList<Phonon::MediaSource> meta)
 {
     metaSources = meta;
-    #ifndef HAVE_KAJAMTAG_H
-    setMetaData();
-    #endif
     table->setRowCount(0);
     tableIndex = 1;
+    #ifdef HAVE_KAJAMTAG_H
+    setMetaData();
+    #endif
 }
 
 //Created these functions to reset keyboard shortcuts
@@ -173,8 +175,6 @@ void MediaControls::search()
     
     cm->close_db();
     delete cm;
-    
-    setMetaData();
 }
 
 //Fills the music table with ID3 tag data.
