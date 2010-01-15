@@ -209,6 +209,16 @@ void Controller::changeSong(Phonon::MediaSource song)
     mediaObject->play();
 }
 
+void Controller::play()
+{
+    mediaObject->play();
+}
+
+void Controller::pause()
+{
+    mediaObject->pause();
+}
+
 void Controller::setNextSong()
 {
     //std::cout << "Controller::setNextSong();\n";
@@ -303,6 +313,31 @@ void Controller::repeat()
     {
         repeated = false;
     }
+}
+
+Phonon::AudioOutput* getAudioOutput()
+{
+    return audioOutput;
+}
+
+Phonon::MediaObject* getMediaObject()
+{
+    return mediaObject;
+}
+
+Phonon::MediaObject* getMetaResolver()
+{
+    return metaResolver;
+}
+
+bool isPlaying()
+{
+    return (mediaObject->state() == Phonon::PlayingState);
+}
+
+bool isPaused()
+{
+    return (mediaObject->state() == Phonon::PausedState);
 }
 
 void Controller::changePlaylist(QString name, int index)

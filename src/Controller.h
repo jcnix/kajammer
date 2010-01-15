@@ -60,8 +60,8 @@ public:
 public slots:
     void setSong(int);
     void changeSong(Phonon::MediaSource);
-    void play() { mediaObject->play(); }
-    void pause() { mediaObject->pause(); }
+    void play();
+    void pause();
     void setNextSong();
     void setPrevSong();
     void changePlaylist(QString, int);
