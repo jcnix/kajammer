@@ -315,27 +315,32 @@ void Controller::repeat()
     }
 }
 
-Phonon::AudioOutput* getAudioOutput()
+void Controller::resetCurrentList()
+{
+    currentList = -1;
+}
+
+Phonon::AudioOutput* Controller::getAudioOutput()
 {
     return audioOutput;
 }
 
-Phonon::MediaObject* getMediaObject()
+Phonon::MediaObject* Controller::getMediaObject()
 {
     return mediaObject;
 }
 
-Phonon::MediaObject* getMetaResolver()
+Phonon::MediaObject* Controller::getMetaResolver()
 {
     return metaResolver;
 }
 
-bool isPlaying()
+bool Controller::isPlaying()
 {
     return (mediaObject->state() == Phonon::PlayingState);
 }
 
-bool isPaused()
+bool Controller::isPaused()
 {
     return (mediaObject->state() == Phonon::PausedState);
 }
@@ -343,10 +348,10 @@ bool isPaused()
 void Controller::changePlaylist(QString name, int index)
 {
     // Clicking the current List won't restart it
-    //if(currentList != index)
-    //{
+    if(currentList != index)
+    {
         currentList = index;
         QStringList list = listManager->getPlaylistContents(name);
         controller->setQueue(list);
-    //}
+    }
 }

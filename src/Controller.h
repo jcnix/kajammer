@@ -48,14 +48,14 @@ public:
     void emitList();
     QMap<QString, QString> getMetadata(QString file);
     QMap<QString, QString> getCurrentMetadata();
-    void resetCurrentList() { currentList = -1; }
+    void resetCurrentList();
     
-    Phonon::AudioOutput* getAudioOutput() { return audioOutput; }
-    Phonon::MediaObject* getMediaObject() { return mediaObject; }
-    Phonon::MediaObject* getMetaResolver() { return metaResolver; }
+    Phonon::AudioOutput* getAudioOutput();
+    Phonon::MediaObject* getMediaObject();
+    Phonon::MediaObject* getMetaResolver();
     
-    bool isPlaying() { return (mediaObject->state() == Phonon::PlayingState); }
-    bool isPaused() { return (mediaObject->state() == Phonon::PausedState); }
+    bool isPlaying();
+    bool isPaused();
     
 public slots:
     void setSong(int);
