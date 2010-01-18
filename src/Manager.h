@@ -34,6 +34,7 @@
 #include "Controller.h"
 #include "Options.h"
 #include "gui/widgets/TrayIcon.h"
+#include "sql/CollectionManager.h"
 
 #ifdef HAVE_LASTFM_H
 #include "services/LastFM.h"
@@ -57,6 +58,7 @@ private:
     
     Controller *controller;
     Options *options;
+    Cli *cli;
     #ifdef HAVE_LASTFM_H
     LastFm *lastfm;
     #endif

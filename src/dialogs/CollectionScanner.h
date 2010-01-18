@@ -23,6 +23,7 @@
 #ifndef _COLLECTIONSCANNER_H
 #define _COLLECTIONSCANNER_H
 
+#include <QtGui/QCheckBox>
 #include <QtGui/QCloseEvent>
 #include <QtGui/QDialog>
 #include <QtGui/QLabel>
@@ -36,6 +37,7 @@
 #include <QtCore/QDir>
 
 #include "../playlists/PlaylistManager.h"
+#include "../sql/CollectionManager.h"
 
 class CollectionScanner : public QDialog
 {
@@ -59,6 +61,12 @@ private:
     QLabel *dirLabel;
     QLineEdit *dirInput;
     QPushButton *browseDirButton;
+    QCheckBox *chkPlaylists;
+    QCheckBox *chkDb;
+    
+    QHBoxLayout *hLayout;
+    QHBoxLayout *checkBoxes;
+    QVBoxLayout *vLayout;
 
     QDialogButtonBox *buttonBox;
 };

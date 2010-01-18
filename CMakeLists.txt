@@ -9,7 +9,7 @@ FIND_PACKAGE( Phonon REQUIRED )
 FIND_PACKAGE( Kajamtag )
 FIND_PACKAGE( LastFM )
 
-SET( QT_USE_GUI TRUE )
+SET( QT_USE_QTSQL TRUE )
 INCLUDE( ${QT_USE_FILE} )
 INCLUDE ( CheckIncludeFiles )
 CHECK_INCLUDE_FILES ( kajamtag/kajamtag.h HAVE_KAJAMTAG_H )
@@ -33,7 +33,8 @@ SET( kajammer_SRCS
 	src/playlists/PlaylistManager.cpp
 	src/dialogs/PlaylistEditor.cpp
 	src/gui/widgets/ToggleButton.cpp
-	src/gui/widgets/TrayIcon.cpp 
+	src/gui/widgets/TrayIcon.cpp
+	src/sql/CollectionManager.cpp
 )
 
 SET( kajammer_MOC_HEADERS
@@ -52,6 +53,7 @@ SET( kajammer_MOC_HEADERS
 	src/dialogs/PlaylistEditor.h
 	src/gui/widgets/ToggleButton.h
 	src/gui/widgets/TrayIcon.h
+	src/sql/CollectionManager.h
 )
 
 QT4_WRAP_CPP( kajammer_MOC_HEADERS ${kajammer_MOC_HEADERS} )
@@ -71,7 +73,7 @@ ENDIF( LastFM_LIBRARY )
 INCLUDE_DIRECTORIES(
         headers/
         ${QT_INCLUDE_DIR}
-        ${QT_GUI_INCLUDE_DIR}
+        ${QT_QTSQL_INCLUDE_DIR}
         ${QTNETWORKHEAD}
         ${QTXMLHEAD}
 )
@@ -81,12 +83,13 @@ ADD_EXECUTABLE( kajammer ${kajammer_SRCS} ${kajammer_MOC_HEADERS} )
 TARGET_LINK_LIBRARIES(
         kajammer
         ${QT_LIBRARIES}
-        ${QT_GUI_LIBRARIES}
+        ${QT_QTSQL_LIBRARIES}
         ${Phonon_LIBRARY}
         ${Kajamtag_LIB}
         ${LastFM_LIB}
         ${QTNETWORKLIB}
         ${QTXMLLIB}
+		${Sqlite3_LIBRARY}
 )
 
 INSTALL(TARGETS kajammer DESTINATION /usr/bin)

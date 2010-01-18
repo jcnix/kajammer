@@ -79,12 +79,11 @@ void Controller::setQueue(QStringList queue)
         {
             Phonon::MediaSource source = queue.at(i);
             
-            //turn a 0 into a 1, much more easy and standard way of dealing with the tracks.
+            //turn a 0 into a 1, much more easy and standard way of dealing
+            //with the tracks.
             trackQueue[i + 1] = source;
         }
         emitList();
-        
-        setNextSong(); //NextSong is track 1, do this so shuffle can kick in
     }
 }
 
@@ -130,12 +129,21 @@ QMap<QString, QString> Controller::getMetadata(QString file)
     artist = QString(c_artist);
     album = QString(c_album);
     
+    //"BAD_TAG" means Kajamtag doesn't 
+    //recognize the tag format.
     //If one is bad, they're all bad.
     if(title.compare("BAD_TAG") == 0) {
         title = "";
         artist = "";
         album = "";
     }
+    else
+    {
+        //free(c_title);
+        //free(c_artist);
+        //free(c_album);
+    }
+    free(cfile);
     #endif
     
     #ifndef HAVE_KAJAMTAG_H
@@ -145,7 +153,6 @@ QMap<QString, QString> Controller::getMetadata(QString file)
     album = metaData.value("ALBUM");
     #endif
     
-    //"BAD_TAG" means Kajamtag doesn't recognize the tag format.
     if (title.compare("") == 0)
     {
         #ifdef HAVE_KAJAMTAG_H
@@ -202,6 +209,16 @@ void Controller::changeSong(Phonon::MediaSource song)
     mediaObject->play();
 }
 
+void Controller::play()
+{
+    mediaObject->play();
+}
+
+void Controller::pause()
+{
+    mediaObject->pause();
+}
+
 void Controller::setNextSong()
 {
     //std::cout << "Controller::setNextSong();\n";
@@ -209,10 +226,13 @@ void Controller::setNextSong()
     if(currentSong < trackQueue.count()  || isShuffle || (isRepeat && !repeated))
     {
         bool error = false;
-        if(isShuffle) error = shuffle();
-        if(isRepeat) repeat();
+        if(isShuffle)
+            error = shuffle();
+        if(isRepeat)
+            repeat();
     
-        if(!error) setSong(currentSong + 1);
+        if(!error)
+            setSong(currentSong + 1);
     }
 }
 
@@ -222,10 +242,13 @@ void Controller::setPrevSong()
     if(currentSong != 1 || isShuffle)
     {
         bool error = false;
-        if(isShuffle) error = shuffle();
-        if(isRepeat) repeat();
+        if(isShuffle)
+            error = shuffle();
+        if(isRepeat)
+            repeat();
     
-        if(!error) setSong(currentSong - 1);
+        if(!error)
+            setSong(currentSong - 1);
     }
 }
 
@@ -257,7 +280,8 @@ bool Controller::shuffle()
     /* don't shuffle if current song is not repeated
      * return false so setNextSong/setPrevSong will work,
      * and the song can repeat */
-    if(isRepeat && !repeated) return (error = false);
+    if(isRepeat && !repeated)
+        return (error = false);
 
     currentSong = (rand() % trackQueue.count());
     
@@ -289,6 +313,36 @@ void Controller::repeat()
     {
         repeated = false;
     }
+}
+
+void Controller::resetCurrentList()
+{
+    currentList = -1;
+}
+
+Phonon::AudioOutput* Controller::getAudioOutput()
+{
+    return audioOutput;
+}
+
+Phonon::MediaObject* Controller::getMediaObject()
+{
+    return mediaObject;
+}
+
+Phonon::MediaObject* Controller::getMetaResolver()
+{
+    return metaResolver;
+}
+
+bool Controller::isPlaying()
+{
+    return (mediaObject->state() == Phonon::PlayingState);
+}
+
+bool Controller::isPaused()
+{
+    return (mediaObject->state() == Phonon::PausedState);
 }
 
 void Controller::changePlaylist(QString name, int index)

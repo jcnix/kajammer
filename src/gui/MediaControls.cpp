@@ -35,10 +35,14 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(controller, SIGNAL(songChanged(int)), this, SLOT(songChanged(int)));
     connect(controller, SIGNAL(queueSet(QList<Phonon::MediaSource>)), this,
             SLOT(getQueue(QList<Phonon::MediaSource>)));
+    #ifndef HAVE_KAJAMTAG_H
     connect(controller->getMetaResolver(), SIGNAL(metaDataChanged()), this, SLOT(setMetaData()));
+    #endif
     connect(table, SIGNAL(cellClicked(int, int)), this, SLOT(tableClicked(int)));
     connect(playlistTable, SIGNAL(cellClicked(int, int)), this, SLOT(changePlaylist(int)));
     connect(listManager, SIGNAL(resetPlaylists()), this, SLOT(setupPlaylists()));
+    connect(searchBar, SIGNAL(returnPressed()), this, SLOT(search()));
+    connect(searchBar, SIGNAL(textEdited(QString)), this, SLOT(search()));
     
     /* If table is empty, re-emit the song list.
      * If the user used -p on the command line, this class will not
@@ -72,6 +76,9 @@ void MediaControls::init()
     
     shuffleBtn = new ToggleButton("S");
     repeatBtn = new ToggleButton("R");
+    
+    searchBar = new QLineEdit("Search");
+    searchBar->setFixedWidth(150);
     
     //Table with meta info
     table = new QTableWidget;
@@ -113,6 +120,7 @@ void MediaControls::init()
     hLayout->addWidget(volumeSlider);
 
     QVBoxLayout *vLayout = new QVBoxLayout;
+    vLayout->addWidget(searchBar);
     vLayout->addLayout(tableLayout);
     vLayout->addWidget(seekSlider);
     vLayout->addLayout(hLayout);
@@ -128,11 +136,11 @@ void MediaControls::songChanged(int row)
 void MediaControls::getQueue(QList<Phonon::MediaSource> meta)
 {
     metaSources = meta;
-    #ifndef HAVE_KAJAMTAG_H
-    setMetaData();
-    #endif
     table->setRowCount(0);
     tableIndex = 1;
+    #ifdef HAVE_KAJAMTAG_H
+    setMetaData();
+    #endif
 }
 
 //Created these functions to reset keyboard shortcuts
@@ -156,9 +164,22 @@ void MediaControls::repeatPressed()
     controller->toggleRepeat();
 }
 
+void MediaControls::search()
+{
+    CollectionManager *cm = new CollectionManager;
+    
+    QString query = searchBar->text();
+    QStringList result = cm->search(query);
+    
+    controller->setQueue(result);
+    
+    cm->close_db();
+    delete cm;
+}
+
 //Fills the music table with ID3 tag data.
 void MediaControls::setMetaData()
-{    
+{
     //kajamtag will only read one file at a time
     //Phonon will use signals to advance to the next file
     #ifdef HAVE_KAJAMTAG_H
@@ -169,7 +190,7 @@ void MediaControls::setMetaData()
         #else
         QMap<QString, QString> metaData = controller->getMetadata("");
         #endif
-    
+        
         QString title = metaData.value("TITLE");
         QString artist = metaData.value("ARTIST");
         QString album = metaData.value("ALBUM");
@@ -198,7 +219,7 @@ void MediaControls::setMetaData()
         Phonon::MediaSource source = controller->getMetaResolver()->currentSource();
         int index = metaSources.indexOf(source) + 1;
         if (metaSources.count() > index) 
-        {            
+        {
             table->resizeColumnsToContents();
             
             if (table->columnWidth(1) > 300)

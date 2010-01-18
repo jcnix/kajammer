@@ -35,8 +35,12 @@ CollectionScanner::~CollectionScanner()
     delete dirLabel;
     delete dirInput;
     delete browseDirButton;
-
+    delete chkPlaylists;
+    delete chkDb;
     delete buttonBox;
+    delete hLayout;
+    delete checkBoxes;
+    delete vLayout;
 }
 
 void CollectionScanner::init()
@@ -47,13 +51,22 @@ void CollectionScanner::init()
     dirInput = new QLineEdit;
     browseDirButton = new QPushButton(style()->standardIcon(QStyle::SP_DialogOpenButton), "", this);
     
-    QHBoxLayout *hLayout = new QHBoxLayout;
+    chkPlaylists = new QCheckBox("Playlists");
+    chkDb = new QCheckBox("Database");
+    chkDb->setCheckState(Qt::Checked);
+    
+    hLayout = new QHBoxLayout;
     hLayout->addWidget(dirLabel);
     hLayout->addWidget(dirInput);
     hLayout->addWidget(browseDirButton);
     
-    QVBoxLayout *vLayout = new QVBoxLayout;
+    checkBoxes = new QHBoxLayout;
+    checkBoxes->addWidget(chkPlaylists);
+    checkBoxes->addWidget(chkDb);
+    
+    vLayout = new QVBoxLayout;
     vLayout->addLayout(hLayout);
+    vLayout->addLayout(checkBoxes);
     vLayout->addWidget(buttonBox);
     setLayout(vLayout);
 }
@@ -70,6 +83,14 @@ void CollectionScanner::browseDir()
 
 void CollectionScanner::scan()
 {
+    if(chkPlaylists->checkState() == Qt::Unchecked  &&
+        chkDb->checkState() == Qt::Unchecked)
+    {
+        //Looks like we're not doing anything
+        return;
+    }
+    
+    CollectionManager *cm = new CollectionManager;
     QString startDir = dirInput->text();
     PlaylistManager *p = PlaylistManager::getInstance();
     
@@ -108,11 +129,21 @@ void CollectionScanner::scan()
 
             QStringList music = ls_music(playlist);
             
-            if(music.length() > 0)
-                p->newPlaylist(playlistName, music);
+            if(music.length() > 0) {
+                if(chkPlaylists->checkState() == Qt::Checked)
+                    p->newPlaylist(playlistName, music);
+                
+                if(chkDb->checkState() == Qt::Checked)
+                {
+                    for(int i = 0; i < music.length(); i++) {
+                        cm->addTrack(music.at(i));
+                    }
+                }
+            }
         }
     }
     
+    cm->close_db();
     accept();
 }
 

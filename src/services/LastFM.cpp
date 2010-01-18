@@ -43,6 +43,11 @@ LastFm::LastFm()
     init();
 }
 
+LastFm::~LastFm()
+{
+    delete as;
+}
+
 void LastFm::init()
 {
     if(options->useLastFm())
