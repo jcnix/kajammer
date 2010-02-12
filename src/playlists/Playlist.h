@@ -31,7 +31,7 @@
 #include <QtCore/QTextStream>
 #include <iostream>
 
-#include "../kajammer.h"
+#include "../headers/kajammer.h"
 
 class Playlist : public QObject
 {

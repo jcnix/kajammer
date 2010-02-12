@@ -33,7 +33,7 @@
 #include <iostream>
 
 #include "config.h"
-#include "kajammer.h"
+#include "headers/kajammer.h"
 
 class Options
 {

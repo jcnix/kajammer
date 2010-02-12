@@ -32,7 +32,7 @@
 #include <QtGui/QPixmap>
 #include <QtGui/QVBoxLayout>
 
-#include "../kajammer.h"
+#include "../headers/kajammer.h"
 
 class AboutDialog : public QDialog
 {

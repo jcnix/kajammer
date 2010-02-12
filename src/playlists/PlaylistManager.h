@@ -34,7 +34,7 @@
 #include <iostream>
 
 #include "Playlist.h"
-#include "../kajammer.h"
+#include "../headers/kajammer.h"
 
 class PlaylistManager : public QObject
 {
