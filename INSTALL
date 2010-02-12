@@ -10,6 +10,7 @@ gstreamer
 gcc
 gcc-c++
 gstreamer-plugins-ugly (in rpmfusion, mp3 support)
+liblastfm (for optional Last.fm support)
 
 Dependencies for Ubuntu (Gnome):
 build-essential
