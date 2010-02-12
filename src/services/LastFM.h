@@ -47,6 +47,7 @@ class LastFm : public QObject
     
 public:
     LastFm();
+    ~LastFm();
     void init();
 
 public slots:

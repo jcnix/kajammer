@@ -79,12 +79,11 @@ void Controller::setQueue(QStringList queue)
         {
             Phonon::MediaSource source = queue.at(i);
             
-            //turn a 0 into a 1, much more easy and standard way of dealing with the tracks.
+            //turn a 0 into a 1, much more easy and standard way of dealing
+            //with the tracks.
             trackQueue[i + 1] = source;
         }
         emitList();
-        
-        setNextSong(); //NextSong is track 1, do this so shuffle can kick in
     }
 }
 
@@ -130,12 +129,21 @@ QMap<QString, QString> Controller::getMetadata(QString file)
     artist = QString(c_artist);
     album = QString(c_album);
     
+    //"BAD_TAG" means Kajamtag doesn't 
+    //recognize the tag format.
     //If one is bad, they're all bad.
     if(title.compare("BAD_TAG") == 0) {
         title = "";
         artist = "";
         album = "";
     }
+    else
+    {
+        //free(c_title);
+        //free(c_artist);
+        //free(c_album);
+    }
+    free(cfile);
     #endif
     
     #ifndef HAVE_KAJAMTAG_H
@@ -145,7 +153,6 @@ QMap<QString, QString> Controller::getMetadata(QString file)
     album = metaData.value("ALBUM");
     #endif
     
-    //"BAD_TAG" means Kajamtag doesn't recognize the tag format.
     if (title.compare("") == 0)
     {
         #ifdef HAVE_KAJAMTAG_H
@@ -301,10 +308,10 @@ void Controller::repeat()
 void Controller::changePlaylist(QString name, int index)
 {
     // Clicking the current List won't restart it
-    if(currentList != index)
-    {
+    //if(currentList != index)
+    //{
         currentList = index;
         QStringList list = listManager->getPlaylistContents(name);
         controller->setQueue(list);
-    }
+    //}
 }

@@ -43,12 +43,12 @@ int Manager::start(int argc, char *argv[], QApplication *app)
 {
     m_app = app;
     
-    Cli *cli = new Cli(argc, argv);
+    cli = new Cli(argc, argv);
     bool xFlag = cli->getXFlag();
     
     if(!xFlag)
     {
-        Options *options = Options::getInstance();
+        options = Options::getInstance();
         
         if(QFile::exists(KAJAMMER_ICON))            
             app->setWindowIcon(QIcon(KAJAMMER_ICON));
@@ -92,6 +92,10 @@ int Manager::exit()
     
     //Quit now that everything is cleaned up.
     m_app->exit(0);
+    delete lastfm;
+    delete controller;
+    delete options;
+    delete cli;
     
     return 1;
 }
