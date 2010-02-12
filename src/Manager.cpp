@@ -92,7 +92,9 @@ int Manager::exit()
     
     //Quit now that everything is cleaned up.
     m_app->exit(0);
+    #ifdef HAVE_LASTFM_H
     delete lastfm;
+    #endif
     delete controller;
     delete options;
     delete cli;
