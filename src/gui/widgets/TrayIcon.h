@@ -38,6 +38,7 @@ public:
     TrayIcon();
     
 public slots:
+    void songChanged();
     void openContextMenu(QSystemTrayIcon::ActivationReason);
     void quit();
     

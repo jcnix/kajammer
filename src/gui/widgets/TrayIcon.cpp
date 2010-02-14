@@ -53,6 +53,8 @@ TrayIcon::TrayIcon() : QSystemTrayIcon()
     connect(pauseAction, SIGNAL(triggered()), controller, SLOT(pause()));
     connect(prevAction, SIGNAL(triggered()), controller, SLOT(setPrevSong()));
     connect(quitAction, SIGNAL(triggered()), this, SLOT(quit()));
+    
+    connect(controller, SIGNAL(songChanged(int)), this, SLOT(songChanged()));
 }
 
 void TrayIcon::openContextMenu(QSystemTrayIcon::ActivationReason activated)
@@ -61,6 +63,12 @@ void TrayIcon::openContextMenu(QSystemTrayIcon::ActivationReason activated)
     {
         menu->show();
     }
+}
+
+void TrayIcon::songChanged()
+{
+    QString title = controller->getCurrentMetadata().value("TITLE");
+    showMessage("Kajammer", "Now Playing: " + title);
 }
 
 void TrayIcon::quit()
