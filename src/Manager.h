@@ -47,6 +47,9 @@ class Manager : public QObject
 public:
     static Manager* getInstance();
     int start(int argc, char *argv[], QApplication*);
+    void showMessage(QString message);
+    
+public slots:
     int exit();
 
 protected:
@@ -59,6 +62,7 @@ private:
     Controller *controller;
     Options *options;
     Cli *cli;
+    TrayIcon *trayIcon;
     #ifdef HAVE_LASTFM_H
     LastFm *lastfm;
     #endif

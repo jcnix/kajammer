@@ -65,6 +65,5 @@ void TrayIcon::openContextMenu(QSystemTrayIcon::ActivationReason activated)
 
 void TrayIcon::quit()
 {
-    Manager *manager = Manager::getInstance();
-    manager->exit();
+    emit exit();
 }

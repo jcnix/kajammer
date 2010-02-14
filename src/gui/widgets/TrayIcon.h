@@ -29,7 +29,6 @@
 #include <QtGui/QAction>
 
 #include "../../Controller.h"
-#include "../../Manager.h"
 
 class TrayIcon : public QSystemTrayIcon
 {   
@@ -41,6 +40,9 @@ public:
 public slots:
     void openContextMenu(QSystemTrayIcon::ActivationReason);
     void quit();
+    
+signals:
+    void exit();
     
 private:
     Controller *controller;

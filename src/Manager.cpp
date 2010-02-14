@@ -64,10 +64,11 @@ int Manager::start(int argc, char *argv[], QApplication *app)
         
         if(options->trayIcon())
         {
-            TrayIcon *trayIcon = new TrayIcon;
+            trayIcon = new TrayIcon;
             
             connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
                     window, SLOT(showWindow(QSystemTrayIcon::ActivationReason)));
+            connect(trayIcon, SIGNAL(exit()), this, SLOT(exit()));
         }
         
         #ifdef HAVE_LASTFM_H
