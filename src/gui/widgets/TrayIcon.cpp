@@ -67,8 +67,11 @@ void TrayIcon::openContextMenu(QSystemTrayIcon::ActivationReason activated)
 
 void TrayIcon::songChanged()
 {
-    QString title = controller->getCurrentMetadata().value("TITLE");
-    showMessage("Kajammer", "Now Playing: " + title);
+    if(supportsMessages())
+    {
+        QString title = controller->getCurrentMetadata().value("TITLE");
+        showMessage("Kajammer", "Now Playing: " + title);
+    }
 }
 
 void TrayIcon::quit()
