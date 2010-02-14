@@ -32,7 +32,7 @@ Controller::Controller()
 {
     audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory);
     mediaObject = new Phonon::MediaObject;
-    Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
+    Phonon::createPath(mediaObject, audioOutput);
     
     metaResolver = new Phonon::MediaObject;  //Used for finding metadata
     
