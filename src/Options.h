@@ -77,6 +77,7 @@ private:
     
     void readOptions();
     QString bool_to_qstring(bool);
+    bool qstring_to_bool(QString);
     QString encrypt(QString);
     
     QString confPath;

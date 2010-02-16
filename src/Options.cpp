@@ -74,24 +74,15 @@ void Options::readOptions()
         }
         else if(list.at(0) == "$Shuff_No_Repeat")
         {
-            if(list.at(1).contains("1"))
-                shuff_no_repeat = true;
-            else
-                shuff_no_repeat = false;
+            shuff_no_repeat = qstring_to_bool(list.at(1));
         }
         else if(list.at(0) == "$Use_Tray_Icon")
         {
-            if(list.at(1) == "1")
-                use_tray_icon = true;
-            else
-                use_tray_icon = false;
+            use_tray_icon = qstring_to_bool(list.at(1));
         }
         else if(list.at(0) == "$Notify_On_Change")
         {
-            if(list.at(1) == "1")
-                notify_on_change = true;
-            else
-                notify_on_change = false;
+            notify_on_change = qstring_to_bool(list.at(1));
         }
         else if(list.at(0) == "$Main_Width") {
             main_width = list.at(1).toInt();
@@ -105,10 +96,7 @@ void Options::readOptions()
         }
         #ifdef HAVE_LASTFM_H
         else if(list.at(0) == "$LastFM") {
-            if(list.at(1) == "1")
-                use_last_fm = true;
-            else
-                use_last_fm = false;
+            use_last_fm = qstring_to_bool(list.at(1));
         }
         else if(list.at(0) == "$LastFM_User") {
             lastfmUser = list.at(1);
@@ -159,6 +147,13 @@ QString Options::bool_to_qstring(bool truthiness)
     if(truthiness)
         truth = "1";
     return truth;
+}
+
+bool Options::qstring_to_bool(QString truthiness) {
+    if(truthiness == "1")
+        return true;
+    else
+        return false;
 }
 
 QString Options::encrypt(QString stringToEncrypt)
