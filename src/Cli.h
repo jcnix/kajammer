@@ -43,7 +43,7 @@ public:
     void cliArgs(char *argv[]);
     bool getXFlag();
     
-private:   
+private:
     int argc;
     bool xFlag;
     bool pFlag;

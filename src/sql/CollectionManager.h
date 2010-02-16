@@ -23,7 +23,7 @@
 #ifndef _COLLECTIONMANAGER_H
 #define _COLLECTIONMANAGER_H
 
-#include <QtCore/QObject>
+#include <QtCore/QThread>
 #include <QtCore/QDir>
 #include <QtCore/QList>
 #include <QtSql/QSqlDatabase>
@@ -31,7 +31,7 @@
 
 #include "../Controller.h"
 
-class CollectionManager : public QObject {
+class CollectionManager : public QThread {
     Q_OBJECT;
     
 public:
@@ -39,10 +39,17 @@ public:
     bool connect_db();
     bool close_db();
     bool addTrack(QString);
-    QStringList search(QString);
+    void search(QString);
+    
+signals:
+    void searchDone(QStringList);
+
+protected:
+    void run();
     
 private:
-    QSqlDatabase db;    
+    QSqlDatabase db;
+    QString queryString;
 };
 
 #endif //_COLLECTIONMNAGER_H

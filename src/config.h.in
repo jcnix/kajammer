@@ -1,3 +1,2 @@
 #cmakedefine HAVE_KAJAMTAG_H
 #cmakedefine HAVE_LASTFM_H
-

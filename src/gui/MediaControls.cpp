@@ -43,6 +43,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
     connect(listManager, SIGNAL(resetPlaylists()), this, SLOT(setupPlaylists()));
     connect(searchBar, SIGNAL(returnPressed()), this, SLOT(search()));
     connect(searchBar, SIGNAL(textEdited(QString)), this, SLOT(search()));
+    connect(cm, SIGNAL(searchDone(QStringList)), this, SLOT(searchDone(QStringList)));
     
     /* If table is empty, re-emit the song list.
      * If the user used -p on the command line, this class will not
@@ -56,6 +57,8 @@ void MediaControls::init()
     controller = Controller::getInstance();
     listManager = PlaylistManager::getInstance();
     tableIndex = 0;
+    
+    cm = new CollectionManager;
     
     volumeSlider = new Phonon::VolumeSlider;
     volumeSlider->setAudioOutput(controller->getAudioOutput());
@@ -166,15 +169,14 @@ void MediaControls::repeatPressed()
 
 void MediaControls::search()
 {
-    CollectionManager *cm = new CollectionManager;
-    
-    QString query = searchBar->text();
-    QStringList result = cm->search(query);
-    
+    QString searchString = searchBar->text();
+    cm->search(searchString);
+}
+
+void MediaControls::searchDone(QStringList result)
+{
     controller->setQueue(result);
-    
     cm->close_db();
-    delete cm;
 }
 
 //Fills the music table with ID3 tag data.

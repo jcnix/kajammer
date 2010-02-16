@@ -28,10 +28,8 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     app.setApplicationName("KaJammer");
-    
     QApplication *pApp = &app;
     
     Manager *manager = Manager::getInstance();
     return manager->start(argc, argv, pApp);
 }
-

@@ -69,13 +69,15 @@ public slots:
     void shufflePressed();
     void repeatPressed();
     void search();
+    void searchDone(QStringList result);
 
 private:
     void init();
 
     Controller *controller;
     PlaylistManager *listManager;
-
+    CollectionManager *cm;
+    
     Phonon::VolumeSlider *volumeSlider;
     Phonon::SeekSlider *seekSlider;
 

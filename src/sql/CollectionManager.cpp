@@ -68,15 +68,22 @@ bool CollectionManager::addTrack(QString track)
     return true;
 }
 
-QStringList CollectionManager::search(QString q)
+void CollectionManager::search(QString q)
+{
+    queryString = q;
+    run();
+}
+
+/* Run the search on a new thread */
+void CollectionManager::run()
 {
     QStringList tracks;
     QSqlQuery query;
     
     query.exec("SELECT file FROM music WHERE "
-                "title LIKE '%"+q+"%'"
-                "OR artist LIKE '%"+q+"%'"
-                "OR album LIKE '%"+q+"%';");
+                "title LIKE '%"+queryString+"%'"
+                "OR artist LIKE '%"+queryString+"%'"
+                "OR album LIKE '%"+queryString+"%';");
                 
     while(query.next())
     {
@@ -84,7 +91,7 @@ QStringList CollectionManager::search(QString q)
         tracks.append(track);        
     }
     
-    return tracks;
+    emit searchDone(tracks);
 }
 
 bool CollectionManager::close_db()
