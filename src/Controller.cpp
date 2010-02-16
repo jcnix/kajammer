@@ -77,6 +77,12 @@ void Controller::setQueue(QStringList queue)
         // Finally add new data to the queue
         for(int i = 0; i < queue.count(); i++)
         {
+            //Make sure the track exists before adding it
+            if(!QFile::exists(queue.at(i))) {
+                std::cout << i << "\n";
+                continue;
+            }
+            
             Phonon::MediaSource source = queue.at(i);
             
             //turn a 0 into a 1, much more easy and standard way of dealing

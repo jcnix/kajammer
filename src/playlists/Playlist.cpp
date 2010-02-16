@@ -107,10 +107,6 @@ QStringList Playlist::getContents()
     
     while(!in.atEnd()) {
         QString track = in.readLine(0);
-        
-        //Make sure the track exists before adding it
-        if(QFile::exists(track))
-            playlist.append(track);
     }
     
     return playlist;
