@@ -33,9 +33,9 @@ TrayIcon::TrayIcon() : QSystemTrayIcon()
     
     menu = new QMenu("KaJammer");
     nextAction = new QAction("Next", this);
+    prevAction = new QAction("Prev", this);
     playAction = new QAction("Play", this);
     pauseAction = new QAction("Pause", this);
-    prevAction = new QAction("Prev", this);
     quitAction = new QAction("Quit", this);
     
     menu->addAction(nextAction);
