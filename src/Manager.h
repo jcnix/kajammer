@@ -27,7 +27,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QIcon>
 
-#include "kajammer.h"
+#include "headers/kajammer.h"
 #include "gui/MainWindow.h"
 #include "Cli.h"
 #include "config.h"
@@ -48,6 +48,8 @@ public:
     static Manager* getInstance();
     int start(int argc, char *argv[], QApplication*);
     void showMessage(QString message);
+    
+public slots:
     int exit();
 
 protected:
@@ -60,6 +62,7 @@ private:
     Controller *controller;
     Options *options;
     Cli *cli;
+    TrayIcon *trayIcon;
     #ifdef HAVE_LASTFM_H
     LastFm *lastfm;
     #endif

@@ -74,17 +74,15 @@ void Options::readOptions()
         }
         else if(list.at(0) == "$Shuff_No_Repeat")
         {
-            if(list.at(1).contains("1"))
-                shuff_no_repeat = true;
-            else
-                shuff_no_repeat = false;
+            shuff_no_repeat = qstring_to_bool(list.at(1));
         }
         else if(list.at(0) == "$Use_Tray_Icon")
         {
-            if(list.at(1) == "1")
-                use_tray_icon = true;
-            else
-                use_tray_icon = false;
+            use_tray_icon = qstring_to_bool(list.at(1));
+        }
+        else if(list.at(0) == "$Notify_On_Change")
+        {
+            notify_on_change = qstring_to_bool(list.at(1));
         }
         else if(list.at(0) == "$Main_Width") {
             main_width = list.at(1).toInt();
@@ -98,10 +96,7 @@ void Options::readOptions()
         }
         #ifdef HAVE_LASTFM_H
         else if(list.at(0) == "$LastFM") {
-            if(list.at(1) == "1")
-                use_last_fm = true;
-            else
-                use_last_fm = false;
+            use_last_fm = qstring_to_bool(list.at(1));
         }
         else if(list.at(0) == "$LastFM_User") {
             lastfmUser = list.at(1);
@@ -129,6 +124,7 @@ void Options::save()
     options.append("$MusicDir=" + defaultOpenDir + "\n");
     options.append("$Shuff_No_Repeat=" + bool_to_qstring(shuff_no_repeat) + "\n");
     options.append("$Use_Tray_Icon=" + bool_to_qstring(use_tray_icon) + "\n");
+    options.append("$Notify_On_Change" + bool_to_qstring(notify_on_change) + "\n");
     options.append("$Main_Width=" + QString::number(main_width) + "\n");
     options.append("$Main_Height=" + QString::number(main_height) + "\n");
     #ifdef HAVE_LASTFM_H
@@ -151,6 +147,13 @@ QString Options::bool_to_qstring(bool truthiness)
     if(truthiness)
         truth = "1";
     return truth;
+}
+
+bool Options::qstring_to_bool(QString truthiness) {
+    if(truthiness == "1")
+        return true;
+    else
+        return false;
 }
 
 QString Options::encrypt(QString stringToEncrypt)
@@ -181,3 +184,31 @@ QString Options::getDefaultOpenDir()
         defaultOpenDir = QDir::homePath();
     return defaultOpenDir;
 }
+
+void Options::setDefaultOpenDir(QString dir) { defaultOpenDir = dir; }
+void Options::setShuff_no_repeat(bool no_repeat) { shuff_no_repeat = no_repeat; }
+void Options::setTrayIcon(bool useTray) { use_tray_icon = useTray; }
+void Options::set_notify_on_change(bool notify) { notify_on_change = notify; }
+void Options::setMainHeight(int height) { main_height = height; }
+void Options::setMainWidth(int width) { main_width = width; }
+
+#ifdef HAVE_LASTFM_H
+void Options::setLastFm(bool use) { use_last_fm = use; }
+void Options::setLastFmUser(QString user) { lastfmUser = user; }
+void Options::setLastFmPass(QString pass) { lastfmPass = pass; }
+void Options::setLastFmKey(QString key) { lastfmKey = key; }
+#endif
+
+QString getDefaultOpenDir();
+bool Options::isShuff_no_repeat() { return shuff_no_repeat; }
+bool Options::trayIcon() { return use_tray_icon; }
+int Options::getMainWidth() { return main_width; }
+bool Options::get_notify_on_change() { return notify_on_change; }
+int Options::getMainHeight() { return main_height; }
+
+#ifdef HAVE_LASTFM_H
+int Options::useLastFm() { return use_last_fm; }
+QString Options::getLastFmUser() { return lastfmUser; }
+QString Options::getLastFmPass() { return lastfmPass; }
+QString Options::getLastFmKey() { return lastfmKey; }
+#endif

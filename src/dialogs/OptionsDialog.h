@@ -69,6 +69,7 @@ private:
     QCheckBox *shuffBox;
     QCheckBox *trayIconOption;
     QCheckBox *lastfmBox;
+    QCheckBox *notifyBox;
     
     #ifdef HAVE_LASTFM_H
     QLineEdit *lastfmUser;

@@ -30,7 +30,7 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 
-#include "kajammer.h"
+#include "headers/kajammer.h"
 #include "Controller.h"
 #include "playlists/PlaylistManager.h"
 

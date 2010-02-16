@@ -32,7 +32,7 @@ Controller::Controller()
 {
     audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory);
     mediaObject = new Phonon::MediaObject;
-    Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
+    Phonon::createPath(mediaObject, audioOutput);
     
     metaResolver = new Phonon::MediaObject;  //Used for finding metadata
     
@@ -77,6 +77,12 @@ void Controller::setQueue(QStringList queue)
         // Finally add new data to the queue
         for(int i = 0; i < queue.count(); i++)
         {
+            //Make sure the track exists before adding it
+            if(!QFile::exists(queue.at(i))) {
+                std::cout << i << "\n";
+                continue;
+            }
+            
             Phonon::MediaSource source = queue.at(i);
             
             //turn a 0 into a 1, much more easy and standard way of dealing
@@ -93,10 +99,15 @@ void Controller::emitList()
 {
     QList<Phonon::MediaSource> list;
     for(int i = 0; i < trackQueue.count(); i++)
+    {
         list.append(trackQueue[i + 1]);
+    }
     
     //Set source so we activate metaDataChanged(), so it loops through our table
-    metaResolver->setCurrentSource(list.at(0));
+    if(!list.isEmpty())
+    {
+        metaResolver->setCurrentSource(list.at(0));
+    }
     metaSources = list;
     
     emit queueSet(list);

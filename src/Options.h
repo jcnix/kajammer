@@ -33,7 +33,7 @@
 #include <iostream>
 
 #include "config.h"
-#include "kajammer.h"
+#include "headers/kajammer.h"
 
 class Options
 {
@@ -41,30 +41,32 @@ public:
     static Options* getInstance();
     void save();
     
-    void setDefaultOpenDir(QString dir) { defaultOpenDir = dir; }
-    void setShuff_no_repeat(bool no_repeat) { shuff_no_repeat = no_repeat; }
-    void setTrayIcon(bool useTray) { use_tray_icon = useTray; }
-    void setMainHeight(int height) { main_height = height; }
-    void setMainWidth(int width) { main_width = width; }
+    void setDefaultOpenDir(QString dir);
+    void setShuff_no_repeat(bool no_repeat);
+    void setTrayIcon(bool useTray);
+    void set_notify_on_change(bool notify);
+    void setMainHeight(int height);
+    void setMainWidth(int width);
     
     #ifdef HAVE_LASTFM_H
-    void setLastFm(bool use) { use_last_fm = use; }
-    void setLastFmUser(QString user) { lastfmUser = user; }
-    void setLastFmPass(QString pass) { lastfmPass = pass; }
-    void setLastFmKey(QString key) { lastfmKey = key; }
+    void setLastFm(bool use);
+    void setLastFmUser(QString user);
+    void setLastFmPass(QString pass);
+    void setLastFmKey(QString key);
     #endif
     
     QString getDefaultOpenDir();
-    bool isShuff_no_repeat() { return shuff_no_repeat; }
-    bool trayIcon() { return use_tray_icon; }
-    int getMainWidth() { return main_width; }
-    int getMainHeight() { return main_height; }
-    
+    bool isShuff_no_repeat();
+    bool trayIcon();
+    bool get_notify_on_change();
+    int getMainWidth();
+    int getMainHeight();
+
     #ifdef HAVE_LASTFM_H
-    int useLastFm() { return use_last_fm; }
-    QString getLastFmUser() { return lastfmUser; }
-    QString getLastFmPass() { return lastfmPass; }
-    QString getLastFmKey() { return lastfmKey; }
+    int useLastFm();
+    QString getLastFmUser();
+    QString getLastFmPass();
+    QString getLastFmKey();
     #endif
     
 protected:
@@ -75,12 +77,14 @@ private:
     
     void readOptions();
     QString bool_to_qstring(bool);
+    bool qstring_to_bool(QString);
     QString encrypt(QString);
     
     QString confPath;
     QString defaultOpenDir;
     bool shuff_no_repeat;
     bool use_tray_icon;
+    bool notify_on_change;
     int main_width;
     int main_height;
     bool use_last_fm;

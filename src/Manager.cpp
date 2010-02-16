@@ -64,10 +64,11 @@ int Manager::start(int argc, char *argv[], QApplication *app)
         
         if(options->trayIcon())
         {
-            TrayIcon *trayIcon = new TrayIcon;
+            trayIcon = new TrayIcon;
             
             connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
                     window, SLOT(showWindow(QSystemTrayIcon::ActivationReason)));
+            connect(trayIcon, SIGNAL(exit()), this, SLOT(exit()));
         }
         
         #ifdef HAVE_LASTFM_H
@@ -92,7 +93,9 @@ int Manager::exit()
     
     //Quit now that everything is cleaned up.
     m_app->exit(0);
+    #ifdef HAVE_LASTFM_H
     delete lastfm;
+    #endif
     delete controller;
     delete options;
     delete cli;

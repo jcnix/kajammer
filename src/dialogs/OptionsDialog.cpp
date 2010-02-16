@@ -39,6 +39,7 @@ OptionsPanel::~OptionsPanel()
     delete browseDefaultOpenBtn;
     delete shuffBox;
     delete trayIconOption;
+    delete notifyBox;
     
     #ifdef HAVE_LASTFM_H
     delete lastfmBox;
@@ -64,6 +65,7 @@ void OptionsPanel::init()
     
     shuffBox = new QCheckBox;
     trayIconOption = new QCheckBox;
+    notifyBox = new QCheckBox;
 
     #ifdef HAVE_LASTFM_H
     lastfmBox = new QCheckBox;
@@ -80,6 +82,7 @@ void OptionsPanel::init()
     formLayout->addRow("Music directory", defaultOpenLayout);
     formLayout->addRow("No repeat on shuffle", shuffBox);
     formLayout->addRow("Enable Tray Icon", trayIconOption);
+    formLayout->addRow("Tray Notifications", notifyBox);
     #ifdef HAVE_LASTFM_H
     formLayout->addRow("Enable Last.fm", lastfmBox);
     formLayout->addRow("Last.fm Username", lastfmUser);
@@ -95,6 +98,7 @@ void OptionsPanel::populate()
     defaultOpen->setText(options->getDefaultOpenDir());
     shuffBox->setChecked(options->isShuff_no_repeat());
     trayIconOption->setChecked(options->trayIcon());
+    notifyBox->setChecked(options->get_notify_on_change());
     #ifdef HAVE_LASTFM_H
     lastfmBox->setChecked(options->useLastFm());
     lastfmUser->setText(options->getLastFmUser());
@@ -107,6 +111,7 @@ void OptionsPanel::save()
     options->setDefaultOpenDir(defaultOpen->text());
     options->setShuff_no_repeat(shuffBox->isChecked());
     options->setTrayIcon(trayIconOption->isChecked());
+    options->set_notify_on_change(notifyBox->isChecked());
     #ifdef HAVE_LASTFM_H
     options->setLastFm(lastfmBox->isChecked());
     options->setLastFmUser(lastfmUser->text());

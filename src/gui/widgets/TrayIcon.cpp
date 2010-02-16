@@ -25,6 +25,7 @@
 TrayIcon::TrayIcon() : QSystemTrayIcon()
 {
     controller = Controller::getInstance();
+    options = Options::getInstance();
     
     trayIcon = new QIcon("/usr/share/icons/kajammer.png");
     setIcon(*trayIcon);
@@ -32,9 +33,9 @@ TrayIcon::TrayIcon() : QSystemTrayIcon()
     
     menu = new QMenu("KaJammer");
     nextAction = new QAction("Next", this);
+    prevAction = new QAction("Prev", this);
     playAction = new QAction("Play", this);
     pauseAction = new QAction("Pause", this);
-    prevAction = new QAction("Prev", this);
     quitAction = new QAction("Quit", this);
     
     menu->addAction(nextAction);
@@ -53,6 +54,8 @@ TrayIcon::TrayIcon() : QSystemTrayIcon()
     connect(pauseAction, SIGNAL(triggered()), controller, SLOT(pause()));
     connect(prevAction, SIGNAL(triggered()), controller, SLOT(setPrevSong()));
     connect(quitAction, SIGNAL(triggered()), this, SLOT(quit()));
+    
+    connect(controller, SIGNAL(songChanged(int)), this, SLOT(songChanged()));
 }
 
 void TrayIcon::openContextMenu(QSystemTrayIcon::ActivationReason activated)
@@ -63,8 +66,16 @@ void TrayIcon::openContextMenu(QSystemTrayIcon::ActivationReason activated)
     }
 }
 
+void TrayIcon::songChanged()
+{
+    if(options->get_notify_on_change() && supportsMessages())
+    {
+        QString title = controller->getCurrentMetadata().value("TITLE");
+        showMessage("Kajammer", "Now Playing: " + title);
+    }
+}
+
 void TrayIcon::quit()
 {
-    Manager *manager = Manager::getInstance();
-    manager->exit();
+    emit exit();
 }
