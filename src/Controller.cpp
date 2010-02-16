@@ -79,7 +79,6 @@ void Controller::setQueue(QStringList queue)
         {
             //Make sure the track exists before adding it
             if(!QFile::exists(queue.at(i))) {
-                std::cout << i << "\n";
                 continue;
             }
             
