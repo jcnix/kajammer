@@ -86,6 +86,13 @@ void Options::readOptions()
             else
                 use_tray_icon = false;
         }
+        else if(list.at(0) == "$Notify_On_Change")
+        {
+            if(list.at(1) == "1")
+                notify_on_change = true;
+            else
+                notify_on_change = false;
+        }
         else if(list.at(0) == "$Main_Width") {
             main_width = list.at(1).toInt();
             if(main_width < 200)
@@ -129,6 +136,7 @@ void Options::save()
     options.append("$MusicDir=" + defaultOpenDir + "\n");
     options.append("$Shuff_No_Repeat=" + bool_to_qstring(shuff_no_repeat) + "\n");
     options.append("$Use_Tray_Icon=" + bool_to_qstring(use_tray_icon) + "\n");
+    options.append("$Notify_On_Change" + bool_to_qstring(notify_on_change) + "\n");
     options.append("$Main_Width=" + QString::number(main_width) + "\n");
     options.append("$Main_Height=" + QString::number(main_height) + "\n");
     #ifdef HAVE_LASTFM_H
@@ -185,6 +193,7 @@ QString Options::getDefaultOpenDir()
 void Options::setDefaultOpenDir(QString dir) { defaultOpenDir = dir; }
 void Options::setShuff_no_repeat(bool no_repeat) { shuff_no_repeat = no_repeat; }
 void Options::setTrayIcon(bool useTray) { use_tray_icon = useTray; }
+void Options::set_notify_on_change(bool notify) { notify_on_change = notify; }
 void Options::setMainHeight(int height) { main_height = height; }
 void Options::setMainWidth(int width) { main_width = width; }
 
@@ -199,6 +208,7 @@ QString getDefaultOpenDir();
 bool Options::isShuff_no_repeat() { return shuff_no_repeat; }
 bool Options::trayIcon() { return use_tray_icon; }
 int Options::getMainWidth() { return main_width; }
+bool Options::get_notify_on_change() { return notify_on_change; }
 int Options::getMainHeight() { return main_height; }
 
 #ifdef HAVE_LASTFM_H

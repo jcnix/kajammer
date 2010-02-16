@@ -44,6 +44,7 @@ public:
     void setDefaultOpenDir(QString dir);
     void setShuff_no_repeat(bool no_repeat);
     void setTrayIcon(bool useTray);
+    void set_notify_on_change(bool notify);
     void setMainHeight(int height);
     void setMainWidth(int width);
     
@@ -57,9 +58,10 @@ public:
     QString getDefaultOpenDir();
     bool isShuff_no_repeat();
     bool trayIcon();
+    bool get_notify_on_change();
     int getMainWidth();
     int getMainHeight();
-    
+
     #ifdef HAVE_LASTFM_H
     int useLastFm();
     QString getLastFmUser();
@@ -81,6 +83,7 @@ private:
     QString defaultOpenDir;
     bool shuff_no_repeat;
     bool use_tray_icon;
+    bool notify_on_change;
     int main_width;
     int main_height;
     bool use_last_fm;

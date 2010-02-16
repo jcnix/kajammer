@@ -29,6 +29,7 @@
 #include <QtGui/QAction>
 
 #include "../../Controller.h"
+#include "../../Options.h"
 
 class TrayIcon : public QSystemTrayIcon
 {   
@@ -47,6 +48,8 @@ signals:
     
 private:
     Controller *controller;
+    Options *options;
+    
     QIcon *trayIcon;
     QMenu *menu;
     QAction *nextAction;
