@@ -93,10 +93,15 @@ void Controller::emitList()
 {
     QList<Phonon::MediaSource> list;
     for(int i = 0; i < trackQueue.count(); i++)
+    {
         list.append(trackQueue[i + 1]);
+    }
     
     //Set source so we activate metaDataChanged(), so it loops through our table
-    metaResolver->setCurrentSource(list.at(0));
+    if(!list.isEmpty())
+    {
+        metaResolver->setCurrentSource(list.at(0));
+    }
     metaSources = list;
     
     emit queueSet(list);
