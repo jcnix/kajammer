@@ -181,3 +181,29 @@ QString Options::getDefaultOpenDir()
         defaultOpenDir = QDir::homePath();
     return defaultOpenDir;
 }
+
+void Options::setDefaultOpenDir(QString dir) { defaultOpenDir = dir; }
+void Options::setShuff_no_repeat(bool no_repeat) { shuff_no_repeat = no_repeat; }
+void Options::setTrayIcon(bool useTray) { use_tray_icon = useTray; }
+void Options::setMainHeight(int height) { main_height = height; }
+void Options::setMainWidth(int width) { main_width = width; }
+
+#ifdef HAVE_LASTFM_H
+void Options::setLastFm(bool use) { use_last_fm = use; }
+void Options::setLastFmUser(QString user) { lastfmUser = user; }
+void Options::setLastFmPass(QString pass) { lastfmPass = pass; }
+void Options::setLastFmKey(QString key) { lastfmKey = key; }
+#endif
+
+QString getDefaultOpenDir();
+bool Options::isShuff_no_repeat() { return shuff_no_repeat; }
+bool Options::trayIcon() { return use_tray_icon; }
+int Options::getMainWidth() { return main_width; }
+int Options::getMainHeight() { return main_height; }
+
+#ifdef HAVE_LASTFM_H
+int Options::useLastFm() { return use_last_fm; }
+QString Options::getLastFmUser() { return lastfmUser; }
+QString Options::getLastFmPass() { return lastfmPass; }
+QString Options::getLastFmKey() { return lastfmKey; }
+#endif
