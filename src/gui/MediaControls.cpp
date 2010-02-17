@@ -176,7 +176,7 @@ void MediaControls::search()
 void MediaControls::searchDone(QStringList result)
 {
     controller->setQueue(result);
-    cm->close_db();
+    //cm->close_db();
 }
 
 //Fills the music table with ID3 tag data.
