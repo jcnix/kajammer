@@ -107,6 +107,7 @@ QStringList Playlist::getContents()
     
     while(!in.atEnd()) {
         QString track = in.readLine(0);
+        playlist.append(track);
     }
     
     return playlist;
