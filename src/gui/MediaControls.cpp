@@ -169,6 +169,11 @@ void MediaControls::repeatPressed()
 
 void MediaControls::search()
 {
+    if(!cm->isDbOpen())
+    {
+        cm->connect_db();
+    }
+    
     QString searchString = searchBar->text();
     cm->search(searchString);
 }
