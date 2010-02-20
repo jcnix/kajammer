@@ -94,6 +94,11 @@ void CollectionManager::run()
     emit searchDone(tracks);
 }
 
+bool CollectionManager::isDbOpen()
+{
+    return db.isOpen();
+}
+
 bool CollectionManager::close_db()
 {
     db.close();

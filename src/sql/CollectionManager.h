@@ -38,6 +38,7 @@ public:
     CollectionManager();
     bool connect_db();
     bool close_db();
+    bool isDbOpen();
     bool addTrack(QString);
     void search(QString);
     
