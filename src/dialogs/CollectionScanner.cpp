@@ -93,7 +93,7 @@ void CollectionScanner::scan()
     QString startDir = dirInput->text();
     if(startDir == "")
     {
-        return;
+        accept();
     }
     
     CollectionManager *cm = new CollectionManager;
@@ -135,13 +135,15 @@ void CollectionScanner::scan()
 
             QStringList music = ls_music(playlist);
             
-            if(music.length() > 0) {
+            if(music.length() > 0)
+            {
                 if(chkPlaylists->checkState() == Qt::Checked)
                     p->newPlaylist(playlistName, music);
                 
                 if(chkDb->checkState() == Qt::Checked)
                 {
-                    for(int i = 0; i < music.length(); i++) {
+                    for(int i = 0; i < music.length(); i++)
+                    {
                         cm->addTrack(music.at(i));
                     }
                 }

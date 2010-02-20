@@ -124,7 +124,7 @@ void Options::save()
     options.append("$MusicDir=" + defaultOpenDir + "\n");
     options.append("$Shuff_No_Repeat=" + bool_to_qstring(shuff_no_repeat) + "\n");
     options.append("$Use_Tray_Icon=" + bool_to_qstring(use_tray_icon) + "\n");
-    options.append("$Notify_On_Change" + bool_to_qstring(notify_on_change) + "\n");
+    options.append("$Notify_On_Change=" + bool_to_qstring(notify_on_change) + "\n");
     options.append("$Main_Width=" + QString::number(main_width) + "\n");
     options.append("$Main_Height=" + QString::number(main_height) + "\n");
     #ifdef HAVE_LASTFM_H
