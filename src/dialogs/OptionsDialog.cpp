@@ -87,8 +87,8 @@ void OptionsPanel::init()
     formLayout->addRow("Enable Last.fm", lastfmBox);
     formLayout->addRow("Last.fm Username", lastfmUser);
     formLayout->addRow("Last.fm Password", lastfmPass);
-    formLayout->addRow("", buttonBox);
     #endif
+    formLayout->addRow("", buttonBox);
 
     setLayout(formLayout);
 }
