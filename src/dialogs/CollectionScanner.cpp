@@ -90,8 +90,14 @@ void CollectionScanner::scan()
         return;
     }
     
-    CollectionManager *cm = new CollectionManager;
     QString startDir = dirInput->text();
+    if(startDir == "")
+    {
+        return;
+    }
+    
+    CollectionManager *cm = new CollectionManager;
+    
     PlaylistManager *p = PlaylistManager::getInstance();
     
     QList<QString> dirs;
