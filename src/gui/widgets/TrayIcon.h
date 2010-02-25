@@ -27,6 +27,7 @@
 #include <QtGui/QIcon>
 #include <QtGui/QMenu>
 #include <QtGui/QAction>
+#include <QtGui/QStyle>
 
 #include "../../Controller.h"
 #include "../../Options.h"

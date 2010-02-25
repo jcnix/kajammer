@@ -38,6 +38,13 @@ TrayIcon::TrayIcon() : QSystemTrayIcon()
     pauseAction = new QAction("Pause", this);
     quitAction = new QAction("Quit", this);
     
+    nextAction->setIcon(menu->style()->standardIcon(QStyle::SP_MediaSkipForward));
+    prevAction->setIcon(menu->style()->standardIcon(QStyle::SP_MediaSkipBackward));
+    playAction->setIcon(menu->style()->standardIcon(QStyle::SP_MediaPlay));
+    pauseAction->setIcon(menu->style()->standardIcon(QStyle::SP_MediaPause));
+    quitAction->setIcon(menu->style()->standardIcon(QStyle::QStyle::SP_MessageBoxCritical));
+    
+    
     menu->addAction(nextAction);
     menu->addAction(playAction);
     menu->addAction(pauseAction);
