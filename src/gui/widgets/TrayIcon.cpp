@@ -44,7 +44,6 @@ TrayIcon::TrayIcon() : QSystemTrayIcon()
     pauseAction->setIcon(menu->style()->standardIcon(QStyle::SP_MediaPause));
     quitAction->setIcon(menu->style()->standardIcon(QStyle::QStyle::SP_MessageBoxCritical));
     
-    
     menu->addAction(nextAction);
     menu->addAction(playAction);
     menu->addAction(pauseAction);

@@ -26,9 +26,7 @@ MenuBar::MenuBar()
 {
     init();
     
-    connect(newPlaylist, SIGNAL(triggered()), this, SLOT(createNewPlaylist()));
     connect(openFile, SIGNAL(triggered()), this, SLOT(open()));
-    connect(delPlaylist, SIGNAL(triggered()), this, SLOT(deletePlaylist()));
     connect(close, SIGNAL(triggered()), this, SLOT(quit()));
     connect(optionsAction, SIGNAL(triggered()), this, SLOT(showOptions()));
     connect(playlistEditAction, SIGNAL(triggered()), this, SLOT(showPlaylistEditor()));
@@ -51,10 +49,8 @@ void MenuBar::init()
     addMenu(file);
     addMenu(tools);
     addMenu(help);
-    
-    newPlaylist = new QAction("&New Playlist...", this);
+
     openFile = new QAction("&Open...", this);
-    delPlaylist = new QAction("&Delete Playlist...", this);
     close = new QAction("E&xit", this);
     
     optionsAction = new QAction("&Options", this);
@@ -63,13 +59,10 @@ void MenuBar::init()
     
     about = new QAction("&About", this);
     
-    newPlaylist->setShortcut(QKeySequence::New);
     openFile->setShortcut(QKeySequence::Open);
     close->setShortcut(QKeySequence::fromString("Ctrl+X", QKeySequence::NativeText));
 
-    file->addAction(newPlaylist);
     file->addAction(openFile);
-    file->addAction(delPlaylist);
     file->addSeparator();
     file->addAction(close);
     
@@ -78,41 +71,6 @@ void MenuBar::init()
     tools->addAction(scanAction);
     
     help->addAction(about);
-}
-
-void MenuBar::createNewPlaylist()
-{
-    bool ok;
-    QStringList addToList;
-    
-    QString input = QInputDialog::getText(this, "New Playlist", "Enter Playlist Name:",
-                                           QLineEdit::Normal, "",
-                                           &ok);
-    if(ok && !input.isEmpty())
-    {
-        QString defaultDir = options->getDefaultOpenDir();
-        addToList = QFileDialog::getOpenFileNames(this, tr("Open File"), defaultDir, 
-                                                   tr("Music Files (*.mp3 *.ogg *.aac)"));
-                                                   
-        if(!addToList.isEmpty())
-        {
-            listManager->newPlaylist(input, addToList);
-            controller->resetCurrentList();
-        }
-    }
-}
-
-void MenuBar::deletePlaylist()
-{
-    bool ok;
-    
-    QString input = QInputDialog::getText(this, "Delete Playlist", "Enter Playlist Name:",
-                                           QLineEdit::Normal, "",
-                                           &ok);
-    if(ok && !input.isEmpty())
-    {
-        listManager->delPlaylist(input);
-    }
 }
 
 void MenuBar::open()

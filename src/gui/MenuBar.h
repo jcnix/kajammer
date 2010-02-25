@@ -52,8 +52,6 @@ public:
     QStringList getQueue();
 
 private slots:
-    void createNewPlaylist();
-    void deletePlaylist();
     void open();
     void quit();
     void showOptions();
@@ -71,8 +69,6 @@ private:
     QMenuBar *menuBar;
     
     QMenu *file;
-    QAction *newPlaylist;
-    QAction *delPlaylist;
     QAction *openFile;
     QAction *close;
     
