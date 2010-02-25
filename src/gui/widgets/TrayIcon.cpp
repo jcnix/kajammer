@@ -45,9 +45,9 @@ TrayIcon::TrayIcon() : QSystemTrayIcon()
     quitAction->setIcon(menu->style()->standardIcon(QStyle::QStyle::SP_MessageBoxCritical));
     
     menu->addAction(nextAction);
+    menu->addAction(prevAction);
     menu->addAction(playAction);
     menu->addAction(pauseAction);
-    menu->addAction(prevAction);
     menu->addAction(menu->addSeparator());
     menu->addAction(quitAction);
     setContextMenu(menu);
