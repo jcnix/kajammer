@@ -53,6 +53,8 @@ void MenuBar::init()
     openFile = new QAction("&Open...", this);
     close = new QAction("E&xit", this);
     
+    openFile->setIcon(style()->standardIcon(QStyle::SP_DialogOpenButton));
+    
     optionsAction = new QAction("&Options", this);
     playlistEditAction = new QAction("&Playlist Editor", this);
     scanAction = new QAction("&Scan Collection", this);
