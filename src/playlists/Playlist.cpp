@@ -27,6 +27,11 @@ Playlist::Playlist(QString name)
     playlist = name;
     playlistFile = PLAYLIST_DIR + name;
     
+    QDir pdir(PLAYLIST_DIR);
+    if(!pdir.exists()) {
+        pdir.mkpath(PLAYLIST_DIR);
+    }
+    
     QFile file(playlistFile);
     if(!file.exists())
     {
@@ -34,7 +39,7 @@ Playlist::Playlist(QString name)
         QStringList list;
         list.append("");
         addTracks(list);
-    }
+    }    
 }
 
 Playlist::Playlist(QString name, QStringList tracks)
