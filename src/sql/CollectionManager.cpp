@@ -49,6 +49,16 @@ bool CollectionManager::connect_db()
     return open;
 }
 
+void CollectionManager::startTransaction()
+{
+    db.transaction();
+}
+
+void CollectionManager::commit()
+{
+    db.commit();
+}
+
 bool CollectionManager::addTrack(QString track)
 {
     Controller *c = Controller::getInstance();

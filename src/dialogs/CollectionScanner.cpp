@@ -97,7 +97,7 @@ void CollectionScanner::scan()
     }
     
     CollectionManager *cm = new CollectionManager;
-    
+    cm->startTransaction();
     PlaylistManager *p = PlaylistManager::getInstance();
     
     QList<QString> dirs;
@@ -151,6 +151,7 @@ void CollectionScanner::scan()
         }
     }
     
+    cm->commit();
     cm->close_db();
     accept();
 }

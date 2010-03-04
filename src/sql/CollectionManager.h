@@ -41,6 +41,8 @@ public:
     bool isDbOpen();
     bool addTrack(QString);
     void search(QString);
+    void startTransaction();
+    void commit();
     
 signals:
     void searchDone(QStringList);
