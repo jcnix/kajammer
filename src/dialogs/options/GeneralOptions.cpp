@@ -1,8 +1,8 @@
 /*
- * File:   optionsPanel.cpp
+ * File:   GeneralOptions.cpp
  * Author: Casey Jones
  *
- * Created on March 10, 2009, 4:27 PM
+ * Created on March 6, 2010, 7:06 PM
  *
  * This file is part of KaJammer.
  *
@@ -22,43 +22,28 @@
 
 #include "OptionsDialog.h"
 
-OptionsPanel::OptionsPanel()
+GeneralOptions::GeneralOptions()
 {
     init();
     populate();
-    
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(save()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
-    connect(browseDefaultOpenBtn, SIGNAL(clicked()), this, 
-            SLOT(browseDefaultOpen()));
 }
 
-OptionsPanel::~OptionsPanel()
-{    
+GeneralOptions::~GeneralOptions()
+{
     delete defaultOpen;
     delete browseDefaultOpenBtn;
     delete shuffBox;
     delete trayIconOption;
     delete notifyBox;
     
-    #ifdef HAVE_LASTFM_H
-    delete lastfmBox;
-    delete lastfmUser;
-    delete lastfmPass;
-    #endif
-    
     delete defaultOpenLayout;
     delete formLayout;
 }
 
-void OptionsPanel::init()
-{   
-	setWindowTitle("KaJammer Options");
-	
+void GeneralOptions::init()
+{    
     options = Options::getInstance();
-    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok |
-                                    QDialogButtonBox::Cancel);
-    
+                                    
     defaultOpen = new QLineEdit;
     defaultOpen->setMinimumWidth(175);
     browseDefaultOpenBtn = new QPushButton(style()->standardIcon(QStyle::SP_DialogOpenButton), "", this);
@@ -66,13 +51,6 @@ void OptionsPanel::init()
     shuffBox = new QCheckBox;
     trayIconOption = new QCheckBox;
     notifyBox = new QCheckBox;
-
-    #ifdef HAVE_LASTFM_H
-    lastfmBox = new QCheckBox;
-    lastfmUser = new QLineEdit;
-    lastfmPass = new QLineEdit;
-    lastfmPass->setEchoMode(QLineEdit::Password);
-    #endif
     
     defaultOpenLayout = new QHBoxLayout;
     defaultOpenLayout->addWidget(defaultOpen);
@@ -83,46 +61,27 @@ void OptionsPanel::init()
     formLayout->addRow("No repeat on shuffle", shuffBox);
     formLayout->addRow("Enable Tray Icon", trayIconOption);
     formLayout->addRow("Tray Notifications", notifyBox);
-    #ifdef HAVE_LASTFM_H
-    formLayout->addRow("Enable Last.fm", lastfmBox);
-    formLayout->addRow("Last.fm Username", lastfmUser);
-    formLayout->addRow("Last.fm Password", lastfmPass);
-    #endif
-    formLayout->addRow("", buttonBox);
 
     setLayout(formLayout);
 }
 
-void OptionsPanel::populate()
-{    
+void GeneralOptions::populate()
+{
     defaultOpen->setText(options->getDefaultOpenDir());
     shuffBox->setChecked(options->isShuff_no_repeat());
     trayIconOption->setChecked(options->trayIcon());
     notifyBox->setChecked(options->get_notify_on_change());
-    #ifdef HAVE_LASTFM_H
-    lastfmBox->setChecked(options->useLastFm());
-    lastfmUser->setText(options->getLastFmUser());
-    lastfmPass->setText(options->getLastFmPass());
-    #endif
 }
 
-void OptionsPanel::save()
+void GeneralOptions::save()
 {
     options->setDefaultOpenDir(defaultOpen->text());
     options->setShuff_no_repeat(shuffBox->isChecked());
     options->setTrayIcon(trayIconOption->isChecked());
     options->set_notify_on_change(notifyBox->isChecked());
-    #ifdef HAVE_LASTFM_H
-    options->setLastFm(lastfmBox->isChecked());
-    options->setLastFmUser(lastfmUser->text());
-    options->setLastFmPass(lastfmPass->text());
-    #endif
-    options->save();
-    
-    accept();
 }
 
-void OptionsPanel::browseDefaultOpen()
+void GeneralOptions::browseDefaultOpen()
 {
     QString dir;
     dir = QFileDialog::getExistingDirectory(NULL, 
@@ -131,11 +90,4 @@ void OptionsPanel::browseDefaultOpen()
                                             QFileDialog::ShowDirsOnly);
                                              
      defaultOpen->setText(dir);
-}
-
-void OptionsPanel::closeEvent(QCloseEvent *event)
-{
-    done(0);
-    delete this;
-    event->accept();
 }

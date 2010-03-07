@@ -37,7 +37,7 @@
 #include "../dialogs/AboutDialog.h"
 #include "../Controller.h"
 #include "../playlists/PlaylistManager.h"
-#include "../dialogs/OptionsDialog.h"
+#include "../dialogs/options/OptionsDialog.h"
 #include "../Options.h"
 #include "../dialogs/PlaylistEditor.h"
 #include "../dialogs/CollectionScanner.h"

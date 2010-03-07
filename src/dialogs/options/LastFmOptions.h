@@ -1,8 +1,8 @@
 /*
- * File:   optionsPanel.h
+ * File:   LastFmOptions.h
  * Author: Casey Jones
  *
- * Created on March 10, 2009, 4:27 PM
+ * Created on March 6, 2010, 4:00 PM
  *
  * This file is part of KaJammer.
  *
@@ -20,66 +20,40 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPTIONSPANEL_H
-#define _OPTIONSPANEL_H
+#ifndef _LASTFMOPTIONS_H
+#define _LASTFMOPTIONS_H
 
-#include <iostream>
 #include <QtCore/QObject>
-#include <QtCore/QDir>
 #include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QTextStream>
 #include <QtGui/QCheckBox>
-#include <QtGui/QCloseEvent>
-#include <QtGui/QDialog>
-#include <QtGui/QDialogButtonBox>
-#include <QtGui/QFileDialog>
 #include <QtGui/QFormLayout>
-#include <QtGui/QHBoxLayout>
 #include <QtGui/QLineEdit>
-#include <QtGui/QPushButton>
-#include <QtGui/QStyle>
+#include <QtGui/QWidget>
 
-#include "../config.h"
-#include "../Options.h"
+#include "../../config.h"
+#include "../../Options.h"
 
-class OptionsPanel : public QDialog
+//#ifdef HAVE_LASTFM_H
+
+class LastFmOptions : public QWidget
 {
     Q_OBJECT;
     
 public:
-    OptionsPanel();
-    ~OptionsPanel();
+    LastFmOptions(QWidget *parent = 0);
+    ~LastFmOptions();
     
-public slots:
-    void save();
-    void browseDefaultOpen();
-    
-protected:
-    void closeEvent(QCloseEvent *event);    
-    
-private:
     void init();
     void populate();
-    
+    void save();
+        
+private:
     Options *options;
-	
-    QLineEdit *defaultOpen;
-    QPushButton *browseDefaultOpenBtn;
-    QCheckBox *shuffBox;
-    QCheckBox *trayIconOption;
     QCheckBox *lastfmBox;
-    QCheckBox *notifyBox;
-    
-    #ifdef HAVE_LASTFM_H
     QLineEdit *lastfmUser;
     QLineEdit *lastfmPass;
-    #endif
-
-    QDialogButtonBox *buttonBox;
-    
-    QHBoxLayout *defaultOpenLayout;
     QFormLayout *formLayout;
 };
 
-#endif /* _OPTIONSPANEL_H */
+//#endif
+#endif /* _LASTFMOPTIONS_H */

@@ -39,7 +39,7 @@ Playlist::Playlist(QString name)
         QStringList list;
         list.append("");
         addTracks(list);
-    }    
+    }
 }
 
 Playlist::Playlist(QString name, QStringList tracks)
