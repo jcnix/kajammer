@@ -33,7 +33,7 @@
 #include "../../config.h"
 #include "../../Options.h"
 
-//#ifdef HAVE_LASTFM_H
+
 
 class LastFmOptions : public QWidget
 {
@@ -55,5 +55,4 @@ private:
     QFormLayout *formLayout;
 };
 
-//#endif
 #endif /* _LASTFMOPTIONS_H */

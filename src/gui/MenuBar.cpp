@@ -22,8 +22,9 @@
 
 #include "MenuBar.h"
 
-MenuBar::MenuBar()
+MenuBar::MenuBar(QApplication *app)
 {
+    m_app = app;
     init();
     
     connect(openFile, SIGNAL(triggered()), this, SLOT(open()));
@@ -32,6 +33,7 @@ MenuBar::MenuBar()
     connect(playlistEditAction, SIGNAL(triggered()), this, SLOT(showPlaylistEditor()));
     connect(scanAction, SIGNAL(triggered()), this, SLOT(showCollectionScanner()));
     connect(about, SIGNAL(triggered()), this, SLOT(aboutDialog()));
+    connect(aboutQt, SIGNAL(triggered()), m_app, SLOT(aboutQt()));
 }
 
 void MenuBar::init()
@@ -60,6 +62,7 @@ void MenuBar::init()
     scanAction = new QAction("&Scan Collection", this);
     
     about = new QAction("&About", this);
+    aboutQt = new QAction("About &Qt", this);
     
     openFile->setShortcut(QKeySequence::Open);
     close->setShortcut(QKeySequence::fromString("Ctrl+X", QKeySequence::NativeText));
@@ -73,6 +76,7 @@ void MenuBar::init()
     tools->addAction(scanAction);
     
     help->addAction(about);
+    help->addAction(aboutQt);
 }
 
 void MenuBar::open()

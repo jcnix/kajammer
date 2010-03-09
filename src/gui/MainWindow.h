@@ -38,7 +38,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT;
     
 public:
-    MainWindow();
+    MainWindow(QApplication*);
 
 public slots:
     void showWindow(QSystemTrayIcon::ActivationReason);
@@ -46,7 +46,7 @@ public slots:
 protected:
     void closeEvent(QCloseEvent*);    
     
-private:    
+private:
     Controller *controller;
     MenuBar *menuBar;
     MediaControls *mediaControls;    

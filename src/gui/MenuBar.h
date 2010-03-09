@@ -48,7 +48,7 @@ class MenuBar : public QMenuBar
     Q_OBJECT;
 
 public:
-    MenuBar();
+    MenuBar(QApplication*);
     QStringList getQueue();
 
 private slots:
@@ -66,6 +66,7 @@ private:
     PlaylistManager *listManager;
     Options *options;
     
+    QApplication *m_app;
     QMenuBar *menuBar;
     
     QMenu *file;
@@ -79,6 +80,7 @@ private:
     
     QMenu *help;
     QAction *about;
+    QAction *aboutQt;
 };
 
 #endif	/* _MENUBAR_H */

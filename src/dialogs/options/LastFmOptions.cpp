@@ -20,8 +20,6 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-//#ifdef HAVE_LASTFM_H
-
 #include "LastFmOptions.h"
 
 LastFmOptions::LastFmOptions(QWidget *parent) : QWidget(parent)
@@ -68,5 +66,3 @@ void LastFmOptions::save()
     options->setLastFmUser(lastfmUser->text());
     options->setLastFmPass(lastfmPass->text());
 }
-
-//#endif

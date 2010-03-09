@@ -22,11 +22,11 @@
 
 #include "MainWindow.h"
 
-MainWindow::MainWindow()
+MainWindow::MainWindow(QApplication *app)
 {
     setWindowTitle("KaJammer Music Player");
 
-    menuBar = new MenuBar;
+    menuBar = new MenuBar(app);
     setMenuBar(menuBar);
 
     mediaControls = new MediaControls;
