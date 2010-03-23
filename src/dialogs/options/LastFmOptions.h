@@ -33,8 +33,6 @@
 #include "../../config.h"
 #include "../../Options.h"
 
-
-
 class LastFmOptions : public QWidget
 {
     Q_OBJECT;

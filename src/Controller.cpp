@@ -131,13 +131,26 @@ QMap<QString, QString> Controller::getMetadata(QString file)
     
     kajamtag_read(cfile);
         
-    char* c_title =   k_getData(KTITLE);
-    char* c_artist =  k_getData(KARTIST);
-    char* c_album =   k_getData(KALBUM);
-    
-    title = QString(c_title);
-    artist = QString(c_artist);
-    album = QString(c_album);
+    if(!kajamtag_isUtf16())
+    {
+        char* c_title =   k_getData(KTITLE);
+        char* c_artist =  k_getData(KARTIST);
+        char* c_album =   k_getData(KALBUM);
+        
+        title = QString(c_title);
+        artist = QString(c_artist);
+        album = QString(c_album);
+    }
+    else
+    {
+        wchar_t* c_title = k_getData16(KTITLE);
+        wchar_t* c_artist = k_getData16(KARTIST);
+        wchar_t* c_album = k_getData16(KALBUM);
+        
+        title = QString::fromWCharArray(c_title, 2);
+        artist = QString::fromWCharArray(c_artist, 2);
+        album = QString::fromWCharArray(c_album, 2);
+    }
     
     //"BAD_TAG" means Kajamtag doesn't 
     //recognize the tag format.
