@@ -146,7 +146,6 @@ QMap<QString, QString> Controller::getMetadata(QString file)
         wchar_t* c_title = k_getData16(KTITLE);
         wchar_t* c_artist = k_getData16(KARTIST);
         wchar_t* c_album = k_getData16(KALBUM);
-        printf("title: %ls\n", c_title);
         
         title = QString::fromWCharArray(c_title, -1);
         artist = QString::fromWCharArray(c_artist, -1);
