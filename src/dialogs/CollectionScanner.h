@@ -36,6 +36,7 @@
 #include <QtGui/QHBoxLayout>
 #include <QtCore/QDir>
 
+#include "../headers/kajammer.h"
 #include "../playlists/PlaylistManager.h"
 #include "../sql/CollectionManager.h"
 

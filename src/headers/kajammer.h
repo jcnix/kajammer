@@ -33,4 +33,6 @@
 #define KAJAM_QDIR QDir(QDir::homePath()+"/.kajammer/")
 #define KAJAM_CONF KAJAM_DIR+"kajammer.conf"
 
+#define MUSIC_TYPES QString("*.mp3 *.ogg *.aac *.flac *.wma *.wav")
+
 #endif //_KAJAMMER_H

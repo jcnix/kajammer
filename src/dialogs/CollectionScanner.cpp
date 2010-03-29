@@ -159,9 +159,8 @@ void CollectionScanner::scan()
 /* Returns full path, not just file names */
 QStringList CollectionScanner::ls_music(QDir dir)
 {
-    QStringList filters;
-    filters << "*.mp3" << "*.ogg" << "*.flac" << "*.aac";
-    filters << "*.wma" << "*.wav";
+    QString music_types = MUSIC_TYPES;
+    QStringList filters = music_types.split(" ");
     
     dir.setNameFilters(filters);
     QStringList files = dir.entryList();
