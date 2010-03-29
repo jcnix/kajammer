@@ -84,7 +84,7 @@ void MenuBar::open()
     QString defaultDir = options->getDefaultOpenDir();
     
     QStringList fileQueue = QFileDialog::getOpenFileNames(this, tr("Open File"), defaultDir, 
-                                    tr("Music Files (*.mp3 *.ogg *.aac *.flac *.wma *.wav)"));
+                        tr("Music Files (*.mp3 *.ogg *.aac *.flac *.wma *.wav);;All Files(*)"));
     //Make sure user didn't cancel out of the dialog
     if(!fileQueue.isEmpty())
     {
