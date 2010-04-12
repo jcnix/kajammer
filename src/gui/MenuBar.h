@@ -55,10 +55,14 @@ public:
 private slots:
     void open();
     void quit();
+    void showPlaylistsSlot(bool);
     void showOptions();
     void showPlaylistEditor();
     void showCollectionScanner();
     void aboutDialog();
+    
+signals:
+    void showPlaylists(bool);
 
 private:
     void init();
@@ -73,6 +77,9 @@ private:
     QMenu *file;
     QAction *openFile;
     QAction *close;
+    
+    QMenu *view;
+    QAction *viewPlaylistsAction;
     
     QMenu *tools;
     QAction *optionsAction;

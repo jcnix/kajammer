@@ -70,6 +70,7 @@ public slots:
     void repeatPressed();
     void search();
     void searchDone(QStringList result);
+    void showPlaylists(bool);
 
 private:
     void init();

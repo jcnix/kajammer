@@ -29,6 +29,8 @@ MenuBar::MenuBar(QApplication *app)
     
     connect(openFile, SIGNAL(triggered()), this, SLOT(open()));
     connect(close, SIGNAL(triggered()), this, SLOT(quit()));
+    connect(viewPlaylistsAction, SIGNAL(triggered(bool)), this,
+            SLOT(showPlaylistsSlot(bool)));
     connect(optionsAction, SIGNAL(triggered()), this, SLOT(showOptions()));
     connect(playlistEditAction, SIGNAL(triggered()), this, SLOT(showPlaylistEditor()));
     connect(scanAction, SIGNAL(triggered()), this, SLOT(showCollectionScanner()));
@@ -45,10 +47,12 @@ void MenuBar::init()
     menuBar = new QMenuBar;
 
     file = new QMenu("&File");
+    view = new QMenu("&View");
     tools = new QMenu("&Tools");
     help = new QMenu("&Help");
 
     addMenu(file);
+    addMenu(view);
     addMenu(tools);
     addMenu(help);
 
@@ -57,19 +61,25 @@ void MenuBar::init()
     
     openFile->setIcon(style()->standardIcon(QStyle::SP_DialogOpenButton));
     
+    openFile->setShortcut(QKeySequence::Open);
+    close->setShortcut(QKeySequence::fromString("Ctrl+X", QKeySequence::NativeText));
+    
+    viewPlaylistsAction = new QAction("View &Playlists", this);
+    viewPlaylistsAction->setCheckable(true);
+    viewPlaylistsAction->setChecked(true);
+    
     optionsAction = new QAction("&Options", this);
     playlistEditAction = new QAction("&Playlist Editor", this);
     scanAction = new QAction("&Scan Collection", this);
     
     about = new QAction("&About", this);
     aboutQt = new QAction("About &Qt", this);
-    
-    openFile->setShortcut(QKeySequence::Open);
-    close->setShortcut(QKeySequence::fromString("Ctrl+X", QKeySequence::NativeText));
 
     file->addAction(openFile);
     file->addSeparator();
     file->addAction(close);
+    
+    view->addAction(viewPlaylistsAction);
     
     tools->addAction(optionsAction);
     tools->addAction(playlistEditAction);
@@ -92,6 +102,11 @@ void MenuBar::open()
         controller->resetCurrentList();
         controller->setQueue(fileQueue);
     }
+}
+
+void MenuBar::showPlaylistsSlot(bool b)
+{
+    emit showPlaylists(b);
 }
 
 void MenuBar::showOptions()

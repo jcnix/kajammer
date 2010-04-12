@@ -28,17 +28,21 @@
 #include <QtGui/QIcon>
 
 #include "headers/kajammer.h"
-#include "gui/MainWindow.h"
 #include "Cli.h"
 #include "config.h"
 #include "Controller.h"
 #include "Options.h"
 #include "gui/widgets/TrayIcon.h"
+#include "gui/MainWindow.h"
+#include "gui/MediaControls.h"
+#include "gui/MenuBar.h"
 #include "sql/CollectionManager.h"
 
 #ifdef HAVE_LASTFM_H
 #include "services/LastFM.h"
 #endif
+
+class MenuBar;
 
 class Manager : public QObject
 {
@@ -58,6 +62,9 @@ protected:
 private:
     static Manager *manager;
     QApplication *m_app;
+    
+    MenuBar *menuBar;
+    MediaControls *mediaControls;
     
     Controller *controller;
     Options *options;

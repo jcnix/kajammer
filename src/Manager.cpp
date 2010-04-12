@@ -1,5 +1,5 @@
 /*
- * File:   manager.cpp
+ * File:   Manager.cpp
  * Author: Casey Jones
  *
  * Created on October 11, 2009, 7:41 PM
@@ -43,6 +43,12 @@ int Manager::start(int argc, char *argv[], QApplication *app)
 {
     m_app = app;
     
+    mediaControls = new MediaControls;
+    menuBar = new MenuBar(app);
+    
+    connect(menuBar, SIGNAL(showPlaylists(bool)), mediaControls,
+            SLOT(showPlaylists(bool)));
+    
     cli = new Cli(argc, argv);
     bool xFlag = cli->getXFlag();
     
@@ -58,7 +64,7 @@ int Manager::start(int argc, char *argv[], QApplication *app)
         else
             app->setQuitOnLastWindowClosed(true);
         
-        MainWindow *window = new MainWindow(m_app);
+        MainWindow *window = new MainWindow(m_app, mediaControls, menuBar);
         window->resize(options->getMainWidth(), options->getMainHeight());
         window->show();
         

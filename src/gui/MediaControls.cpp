@@ -285,3 +285,8 @@ void MediaControls::changePlaylist(int row)
     QString name = clickedList->text();
     controller->changePlaylist(name, row);
 }
+
+void MediaControls::showPlaylists(bool b)
+{
+    playlistTable->setVisible(b);
+}
