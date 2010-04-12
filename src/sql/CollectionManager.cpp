@@ -84,6 +84,12 @@ void CollectionManager::search(QString q)
     run();
 }
 
+void CollectionManager::clearTable()
+{
+    QSqlQuery query;
+    query.exec("DELETE FROM music;");
+}
+
 /* Run the search on a new thread */
 void CollectionManager::run()
 {

@@ -97,6 +97,14 @@ void CollectionScanner::scan()
     }
     
     CollectionManager *cm = new CollectionManager;
+    
+    //Clear out the table, so all the missing
+    //tracks go away
+    if(chkDb->checkState() == Qt::Checked)
+    {
+        cm->clearTable();
+    }
+    
     cm->startTransaction();
     PlaylistManager *p = PlaylistManager::getInstance();
     
