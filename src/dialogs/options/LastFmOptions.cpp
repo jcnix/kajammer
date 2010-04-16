@@ -55,14 +55,18 @@ void LastFmOptions::init()
 
 void LastFmOptions::populate()
 {
+    #ifdef HAVE_LASTFM_H
     lastfmBox->setChecked(options->useLastFm());
     lastfmUser->setText(options->getLastFmUser());
     lastfmPass->setText(options->getLastFmPass());
+    #endif
 }
 
 void LastFmOptions::save()
 {
+    #ifdef HAVE_LASTFM_H
     options->setLastFm(lastfmBox->isChecked());
     options->setLastFmUser(lastfmUser->text());
     options->setLastFmPass(lastfmPass->text());
+    #endif
 }
