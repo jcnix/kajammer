@@ -50,12 +50,12 @@ void OptionsPanel::init()
     tabWidget = new QTabWidget;
 
     genOptions = new GeneralOptions;
-    #ifdef HAVE_LASTFM_H
-    lfmOptions = new LastFmOptions;
-    #endif
     
     tabWidget->addTab(genOptions, "General");
+    #ifdef HAVE_LASTFM_H
+    lfmOptions = new LastFmOptions;
     tabWidget->addTab(lfmOptions, "Last.fm");
+    #endif
     
     layout = new QHBoxLayout;
     layout->addWidget(tabWidget);
