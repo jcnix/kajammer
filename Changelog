@@ -3,6 +3,7 @@ Kajammer 1.0
 -Searching your collection
 -Tray Icon popup messages
 -Tray Icon uses icons for the menu items
+-Toggle visibility of Playlist table
 -Removed File->New Playlist
 -Removed File->Delete Playlist
 -Bug: Show Okay/Cancel in options if Last.fm isn't enabled.
