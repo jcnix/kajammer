@@ -29,7 +29,7 @@
 
 #include "headers/kajammer.h"
 #include "Cli.h"
-#include "config.h"
+#include "headers/config.h"
 #include "Controller.h"
 #include "Options.h"
 #include "gui/widgets/TrayIcon.h"

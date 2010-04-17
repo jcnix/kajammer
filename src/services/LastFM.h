@@ -23,7 +23,7 @@
 #ifndef _LASTFM_H
 #define _LASTFM_H
 
-#include "../config.h"
+#include "../headers/config.h"
 #ifdef HAVE_LASTFM_H
 
 #include <iostream>

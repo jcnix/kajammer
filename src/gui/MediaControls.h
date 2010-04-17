@@ -43,7 +43,7 @@
 #include <phonon/volumeslider.h>
 #include <iostream>
 
-#include "../config.h"
+#include "../headers/config.h"
 #include "../Controller.h"
 #include "../playlists/PlaylistManager.h"
 #include "../gui/widgets/ToggleButton.h"

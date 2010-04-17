@@ -30,7 +30,7 @@
 #include <QtGui/QLineEdit>
 #include <QtGui/QWidget>
 
-#include "../../config.h"
+#include "../../headers/config.h"
 #include "../../Options.h"
 
 class LastFmOptions : public QWidget

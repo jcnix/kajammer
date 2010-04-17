@@ -31,7 +31,7 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QTabWidget>
 
-#include "../../config.h"
+#include "../../headers/config.h"
 #include "../../Options.h"
 #include "GeneralOptions.h"
 #include "LastFmOptions.h"

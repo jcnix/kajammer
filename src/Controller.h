@@ -34,7 +34,7 @@
 #include <ctime>
 #include <cstdlib>
 
-#include "config.h"
+#include "headers/config.h"
 #include "playlists/PlaylistManager.h"
 #include "Options.h"
 

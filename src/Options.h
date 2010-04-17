@@ -32,7 +32,7 @@
 #include <QtCore/QTextStream>
 #include <iostream>
 
-#include "config.h"
+#include "headers/config.h"
 #include "headers/kajammer.h"
 
 class Options
