@@ -35,6 +35,7 @@ SET( kajammer_SRCS
     src/playlists/Playlist.cpp
     src/playlists/PlaylistManager.cpp
     src/dialogs/PlaylistEditor.cpp
+    src/dialogs/TagEditor.cpp
     src/gui/widgets/ToggleButton.cpp
     src/gui/widgets/TrayIcon.cpp
     src/sql/CollectionManager.cpp
@@ -56,6 +57,7 @@ SET( kajammer_MOC_HEADERS
     src/playlists/Playlist.h
     src/playlists/PlaylistManager.h
     src/dialogs/PlaylistEditor.h
+    src/dialogs/TagEditor.h
     src/gui/widgets/ToggleButton.h
     src/gui/widgets/TrayIcon.h
     src/sql/CollectionManager.h

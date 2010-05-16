@@ -41,6 +41,7 @@
 #include "../dialogs/options/OptionsDialog.h"
 #include "../Options.h"
 #include "../dialogs/PlaylistEditor.h"
+#include "../dialogs/TagEditor.h"
 #include "../dialogs/CollectionScanner.h"
 #include "../Manager.h"
 
@@ -59,6 +60,7 @@ private slots:
     void showOptions();
     void showPlaylistEditor();
     void showCollectionScanner();
+    void showTagEditor();
     void aboutDialog();
     
 signals:
@@ -85,6 +87,7 @@ private:
     QAction *optionsAction;
     QAction *playlistEditAction;
     QAction *scanAction;
+    QAction *tagEditorAction;
     
     QMenu *help;
     QAction *about;

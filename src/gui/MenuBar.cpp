@@ -34,6 +34,7 @@ MenuBar::MenuBar(QApplication *app)
     connect(optionsAction, SIGNAL(triggered()), this, SLOT(showOptions()));
     connect(playlistEditAction, SIGNAL(triggered()), this, SLOT(showPlaylistEditor()));
     connect(scanAction, SIGNAL(triggered()), this, SLOT(showCollectionScanner()));
+    connect(tagEditorAction, SIGNAL(triggered()), this, SLOT(showTagEditor()));
     connect(about, SIGNAL(triggered()), this, SLOT(aboutDialog()));
     connect(aboutQt, SIGNAL(triggered()), m_app, SLOT(aboutQt()));
 }
@@ -71,6 +72,7 @@ void MenuBar::init()
     optionsAction = new QAction("&Options", this);
     playlistEditAction = new QAction("&Playlist Editor", this);
     scanAction = new QAction("&Scan Collection", this);
+    tagEditorAction = new QAction("&Tag Editor", this);
     
     about = new QAction("&About", this);
     aboutQt = new QAction("About &Qt", this);
@@ -84,6 +86,7 @@ void MenuBar::init()
     tools->addAction(optionsAction);
     tools->addAction(playlistEditAction);
     tools->addAction(scanAction);
+    tools->addAction(tagEditorAction);
     
     help->addAction(about);
     help->addAction(aboutQt);
@@ -126,6 +129,12 @@ void MenuBar::showCollectionScanner()
 {
     CollectionScanner *cs = new CollectionScanner;
     cs->show();
+}
+
+void MenuBar::showTagEditor()
+{
+    TagEditor *te = new TagEditor;
+    te->show();
 }
 
 void MenuBar::aboutDialog()
