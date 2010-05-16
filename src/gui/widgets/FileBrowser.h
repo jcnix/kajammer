@@ -1,8 +1,8 @@
 /*
- * File:   TagEditor.h
+ * File:   FileBrowser.h
  * Author: Casey Jones
  *
- * Created on April 20, 2010, 8:54 PM
+ * Created on May 15, 2010, 11:21 PM
  *
  * This file is part of KaJammer.
  *
@@ -20,43 +20,29 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _TAGEDITOR_H
-#define _TAGEDITOR_H
+#ifndef _FILEBROWSER_H
+#define _FILEBROWSER_H
 
-#include <QtGui/QDialog>
-#include <QtGui/QDialogButtonBox>
-#include <QtGui/QListWidget>
-#include <QtGui/QLineEdit>
-#include <QtGui/QPushButton>
-#include <QtGui/QFormLayout>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QVBoxLayout>
+#include <QtCore/QDir>
+#include <QtCore/QFileInfo>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
+#include <QtGui/QStyle>
+#include <QtGui/QTreeWidget>
+#include <QtGui/QTreeWidgetItem>
 
-#include "../gui/widgets/FileBrowser.h"
-
-class TagEditor : public QDialog
+class FileBrowser : public QTreeWidget
 {
     Q_OBJECT
-
-public:
-    TagEditor();
-    ~TagEditor();
     
-private slots:
-    void writeData();
+public:
+    FileBrowser();
+    
+signals:
+    void clickedFile(QString file);
     
 private:
-    void init();
-    
-    FileBrowser *m_fileBrowser;
-    QListWidget *m_tagList;
-    QLineEdit *m_lineEdit;
-    QPushButton *m_acceptBtn;
-    QDialogButtonBox *m_buttonBox;
-    
-    QHBoxLayout *hLayout;
-    QFormLayout *m_form;
-    QVBoxLayout *m_vlayout;
+    void fill(QString dir);
 };
 
 #endif

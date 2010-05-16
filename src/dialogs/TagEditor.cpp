@@ -43,7 +43,8 @@ TagEditor::~TagEditor()
 }
 
 void TagEditor::init()
-{    
+{
+    m_fileBrowser = new FileBrowser;
     m_tagList = new QListWidget;
     m_tagList->addItem("KTAG");
     m_tagList->addItem("KALBUM");
@@ -52,6 +53,7 @@ void TagEditor::init()
     m_lineEdit = new QLineEdit;
     
     hLayout = new QHBoxLayout;
+    hLayout->addWidget(m_fileBrowser);
     hLayout->addWidget(m_tagList);
     
     m_acceptBtn = new QPushButton("Accept");
