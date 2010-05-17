@@ -25,11 +25,17 @@
 FileBrowser::FileBrowser()
 {
     setColumnCount(1);
-    fill("/");
+    fill("/", NULL);
+    
+    connect(this, SIGNAL(itemExpanded(QTreeWidgetItem*)), this,
+            SLOT(expandItem(QTreeWidgetItem*)));
 }
 
-void FileBrowser::fill(QString dir)
+void FileBrowser::fill(QString dir, QTreeWidgetItem *parent)
 {
+    if(parent != NULL)
+        parent->takeChild(0);
+    
     QDir qdir(dir);
     QStringList ls = qdir.entryList();
     ls.removeOne(".");
@@ -37,7 +43,7 @@ void FileBrowser::fill(QString dir)
     
     for(int i = 0; i < ls.length(); i++)
     {
-        QString fullPath = dir + ls.at(i);
+        QString fullPath = dir + "/" + ls.at(i);
         
         QTreeWidgetItem *itm = new QTreeWidgetItem;
         itm->setText(0, ls.at(i));
@@ -50,6 +56,38 @@ void FileBrowser::fill(QString dir)
             itm->addChild(nullItem);
         }
         
-        addTopLevelItem(itm);
+        if(parent == NULL)
+            addTopLevelItem(itm);
+        else
+            parent->addChild(itm);
     }
+}
+
+QString FileBrowser::buildPath(QTreeWidgetItem *item)
+{
+    QStack<QString> stack;
+    QString path = "/";
+    
+    QTreeWidgetItem *item_it = item->parent();
+    if(item_it == NULL)
+        item_it = item;
+    
+    while(item_it != NULL)
+    {
+        stack.push(item_it->text(0));
+        item_it = item_it->parent();
+    }
+    
+    for(int i = 0; i < stack.size(); i++)
+    {
+        path += stack.pop();
+    }
+    
+    return path;
+}
+
+void FileBrowser::expandItem(QTreeWidgetItem *item)
+{
+    QString path = buildPath(item);
+    fill(path, item);
 }

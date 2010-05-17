@@ -25,6 +25,7 @@
 
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
+#include <QtCore/QStack>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtGui/QStyle>
@@ -38,11 +39,15 @@ class FileBrowser : public QTreeWidget
 public:
     FileBrowser();
     
+public slots:
+    void expandItem(QTreeWidgetItem *item);
+    
 signals:
     void clickedFile(QString file);
     
 private:
-    void fill(QString dir);
+    void fill(QString dir, QTreeWidgetItem *parent);
+    QString buildPath(QTreeWidgetItem *item);
 };
 
 #endif
