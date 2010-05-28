@@ -7,3 +7,6 @@ install: $(deps)
 uninstall: $(deps)
 	cd bin && $(MAKE) $(MAKEFLAGS) $@
 
+clean: $(deps)
+	cd bin && $(MAKE) $(MAKEFLAGS) $@
+
