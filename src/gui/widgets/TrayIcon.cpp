@@ -30,6 +30,7 @@ TrayIcon::TrayIcon() : QSystemTrayIcon()
     trayIcon = new QIcon("/usr/share/icons/kajammer.png");
     setIcon(*trayIcon);
     setVisible(true);
+    setToolTip("Kajammer");
     
     menu = new QMenu("KaJammer");
     nextAction = new QAction("Next", this);
