@@ -26,12 +26,15 @@
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QListWidget>
+#include <QtGui/QListWidgetItem>
 #include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
+#include <QtGui/QTreeWidgetItem>
 #include <QtGui/QFormLayout>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QVBoxLayout>
 
+#include "../Controller.h"
 #include "../gui/widgets/FileBrowser.h"
 
 class TagEditor : public QDialog
@@ -44,6 +47,8 @@ public:
     
 private slots:
     void writeData();
+    void openTag(QListWidgetItem*);
+    void openFile(QTreeWidgetItem*, int);
     
 private:
     void init();
@@ -57,6 +62,11 @@ private:
     QHBoxLayout *hLayout;
     QFormLayout *m_form;
     QVBoxLayout *m_vlayout;
+    
+    bool file_open;
+    QString m_title;
+    QString m_album;
+    QString m_artist;
 };
 
 #endif

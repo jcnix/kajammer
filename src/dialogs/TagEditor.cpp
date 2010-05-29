@@ -20,11 +20,10 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "TagEditor.h"
-
 #ifdef HAVE_KAJAMTAG_H
 #include <kajamtag/kajamtag.h>
 #endif
+#include "TagEditor.h"
 
 TagEditor::TagEditor()
 {
@@ -32,6 +31,10 @@ TagEditor::TagEditor()
     
     connect(m_acceptBtn, SIGNAL(clicked()), this, SLOT(writeData()));
     connect(m_buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(m_tagList, SIGNAL(itemClicked(QListWidgetItem*)),
+            this, SLOT(openTag(QListWidgetItem*)));
+    connect(m_fileBrowser, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)),
+            this, SLOT(openFile(QTreeWidgetItem*, int)));
 }
 
 TagEditor::~TagEditor()
@@ -44,11 +47,13 @@ TagEditor::~TagEditor()
 
 void TagEditor::init()
 {
+    file_open = false;
+    
     m_fileBrowser = new FileBrowser;
     m_tagList = new QListWidget;
-    m_tagList->addItem("KTAG");
-    m_tagList->addItem("KALBUM");
-    m_tagList->addItem("KARTIST");
+    m_tagList->addItem("Title");
+    m_tagList->addItem("Album");
+    m_tagList->addItem("Artist");
     
     m_lineEdit = new QLineEdit;
     
@@ -75,4 +80,35 @@ void TagEditor::init()
 void TagEditor::writeData()
 {
     QString data = m_lineEdit->text();
+}
+
+void TagEditor::openTag(QListWidgetItem* item)
+{
+    if(!file_open)
+        return;
+    
+    QString text = item->text();
+    QString data = "";
+    
+    if(text == "Title")
+        data = m_title;
+    else if(text == "Album")
+        data = m_album;
+    else if(text == "Artist")
+        data = m_artist;
+    
+    m_lineEdit->setText(data);
+}
+
+void TagEditor::openFile(QTreeWidgetItem* item, int column)
+{
+    file_open = true;
+    
+    QString path = m_fileBrowser->buildPath(item);
+    Controller *controller = Controller::getInstance();
+    QMap<QString, QString> metaData = controller->getMetadata(path);
+    
+    m_title = metaData.value("TITLE");
+    m_artist = metaData.value("ARTIST");
+    m_album = metaData.value("ALBUM");
 }
