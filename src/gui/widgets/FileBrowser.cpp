@@ -21,7 +21,6 @@
  */
 
 #include "FileBrowser.h"
-#include <iostream>
 
 FileBrowser::FileBrowser()
 {
@@ -84,6 +83,9 @@ QString FileBrowser::buildPath(QTreeWidgetItem *item)
         QString d = stack.pop();
         path += d + "/";
     }
+    
+    //Remove trailing /
+    path = path.remove(path.length() - 1, 1);
     
     return path;
 }

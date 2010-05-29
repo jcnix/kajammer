@@ -38,6 +38,7 @@ class FileBrowser : public QTreeWidget
     
 public:
     FileBrowser();
+    QString buildPath(QTreeWidgetItem *item);
     
 public slots:
     void expandItem(QTreeWidgetItem *item);
@@ -47,7 +48,6 @@ signals:
     
 private:
     void fill(QString dir, QTreeWidgetItem *parent);
-    QString buildPath(QTreeWidgetItem *item);
 };
 
 #endif
