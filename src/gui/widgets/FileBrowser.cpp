@@ -21,6 +21,7 @@
  */
 
 #include "FileBrowser.h"
+#include <iostream>
 
 FileBrowser::FileBrowser()
 {
@@ -68,7 +69,7 @@ QString FileBrowser::buildPath(QTreeWidgetItem *item)
     QStack<QString> stack;
     QString path = "/";
     
-    QTreeWidgetItem *item_it = item->parent();
+    QTreeWidgetItem *item_it = item;
     if(item_it == NULL)
         item_it = item;
     
@@ -78,9 +79,11 @@ QString FileBrowser::buildPath(QTreeWidgetItem *item)
         item_it = item_it->parent();
     }
     
-    for(int i = 0; i < stack.size(); i++)
+    std::cout << stack.size() << "\n";
+    while(stack.size() > 0)
     {
-        path += stack.pop();
+        QString d = stack.pop();
+        path += d + "/";
     }
     
     return path;
@@ -89,5 +92,6 @@ QString FileBrowser::buildPath(QTreeWidgetItem *item)
 void FileBrowser::expandItem(QTreeWidgetItem *item)
 {
     QString path = buildPath(item);
+    std::cout << path.toStdString() << "\n\n";
     fill(path, item);
 }
