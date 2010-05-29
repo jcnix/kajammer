@@ -79,7 +79,6 @@ QString FileBrowser::buildPath(QTreeWidgetItem *item)
         item_it = item_it->parent();
     }
     
-    std::cout << stack.size() << "\n";
     while(stack.size() > 0)
     {
         QString d = stack.pop();
@@ -92,6 +91,5 @@ QString FileBrowser::buildPath(QTreeWidgetItem *item)
 void FileBrowser::expandItem(QTreeWidgetItem *item)
 {
     QString path = buildPath(item);
-    std::cout << path.toStdString() << "\n\n";
     fill(path, item);
 }
