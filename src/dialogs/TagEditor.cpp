@@ -20,9 +20,7 @@
  * along with KaJammer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifdef HAVE_KAJAMTAG_H
-#include <kajamtag/kajamtag.h>
-#endif
+
 #include "TagEditor.h"
 
 TagEditor::TagEditor()
@@ -79,7 +77,16 @@ void TagEditor::init()
 
 void TagEditor::writeData()
 {
+    //Only Kajamtag is supported
+    #ifdef HAVE_KAJAMTAG_H
+    if(!file_open)
+        return;
+    
+    const char* cfile = m_file.toStdString().c_str();
     QString data = m_lineEdit->text();
+    const char* cdata = data.toStdString().c_str();
+    kajamtag_write((char*) cfile, m_ktag, (char*) cdata);
+    #endif
 }
 
 void TagEditor::openTag(QListWidgetItem* item)
@@ -91,11 +98,26 @@ void TagEditor::openTag(QListWidgetItem* item)
     QString data = "";
     
     if(text == "Title")
+    {
         data = m_title;
+        #ifdef HAVE_KAJAMTAG_H
+        m_ktag = KTITLE;
+        #endif
+    }
     else if(text == "Album")
+    {
         data = m_album;
+        #ifdef HAVE_KAJAMTAG_H
+        m_ktag = KALBUM;
+        #endif
+    }
     else if(text == "Artist")
+    {
         data = m_artist;
+        #ifdef HAVE_KAJAMTAG_H
+        m_ktag = KARTIST;
+        #endif
+    }
     
     m_lineEdit->setText(data);
 }
@@ -104,9 +126,9 @@ void TagEditor::openFile(QTreeWidgetItem* item, int column)
 {
     file_open = true;
     
-    QString path = m_fileBrowser->buildPath(item);
+    m_file = m_fileBrowser->buildPath(item);
     Controller *controller = Controller::getInstance();
-    QMap<QString, QString> metaData = controller->getMetadata(path);
+    QMap<QString, QString> metaData = controller->getMetadata(m_file);
     
     m_title = metaData.value("TITLE");
     m_artist = metaData.value("ARTIST");

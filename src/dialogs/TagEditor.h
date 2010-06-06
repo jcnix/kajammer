@@ -23,6 +23,11 @@
 #ifndef _TAGEDITOR_H
 #define _TAGEDITOR_H
 
+#include "../headers/config.h"
+#ifdef HAVE_KAJAMTAG_H
+#include <kajamtag/kajamtag.h>
+#endif
+
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QListWidget>
@@ -64,6 +69,10 @@ private:
     QVBoxLayout *m_vlayout;
     
     bool file_open;
+    QString m_file;
+    #ifdef HAVE_KAJAMTAG_H
+    Ktag m_ktag;
+    #endif
     QString m_title;
     QString m_album;
     QString m_artist;
