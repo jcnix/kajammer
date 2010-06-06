@@ -37,6 +37,7 @@ OptionsPanel::~OptionsPanel()
     delete lfmOptions;
     #endif
     delete layout;
+    delete vLayout;
 }
 
 void OptionsPanel::init()
@@ -60,7 +61,11 @@ void OptionsPanel::init()
     layout = new QHBoxLayout;
     layout->addWidget(tabWidget);
     
-    setLayout(layout);
+    vLayout = new QVBoxLayout;
+    vLayout->addLayout(layout);
+    vLayout->addWidget(buttonBox);
+    
+    setLayout(vLayout);
 }
 
 void OptionsPanel::save()

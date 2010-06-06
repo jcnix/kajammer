@@ -29,6 +29,7 @@
 #include <QtGui/QCloseEvent>
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QHBoxLayout>
+#include <QtGui/QVBoxLayout>
 #include <QtGui/QTabWidget>
 
 #include "../../headers/config.h"
@@ -63,6 +64,7 @@ private:
     #endif
     
     QHBoxLayout *layout;
+    QVBoxLayout *vLayout;
 };
 
 #endif /* _OPTIONSPANEL_H */
