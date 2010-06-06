@@ -77,7 +77,7 @@ void TrayIcon::songChanged()
 {
     if(options->get_notify_on_change() && supportsMessages())
     {
-        int timeout = options->get_notification_time() * 1000; //conver to seconds
+        int timeout = options->get_notification_time() * 1000; //convert to seconds
         QString title = controller->getCurrentMetadata().value("TITLE");
         showMessage("Kajammer", "Now Playing: " + title, 
                     QSystemTrayIcon::Information, timeout);
