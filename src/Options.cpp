@@ -84,6 +84,12 @@ void Options::readOptions()
         {
             notify_on_change = qstring_to_bool(list.at(1));
         }
+        else if(list.at(0) == "$Notification_Time")
+        {
+            notification_time = list.at(1).toInt();
+            if(notification_time < 0)
+                notification_time = 0;
+        }
         else if(list.at(0) == "$Main_Width") {
             main_width = list.at(1).toInt();
             if(main_width < 200)
@@ -125,6 +131,7 @@ void Options::save()
     options.append("$Shuff_No_Repeat=" + bool_to_qstring(shuff_no_repeat) + "\n");
     options.append("$Use_Tray_Icon=" + bool_to_qstring(use_tray_icon) + "\n");
     options.append("$Notify_On_Change=" + bool_to_qstring(notify_on_change) + "\n");
+    options.append("$Notification_Time=" + QString::number(notification_time) + "\n");
     options.append("$Main_Width=" + QString::number(main_width) + "\n");
     options.append("$Main_Height=" + QString::number(main_height) + "\n");
     #ifdef HAVE_LASTFM_H
@@ -189,6 +196,12 @@ void Options::setDefaultOpenDir(QString dir) { defaultOpenDir = dir; }
 void Options::setShuff_no_repeat(bool no_repeat) { shuff_no_repeat = no_repeat; }
 void Options::setTrayIcon(bool useTray) { use_tray_icon = useTray; }
 void Options::set_notify_on_change(bool notify) { notify_on_change = notify; }
+void Options::set_notification_time(int time) {
+    if(time < 0)
+        time = 0;
+    
+    notification_time = time;
+}
 void Options::setMainHeight(int height) { main_height = height; }
 void Options::setMainWidth(int width) { main_width = width; }
 
@@ -202,9 +215,15 @@ void Options::setLastFmKey(QString key) { lastfmKey = key; }
 QString getDefaultOpenDir();
 bool Options::isShuff_no_repeat() { return shuff_no_repeat; }
 bool Options::trayIcon() { return use_tray_icon; }
-int Options::getMainWidth() { return main_width; }
 bool Options::get_notify_on_change() { return notify_on_change; }
+int Options::get_notification_time() {
+    if(notification_time < 0)
+        return 0;
+    
+    return notification_time;
+}
 int Options::getMainHeight() { return main_height; }
+int Options::getMainWidth() { return main_width; }
 
 #ifdef HAVE_LASTFM_H
 int Options::useLastFm() { return use_last_fm; }

@@ -33,6 +33,7 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
+#include <QtGui/QSpinBox>
 #include <QtGui/QStyle>
 
 #include "../../Options.h"
@@ -58,6 +59,7 @@ private:
     QCheckBox *shuffBox;
     QCheckBox *trayIconOption;
     QCheckBox *notifyBox;
+    QSpinBox *notifyTimeBox;
     
     QHBoxLayout *defaultOpenLayout;
     QFormLayout *formLayout;

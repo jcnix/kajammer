@@ -35,6 +35,7 @@ GeneralOptions::~GeneralOptions()
     delete shuffBox;
     delete trayIconOption;
     delete notifyBox;
+    delete notifyTimeBox;
     
     delete defaultOpenLayout;
     delete formLayout;
@@ -51,6 +52,7 @@ void GeneralOptions::init()
     shuffBox = new QCheckBox;
     trayIconOption = new QCheckBox;
     notifyBox = new QCheckBox;
+    notifyTimeBox = new QSpinBox;
     
     defaultOpenLayout = new QHBoxLayout;
     defaultOpenLayout->addWidget(defaultOpen);
@@ -61,6 +63,7 @@ void GeneralOptions::init()
     formLayout->addRow("No repeat on shuffle", shuffBox);
     formLayout->addRow("Enable Tray Icon", trayIconOption);
     formLayout->addRow("Tray Notifications", notifyBox);
+    formLayout->addRow("Notification Time", notifyTimeBox);
 
     setLayout(formLayout);
 }
@@ -71,6 +74,7 @@ void GeneralOptions::populate()
     shuffBox->setChecked(options->isShuff_no_repeat());
     trayIconOption->setChecked(options->trayIcon());
     notifyBox->setChecked(options->get_notify_on_change());
+    notifyTimeBox->setValue(options->get_notification_time());
 }
 
 void GeneralOptions::save()
@@ -79,6 +83,7 @@ void GeneralOptions::save()
     options->setShuff_no_repeat(shuffBox->isChecked());
     options->setTrayIcon(trayIconOption->isChecked());
     options->set_notify_on_change(notifyBox->isChecked());
+    options->set_notification_time(notifyTimeBox->value());
 }
 
 void GeneralOptions::browseDefaultOpen()
