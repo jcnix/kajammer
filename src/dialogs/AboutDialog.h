@@ -33,6 +33,11 @@
 #include <QtGui/QVBoxLayout>
 
 #include "../headers/kajammer.h"
+#include "../headers/config.h"
+
+#ifdef HAVE_KAJAMTAG_H
+#include <kajamtag/kajamtag.h>
+#endif
 
 class AboutDialog : public QDialog
 {

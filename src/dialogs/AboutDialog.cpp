@@ -52,11 +52,14 @@ void AboutDialog::init()
     iconLabel->setPixmap(icon);
     
     std::stringstream s;
-    s << "Kajammer " << KAJAMMER_VER << "\nis licensed under the GPLv3.";
+    s << "Kajammer " << KAJAMMER_VER << " is licensed under the GPLv3.\n";
+    #ifdef HAVE_KAJAMTAG_H
+    s << "Kajamtag " << KAJAMTAG_VERSION << " is licensed under the LGPLv3.\n";
+    #endif
     QString about(QString::fromStdString(s.str()));
     aboutLabel = new QLabel(about);
     
-    authorsLabel = new QLabel("\nBy Casey Jones");
+    authorsLabel = new QLabel("By Casey Jones");
     
     topLayout = new QHBoxLayout;
     topLayout->addWidget(iconLabel);
