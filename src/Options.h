@@ -43,6 +43,7 @@ public:
     
     void setDefaultOpenDir(QString dir);
     void setShuff_no_repeat(bool no_repeat);
+    void setShowPlaylists(bool show);
     
     void setTrayIcon(bool useTray);
     void set_notify_on_change(bool notify);
@@ -60,6 +61,7 @@ public:
     
     QString getDefaultOpenDir();
     bool isShuff_no_repeat();
+    bool showPlaylists();
     
     bool trayIcon();
     bool get_notify_on_change();
@@ -89,6 +91,7 @@ private:
     QString confPath;
     QString defaultOpenDir;
     bool shuff_no_repeat;
+    bool show_playlists;
     
     bool use_tray_icon;
     bool notify_on_change;

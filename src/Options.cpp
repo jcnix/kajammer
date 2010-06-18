@@ -76,6 +76,10 @@ void Options::readOptions()
         {
             shuff_no_repeat = qstring_to_bool(list.at(1));
         }
+        else if(list.at(0) == "$Show_Playlists")
+        {
+            show_playlists = qstring_to_bool(list.at(1));
+        }
         else if(list.at(0) == "$Use_Tray_Icon")
         {
             use_tray_icon = qstring_to_bool(list.at(1));
@@ -129,6 +133,7 @@ void Options::save()
     
     options.append("$MusicDir=" + defaultOpenDir + "\n");
     options.append("$Shuff_No_Repeat=" + bool_to_qstring(shuff_no_repeat) + "\n");
+    options.append("$Show_Playlists=" + bool_to_qstring(show_playlists) + "\n");
     options.append("$Use_Tray_Icon=" + bool_to_qstring(use_tray_icon) + "\n");
     options.append("$Notify_On_Change=" + bool_to_qstring(notify_on_change) + "\n");
     options.append("$Notification_Time=" + QString::number(notification_time) + "\n");
@@ -194,6 +199,12 @@ QString Options::getDefaultOpenDir()
 
 void Options::setDefaultOpenDir(QString dir) { defaultOpenDir = dir; }
 void Options::setShuff_no_repeat(bool no_repeat) { shuff_no_repeat = no_repeat; }
+
+void Options::setShowPlaylists(bool show)
+{
+    show_playlists = show;
+}
+
 void Options::setTrayIcon(bool useTray) { use_tray_icon = useTray; }
 void Options::set_notify_on_change(bool notify) { notify_on_change = notify; }
 void Options::set_notification_time(int time) {
@@ -214,6 +225,12 @@ void Options::setLastFmKey(QString key) { lastfmKey = key; }
 
 QString getDefaultOpenDir();
 bool Options::isShuff_no_repeat() { return shuff_no_repeat; }
+
+bool Options::showPlaylists()
+{
+    return show_playlists;
+}
+
 bool Options::trayIcon() { return use_tray_icon; }
 bool Options::get_notify_on_change() { return notify_on_change; }
 int Options::get_notification_time() {

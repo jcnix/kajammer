@@ -67,7 +67,7 @@ void MenuBar::init()
     
     viewPlaylistsAction = new QAction("View &Playlists", this);
     viewPlaylistsAction->setCheckable(true);
-    viewPlaylistsAction->setChecked(true);
+    viewPlaylistsAction->setChecked(options->showPlaylists());
     
     optionsAction = new QAction("&Options", this);
     playlistEditAction = new QAction("&Playlist Editor", this);

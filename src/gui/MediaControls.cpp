@@ -55,6 +55,7 @@ MediaControls::MediaControls(QWidget *parent) : QWidget(parent)
 void MediaControls::init()
 {
     controller = Controller::getInstance();
+    options = Options::getInstance();
     listManager = PlaylistManager::getInstance();
     tableIndex = 0;
     
@@ -103,6 +104,7 @@ void MediaControls::init()
     playlistTable->setShowGrid(false);
     playlistTable->setMaximumWidth(PLAYLIST_WIDTH);
     setupPlaylists(); //Fill table with playlists
+    showPlaylists(options->showPlaylists());
     
     QHBoxLayout *tableLayout = new QHBoxLayout;
     tableLayout->addWidget(playlistTable);
@@ -289,4 +291,6 @@ void MediaControls::changePlaylist(int row)
 void MediaControls::showPlaylists(bool b)
 {
     playlistTable->setVisible(b);
+    options->setShowPlaylists(b);
+    options->save();
 }

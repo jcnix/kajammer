@@ -45,6 +45,7 @@
 
 #include "../headers/config.h"
 #include "../Controller.h"
+#include "../Options.h"
 #include "../playlists/PlaylistManager.h"
 #include "../gui/widgets/ToggleButton.h"
 #include "../sql/CollectionManager.h"
@@ -76,6 +77,7 @@ private:
     void init();
 
     Controller *controller;
+    Options *options;
     PlaylistManager *listManager;
     CollectionManager *cm;
     
