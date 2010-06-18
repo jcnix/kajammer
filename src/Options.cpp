@@ -197,54 +197,123 @@ QString Options::getDefaultOpenDir()
     return defaultOpenDir;
 }
 
-void Options::setDefaultOpenDir(QString dir) { defaultOpenDir = dir; }
-void Options::setShuff_no_repeat(bool no_repeat) { shuff_no_repeat = no_repeat; }
+void Options::setDefaultOpenDir(QString dir)
+{
+    defaultOpenDir = dir;
+}
+
+void Options::setShuff_no_repeat(bool no_repeat)
+{
+    shuff_no_repeat = no_repeat;
+}
 
 void Options::setShowPlaylists(bool show)
 {
     show_playlists = show;
 }
 
-void Options::setTrayIcon(bool useTray) { use_tray_icon = useTray; }
-void Options::set_notify_on_change(bool notify) { notify_on_change = notify; }
+void Options::setTrayIcon(bool useTray)
+{
+    use_tray_icon = useTray;
+}
+
+void Options::set_notify_on_change(bool notify)
+{
+    notify_on_change = notify;
+}
+
 void Options::set_notification_time(int time) {
     if(time < 0)
         time = 0;
     
     notification_time = time;
 }
-void Options::setMainHeight(int height) { main_height = height; }
-void Options::setMainWidth(int width) { main_width = width; }
+
+void Options::setMainHeight(int height){
+    main_height = height;
+}
+
+void Options::setMainWidth(int width)
+{
+    main_width = width;
+}
 
 #ifdef HAVE_LASTFM_H
-void Options::setLastFm(bool use) { use_last_fm = use; }
-void Options::setLastFmUser(QString user) { lastfmUser = user; }
-void Options::setLastFmPass(QString pass) { lastfmPass = pass; }
-void Options::setLastFmKey(QString key) { lastfmKey = key; }
+void Options::setLastFm(bool use)
+{
+    use_last_fm = use;
+}
+
+void Options::setLastFmUser(QString user)
+{
+    lastfmUser = user;
+}
+
+void Options::setLastFmPass(QString pass)
+{
+    lastfmPass = pass;
+}
+
+void Options::setLastFmKey(QString key)
+{
+    lastfmKey = key;
+}
 #endif
 
-QString getDefaultOpenDir();
-bool Options::isShuff_no_repeat() { return shuff_no_repeat; }
+bool Options::isShuff_no_repeat()
+{
+    return shuff_no_repeat;
+}
 
 bool Options::showPlaylists()
 {
     return show_playlists;
 }
 
-bool Options::trayIcon() { return use_tray_icon; }
-bool Options::get_notify_on_change() { return notify_on_change; }
+bool Options::trayIcon()
+{
+    return use_tray_icon;
+}
+
+bool Options::get_notify_on_change()
+{
+    return notify_on_change;
+}
+
 int Options::get_notification_time() {
     if(notification_time < 0)
         return 0;
     
     return notification_time;
 }
-int Options::getMainHeight() { return main_height; }
-int Options::getMainWidth() { return main_width; }
+
+int Options::getMainHeight()
+{
+    return main_height;
+}
+
+int Options::getMainWidth()
+{
+    return main_width;
+}
 
 #ifdef HAVE_LASTFM_H
-int Options::useLastFm() { return use_last_fm; }
-QString Options::getLastFmUser() { return lastfmUser; }
-QString Options::getLastFmPass() { return lastfmPass; }
-QString Options::getLastFmKey() { return lastfmKey; }
+int Options::useLastFm()
+{
+    return use_last_fm;
+}
+
+QString Options::getLastFmUser()
+{
+    return lastfmUser;
+}
+
+QString Options::getLastFmPass()
+{
+    return lastfmPass;
+}
+QString Options::getLastFmKey()
+{
+    return lastfmKey;
+}
 #endif
