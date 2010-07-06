@@ -24,7 +24,6 @@
 
 MenuBar::MenuBar(QApplication *app)
 {
-    m_app = app;
     init();
     
     connect(openFile, SIGNAL(triggered()), this, SLOT(open()));
@@ -36,7 +35,7 @@ MenuBar::MenuBar(QApplication *app)
     connect(scanAction, SIGNAL(triggered()), this, SLOT(showCollectionScanner()));
     connect(tagEditorAction, SIGNAL(triggered()), this, SLOT(showTagEditor()));
     connect(about, SIGNAL(triggered()), this, SLOT(aboutDialog()));
-    connect(aboutQt, SIGNAL(triggered()), m_app, SLOT(aboutQt()));
+    //connect(aboutQt, SIGNAL(triggered()), m_app, SLOT(aboutQt()));
 }
 
 void MenuBar::init()
@@ -145,6 +144,5 @@ void MenuBar::aboutDialog()
 
 void MenuBar::quit()
 {
-    Manager *manager = Manager::getInstance();
-    manager->exit();
+    //m_manager->exit();
 }

@@ -22,33 +22,15 @@
 
 #include "Manager.h"
 
-Manager* Manager::manager = 0;
-
 Manager::Manager()
 {
     controller = Controller::getInstance();
     options = Options::getInstance();
 }
 
-Manager* Manager::getInstance()
-{
-    if(manager == 0)
-    {
-        manager = new Manager;
-    }
-    return manager;
-}
-
 int Manager::start(int argc, char *argv[], QApplication *app)
 {
-    m_app = app;
-    
-    mediaControls = new MediaControls;
-    menuBar = new MenuBar(app);
-    
-    connect(menuBar, SIGNAL(showPlaylists(bool)), mediaControls,
-            SLOT(showPlaylists(bool)));
-    
+    m_app = app;    
     cli = new Cli(argc, argv);
     bool xFlag = cli->getXFlag();
     
@@ -64,7 +46,7 @@ int Manager::start(int argc, char *argv[], QApplication *app)
         else
             app->setQuitOnLastWindowClosed(true);
         
-        MainWindow *window = new MainWindow(m_app, mediaControls, menuBar);
+        MainWindow *window = new MainWindow(m_app);
         window->resize(options->getMainWidth(), options->getMainHeight());
         window->show();
         

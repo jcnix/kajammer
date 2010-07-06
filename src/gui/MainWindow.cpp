@@ -22,12 +22,17 @@
 
 #include "MainWindow.h"
 
-MainWindow::MainWindow(QApplication *app, MediaControls *mediaControls,
-                       MenuBar *menuBar)
+MainWindow::MainWindow(QApplication *app)
 {
+    mediaControls = new MediaControls;
+    menuBar = new MenuBar(app);
+    
     setWindowTitle("KaJammer Music Player");
     setMenuBar(menuBar);
     setCentralWidget(mediaControls);
+    
+    connect(menuBar, SIGNAL(showPlaylists(bool)), mediaControls,
+            SLOT(showPlaylists(bool)));
 }
 
 void MainWindow::showWindow(QSystemTrayIcon::ActivationReason activated)

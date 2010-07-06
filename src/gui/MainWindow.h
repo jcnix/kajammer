@@ -31,14 +31,14 @@
 #include "MenuBar.h"
 #include "../Options.h"
 
-class MenuBar;
+class Manager;
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT;
     
 public:
-    MainWindow(QApplication*, MediaControls*, MenuBar*);
+    MainWindow(QApplication*);
 
 public slots:
     void showWindow(QSystemTrayIcon::ActivationReason);
@@ -48,6 +48,8 @@ protected:
     
 private:
     Controller *controller;
+    MediaControls *mediaControls;
+    MenuBar *menuBar;
 };
 
 #endif  /* _MAINWINDOW_H */

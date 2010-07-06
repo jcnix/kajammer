@@ -43,7 +43,6 @@
 #include "../dialogs/PlaylistEditor.h"
 #include "../dialogs/TagEditor.h"
 #include "../dialogs/CollectionScanner.h"
-#include "../Manager.h"
 
 class MenuBar : public QMenuBar
 {
@@ -73,7 +72,6 @@ private:
     PlaylistManager *listManager;
     Options *options;
     
-    QApplication *m_app;
     QMenuBar *menuBar;
     
     QMenu *file;
