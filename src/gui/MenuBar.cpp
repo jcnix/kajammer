@@ -22,7 +22,7 @@
 
 #include "MenuBar.h"
 
-MenuBar::MenuBar(QApplication *app)
+MenuBar::MenuBar()
 {
     init();
     
@@ -35,7 +35,7 @@ MenuBar::MenuBar(QApplication *app)
     connect(scanAction, SIGNAL(triggered()), this, SLOT(showCollectionScanner()));
     connect(tagEditorAction, SIGNAL(triggered()), this, SLOT(showTagEditor()));
     connect(about, SIGNAL(triggered()), this, SLOT(aboutDialog()));
-    //connect(aboutQt, SIGNAL(triggered()), m_app, SLOT(aboutQt()));
+    connect(aboutQt, SIGNAL(triggered()), this, SLOT(showAboutQt()));
 }
 
 void MenuBar::init()
@@ -140,6 +140,11 @@ void MenuBar::aboutDialog()
 {
     AboutDialog *about = new AboutDialog;
     about->show();
+}
+
+void MenuBar::showAboutQt()
+{
+    QMessageBox::aboutQt(this);
 }
 
 void MenuBar::quit()

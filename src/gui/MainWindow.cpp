@@ -25,7 +25,7 @@
 MainWindow::MainWindow(QApplication *app)
 {
     mediaControls = new MediaControls;
-    menuBar = new MenuBar(app);
+    menuBar = new MenuBar;
     
     setWindowTitle("KaJammer Music Player");
     setMenuBar(menuBar);

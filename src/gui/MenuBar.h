@@ -49,7 +49,7 @@ class MenuBar : public QMenuBar
     Q_OBJECT;
 
 public:
-    MenuBar(QApplication*);
+    MenuBar();
     QStringList getQueue();
 
 private slots:
@@ -61,6 +61,7 @@ private slots:
     void showCollectionScanner();
     void showTagEditor();
     void aboutDialog();
+    void showAboutQt();
     
 signals:
     void showPlaylists(bool);
