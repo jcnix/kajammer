@@ -126,7 +126,7 @@ QMap<QString, QString> Controller::getMetadata(QString file)
     QString album;
     
     #ifdef HAVE_KAJAMTAG_H
-    char* cfile = new char[file.size()+1];
+    char* cfile = (char*) malloc(file.size()+1);
     strcpy(cfile, file.toStdString().c_str());
     
     kajamtag_read(cfile);
@@ -140,6 +140,8 @@ QMap<QString, QString> Controller::getMetadata(QString file)
         title = QString(c_title);
         artist = QString(c_artist);
         album = QString(c_album);
+        
+        //kajamtag_close();
     }
     else
     {
@@ -150,6 +152,8 @@ QMap<QString, QString> Controller::getMetadata(QString file)
         title = QString::fromWCharArray(c_title, -1);
         artist = QString::fromWCharArray(c_artist, -1);
         album = QString::fromWCharArray(c_album, -1);
+        
+        //kajamtag_close();
     }
     
     //"BAD_TAG" means Kajamtag doesn't 
@@ -160,12 +164,7 @@ QMap<QString, QString> Controller::getMetadata(QString file)
         artist = "";
         album = "";
     }
-    else
-    {
-        //free(c_title);
-        //free(c_artist);
-        //free(c_album);
-    }
+    
     free(cfile);
     #endif
     
