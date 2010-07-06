@@ -30,6 +30,7 @@
 #include "MediaControls.h"
 #include "MenuBar.h"
 #include "../Options.h"
+#include "../Manager.h"
 
 class Manager;
 
@@ -38,7 +39,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT;
     
 public:
-    MainWindow(QApplication*);
+    MainWindow(QApplication*, Manager*);
 
 public slots:
     void showWindow(QSystemTrayIcon::ActivationReason);
@@ -47,9 +48,11 @@ protected:
     void closeEvent(QCloseEvent*);
     
 private:
+    Manager *m_manager;
     Controller *controller;
     MediaControls *mediaControls;
     MenuBar *menuBar;
+    Options *options;
 };
 
 #endif  /* _MAINWINDOW_H */

@@ -149,5 +149,5 @@ void MenuBar::showAboutQt()
 
 void MenuBar::quit()
 {
-    //m_manager->exit();
+    emit exit();
 }

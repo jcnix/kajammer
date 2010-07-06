@@ -65,6 +65,7 @@ private slots:
     
 signals:
     void showPlaylists(bool);
+    void exit();
 
 private:
     void init();

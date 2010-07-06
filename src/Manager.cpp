@@ -46,7 +46,7 @@ int Manager::start(int argc, char *argv[], QApplication *app)
         else
             app->setQuitOnLastWindowClosed(true);
         
-        MainWindow *window = new MainWindow(app);
+        MainWindow *window = new MainWindow(app, this);
         window->resize(options->getMainWidth(), options->getMainHeight());
         window->show();
         

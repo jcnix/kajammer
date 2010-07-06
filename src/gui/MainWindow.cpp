@@ -22,8 +22,9 @@
 
 #include "MainWindow.h"
 
-MainWindow::MainWindow(QApplication *app)
+MainWindow::MainWindow(QApplication *app, Manager* manager)
 {
+    m_manager = manager;
     mediaControls = new MediaControls;
     menuBar = new MenuBar;
     
@@ -33,6 +34,7 @@ MainWindow::MainWindow(QApplication *app)
     
     connect(menuBar, SIGNAL(showPlaylists(bool)), mediaControls,
             SLOT(showPlaylists(bool)));
+    connect(menuBar, SIGNAL(exit()), m_manager, SLOT(exit()));
 }
 
 void MainWindow::showWindow(QSystemTrayIcon::ActivationReason activated)
@@ -52,6 +54,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
     options->setMainWidth(width());
     options->setMainHeight(height());
     options->save();
+    
+    options = Options::getInstance();
+    if(!options->trayIcon())
+        m_manager->exit();
     
     event->accept();
 }
