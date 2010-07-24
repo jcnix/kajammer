@@ -35,7 +35,6 @@ LastFm::LastFm()
     }
     
     controller = Controller::getInstance();
-    options = Options::getInstance();
     
     QCoreApplication::setApplicationName("kjm");
     QCoreApplication::setApplicationVersion("1.0");
@@ -50,11 +49,11 @@ LastFm::~LastFm()
 
 void LastFm::init()
 {
-    if(options->useLastFm())
+    if(Options::getOption_Bool(KJ::USE_LASTFM))
     {
-        const QString password = options->getLastFmPass();
-        const QString sessionKey = options->getLastFmKey();
-        const QString userName = options->getLastFmUser();
+        const QString password = Options::getOption_String(KJ::LASTFM_PASS);
+        const QString sessionKey = Options::getOption_String(KJ::LASTFM_KEY);
+        const QString userName = Options::getOption_String(KJ::LASTFM_USER);
         lastfm::ws::ApiKey = "519604ab5a867081cbb9a1edaf75ded4";
         lastfm::ws::SharedSecret = "d5d1806ea34cea02336917b15bff9dec";
         lastfm::ws::Username = userName;
@@ -87,7 +86,7 @@ void LastFm::init()
 
 void LastFm::nowPlaying()
 {
-    if(options->useLastFm())
+    if(Options::getOption_Bool(KJ::USE_LASTFM))
     {
         std::cout << "Now Playing\n";
         try
@@ -121,7 +120,7 @@ void LastFm::nowPlaying()
 
 void LastFm::scrobble()
 {
-    if(options->useLastFm())
+    if(Options::getOption_Bool(KJ::USE_LASTFM))
     {
         std::cout << "Srobble\n";
         try
@@ -154,15 +153,13 @@ void LastFm::parseReply()
             {
                 std::cout << "error from authenticating with last.fm service:"
                         << lfm.text().toStdString();
-                options->setLastFmKey("");
-                options->save();
+                Options::setOption(KJ::LASTFM_KEY, "");
                 break;
             }
             sessionKey = lfm["session"]["key"].text();
 
             lastfm::ws::SessionKey = sessionKey.toLatin1().data();
-            options->setLastFmKey(sessionKey);
-            options->save();
+            Options::setOption(KJ::LASTFM_KEY, sessionKey);
 
             break;
         } 

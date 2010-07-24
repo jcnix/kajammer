@@ -77,7 +77,6 @@ private:
     void init();
 
     Controller *controller;
-    Options *options;
     PlaylistManager *listManager;
     CollectionManager *cm;
     

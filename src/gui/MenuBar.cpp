@@ -42,7 +42,6 @@ void MenuBar::init()
 {
     controller = Controller::getInstance();
     listManager = PlaylistManager::getInstance();
-    options = Options::getInstance();
     
     menuBar = new QMenuBar;
 
@@ -66,7 +65,7 @@ void MenuBar::init()
     
     viewPlaylistsAction = new QAction("View &Playlists", this);
     viewPlaylistsAction->setCheckable(true);
-    viewPlaylistsAction->setChecked(options->showPlaylists());
+    viewPlaylistsAction->setChecked(Options::getOption_Bool(KJ::SHOW_PLAYLISTS));
     
     optionsAction = new QAction("&Options", this);
     playlistEditAction = new QAction("&Playlist Editor", this);
@@ -93,7 +92,7 @@ void MenuBar::init()
 
 void MenuBar::open()
 {
-    QString defaultDir = options->getDefaultOpenDir();
+    QString defaultDir = Options::getOption_String(KJ::DEFAULT_OPEN_DIR);
     QString filter = "Music Files (" + MUSIC_TYPES + ");;All Files(*)";
     
     QStringList fileQueue = QFileDialog::getOpenFileNames(this, tr("Open File"),

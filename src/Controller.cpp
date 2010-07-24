@@ -35,9 +35,7 @@ Controller::Controller()
     Phonon::createPath(mediaObject, audioOutput);
     
     metaResolver = new Phonon::MediaObject;  //Used for finding metadata
-    
     listManager = PlaylistManager::getInstance();
-    options = Options::getInstance();
     
     currentSong = 0;
     currentList = -1;
@@ -307,7 +305,7 @@ bool Controller::shuffle()
 
     currentSong = (rand() % trackQueue.count());
     
-    if(options->isShuff_no_repeat())
+    if(Options::getOption_Bool(KJ::SHUFF_NO_REPEAT))
     {
         if(playedTracks.count() == trackQueue.count()) return (error = true);
         else

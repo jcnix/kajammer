@@ -52,7 +52,6 @@ private:
     Controller *controller;
     MediaControls *mediaControls;
     MenuBar *menuBar;
-    Options *options;
 };
 
 #endif  /* _MAINWINDOW_H */

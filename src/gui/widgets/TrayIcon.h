@@ -49,7 +49,6 @@ signals:
     
 private:
     Controller *controller;
-    Options *options;
     
     QIcon *trayIcon;
     QMenu *menu;

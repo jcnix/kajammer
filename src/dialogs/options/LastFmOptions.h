@@ -46,7 +46,6 @@ public:
     void save();
         
 private:
-    Options *options;
     QCheckBox *lastfmBox;
     QLineEdit *lastfmUser;
     QLineEdit *lastfmPass;

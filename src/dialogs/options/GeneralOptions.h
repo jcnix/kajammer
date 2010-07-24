@@ -51,9 +51,7 @@ public:
     void init();
     void populate();
     
-private:    
-    Options *options;
-    
+private:   
     QLineEdit *defaultOpen;
     QPushButton *browseDefaultOpenBtn;
     QCheckBox *shuffBox;

@@ -25,7 +25,6 @@
 TrayIcon::TrayIcon() : QSystemTrayIcon()
 {
     controller = Controller::getInstance();
-    options = Options::getInstance();
     
     trayIcon = new QIcon("/usr/share/icons/kajammer.png");
     setIcon(*trayIcon);
@@ -75,9 +74,9 @@ void TrayIcon::openContextMenu(QSystemTrayIcon::ActivationReason activated)
 
 void TrayIcon::songChanged()
 {
-    if(options->get_notify_on_change() && supportsMessages())
+    if(Options::getOption_Bool(KJ::NOTIFY_ON_TRACK_CHANGE) && supportsMessages())
     {
-        int timeout = options->get_notification_time() * 1000; //convert to seconds
+        int timeout = Options::getOption_Int(KJ::NOTIFICATION_TIME) * 1000; //convert to seconds
         QString title = controller->getCurrentMetadata().value("TITLE");
         showMessage("Kajammer", "Now Playing: " + title, 
                     QSystemTrayIcon::Information, timeout);

@@ -42,9 +42,7 @@ GeneralOptions::~GeneralOptions()
 }
 
 void GeneralOptions::init()
-{    
-    options = Options::getInstance();
-                                    
+{                                    
     defaultOpen = new QLineEdit;
     defaultOpen->setMinimumWidth(175);
     browseDefaultOpenBtn = new QPushButton(style()->standardIcon(QStyle::SP_DialogOpenButton), "", this);
@@ -70,20 +68,20 @@ void GeneralOptions::init()
 
 void GeneralOptions::populate()
 {
-    defaultOpen->setText(options->getDefaultOpenDir());
-    shuffBox->setChecked(options->isShuff_no_repeat());
-    trayIconOption->setChecked(options->trayIcon());
-    notifyBox->setChecked(options->get_notify_on_change());
-    notifyTimeBox->setValue(options->get_notification_time());
+    defaultOpen->setText(Options::getOption_String(KJ::DEFAULT_OPEN_DIR));
+    shuffBox->setChecked(Options::getOption_Bool(KJ::SHUFF_NO_REPEAT));
+    trayIconOption->setChecked(Options::getOption_Bool(KJ::USE_TRAY_ICON));
+    notifyBox->setChecked(Options::getOption_Bool(KJ::NOTIFY_ON_TRACK_CHANGE));
+    notifyTimeBox->setValue(Options::getOption_Int(KJ::NOTIFICATION_TIME));
 }
 
 void GeneralOptions::save()
 {
-    options->setDefaultOpenDir(defaultOpen->text());
-    options->setShuff_no_repeat(shuffBox->isChecked());
-    options->setTrayIcon(trayIconOption->isChecked());
-    options->set_notify_on_change(notifyBox->isChecked());
-    options->set_notification_time(notifyTimeBox->value());
+    Options::setOption(KJ::DEFAULT_OPEN_DIR, defaultOpen->text());
+    Options::setOption(KJ::SHUFF_NO_REPEAT, shuffBox->isChecked());
+    Options::setOption(KJ::USE_TRAY_ICON, trayIconOption->isChecked());
+    Options::setOption(KJ::NOTIFY_ON_TRACK_CHANGE, notifyBox->isChecked());
+    Options::setOption(KJ::NOTIFICATION_TIME, notifyTimeBox->value());
 }
 
 void GeneralOptions::browseDefaultOpen()

@@ -38,8 +38,6 @@ LastFmOptions::~LastFmOptions()
 
 void LastFmOptions::init()
 {
-    options = Options::getInstance();
-    
     lastfmBox = new QCheckBox;
     lastfmUser = new QLineEdit;
     lastfmPass = new QLineEdit;
@@ -56,17 +54,17 @@ void LastFmOptions::init()
 void LastFmOptions::populate()
 {
     #ifdef HAVE_LASTFM_H
-    lastfmBox->setChecked(options->useLastFm());
-    lastfmUser->setText(options->getLastFmUser());
-    lastfmPass->setText(options->getLastFmPass());
+    lastfmBox->setChecked(Options::getOption_Bool(KJ::USE_LASTFM));
+    lastfmUser->setText(Options::getOption_String(KJ::LASTFM_USER));
+    lastfmPass->setText(Options::getOption_String(KJ::LASTFM_PASS));
     #endif
 }
 
 void LastFmOptions::save()
 {
     #ifdef HAVE_LASTFM_H
-    options->setLastFm(lastfmBox->isChecked());
-    options->setLastFmUser(lastfmUser->text());
-    options->setLastFmPass(lastfmPass->text());
+    Options::setOption(KJ::USE_LASTFM, lastfmBox->isChecked());
+    Options::setOption(KJ::LASTFM_USER, lastfmUser->text());
+    Options::setOption(KJ::LASTFM_PASS, lastfmPass->text());
     #endif
 }

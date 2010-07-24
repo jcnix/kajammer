@@ -28,10 +28,10 @@
 #define KAJAMMER_VER "1.0-dev"
 #define KAJAMMER_ICON "/usr/share/icons/kajammer.png"
 
-#define KAJAM_DIR QDir::homePath()+"/.kajammer/"
-#define PLAYLIST_DIR KAJAM_DIR+"/playlists/"
-#define KAJAM_QDIR QDir(QDir::homePath()+"/.kajammer/")
-#define KAJAM_CONF KAJAM_DIR+"kajammer.conf"
+#define KAJAM_DIR QDir::homePath() + "/.kajammer"
+#define PLAYLIST_DIR KAJAM_DIR + "/playlists/"
+#define KAJAM_QDIR QDir(QDir::homePath() + "/.kajammer/")
+#define KAJAM_XML QString(KAJAM_DIR + "/kajammer.xml")
 
 #define MUSIC_TYPES QString("*.mp3 *.ogg *.aac *.flac *.wma *.wav")
 

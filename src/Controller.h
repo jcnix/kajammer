@@ -83,7 +83,6 @@ private:
     
     static Controller *controller;
     PlaylistManager *listManager;
-    Options *options;
     
     Phonon::AudioOutput *audioOutput;
     Phonon::MediaObject *mediaObject;

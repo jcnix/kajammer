@@ -43,8 +43,6 @@ OptionsPanel::~OptionsPanel()
 void OptionsPanel::init()
 {
 	setWindowTitle("KaJammer Options");
-	
-    options = Options::getInstance();
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok |
                                     QDialogButtonBox::Cancel);
     
@@ -75,7 +73,6 @@ void OptionsPanel::save()
     lfmOptions->save();
     #endif
     
-    options->save();
     accept();
 }
 

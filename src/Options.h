@@ -23,88 +23,58 @@
 #ifndef _OPTIONS_H
 #define _OPTIONS_H
 
-#include <QtCore/QObject>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
-#include <QtCore/QIODevice>
 #include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QTextStream>
+#include <QtXml/QDomDocument>
+#include <QtXml/QDomNode>
+#include <QtXml/QDomElement>
 #include <iostream>
 
 #include "headers/config.h"
 #include "headers/kajammer.h"
 
+namespace KJ
+{
+    enum OptionKeys_String
+    {
+        DEFAULT_OPEN_DIR,
+        LASTFM_USER,
+        LASTFM_PASS,
+        LASTFM_KEY
+    };
+
+    enum OptionKeys_Bool
+    {
+        SHUFF_NO_REPEAT,
+        SHOW_PLAYLISTS,
+        USE_TRAY_ICON,
+        NOTIFY_ON_TRACK_CHANGE,
+        USE_LASTFM
+    };
+
+    enum OptionKeys_Int
+    {
+        NOTIFICATION_TIME,
+        MAIN_WIDTH,
+        MAIN_HEIGHT
+    };
+};
+
 class Options
 {
 public:
-    static Options* getInstance();
-    void save();
-    
-    void setDefaultOpenDir(QString dir);
-    void setShuff_no_repeat(bool no_repeat);
-    void setShowPlaylists(bool show);
-    
-    void setTrayIcon(bool useTray);
-    void set_notify_on_change(bool notify);
-    void set_notification_time(int time);
-    
-    void setMainHeight(int height);
-    void setMainWidth(int width);
-    
-    #ifdef HAVE_LASTFM_H
-    void setLastFm(bool use);
-    void setLastFmUser(QString user);
-    void setLastFmPass(QString pass);
-    void setLastFmKey(QString key);
-    #endif
-    
-    QString getDefaultOpenDir();
-    bool isShuff_no_repeat();
-    bool showPlaylists();
-    
-    bool trayIcon();
-    bool get_notify_on_change();
-    int get_notification_time();
-    
-    int getMainWidth();
-    int getMainHeight();
-
-    #ifdef HAVE_LASTFM_H
-    int useLastFm();
-    QString getLastFmUser();
-    QString getLastFmPass();
-    QString getLastFmKey();
-    #endif
-    
-protected:
-    Options();
+    static QString getOption_String(KJ::OptionKeys_String o);
+    static bool getOption_Bool(KJ::OptionKeys_Bool o);
+    static int getOption_Int(KJ::OptionKeys_Int o);
+    static void setOption(KJ::OptionKeys_String o, QString s);
+    static void setOption(KJ::OptionKeys_Bool o, bool b);
+    static void setOption(KJ::OptionKeys_Int o, int i);
     
 private:
-    static Options *options;
-    
-    void readOptions();
-    QString bool_to_qstring(bool);
-    bool qstring_to_bool(QString);
-    QString encrypt(QString);
-    
-    QString confPath;
-    QString defaultOpenDir;
-    bool shuff_no_repeat;
-    bool show_playlists;
-    
-    bool use_tray_icon;
-    bool notify_on_change;
-    int notification_time;
-    
-    int main_width;
-    int main_height;
-    bool use_last_fm;
-    #ifdef HAVE_LASTFM_H
-    QString lastfmUser;
-    QString lastfmPass;
-    QString lastfmKey;
-    #endif
+    Options();
+    static QString getOption(QString key);
+    static void setOption(QString key, QString value);
 };
 
 #endif /* _OPTIONS_H */

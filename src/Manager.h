@@ -56,7 +56,6 @@ private:
     QApplication *m_app;
     
     Controller *controller;
-    Options *options;
     Cli *cli;
     TrayIcon *trayIcon;
     #ifdef HAVE_LASTFM_H

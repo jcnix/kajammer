@@ -22,138 +22,112 @@
 
 #include "Options.h"
 
-Options* Options::options = 0;
+static QString bool_to_qstring(bool);
+static bool qstring_to_bool(QString);
+static QString encrypt(QString);
+static void createXmlIfNeeded();
 
-Options::Options()
+const char* OptionKeys_str[] = {
+    "DefaultDir",
+    "LastFmUser",
+    "LastFmPass",
+    "LastFmKey"
+};
+
+const char* OptionKeys_bool[] = {
+    "ShuffNoRepeat",
+    "ShowPlaylists",
+    "UseTrayIcon",
+    "NotifyOnTrackChange",
+    "UseLastFm"
+};
+
+const char* OptionKeys_int[] = {
+    "NotificationTime",
+    "MainWidth",
+    "MainHeight"
+};
+
+QString Options::getOption(QString key)
 {
-    //if height and width aren't found, these are defaults
-    main_width = 640;
-    main_height = 360;
-    use_last_fm = false;
-	use_tray_icon = false;
-	
+    createXmlIfNeeded();
+    
+    QDomDocument doc;
+    QFile file(KAJAM_XML);
+    if(!file.open(QIODevice::ReadOnly))
+        return "";
+    
+    doc.setContent(&file);
+    QDomElement root = doc.documentElement();
+    QDomNode n = root.firstChild();
+    QString text = "";
+    while(!n.isNull())
+    {
+        QDomElement e = n.toElement();
+        if(!e.isNull())
+        {
+            if(e.tagName() == key) {
+                text = e.text();
+                break;
+            }
+        }
+        
+        n = n.nextSibling();
+    }
+    
+    file.close();
+    return text;
+}
+
+QString Options::getOption_String(KJ::OptionKeys_String o)
+{
+    QString key = OptionKeys_str[o];
+    return getOption(key);
+}
+
+bool Options::getOption_Bool(KJ::OptionKeys_Bool o)
+{
+    QString key = OptionKeys_bool[o];
+    return qstring_to_bool(getOption(key));
+}
+
+int Options::getOption_Int(KJ::OptionKeys_Int o)
+{
+    QString key = OptionKeys_int[o];
+    return getOption(key).toInt();
+}
+
+void Options::setOption(QString key, QString value)
+{
+    createXmlIfNeeded();
+    //Fill this in...
+}
+
+void Options::setOption(KJ::OptionKeys_String o, QString value)
+{
+    setOption(OptionKeys_str[o], value);
+}
+
+void Options::setOption(KJ::OptionKeys_Bool o, bool b)
+{
+    setOption(OptionKeys_bool[o], bool_to_qstring(b));
+}
+
+void Options::setOption(KJ::OptionKeys_Int o, int i)
+{
+    setOption(OptionKeys_int[o], QString::number(i));
+}
+
+void createXmlIfNeeded()
+{
     if(!KAJAM_QDIR.exists())
     {
         KAJAM_QDIR.mkdir(KAJAM_DIR);
         KAJAM_QDIR.mkdir(PLAYLIST_DIR);
     }
-    
-    readOptions();
 }
 
-Options* Options::getInstance()
-{
-    if(options == 0)
-    {
-        options = new Options;
-    }
-    return options;
-}
-
-void Options::readOptions()
-{    
-    QFile conf(KAJAM_CONF);
-    conf.open(QIODevice::ReadOnly);
-    
-    QStringList options;
-    QTextStream in(&conf);
-    
-    //Read conf file and store in list
-    while(!in.atEnd())
-        options.append(in.readLine(0));
-    
-    //Parse conf file and set options
-    for(int i = 0; i < options.count(); i++)
-    {
-        QString option = options.at(i);
-        QStringList list = option.split("=");
-        
-        if(list.at(0) == "$MusicDir")
-        {
-            defaultOpenDir = list.at(1);
-        }
-        else if(list.at(0) == "$Shuff_No_Repeat")
-        {
-            shuff_no_repeat = qstring_to_bool(list.at(1));
-        }
-        else if(list.at(0) == "$Show_Playlists")
-        {
-            show_playlists = qstring_to_bool(list.at(1));
-        }
-        else if(list.at(0) == "$Use_Tray_Icon")
-        {
-            use_tray_icon = qstring_to_bool(list.at(1));
-        }
-        else if(list.at(0) == "$Notify_On_Change")
-        {
-            notify_on_change = qstring_to_bool(list.at(1));
-        }
-        else if(list.at(0) == "$Notification_Time")
-        {
-            notification_time = list.at(1).toInt();
-            if(notification_time < 0)
-                notification_time = 0;
-        }
-        else if(list.at(0) == "$Main_Width") {
-            main_width = list.at(1).toInt();
-            if(main_width < 200)
-                main_width = 640;
-        }
-        else if(list.at(0) == "$Main_Height") {
-            main_height = list.at(1).toInt();
-            if(main_height < 100)
-                main_height = 360;
-        }
-        #ifdef HAVE_LASTFM_H
-        else if(list.at(0) == "$LastFM") {
-            use_last_fm = qstring_to_bool(list.at(1));
-        }
-        else if(list.at(0) == "$LastFM_User") {
-            lastfmUser = list.at(1);
-        }
-        else if(list.at(0) == "$LastFM_Pass") {
-            lastfmPass = encrypt(list.at(1));
-        }
-        else if(list.at(0) == "$LastFM_Key") {
-            lastfmKey = list.at(1);
-        }
-        #endif
-    }
-    
-    conf.close();
-}
-
-void Options::save()
-{
-    QFile conf(KAJAM_CONF);
-    conf.open(QIODevice::WriteOnly);
-    
-    QStringList options;
-    QTextStream out(&conf);
-    
-    options.append("$MusicDir=" + defaultOpenDir + "\n");
-    options.append("$Shuff_No_Repeat=" + bool_to_qstring(shuff_no_repeat) + "\n");
-    options.append("$Show_Playlists=" + bool_to_qstring(show_playlists) + "\n");
-    options.append("$Use_Tray_Icon=" + bool_to_qstring(use_tray_icon) + "\n");
-    options.append("$Notify_On_Change=" + bool_to_qstring(notify_on_change) + "\n");
-    options.append("$Notification_Time=" + QString::number(notification_time) + "\n");
-    options.append("$Main_Width=" + QString::number(main_width) + "\n");
-    options.append("$Main_Height=" + QString::number(main_height) + "\n");
-    #ifdef HAVE_LASTFM_H
-    options.append("$LastFM=" + bool_to_qstring(use_last_fm) + "\n");
-    options.append("$LastFM_User=" + lastfmUser + "\n");
-    options.append("$LastFM_Pass=" + encrypt(lastfmPass) + "\n");
-    options.append("$LastFM_Key=" + lastfmKey + "\n");
-    #endif
-
-    //Write to file
-    for(int i = 0; i < options.count(); i++)
-        out << options.at(i);
-    
-    conf.close();
-}
-
-QString Options::bool_to_qstring(bool truthiness)
+QString bool_to_qstring(bool truthiness)
 {
     QString truth = "0";
     if(truthiness)
@@ -161,14 +135,14 @@ QString Options::bool_to_qstring(bool truthiness)
     return truth;
 }
 
-bool Options::qstring_to_bool(QString truthiness) {
+bool qstring_to_bool(QString truthiness) {
     if(truthiness == "1")
         return true;
     else
         return false;
 }
 
-QString Options::encrypt(QString stringToEncrypt)
+QString encrypt(QString stringToEncrypt)
 {    
     const char* cstring = stringToEncrypt.toStdString().c_str();
     int length = strlen(cstring);
@@ -189,131 +163,3 @@ QString Options::encrypt(QString stringToEncrypt)
     
     return QString(crypto);
 }
-
-QString Options::getDefaultOpenDir()
-{
-    if(defaultOpenDir.isEmpty() || defaultOpenDir == NULL)
-        defaultOpenDir = QDir::homePath();
-    return defaultOpenDir;
-}
-
-void Options::setDefaultOpenDir(QString dir)
-{
-    defaultOpenDir = dir;
-}
-
-void Options::setShuff_no_repeat(bool no_repeat)
-{
-    shuff_no_repeat = no_repeat;
-}
-
-void Options::setShowPlaylists(bool show)
-{
-    show_playlists = show;
-}
-
-void Options::setTrayIcon(bool useTray)
-{
-    use_tray_icon = useTray;
-}
-
-void Options::set_notify_on_change(bool notify)
-{
-    notify_on_change = notify;
-}
-
-void Options::set_notification_time(int time) {
-    if(time < 0)
-        time = 0;
-    
-    notification_time = time;
-}
-
-void Options::setMainHeight(int height){
-    main_height = height;
-}
-
-void Options::setMainWidth(int width)
-{
-    main_width = width;
-}
-
-#ifdef HAVE_LASTFM_H
-void Options::setLastFm(bool use)
-{
-    use_last_fm = use;
-}
-
-void Options::setLastFmUser(QString user)
-{
-    lastfmUser = user;
-}
-
-void Options::setLastFmPass(QString pass)
-{
-    lastfmPass = pass;
-}
-
-void Options::setLastFmKey(QString key)
-{
-    lastfmKey = key;
-}
-#endif
-
-bool Options::isShuff_no_repeat()
-{
-    return shuff_no_repeat;
-}
-
-bool Options::showPlaylists()
-{
-    return show_playlists;
-}
-
-bool Options::trayIcon()
-{
-    return use_tray_icon;
-}
-
-bool Options::get_notify_on_change()
-{
-    return notify_on_change;
-}
-
-int Options::get_notification_time() {
-    if(notification_time < 0)
-        return 0;
-    
-    return notification_time;
-}
-
-int Options::getMainHeight()
-{
-    return main_height;
-}
-
-int Options::getMainWidth()
-{
-    return main_width;
-}
-
-#ifdef HAVE_LASTFM_H
-int Options::useLastFm()
-{
-    return use_last_fm;
-}
-
-QString Options::getLastFmUser()
-{
-    return lastfmUser;
-}
-
-QString Options::getLastFmPass()
-{
-    return lastfmPass;
-}
-QString Options::getLastFmKey()
-{
-    return lastfmKey;
-}
-#endif

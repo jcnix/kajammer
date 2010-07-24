@@ -63,7 +63,6 @@ void PlaylistEditor::init()
     setMinimumSize(500,400);
 
     listManager = PlaylistManager::getInstance();
-    options = Options::getInstance();
 
     playlistList = new QListWidget;
     fillPlaylists();
@@ -200,7 +199,7 @@ void PlaylistEditor::openPlaylist(QListWidgetItem* item)
 
 void PlaylistEditor::addTracks()
 {
-    QString defaultDir = options->getDefaultOpenDir();
+    QString defaultDir = Options::getOption_String(KJ::DEFAULT_OPEN_DIR);
 
     QStringList list = QFileDialog::getOpenFileNames(this, tr("Open File"), defaultDir, 
                                         tr("Music Files (*.mp3 *.ogg *.aac *.flac *.wma *.wav)"));

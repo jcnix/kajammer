@@ -62,7 +62,6 @@ private:
     
     lastfm::Audioscrobbler *as;
     Controller *controller;
-    Options *options;
     QNetworkReply* reply;
     QString sessionKey;
 };

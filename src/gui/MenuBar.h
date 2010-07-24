@@ -71,9 +71,7 @@ private:
     void init();
     
     Controller *controller;
-    PlaylistManager *listManager;
-    Options *options;
-    
+    PlaylistManager *listManager;    
     QMenuBar *menuBar;
     
     QMenu *file;

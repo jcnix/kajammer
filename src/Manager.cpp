@@ -25,7 +25,6 @@
 Manager::Manager()
 {
     controller = Controller::getInstance();
-    options = Options::getInstance();
 }
 
 int Manager::start(int argc, char *argv[], QApplication *app)
@@ -35,22 +34,21 @@ int Manager::start(int argc, char *argv[], QApplication *app)
     bool xFlag = cli->getXFlag();
     
     if(!xFlag)
-    {
-        options = Options::getInstance();
-        
+    {        
         if(QFile::exists(KAJAMMER_ICON))            
             app->setWindowIcon(QIcon(KAJAMMER_ICON));
         
-        if(options->trayIcon())
+        if(Options::getOption_Bool(KJ::USE_TRAY_ICON))
             app->setQuitOnLastWindowClosed(false);
         else
             app->setQuitOnLastWindowClosed(true);
         
         MainWindow *window = new MainWindow(app, this);
-        window->resize(options->getMainWidth(), options->getMainHeight());
+        window->resize(Options::getOption_Int(KJ::MAIN_WIDTH),
+                       Options::getOption_Int(KJ::MAIN_HEIGHT));
         window->show();
         
-        if(options->trayIcon())
+        if(Options::getOption_Bool(KJ::USE_TRAY_ICON))
         {
             trayIcon = new TrayIcon;
             
@@ -60,7 +58,7 @@ int Manager::start(int argc, char *argv[], QApplication *app)
         }
         
         #ifdef HAVE_LASTFM_H
-        if(options->useLastFm())
+        if(Options::getOption_Bool(KJ::USE_LASTFM))
         {
             lastfm = new LastFm();
             connect(controller, SIGNAL(songChanged(int)), lastfm, SLOT(nowPlaying()));
@@ -75,7 +73,7 @@ int Manager::exit()
 {
     //Submit whats left over in the cache.
     #ifdef HAVE_LASTFM_H
-    if(options->useLastFm())
+    if(Options::getOption_Bool(KJ::USE_LASTFM))
         lastfm->scrobble();
     #endif
     
@@ -85,7 +83,6 @@ int Manager::exit()
     delete lastfm;
     #endif
     delete controller;
-    delete options;
     delete cli;
     
     return 1;

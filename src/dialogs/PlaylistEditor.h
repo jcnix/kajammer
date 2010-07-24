@@ -71,7 +71,6 @@ private:
     void fillPlaylists();
     
     PlaylistManager *listManager;
-    Options *options;
 
     QListWidget *playlistList;
     QListWidget *playlistContents;

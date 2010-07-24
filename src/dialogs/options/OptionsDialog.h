@@ -54,7 +54,6 @@ protected:
 private:
     void init();
     
-    Options *options;
     QTabWidget *tabWidget;
     QDialogButtonBox *buttonBox;
     

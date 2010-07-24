@@ -50,13 +50,10 @@ void MainWindow::showWindow(QSystemTrayIcon::ActivationReason activated)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    Options *options = Options::getInstance();
-    options->setMainWidth(width());
-    options->setMainHeight(height());
-    options->save();
+    Options::setOption(KJ::MAIN_WIDTH, width());
+    Options::setOption(KJ::MAIN_HEIGHT, height());
     
-    options = Options::getInstance();
-    if(!options->trayIcon())
+    if(!Options::getOption_Bool(KJ::USE_TRAY_ICON))
         m_manager->exit();
     
     event->accept();
