@@ -97,7 +97,7 @@ TARGET_LINK_LIBRARIES(
     ${Phonon_LIBRARY}
     ${Kajamtag_LIB}
     ${LastFM_LIB}
-    ${QTNETWORKLIB}
+    ${QT_QTNETWORK_LIBRARIES}
     ${QT_QTXML_LIBRARIES}
 )
 
